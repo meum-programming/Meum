@@ -9,7 +9,7 @@ public class ServerSelector : MonoBehaviour
     private InputField type;
     private InputField id;
     private InputField maxN;
-    private SocketIOComponent _socket = null;
+    private SocketIOComponentCoroutine _socket = null;
 
     private static ServerSelector _globalInstance = null;
 
@@ -17,7 +17,8 @@ public class ServerSelector : MonoBehaviour
     {
         if (_globalInstance == null)
         {
-            _socket = GetComponent<SocketIOComponent>();
+            //_socket = GetComponent<SocketIOComponent>();
+            _socket = GetComponent<SocketIOComponentCoroutine>();
             _socket.Connect();
             _socket.autoConnect = true;
             DontDestroyOnLoad(gameObject);

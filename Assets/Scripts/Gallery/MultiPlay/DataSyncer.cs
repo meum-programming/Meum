@@ -26,7 +26,7 @@ public class DataSyncer : MonoBehaviour
     public int currentCharId { get { return _currentCharId;  } }
     private OtherPlayerController[] _others = null;
 
-    private SocketIOComponent _socket = null;
+    private SocketIOComponentCoroutine _socket = null;
     private int _id = -1;
     private Dictionary<string, string> _dataCache = new Dictionary<string, string>();
     private JSONObject _jsonCache = new JSONObject();
@@ -37,7 +37,8 @@ public class DataSyncer : MonoBehaviour
         transform.rotation = Quaternion.identity;
         transform.localScale = new Vector3(1, 1, 1);
         
-        _socket = GetComponent<SocketIOComponent>();
+        //_socket = GetComponent<SocketIOComponent>();
+        _socket = GetComponent<SocketIOComponentCoroutine>();
         _socket.On("enteringSuccess", OnEnteringSuccess);
         _socket.On("userData", OnUserData);
         _socket.On("animTrigger", OnAnimTrigger);
