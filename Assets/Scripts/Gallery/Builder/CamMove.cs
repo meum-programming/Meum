@@ -1,50 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class CamMove : MonoBehaviour
+namespace Gallery.Builder
 {
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float lookSensitivity;
-    [SerializeField] private Transform camera;
-
-    // Update is called once per frame
-    void Update()
+    public class CamMove : MonoBehaviour
     {
-        if (Input.GetMouseButton(1))
+        [SerializeField] private float walkSpeed;
+        [SerializeField] private float lookSensitivity;
+
+        [FormerlySerializedAs("camera")] [SerializeField]
+        private Transform cam;
+
+        // Update is called once per frame
+        void Update()
         {
-            Move();
-            CameraRotation();
-            CharacterRotation();
+            if (Input.GetMouseButton(1))
+            {
+                Move();
+                CameraRotation();
+                CharacterRotation();
+            }
         }
-    }
 
-    private void Move()
-    {
-        float moveDirX = Input.GetAxisRaw("Horizontal");
-        float moveDirZ = Input.GetAxisRaw("Vertical");
-        
-        Vector3 moveHorizontal = camera.right * moveDirX;
-        Vector3 moveVertical = camera.forward * moveDirZ;
+        private void Move()
+        {
+            float moveDirX = Input.GetAxisRaw("Horizontal");
+            float moveDirZ = Input.GetAxisRaw("Vertical");
 
-        Vector3 delta = (moveHorizontal + moveVertical).normalized * walkSpeed;
+            Vector3 moveHorizontal = cam.right * moveDirX;
+            Vector3 moveVertical = cam.forward * moveDirZ;
 
-        transform.position += delta;
-    }
+            Vector3 delta = (moveHorizontal + moveVertical).normalized * walkSpeed;
+
+            transform.position += delta;
+        }
 
 
-    private void CharacterRotation()
-    {
-        // 좌우 캐릭터 회전
-        float yRotation = Input.GetAxisRaw("Mouse X");
-        transform.Rotate(Vector3.up, yRotation*lookSensitivity);
-    }
+        private void CharacterRotation()
+        {
+            // 좌우 캐릭터 회전
+            float yRotation = Input.GetAxisRaw("Mouse X");
+            transform.Rotate(Vector3.up, yRotation * lookSensitivity);
+        }
 
-    private void CameraRotation()
-    {
-        // 상하 카메라 회전
-        float xRotation = Input.GetAxisRaw("Mouse Y");
-        float cameraRotationX = xRotation * lookSensitivity;
-        camera.Rotate(Vector3.right, -cameraRotationX);
+        private void CameraRotation()
+        {
+            // 상하 카메라 회전
+            float xRotation = Input.GetAxisRaw("Mouse Y");
+            float cameraRotationX = xRotation * lookSensitivity;
+            cam.Rotate(Vector3.right, -cameraRotationX);
+        }
     }
 }
