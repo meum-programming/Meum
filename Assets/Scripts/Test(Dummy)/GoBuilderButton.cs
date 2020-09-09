@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GoLobbyButton : MonoBehaviour
+public class GoBuilderButton : MonoBehaviour
 {
     private void Awake()
     {
@@ -15,6 +15,6 @@ public class GoLobbyButton : MonoBehaviour
 
     private void ButtonAction()
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("RoomBuilder");
     }
 }

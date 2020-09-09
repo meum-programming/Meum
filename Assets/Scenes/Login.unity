@@ -156,7 +156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 120.9}
+  m_AnchoredPosition: {x: 0, y: 121}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &85021391
@@ -537,7 +537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 22.700012}
+  m_AnchoredPosition: {x: 0, y: 23}
   m_SizeDelta: {x: -600, y: -554.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &399676308
@@ -1417,7 +1417,7 @@ GameObject:
   - component: {fileID: 1711982878}
   m_Layer: 0
   m_Name: SocketIO
-  m_TagString: Untagged
+  m_TagString: SocketIO
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1435,7 +1435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    url: 52.78.99.172
+    url: 127.0.0.1
     port: 3000
     sslEnabled: 0
     reconnectTime: 500
@@ -1476,9 +1476,10 @@ MonoBehaviour:
   otherPlayerPrefabs:
   - {fileID: 2442103649596044328, guid: b05db9a2f22f38148820783486da4919, type: 3}
   - {fileID: 1278361466101436568, guid: 993f6e67de9b058428ed507d3101fbec, type: 3}
-  scenes:
-  - Galleries/Gallery0
-  - Galleries/Gallery1
+  mapPrefabs:
+  - {fileID: 222819809479834012, guid: ad0ada51f6b4ef54bb701f5695e98390, type: 3}
+  - {fileID: 8276785843308883225, guid: 361bc6d25eaf9a64d8fb4418a7c421df, type: 3}
+  gallerySceneName: Gallery
 --- !u!114 &1711982878
 MonoBehaviour:
   m_ObjectHideFlags: 0

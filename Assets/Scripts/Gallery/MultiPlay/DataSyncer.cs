@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Gallery.Builder;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -18,12 +19,12 @@ namespace Gallery.MultiPlay
         [SerializeField] private float receiveInterval;
         private float _sendIntervalCounter = 0.0f;
 
-        [Header("Require Prefabs")] [SerializeField]
-        private List<GameObject> playerPrefabs;
-
+        [Header("Require Prefabs")] 
+        [SerializeField] private List<GameObject> playerPrefabs;
         [SerializeField] private List<GameObject> otherPlayerPrefabs;
+        [SerializeField] private List<GameObject> mapPrefabs;
 
-        [Header("Scenes")] [SerializeField] private List<string> scenes;
+        [Header("Scenes")] [SerializeField] private string gallerySceneName;
 
         private Transform _player = null;
         private Animator _playerAnimator = null;
@@ -133,13 +134,17 @@ namespace Gallery.MultiPlay
             public int maxN;
         }
 
-        private IEnumerator WaitLoadingGallery(SocketIOEvent e)
+        private IEnumerator LoadingGallery(SocketIOEvent e)
         {
+            // wait load complete
             var data = JsonConvert.DeserializeObject<EnteringSuccessEventData>(e.data);
-            var sceneName = scenes[data.roomType];
-            var loading = SceneManager.LoadSceneAsync(sceneName);
+            var loading = SceneManager.LoadSceneAsync(gallerySceneName);
             while (!loading.isDone) yield return null;
-
+            
+            // setting map prefab
+            Instantiate(mapPrefabs[data.roomType], Vector3.zero, Quaternion.identity);
+            
+            // setting other players
             _id = data.id;
             _others = new OtherPlayerController[data.maxN];
 
@@ -154,21 +159,35 @@ namespace Gallery.MultiPlay
                 _others[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
                 _others[i].SetOriginalTransform(spawnPos, spawnRot);
             }
-
+            
+            // print data
             Debug.Log("My id is " + _id);
             Debug.Log("maxN is " + _others.Length);
             Debug.Log("room id is " + data.roomId);
-
+            
+            // setting player
             _player = Instantiate(playerPrefabs[0]).transform;
             _playerAnimator = _player.GetComponent<Animator>();
             _currentCharId = 0;
             _player.position = spawnTransform.position;
             _player.rotation = spawnTransform.rotation;
+
+            // setting paints
+            StartCoroutine(SerializePaints(data.roomId));
+        }
+        private IEnumerator SerializePaints(int roomId)
+        {
+            var paintsSerializer = GameObject.Find("Paints").GetComponent<PaintsSerializer>();
+            var cd = new CoroutineWithData(this, MeumDB.Get().GetRoomInfo(roomId));
+            yield return cd.coroutine;
+            var roomInfo = cd.result as MeumDB.RoomInfo;
+            Debug.Assert(roomInfo != null);
+            paintsSerializer.SetJson(roomInfo.data_json);
         }
 
         private void OnEnteringSuccess(SocketIOEvent e)
         {
-            StartCoroutine(WaitLoadingGallery(e));
+            StartCoroutine(LoadingGallery(e));
         }
 
         private struct UserQuitEventData
@@ -179,7 +198,6 @@ namespace Gallery.MultiPlay
         private void OnUserQuit(SocketIOEvent e)
         {
             var data = JsonConvert.DeserializeObject<UserQuitEventData>(e.data);
-            Debug.Log(data.id + ", " + _id);
             if (data.id == _id)
             {
                 SceneManager.LoadScene("Lobby");
