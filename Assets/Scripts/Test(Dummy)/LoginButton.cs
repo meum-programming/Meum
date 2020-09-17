@@ -24,6 +24,6 @@ public class LoginButton : MonoBehaviour
         if (result)
             SceneManager.LoadScene("Lobby");
         else
-            Debug.Log("login failed");
+            Debug.LogError("login failed");
     }
 }

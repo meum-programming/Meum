@@ -15,44 +15,43 @@ namespace Gallery.MultiPlay
     {
         [Header("Connection Info")] [SerializeField]
         private float sendInterval;
-
-        [SerializeField] private float receiveInterval;
         private float _sendIntervalCounter = 0.0f;
 
         [Header("Require Prefabs")] 
         [SerializeField] private List<GameObject> playerPrefabs;
         [SerializeField] private List<GameObject> otherPlayerPrefabs;
-        [SerializeField] private List<GameObject> mapPrefabs;
-
-        [Header("Scenes")] [SerializeField] private string gallerySceneName;
 
         private Transform _player = null;
         private Animator _playerAnimator = null;
-        private int _currentCharId = 0;
-
-        public int currentCharId
-        {
-            get { return _currentCharId; }
-        }
+        public int currentCharId { get; private set; }
 
         private OtherPlayerController[] _others = null;
 
         private SocketIOController _socket;
         private int _id = -1;
 
-        private void Start()
+        private static DataSyncer _globalInstance = null;
+        public static DataSyncer Get()
         {
-            transform.position = Vector3.zero;
-            transform.rotation = Quaternion.identity;
-            transform.localScale = new Vector3(1, 1, 1);
-
-            _socket = GetComponent<SocketIOController>();
-            _socket.On("enteringSuccess", OnEnteringSuccess);
-            _socket.On("userQuit", OnUserQuit);
-            _socket.On("userInfo", OnUserInfo);
-            _socket.On("animTrigger", OnAnimTrigger);
-            _socket.On("changeCharacter", OnChangeCharacter);
-            _socket.Connect();
+            return _globalInstance;
+        }
+        
+        #region Unity Functions
+        
+        private void Awake()
+        {
+            if (_globalInstance == null)
+            {
+                var selfTransform = transform;
+                selfTransform.position = Vector3.zero;
+                selfTransform.rotation = Quaternion.identity;
+                selfTransform.localScale = new Vector3(1, 1, 1);
+                
+                DontDestroyOnLoad(gameObject);
+                _globalInstance = this;
+            }
+            else
+                Destroy(gameObject);
         }
 
         private void Update()
@@ -67,18 +66,89 @@ namespace Gallery.MultiPlay
                 }
             }
         }
+        
+        #endregion
 
-        public void ResetRoom()
+        #region Other Functions
+
+        public bool IsInRoomOrSquare()
         {
+            return _id != -1;
+        }
+
+        public void TemporaryLeaveRoom()
+        {
+            for (var i = 0; i < _others.Length; ++i)
+            {
+                if(_others[i] != null)
+                    _others[i].SetRendererEnabled(false);
+            }
+            _player.gameObject.SetActive(false);
+        }
+
+        public void ReturnToRoom()
+        {
+            for (var i = 0; i < _others.Length; ++i)
+            {
+                if(_others[i] != null)
+                    _others[i].SetRendererEnabled(true);
+            }
+            _player.gameObject.SetActive(true);
+        }
+
+        public void Reset()
+        {
+            for (var i = 0; i < _others.Length; ++i)
+            {
+                if(_others[i] != null)
+                    Destroy(_others[i].gameObject);
+            }
+            Destroy(_player.gameObject);
+
+            _others = null;
             _player = null;
             _playerAnimator = null;
+
             _id = -1;
+            currentCharId = -1;
+        }
+
+        public void SetupRoom(int playerID, int maxN, SocketIOController socket)
+        {
+            // setting other players
+            _id = playerID;
+            _others = new OtherPlayerController[maxN];
+
+            var spawnTransform = GameObject.Find("SpawnSite").transform;
+            var spawnPos = spawnTransform.position;
+            var spawnRot = spawnTransform.rotation;
             for (int i = 0; i < _others.Length; ++i)
             {
-                if (_others[i] == null) continue;
-                Destroy(_others[i].gameObject);
+                if (i == _id) continue;
+                _others[i] = Instantiate(otherPlayerPrefabs[0], transform).GetComponent<OtherPlayerController>();
+                _others[i].gameObject.SetActive(false);
+                
+                _others[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
+                _others[i].SetOriginalTransform(spawnPos, spawnRot);
             }
+            
+            // setting player
+            _player = Instantiate(playerPrefabs[0], transform).transform;
+            _playerAnimator = _player.GetComponent<Animator>();
+            currentCharId = 0;
+            _player.position = spawnTransform.position;
+            _player.rotation = spawnTransform.rotation;
+            
+            // setting socket.io
+            _socket = socket;
+            _socket.On("userQuit", OnUserQuit);
+            _socket.On("userInfo", OnUserInfo);
+            _socket.On("animTrigger", OnAnimTrigger);
+            _socket.On("changeCharacter", OnChangeCharacter);
+            _socket.On("updateArtworks", OnUpdateArtworks);
         }
+        
+        #endregion
 
         #region Socket Event Emitters
 
@@ -115,80 +185,21 @@ namespace Gallery.MultiPlay
             public int charId;
         }
 
-        public void ChangeCharacter(int charId)
+        public void BroadCastChangeCharacter(int charId)
         {
             ChangeCharacterData data;
             data.charId = charId;
             _socket.Emit("broadCastChangeCharacter", JsonConvert.SerializeObject(data));
         }
 
+        public void BroadCastUpdateArtworks()
+        {
+            _socket.Emit("broadcastUpdateArtworks");
+        }
+
         #endregion
 
         #region Socket Event Handlers
-
-        private struct EnteringSuccessEventData
-        {
-            public int id;
-            public int roomId;
-            public int roomType;
-            public int maxN;
-        }
-
-        private IEnumerator LoadingGallery(SocketIOEvent e)
-        {
-            // wait load complete
-            var data = JsonConvert.DeserializeObject<EnteringSuccessEventData>(e.data);
-            var loading = SceneManager.LoadSceneAsync(gallerySceneName);
-            while (!loading.isDone) yield return null;
-            
-            // setting map prefab
-            Instantiate(mapPrefabs[data.roomType], Vector3.zero, Quaternion.identity);
-            
-            // setting other players
-            _id = data.id;
-            _others = new OtherPlayerController[data.maxN];
-
-            var spawnTransform = GameObject.Find("SpawnSite").transform;
-            var spawnPos = spawnTransform.position;
-            var spawnRot = spawnTransform.rotation;
-            for (int i = 0; i < _others.Length; ++i)
-            {
-                if (i == _id) continue;
-                _others[i] = Instantiate(otherPlayerPrefabs[0], transform).GetComponent<OtherPlayerController>();
-                _others[i].gameObject.SetActive(false);
-                _others[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
-                _others[i].SetOriginalTransform(spawnPos, spawnRot);
-            }
-            
-            // print data
-            Debug.Log("My id is " + _id);
-            Debug.Log("maxN is " + _others.Length);
-            Debug.Log("room id is " + data.roomId);
-            
-            // setting player
-            _player = Instantiate(playerPrefabs[0]).transform;
-            _playerAnimator = _player.GetComponent<Animator>();
-            _currentCharId = 0;
-            _player.position = spawnTransform.position;
-            _player.rotation = spawnTransform.rotation;
-
-            // setting paints
-            StartCoroutine(SerializePaints(data.roomId));
-        }
-        private IEnumerator SerializePaints(int roomId)
-        {
-            var paintsSerializer = GameObject.Find("Paints").GetComponent<PaintsSerializer>();
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetRoomInfo(roomId));
-            yield return cd.coroutine;
-            var roomInfo = cd.result as MeumDB.RoomInfo;
-            Debug.Assert(roomInfo != null);
-            paintsSerializer.SetJson(roomInfo.data_json);
-        }
-
-        private void OnEnteringSuccess(SocketIOEvent e)
-        {
-            StartCoroutine(LoadingGallery(e));
-        }
 
         private struct UserQuitEventData
         {
@@ -198,10 +209,10 @@ namespace Gallery.MultiPlay
         private void OnUserQuit(SocketIOEvent e)
         {
             var data = JsonConvert.DeserializeObject<UserQuitEventData>(e.data);
-            if (data.id == _id)
-            {
+            if (!IsInRoomOrSquare())
+            { 
+                MeumDB.Get().ClearTextureBuffer();
                 SceneManager.LoadScene("Lobby");
-                ResetRoom();
             }
             else
             {
@@ -219,9 +230,10 @@ namespace Gallery.MultiPlay
 
         private void OnUserInfo(SocketIOEvent e)
         {
+            if (!IsInRoomOrSquare()) return;
             var data = JsonConvert.DeserializeObject<UserInfoEventData>(e.data);
-            if (data.id == _id) return;
             var obj = _others[data.id];
+            if (data.id == _id || obj == null) return;
             obj.gameObject.SetActive(true);
             obj.UpdateTransform(data.position, data.rotation);
             obj.AnimBoolChange(Animator.StringToHash("walking"), data.walking);
@@ -253,13 +265,13 @@ namespace Gallery.MultiPlay
             var data = JsonConvert.DeserializeObject<ChangeCharacterEventData>(e.data);
             if (data.id == _id)
             {
-                if (_currentCharId == data.charId) return;
+                if (currentCharId == data.charId) return;
                 var playerOld = _player;
                 var pPosition = playerOld.position;
                 var pRotation = playerOld.rotation;
                 _player = Instantiate(playerPrefabs[data.charId]).transform;
                 _playerAnimator = _player.GetComponent<Animator>();
-                _currentCharId = data.charId;
+                currentCharId = data.charId;
                 _player.position = pPosition;
                 _player.rotation = pRotation;
                 Destroy(playerOld.gameObject);
@@ -275,6 +287,13 @@ namespace Gallery.MultiPlay
                 _others[data.id].SetOriginalTransform(pPosition, pRotation);
                 Destroy(playerOld.gameObject);
             }
+        }
+
+        private void OnUpdateArtworks(SocketIOEvent e)
+        {
+            // if _player deactivated then player is in builder scene
+            if(_player.gameObject.activeSelf)        
+                MeumSocket.Get().SerializeArtworks();
         }
 
         #endregion

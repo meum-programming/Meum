@@ -9,8 +9,15 @@ namespace Gallery.Builder
     {
         [SerializeField] private float placeHeight = 0.5f;
         [SerializeField] private float placeDistance = 0.3f;
+        [SerializeField] private bool runOnStart = false;
 
-        private void Awake()
+        private void Start()
+        {
+            if (runOnStart)
+                Add();
+        }
+
+        public void Add()
         {
             for (int i = 0; i < transform.childCount; ++i)
             {

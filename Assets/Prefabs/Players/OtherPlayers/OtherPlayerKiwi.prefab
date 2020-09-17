@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpTime: 0.125
+  playerRenderer: {fileID: 2591160656843223069}
 --- !u!1 &3878316866636979903
 GameObject:
   m_ObjectHideFlags: 0

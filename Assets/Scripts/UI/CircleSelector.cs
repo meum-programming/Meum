@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,18 +10,24 @@ namespace UI
 {
     public class CircleSelector : MonoBehaviour
     {
-        [Header("Layout")] [SerializeField] private GameObject linePrefab;
-        [SerializeField] private GameObject textPrefab;
+        [Header("Layout")]
+        [SerializeField] private GameObject linePrefab;
+        [SerializeField] private GameObject iconPrefab;
         [SerializeField, Range(2, 10)] private int numOptions = 2;
-        [SerializeField] private float textDistanceFromCenter = 300.0f;
+        [SerializeField] private float iconDistanceFromCenter = 300.0f;
 
-        [Header("Expand, Shrink")] [SerializeField]
-        private float chagingTime;
+        [Header("Expand, Shrink")] 
+        [SerializeField] private float chagingTime;
+        
+        [Header("Active")]
+        [SerializeField] private float holdTimeToExpand;
+        [SerializeField] private float cancelRadius;
 
         [System.Serializable]
         public class OptionData
         {
             public string name = "Dummy";
+            public Sprite sprite;
             public UnityEvent onSelect;
         }
 
@@ -28,8 +35,8 @@ namespace UI
 
         [SerializeField, HideInInspector] private Transform[] _lines = null;
         [SerializeField, HideInInspector] private Transform _linesParent;
-        [SerializeField, HideInInspector] private Text[] _optionTexts = null;
-        [SerializeField, HideInInspector] private Transform _textsParent;
+        [SerializeField, HideInInspector] private Image[] _optionIcons = null;
+        [SerializeField, HideInInspector] private Transform _iconsParent;
 
         private Transform _visibles = null;
         private Vector3 _originalScale = Vector3.zero;
@@ -37,6 +44,7 @@ namespace UI
         private IEnumerator _shrinking = null;
 
         private Vector3 _dragStartPosition;
+        private bool _expanded = false;
 
         public void OptionTest(int idx)
         {
@@ -58,6 +66,12 @@ namespace UI
                 StopCoroutine(v);
                 v = null;
             }
+        }
+
+        private bool CheckMouseInCancelArea(Vector3 mousePos)
+        {
+            Vector2 delta = mousePos - _dragStartPosition;
+            return delta.sqrMagnitude < cancelRadius * cancelRadius;
         }
 
         private int FindSelected(Vector3 mousePos)
@@ -84,31 +98,53 @@ namespace UI
         {
             if (Input.GetMouseButtonDown(0))
             {
-                _dragStartPosition = Input.mousePosition;
                 StopCo(ref _shrinking);
                 StopCo(ref _expanding);
+                
+                _dragStartPosition = Input.mousePosition;
                 StartCoroutine(_expanding = Expand());
             }
 
-            if (Input.GetMouseButton(0))
+            if (_expanded)
             {
-                foreach (var text in _optionTexts)
-                    text.color = Color.black;
-                var selected = FindSelected(Input.mousePosition);
-                _optionTexts[selected].color = Color.blue;
+                foreach (var icon in _optionIcons)
+                    icon.color = Color.white;
+
+                var mousePos = Input.mousePosition;
+                if (!CheckMouseInCancelArea(mousePos))
+                {
+                    var selected = FindSelected(mousePos);
+                    _optionIcons[selected].color = Color.blue;
+                }
             }
 
             if (Input.GetMouseButtonUp(0))
             {
-                var selected = FindSelected(Input.mousePosition);
                 StopCo(ref _shrinking);
                 StopCo(ref _expanding);
-                StartCoroutine(_shrinking = Shrink(options[selected].onSelect));
+                
+                var selected = -1;
+                var mousePos = Input.mousePosition;
+                if (!CheckMouseInCancelArea(mousePos))
+                    selected = FindSelected(mousePos);
+
+                StartCoroutine(_shrinking = Shrink(_expanded && (selected >= 0) ? options[selected].onSelect : null));
             }
         }
 
         private IEnumerator Expand()
         {
+            var t = 0.0f;
+            while (t < holdTimeToExpand)
+            {
+                if (!Input.GetMouseButton(0))
+                    yield break;
+                t += Time.deltaTime;
+                yield return null;
+            }
+
+            _expanded = true;
+            
             _visibles.gameObject.SetActive(true);
             var v = 0.0f;
             var selfTransform = _visibles.transform;
@@ -126,6 +162,7 @@ namespace UI
 
         private IEnumerator Shrink(UnityEvent evt)
         {
+            _expanded = false;
             var v = 0.0f;
             var selfTransform = _visibles.transform;
             var startScale = selfTransform.localScale;
@@ -138,14 +175,20 @@ namespace UI
 
             selfTransform.localPosition = Vector3.zero;
             _visibles.gameObject.SetActive(false);
-            evt.Invoke();
+            if(evt != null) 
+                evt.Invoke();
             _shrinking = null;
         }
 
         private void OnValidate()
         {
+            #if UNITY_EDITOR
             if (!Application.isEditor || EditorApplication.isPlayingOrWillChangePlaymode)
                 return;
+            #else
+            if (!Application.isEditor)
+                return;
+            #endif
 
             if (options == null)
                 options = new OptionData[numOptions];
@@ -163,53 +206,55 @@ namespace UI
 
         private void GenerateOptionTexts()
         {
-            if (_textsParent == null)
-                _textsParent = transform.Find("visibles").Find("texts");
+            if (_iconsParent == null)
+                _iconsParent = transform.Find("visibles").Find("icons");
 
             var angleInterval = 360.0f / numOptions;
 
-            if (_optionTexts == null)
+            if (_optionIcons == null)
             {
-                _optionTexts = new Text[numOptions];
+                _optionIcons = new Image[numOptions];
                 for (var i = 0; i < numOptions; ++i)
                 {
-                    _optionTexts[i] = Instantiate(textPrefab, _textsParent.position, Quaternion.identity, _textsParent)
-                        .GetComponent<Text>();
-                    _optionTexts[i].transform.position =
-                        _textsParent.position + Quaternion.AngleAxis(i * angleInterval, Vector3.forward) *
-                        Vector3.up * textDistanceFromCenter;
+                    _optionIcons[i] = Instantiate(iconPrefab, _iconsParent.position, Quaternion.identity, _iconsParent)
+                        .GetComponent<Image>();
+                    _optionIcons[i].transform.position =
+                        _iconsParent.position + Quaternion.AngleAxis(i * angleInterval, Vector3.forward) *
+                        Vector3.up * iconDistanceFromCenter;
                 }
             }
-            else if (_optionTexts.Length != numOptions)
+            else if (_optionIcons.Length != numOptions)
             {
-                for (var i = 0; i < _optionTexts.Length; ++i)
+                for (var i = 0; i < _optionIcons.Length; ++i)
                 {
-                    if (null != _optionTexts[i])
-                        DestroyInEditor(_optionTexts[i].gameObject);
-                    _optionTexts[i] = null;
+                    if (null != _optionIcons[i])
+                        DestroyInEditor(_optionIcons[i].gameObject);
+                    _optionIcons[i] = null;
                 }
 
-                Array.Resize(ref _optionTexts, numOptions);
+                Array.Resize(ref _optionIcons, numOptions);
                 for (var i = 0; i < numOptions; ++i)
                 {
-                    if (_optionTexts[i] == null)
-                        _optionTexts[i] =
-                            Instantiate(textPrefab, _textsParent.position, Quaternion.identity, _textsParent)
-                                .GetComponent<Text>();
-                    _optionTexts[i].transform.position =
-                        _textsParent.position + Quaternion.AngleAxis(i * angleInterval, Vector3.forward) *
-                        Vector3.up * textDistanceFromCenter;
+                    if (_optionIcons[i] == null)
+                        _optionIcons[i] =
+                            Instantiate(iconPrefab, _iconsParent.position, Quaternion.identity, _iconsParent)
+                                .GetComponent<Image>();
+                    _optionIcons[i].transform.position =
+                        _iconsParent.position + Quaternion.AngleAxis(i * angleInterval, Vector3.forward) *
+                        Vector3.up * iconDistanceFromCenter;
                 }
             }
 
             for (var i = 0; i < numOptions; ++i)
             {
-                _optionTexts[i].text = options[i].name;
+                _optionIcons[i].sprite = options[i].sprite;
             }
         }
 
         private void GenerateLines()
         {
+            if (linePrefab == null) return;
+            
             if (_linesParent == null)
                 _linesParent = transform.Find("visibles").Find("lines");
             var angleInterval = 360.0f / numOptions;

@@ -22,7 +22,7 @@ public class SwitchCharacter : MonoBehaviour
     public void Switch()
     {
         var current = _syncer.currentCharId;
-        _syncer.ChangeCharacter(current == 0 ? 1 : 0);
+        _syncer.BroadCastChangeCharacter(current == 0 ? 1 : 0);
     }
 }
 

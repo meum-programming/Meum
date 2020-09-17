@@ -5,12 +5,26 @@ using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class MeumDB : MonoBehaviour
 {
+    private TextureBuffer _textureBuffer = new TextureBuffer();
+    
     private string _token = "";
 
     private static MeumDB _globalInstance;
+
+    public void SetToken(string token)
+    {
+        _token = token;
+    }
+
+    public bool TokenExist()
+    {
+        return _token != "";
+    }
+    
     private void Awake()
     {
         if (_globalInstance == null)
@@ -169,6 +183,45 @@ public class MeumDB : MonoBehaviour
         // var response = cd.result as string;
     }
 
+    public class ArtworkInfo
+    {
+        public int primaryKey;
+        public string url;
+        public int like;
+        public int hate;
+    }
+    public IEnumerator GetArtworks(int user_pk)
+    {
+        var url = "http://52.78.99.172:8000/artwork/owner/" + user_pk;
+        var cd = new CoroutineWithData(this, WebRequest(url, "GET"));
+        yield return cd.coroutine;
+        var data = cd.result as string;
+
+        var jarray = JArray.Parse(data);
+        var output = new ArtworkInfo[jarray.Count];
+        for (var i = 0; i < jarray.Count; ++i)
+        {
+            var obj = jarray[i];
+            output[i] = new ArtworkInfo();
+            output[i].primaryKey = obj["pk"].Value<int>();
+            output[i].url = "http://52.78.99.172:8000" + obj["file"].Value<string>();
+            output[i].like = obj["like"].Value<int>();
+            output[i].hate = obj["hate"].Value<int>();
+        }
+
+        yield return output;
+    }
+
+    public CoroutineWithData GetTexture(string url)
+    {
+        return _textureBuffer.Get(this, url);
+    }
+
+    public void ClearTextureBuffer()
+    {
+        _textureBuffer.Clear();
+    }
+
     private IEnumerator WebRequest(string url, string method, string json="")
     {
         var uwr = new UnityWebRequest(url, method);
@@ -179,7 +232,7 @@ public class MeumDB : MonoBehaviour
         }
         uwr.downloadHandler = new DownloadHandlerBuffer();
         uwr.SetRequestHeader("Content-Type", "application/json");
-        if(_token != "")
+        if(TokenExist())
             uwr.SetRequestHeader("Authorization", "JWT " + _token);
 
         yield return uwr.SendWebRequest();

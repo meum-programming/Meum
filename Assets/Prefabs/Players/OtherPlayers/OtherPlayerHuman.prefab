@@ -450,6 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpTime: 0.125
+  playerRenderer: {fileID: 5233875567938900987}
 --- !u!95 &5964442949446282531
 Animator:
   serializedVersion: 3

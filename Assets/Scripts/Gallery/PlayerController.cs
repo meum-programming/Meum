@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Gallery.MultiPlay;
 using UnityEngine;
 
 namespace Gallery
@@ -33,7 +34,7 @@ namespace Gallery
         void Start()
         {
             _animator = GetComponent<Animator>();
-            _dataSyncer = GameObject.FindWithTag("SocketIO").GetComponent<MultiPlay.DataSyncer>();
+            _dataSyncer = DataSyncer.Get();
             _myRigid = GetComponent<Rigidbody>();
             Debug.Assert(_animator && _dataSyncer && _myRigid);
 

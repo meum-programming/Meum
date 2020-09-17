@@ -8,6 +8,7 @@ namespace Gallery.MultiPlay
     public class OtherPlayerController : MonoBehaviour
     {
         [SerializeField] private float lerpTime;
+        [SerializeField] private Renderer playerRenderer;
 
         private Vector3 _posOrigin;
         private Vector3 _posDest;
@@ -19,9 +20,16 @@ namespace Gallery.MultiPlay
 
         private void Awake()
         {
+            Debug.Assert(playerRenderer);
+            
             _transform = transform;
             _animator = GetComponent<Animator>();
             Debug.Assert(_animator);
+        }
+
+        public void SetRendererEnabled(bool val)
+        {
+            playerRenderer.enabled = val;
         }
 
         public void SetOriginalTransform(Vector3 pos, Quaternion rot)

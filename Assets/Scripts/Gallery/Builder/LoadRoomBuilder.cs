@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class LoadRoomBuilder : MonoBehaviour
 {
-    [SerializeField] private GameObject[] mapPrefabs;
-
-    private PaintsSerializer _serializer;
+    private ArtworkSerializer _serializer;
     private Transform _cam;
     
     private void Awake()
     {
-        _serializer = GameObject.Find("Paints").GetComponent<PaintsSerializer>();
+        _serializer = GameObject.Find("Artworks").GetComponent<ArtworkSerializer>();
         _cam = GameObject.Find("camera").transform;
     }
 
@@ -34,8 +32,7 @@ public class LoadRoomBuilder : MonoBehaviour
         var roomInfo = cd.result as MeumDB.RoomInfo;
         if (null != roomInfo)
         {
-            var map = Instantiate(mapPrefabs[roomInfo.type_int], Vector3.zero, Quaternion.identity);
-            var spawnSite = map.transform.Find("SpawnSite").transform;
+            var spawnSite = GameObject.Find("SpawnSite").transform;
             _cam.position = spawnSite.position;
             _cam.rotation = spawnSite.rotation;
             
