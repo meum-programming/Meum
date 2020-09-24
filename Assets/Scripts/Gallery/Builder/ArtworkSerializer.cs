@@ -5,6 +5,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using Gallery.MultiPlay;
+using Global.Socket;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -75,8 +76,8 @@ namespace Gallery.Builder
         private IEnumerator PatchRoomJson()
         {
             var json = GetJson();
-            yield return MeumDB.Get().PatchRoomJson(json);
-            DataSyncer.Get().BroadCastUpdateArtworks();
+            yield return Global.MeumDB.Get().PatchRoomJson(json);
+            MeumSocket.Get().BroadCastUpdateArtworks();
         }
     }
 }

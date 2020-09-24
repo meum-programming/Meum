@@ -11,7 +11,7 @@ public class QuitButton : MonoBehaviour
     {
         var button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(MeumSocket.Get().QuitRoom);
+        button.onClick.AddListener(Global.Socket.MeumSocket.Get().Quit);
     }
 }
 

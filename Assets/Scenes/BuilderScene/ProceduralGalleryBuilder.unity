@@ -1432,7 +1432,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1408206158}
-  - component: {fileID: 1408206159}
   m_Layer: 5
   m_Name: Sidebar
   m_TagString: Untagged
@@ -1461,19 +1460,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1408206159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1408206157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ae70ae1da0004948bbc8b8cbe2b715d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  container: {fileID: 1652954035}
 --- !u!1 &1474916930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1956,6 +1942,7 @@ GameObject:
   - component: {fileID: 2078008490}
   - component: {fileID: 2078008489}
   - component: {fileID: 2078008491}
+  - component: {fileID: 2078008492}
   m_Layer: 10
   m_Name: Artworks
   m_TagString: Untagged
@@ -1977,6 +1964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paintPrefab: {fileID: 2688551444214508632, guid: d2a5fc7abab86d64482f0777677eb382, type: 3}
   cam: {fileID: 92377507}
+  snapGridSizeY: 0.5
   scaleFactor: 0.3
   scaleLimit: 2
 --- !u!4 &2078008490
@@ -2006,3 +1994,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paintPrefab: {fileID: 2688551444214508632, guid: d2a5fc7abab86d64482f0777677eb382, type: 3}
+--- !u!114 &2078008492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078008488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae70ae1da0004948bbc8b8cbe2b715d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  container: {fileID: 1652954035}

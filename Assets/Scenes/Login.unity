@@ -543,12 +543,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d9c1939efa8114f9898c6af534a16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sendInterval: 0.125
   playerPrefabs:
-  - {fileID: 6647103159993374495, guid: f83516f4011e5054b989824eca9fd7f5, type: 3}
+  - {fileID: 9157458219296972478, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
   - {fileID: 4462832844320068774, guid: 7bab11a47c4b08748851d0d992f3ea95, type: 3}
   otherPlayerPrefabs:
-  - {fileID: 2442103649596044328, guid: b05db9a2f22f38148820783486da4919, type: 3}
+  - {fileID: 6261111249021333171, guid: e605f14b1d25a7a41805d456d3a85a28, type: 3}
   - {fileID: 1278361466101436568, guid: 993f6e67de9b058428ed507d3101fbec, type: 3}
 --- !u!1 &399676306
 GameObject:
@@ -777,7 +776,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter Email
+  m_Text: Enter Password
 --- !u!222 &659836874
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1517,6 +1516,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686a70fe38eca8441afe15a6a9009969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sendInterval: 0.125
+  sceneInfos:
+  - gallery: ProceduralGallery
+    builder: ProceduralGalleryBuilder
 --- !u!1 &2056064794
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Global.Socket;
 using UnityEngine;
 
 public class SwitchCharacter : MonoBehaviour
 {
-    private Gallery.MultiPlay.DataSyncer _syncer;
+    private int _current = 0;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        _syncer = GetComponent<Gallery.MultiPlay.DataSyncer>();
+        _current = 0;
     }
 
     private void Update()
@@ -21,8 +22,9 @@ public class SwitchCharacter : MonoBehaviour
 
     public void Switch()
     {
-        var current = _syncer.currentCharId;
-        _syncer.BroadCastChangeCharacter(current == 0 ? 1 : 0);
+        var val = _current == 0 ? 1 : 0;
+        MeumSocket.Get().BroadCastChangeCharacter(val);
+        _current = val;
     }
 }
 

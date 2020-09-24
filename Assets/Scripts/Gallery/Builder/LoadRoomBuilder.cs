@@ -22,14 +22,14 @@ public class LoadRoomBuilder : MonoBehaviour
 
     private IEnumerator Load()
     {
-        var meumDB = MeumDB.Get();
+        var meumDB = Global.MeumDB.Get();
         var cd = new CoroutineWithData(this, meumDB.GetUserInfo());
         yield return cd.coroutine;
-        var userInfo = cd.result as MeumDB.UserInfo;
+        var userInfo = cd.result as Global.MeumDB.UserInfo;
         
         cd = new CoroutineWithData(this, meumDB.GetRoomInfoWithUser(userInfo.primaryKey));
         yield return cd.coroutine;
-        var roomInfo = cd.result as MeumDB.RoomInfo;
+        var roomInfo = cd.result as Global.MeumDB.RoomInfo;
         if (null != roomInfo)
         {
             var spawnSite = GameObject.Find("SpawnSite").transform;

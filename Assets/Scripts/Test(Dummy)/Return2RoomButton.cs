@@ -15,6 +15,6 @@ public class Return2RoomButton : MonoBehaviour
 
     private void ButtonAction()
     {
-        MeumSocket.Get().ReturnToRoom();
+        Global.Socket.MeumSocket.Get().Return();
     }
 }

@@ -20,7 +20,7 @@ namespace Gallery.MultiPlay
 
         private void Enter()
         {
-            MeumSocket.Get().EnterRoom(nickname.text);
+            Global.Socket.MeumSocket.Get().EnterGallery(nickname.text);
         }
     }
 }

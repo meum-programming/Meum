@@ -12,23 +12,23 @@ namespace Gallery.Builder
     {
         [SerializeField] private ContentsContainer container;
 
-        private MeumDB.ArtworkInfo[] _artworkInfos;
+        private Global.MeumDB.ArtworkInfo[] _artworkInfos;
 
-        private void Start()
+        public void Load()
         {
             StartCoroutine(LoadArtworks());
         }
 
         private IEnumerator LoadArtworks()
         {
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo());
+            var cd = new CoroutineWithData(this, Global.MeumDB.Get().GetUserInfo());
             yield return cd.coroutine;
-            var userInfo = cd.result as MeumDB.UserInfo;
+            var userInfo = cd.result as Global.MeumDB.UserInfo;
             
             Debug.Assert(userInfo != null);
-            cd = new CoroutineWithData(this, MeumDB.Get().GetArtworks(userInfo.primaryKey));
+            cd = new CoroutineWithData(this, Global.MeumDB.Get().GetArtworks(userInfo.primaryKey));
             yield return cd.coroutine;
-            _artworkInfos = cd.result as MeumDB.ArtworkInfo[];
+            _artworkInfos = cd.result as Global.MeumDB.ArtworkInfo[];
             
             if(container != null)
                 AddArtworksToContainer();
@@ -48,7 +48,7 @@ namespace Gallery.Builder
             return uri.Segments.Last();
         }
 
-        private UI.ContentData CreateContentData(MeumDB.ArtworkInfo info)
+        private UI.ContentData CreateContentData(Global.MeumDB.ArtworkInfo info)
         {
             var output = new UI.ContentData();
             output.id = info.primaryKey;

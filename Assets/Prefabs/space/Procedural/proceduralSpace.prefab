@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placeHeight: 0.5
-  placeDistance: 0.3
+  placeDistance: 0.1
   runOnStart: 0
 --- !u!1 &5933453787565019819
 GameObject:

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Global.Socket;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,14 +11,12 @@ namespace Gallery
     {
         public void GoShop()
         {
-            MeumSocket.Get().TemporaryLeaveGallery();
-            SceneManager.LoadScene("Shop");
+            MeumSocket.Get().LeaveToShop();
         }
 
         public void GoRoomBuilder()
         {
-            MeumSocket.Get().TemporaryLeaveGallery();
-            SceneManager.LoadScene("ProceduralGalleryBuilder");
+            MeumSocket.Get().LeaveToEdit();
         }
     }
 }

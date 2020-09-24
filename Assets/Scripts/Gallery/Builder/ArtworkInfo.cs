@@ -49,22 +49,10 @@ namespace Gallery.Builder
         
         private IEnumerator LoadImage()
         {
-            var textureGetter = MeumDB.Get().GetTexture(url);
+            var textureGetter = Global.MeumDB.Get().GetTexture(url);
             yield return textureGetter.coroutine;
             var texture = textureGetter.result as Texture2D;
             SetTexture(texture);
-            
-            // UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
-            // yield return www.SendWebRequest();
-            //
-            // if (www.isNetworkError || www.isHttpError)
-            // {
-            //     Debug.Log(www.error);
-            //     yield break;
-            // }
-            //
-            // var texture = ((DownloadHandlerTexture) www.downloadHandler).texture;
-            // SetTexture(texture);
         }
         
         public void SetTexture(Texture2D texture)

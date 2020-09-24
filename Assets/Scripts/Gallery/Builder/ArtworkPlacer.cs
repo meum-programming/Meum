@@ -11,6 +11,7 @@ namespace Gallery.Builder
     {
         [SerializeField] private GameObject paintPrefab;
         [SerializeField] private Camera cam;
+        [SerializeField] private float snapGridSizeY;
 
         [Header("Image scaling")] [SerializeField]
         private float scaleFactor;
@@ -87,15 +88,25 @@ namespace Gallery.Builder
 
         private void AlignPaintTransform(Transform paint, RaycastHit hit)
         {
-            Vector3 placePosition = hit.point;
+            var placePosition = hit.point;
             var objectHit = hit.transform;
             var wallInfo = objectHit.GetComponent<WallInfo>();
             Debug.Assert(wallInfo);
             var normVec = wallInfo.GetNormalDir(cam.transform.position);
-            placePosition.y = objectHit.transform.position.y + wallInfo.placeHeight;
+            var distanceFromCenterY = hit.point.y - objectHit.transform.position.y;
+            placePosition.y = objectHit.transform.position.y + SnapFloat(distanceFromCenterY, snapGridSizeY);
             placePosition += normVec * wallInfo.placeDistance;
-            _selected.rotation = Quaternion.LookRotation(normVec);
-            _selected.position = placePosition;
+            paint.rotation = Quaternion.LookRotation(normVec);
+            paint.position = placePosition;
+        }
+
+        private float SnapFloat(float v, float gridSize)
+        {
+            var precision = 100000;
+            var gridSizeRounded = Mathf.RoundToInt(gridSize * precision);
+            float result = Mathf.RoundToInt(v * precision) / gridSizeRounded * gridSizeRounded;
+            result /= precision;
+            return result;
         }
     }
 }

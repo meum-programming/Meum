@@ -1622,6 +1622,7 @@ MonoBehaviour:
   originalCamPos: {fileID: 3395340342092296999}
   thirdCamPos: {fileID: 3395340342354525241}
   switchSpeed: 5
+  detectDistance: 4.33
 --- !u!1 &6705761219495258694
 GameObject:
   m_ObjectHideFlags: 0

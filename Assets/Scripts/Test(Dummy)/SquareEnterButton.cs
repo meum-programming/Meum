@@ -12,6 +12,6 @@ public class SquareEnterButton : MonoBehaviour
 
     private void Enter()
     {
-        MeumSocket.Get().EnterSquare();
+        Global.Socket.MeumSocket.Get().EnterSquare();
     }
 }
