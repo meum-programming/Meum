@@ -10,10 +10,10 @@ namespace Gallery.Builder
         public float placeHeight;
         public float placeDistance;
 
-        public Vector3 GetNormalDir(Vector3 camPos)
+        public Vector3 GetNormalDir(Vector3 hitPoint, Vector3 camPos)
         {
             var selfTransform = transform;
-            Vector3 dir = camPos - selfTransform.position;
+            var dir = camPos - hitPoint;
 
             var forward = selfTransform.forward;
             var right = selfTransform.right;

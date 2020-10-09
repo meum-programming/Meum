@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UI.BuilderScene;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,17 +11,21 @@ namespace Gallery.Builder
         [SerializeField] private float walkSpeed;
         [SerializeField] private float lookSensitivity;
 
+        [SerializeField] private BuilderSceneVerifyModals verifyModalManager;
+
         [FormerlySerializedAs("camera")] [SerializeField]
         private Transform cam;
 
         // Update is called once per frame
         void Update()
         {
+            if (verifyModalManager.showingModal) return;
+
             if (Input.GetMouseButton(1))
             {
                 Move();
-                CameraRotation();
-                CharacterRotation();
+                VerticalRotation();
+                HorizontalRotation();
             }
         }
 
@@ -38,14 +43,14 @@ namespace Gallery.Builder
         }
 
 
-        private void CharacterRotation()
+        private void HorizontalRotation()
         {
             // 좌우 캐릭터 회전
             float yRotation = Input.GetAxisRaw("Mouse X");
             transform.Rotate(Vector3.up, yRotation * lookSensitivity);
         }
 
-        private void CameraRotation()
+        private void VerticalRotation()
         {
             // 상하 카메라 회전
             float xRotation = Input.GetAxisRaw("Mouse Y");

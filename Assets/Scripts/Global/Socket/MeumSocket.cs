@@ -13,13 +13,13 @@ namespace Global.Socket
         [Header("Connection Info")] [SerializeField] private float sendInterval;
         private float _sendIntervalCounter = 0.0f;
     
-        [System.Serializable]
-        public struct GallerySceneInfo
-        {
-            public string gallery;
-            public string builder;
-        }
-        [Header("Gallery Scenes")] [SerializeField] private GallerySceneInfo[] sceneInfos;
+        // [System.Serializable]
+        // public struct GallerySceneInfo
+        // {
+        //     public string gallery;
+        //     public string builder;
+        // }
+        // [Header("Gallery Scenes")] [SerializeField] private GallerySceneInfo[] sceneInfos;
         
 
         private SocketIOController _socket;
@@ -29,15 +29,15 @@ namespace Global.Socket
 
         public MeumDB.UserInfo PlayerInfo { get; private set; } = null;
 
-        public string GetGallerySceneName(int type)
-        {
-            return sceneInfos[type].gallery;
-        }
-
-        public string GetBuilderSceneName(int type)
-        {
-            return sceneInfos[type].builder;
-        }
+        // public string GetGallerySceneName(int type)
+        // {
+        //     return sceneInfos[type].gallery;
+        // }
+        //
+        // public string GetBuilderSceneName(int type)
+        // {
+        //     return sceneInfos[type].builder;
+        // }
 
         private void Init()
         {

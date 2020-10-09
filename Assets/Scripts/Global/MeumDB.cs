@@ -201,7 +201,7 @@ namespace Global
 
         public IEnumerator GetArtworks(int user_pk)
         {
-            var url = "http://52.78.99.172:8000/artwork/owner/" + user_pk;
+            var url = "http://52.78.99.172:8000/artwork/owner/0/" + user_pk;
             var cd = new CoroutineWithData(this, WebRequest(url, "GET"));
             yield return cd.coroutine;
             var data = cd.result as string;
@@ -221,9 +221,14 @@ namespace Global
             yield return output;
         }
 
-        public CoroutineWithData GetTexture(string url)
+        public CoroutineWithData GetTextureCoroutine(string url)
         {
             return _textureBuffer.Get(this, url);
+        }
+
+        public Texture2D GetTexture(string url)
+        {
+            return _textureBuffer.Get(url);
         }
 
         public void ClearTextureBuffer()

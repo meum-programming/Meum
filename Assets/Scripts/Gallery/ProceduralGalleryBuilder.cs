@@ -43,8 +43,6 @@ public class ProceduralGalleryBuilder : MonoBehaviour
         BuildBlock(new IVector2(0, 0));
         for(var i=0; i<positions.Length; ++i)
             BuildBlock(positions[i]);
-
-        _walls.GetComponent<WallInfoAdder>().Add();
     }
 
     private void BuildBlock(IVector2 pos)
@@ -60,7 +58,6 @@ public class ProceduralGalleryBuilder : MonoBehaviour
             var wall = Instantiate(wallPrefab, _walls);
             var wallPos = new Vector3(position.x - edge_length / 2.0f, wallY, position.z);
             wall.transform.position = wallPos;
-            wall.transform.Rotate(Vector3.forward, 180.0f);
         }
         if (!Has(pos.x + 1, pos.y))
         {
@@ -75,14 +72,14 @@ public class ProceduralGalleryBuilder : MonoBehaviour
             var wall = Instantiate(wallPrefab, _walls);
             var wallPos = new Vector3(position.x, wallY, position.z - edge_length / 2.0f);
             wall.transform.position = wallPos;
-            wall.transform.Rotate(Vector3.forward, 90.0f);
+            wall.transform.Rotate(Vector3.up, 90.0f);
         }
         if (!Has(pos.x, pos.y + 1))
         {
             var wall = Instantiate(wallPrefab, _walls);
             var wallPos = new Vector3(position.x, wallY, position.z + edge_length / 2.0f);
             wall.transform.position = wallPos;
-            wall.transform.Rotate(Vector3.forward, -90.0f);
+            wall.transform.Rotate(Vector3.up, -90.0f);
         }
     }
 

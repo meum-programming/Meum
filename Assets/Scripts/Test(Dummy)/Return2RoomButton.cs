@@ -9,7 +9,6 @@ public class Return2RoomButton : MonoBehaviour
     private void Awake()
     {
         var button = GetComponent<Button>();
-        button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ButtonAction);
     }
 

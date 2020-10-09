@@ -70,9 +70,15 @@ namespace Gallery
             }
             CharacterRotationToFitCam();
 
+            _animController.SetIsJumpEnded(IsJumpEnded());
+
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            {
+                _animController.SetHorizontalSpeed(0.0f);
+                _animController.SetVerticalSpeed(0.0f);
                 return;
-            
+            }
+
             Move();
 
             if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
@@ -80,7 +86,6 @@ namespace Gallery
                 _myRigid.AddForce(Vector3.up * 300.0f);
                 _animController.SetTrigger(Animator.StringToHash("jump"));
             }
-            _animController.SetIsJumpEnded(IsJumpEnded());
 
             if (Input.GetKeyDown(KeyCode.E) && _switching == null)
                 StartCoroutine(_switching = SwitchView());

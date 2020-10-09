@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public interface IDbBuffer
-{ 
-    CoroutineWithData Get(MonoBehaviour caller, string url);
-    void Clear();
-}
-
-public abstract class DbBufferBase<T> : IDbBuffer
+public abstract class DbBufferBase<T>
 {
     private Dictionary<string, T> _buffer = new Dictionary<string, T>();
 
@@ -34,7 +28,7 @@ public abstract class DbBufferBase<T> : IDbBuffer
         _buffer.Add(url, value);
     }
 
-    protected T Get(string url)
+    public T Get(string url)
     {
         if(_buffer.ContainsKey(url))
             return _buffer[url];

@@ -1517,9 +1517,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sendInterval: 0.125
-  sceneInfos:
-  - gallery: ProceduralGallery
-    builder: ProceduralGalleryBuilder
 --- !u!1 &2056064794
 GameObject:
   m_ObjectHideFlags: 0

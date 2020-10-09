@@ -36,7 +36,7 @@ namespace Gallery.Builder
         
         private void AddArtworksToContainer()
         {
-            var contentData = new UI.ContentData[_artworkInfos.Length];
+            var contentData = new ContentData[_artworkInfos.Length];
             for (var i = 0; i < contentData.Length; ++i)
                 contentData[i] = CreateContentData(_artworkInfos[i]);
             container.AddContents(contentData);

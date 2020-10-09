@@ -20,7 +20,7 @@ namespace UI
     public class Content : MonoBehaviour
     {
         public Text name;
-        public Image image;
+        public RawImage image;
 
         public ContentData data
         {
@@ -29,20 +29,16 @@ namespace UI
             {
                 _data = value;
                 name.text = _data.name;
-                StartCoroutine(LoadImage());
+                LoadImage();
             }
         }
         
         private ContentData _data;
 
-        private IEnumerator LoadImage()
+        private void LoadImage()
         {
-            var textureGetter = Global.MeumDB.Get().GetTexture(_data.thumbnail_url);
-            yield return textureGetter.coroutine;
-            var texture = textureGetter.result as Texture2D;
-            if (texture == null) yield break;
-            var spriteRect = new Rect(0, 0, texture.width, texture.height);
-            image.sprite = Sprite.Create(texture, spriteRect, new Vector2(0.5f, 0.5f));
+            var texture = Global.MeumDB.Get().GetTexture(_data.thumbnail_url);
+            image.texture = texture;
         }
     }
 }

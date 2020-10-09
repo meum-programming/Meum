@@ -8,37 +8,49 @@ namespace UI.ChattingUI
 {
     public class ChattingLogContainer : MonoBehaviour
     {
-        [SerializeField] private GameObject logPrefab;
+        [SerializeField] private GameObject logPrefabMe;
+        [SerializeField] private GameObject logPrefabYou;
         [SerializeField] private float offset;
 
-        private RectTransform _transform;
-        private float _prefabHeight;
+       private RectTransform _transform;
 
         private void Awake()
         {
             _transform = GetComponent<RectTransform>();
-            _prefabHeight = logPrefab.GetComponent<RectTransform>().sizeDelta.y;
+            var sizeDelta = _transform.sizeDelta;
+            sizeDelta.x = _transform.parent.GetComponent<RectTransform>().rect.width;
+            _transform.sizeDelta = sizeDelta;
         }
 
-        public void Add(string sender, string message)
+        public ChattingLog Add(string sender, string message, bool isMe)
         {
-            var newLog = Instantiate(logPrefab, transform);
-            newLog.GetComponent<Text>().text = String.Format("{0}: {1} ", sender, message);
+            var newLog = Instantiate(isMe ? logPrefabMe : logPrefabYou, transform);
+            var chattingLogCompo = newLog.GetComponent<ChattingLog>();
+            chattingLogCompo.SetData(sender, message, isMe);
             Align();
+            return chattingLogCompo;
         }
 
         private void Align()
         {
+            if(_transform == null)
+                _transform = GetComponent<RectTransform>();
+            
             var childCount = _transform.childCount;
+            var height = 0.0f;
 
             for (var i = 0; i < childCount; ++i)
             {
                 var child = _transform.GetChild(childCount - 1 - i);
-                child.localPosition = new Vector3(0, (_prefabHeight + offset) * i, 0);
+                var chattingLog = child.GetComponent<ChattingLog>();
+                
+                child.localPosition = new Vector3(chattingLog.isMe ? _transform.sizeDelta.x : 0,
+                                                  height, 0);
+                height += chattingLog.height + offset;
             }
 
             var sizeDelta = _transform.sizeDelta;
-            sizeDelta.y = (_prefabHeight + offset) * childCount;
+            sizeDelta.y = height;
             _transform.sizeDelta = sizeDelta;
         }
     }

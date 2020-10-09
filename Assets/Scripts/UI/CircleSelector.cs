@@ -21,7 +21,7 @@ namespace UI
         
         [Header("Active")]
         [SerializeField] private float holdTimeToExpand;
-        [SerializeField] private float cancelRadius;
+        // [SerializeField] private float cancelRadius;
 
         [System.Serializable]
         public class OptionData
@@ -30,12 +30,12 @@ namespace UI
             public Sprite sprite;
             public UnityEvent onSelect;
         }
-
+        
         [SerializeField] private OptionData[] options;
 
         [SerializeField, HideInInspector] private Transform[] _lines = null;
         [SerializeField, HideInInspector] private Transform _linesParent;
-        [SerializeField, HideInInspector] private Image[] _optionIcons = null;
+        [SerializeField, HideInInspector] private Button[] _optionButtons = null;
         [SerializeField, HideInInspector] private Transform _iconsParent;
 
         private Transform _visibles = null;
@@ -43,20 +43,21 @@ namespace UI
         private IEnumerator _expanding = null;
         private IEnumerator _shrinking = null;
 
-        private Vector3 _dragStartPosition;
+        // private Vector3 _dragStartPosition;
         private bool _expanded = false;
 
-        public void OptionTest(int idx)
-        {
-            Debug.Log(options[idx].name + " invoked");
-        }
-
-        private void Start()
+        private void Awake()
         {
             _visibles = transform.Find("visibles");
             _visibles.gameObject.SetActive(false);
             _originalScale = _visibles.transform.localScale;
             _visibles.transform.localScale = Vector3.zero;
+            
+            for (var i = 0; i < numOptions; ++i)
+            {
+                _optionButtons[i].onClick.RemoveAllListeners();
+                _optionButtons[i].onClick.AddListener(options[i].onSelect.Invoke);
+            }
         }
 
         private void StopCo(ref IEnumerator v)
@@ -70,69 +71,84 @@ namespace UI
 
         private bool CheckMouseInCancelArea(Vector3 mousePos)
         {
-            Vector2 delta = mousePos - _dragStartPosition;
-            return delta.sqrMagnitude < cancelRadius * cancelRadius;
-        }
-
-        private int FindSelected(Vector3 mousePos)
-        {
-            Vector2 delta = mousePos - _dragStartPosition;
-            delta.Normalize();
-            var angle = Mathf.Acos(Vector2.Dot(delta, Vector2.up)) / 3.14f * 180.0f;
-            if (delta.x > 0.0f)
-                angle = 360.0f - angle;
-
-            var angleInterval = 360.0f / numOptions;
-            var initialAngle = angleInterval * 0.5f;
-            for (var i = 0; i < numOptions - 1; ++i)
+            for (var i = 0; i < _optionButtons.Length; ++i)
             {
-                var start = initialAngle + angleInterval * i;
-                if (angle < start + angleInterval && angle > start)
-                    return i + 1;
+                if (RectTransformUtility.RectangleContainsScreenPoint(_optionButtons[i].transform as RectTransform, mousePos))
+                    return false;
             }
 
-            return 0;
+            return true;
         }
+
+        // private int FindSelected(Vector3 mousePos)
+        // {
+        //     Vector2 delta = mousePos - _dragStartPosition;
+        //     delta.Normalize();
+        //     var angle = Mathf.Acos(Vector2.Dot(delta, Vector2.up)) / 3.14f * 180.0f;
+        //     if (delta.x > 0.0f)
+        //         angle = 360.0f - angle;
+        //
+        //     var angleInterval = 360.0f / numOptions;
+        //     var initialAngle = angleInterval * 0.5f;
+        //     for (var i = 0; i < numOptions - 1; ++i)
+        //     {
+        //         var start = initialAngle + angleInterval * i;
+        //         if (angle < start + angleInterval && angle > start)
+        //             return i + 1;
+        //     }
+        //
+        //     return 0;
+        // }
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (!_expanded && Input.GetKey(KeyCode.Q) && Input.GetMouseButtonDown(0))
             {
                 StopCo(ref _shrinking);
                 StopCo(ref _expanding);
                 
-                _dragStartPosition = Input.mousePosition;
-                StartCoroutine(_expanding = Expand());
+                // _dragStartPosition = Input.mousePosition;
+                StartCoroutine(_expanding = ExpandCoroutine());
             }
+            
+            if(_expanded &&Input.GetMouseButtonDown(0) && CheckMouseInCancelArea(Input.mousePosition))
+                Shrink();
 
-            if (_expanded)
-            {
-                foreach (var icon in _optionIcons)
-                    icon.color = Color.white;
+            // if (_expanded)
+            // {
+            //     foreach (var icon in _optionIcons)
+            //         icon.color = Color.white;
+            //
+            //     var mousePos = Input.mousePosition;
+            //     if (!CheckMouseInCancelArea(mousePos))
+            //     {
+            //         var selected = FindSelected(mousePos);
+            //         _optionIcons[selected].color = Color.blue;
+            //     }
+            // }
 
-                var mousePos = Input.mousePosition;
-                if (!CheckMouseInCancelArea(mousePos))
-                {
-                    var selected = FindSelected(mousePos);
-                    _optionIcons[selected].color = Color.blue;
-                }
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                StopCo(ref _shrinking);
-                StopCo(ref _expanding);
-                
-                var selected = -1;
-                var mousePos = Input.mousePosition;
-                if (!CheckMouseInCancelArea(mousePos))
-                    selected = FindSelected(mousePos);
-
-                StartCoroutine(_shrinking = Shrink(_expanded && (selected >= 0) ? options[selected].onSelect : null));
-            }
+            // if (Input.GetMouseButtonUp(0))
+            // {
+            //     StopCo(ref _shrinking);
+            //     StopCo(ref _expanding);
+            //     
+            //     var selected = -1;
+            //     var mousePos = Input.mousePosition;
+            //     // if (!CheckMouseInCancelArea(mousePos))
+            //     //     selected = FindSelected(mousePos);
+            //
+            //     StartCoroutine(_shrinking = Shrink());
+            // }
         }
 
-        private IEnumerator Expand()
+        public void Shrink()
+        {
+            StopCo(ref _shrinking);
+            StopCo(ref _expanding);
+            StartCoroutine(_shrinking = ShrinkCoroutine());
+        }
+
+        private IEnumerator ExpandCoroutine()
         {
             var t = 0.0f;
             while (t < holdTimeToExpand)
@@ -160,7 +176,7 @@ namespace UI
             _expanding = null;
         }
 
-        private IEnumerator Shrink(UnityEvent evt)
+        private IEnumerator ShrinkCoroutine()
         {
             _expanded = false;
             var v = 0.0f;
@@ -175,8 +191,8 @@ namespace UI
 
             selfTransform.localPosition = Vector3.zero;
             _visibles.gameObject.SetActive(false);
-            if(evt != null) 
-                evt.Invoke();
+            // if(evt != null) 
+            //     evt.Invoke();
             _shrinking = null;
         }
 
@@ -211,35 +227,35 @@ namespace UI
 
             var angleInterval = 360.0f / numOptions;
 
-            if (_optionIcons == null)
+            if (_optionButtons == null)
             {
-                _optionIcons = new Image[numOptions];
+                _optionButtons = new Button[numOptions];
                 for (var i = 0; i < numOptions; ++i)
                 {
-                    _optionIcons[i] = Instantiate(iconPrefab, _iconsParent.position, Quaternion.identity, _iconsParent)
-                        .GetComponent<Image>();
-                    _optionIcons[i].transform.position =
+                    _optionButtons[i] = Instantiate(iconPrefab, _iconsParent.position, Quaternion.identity, _iconsParent)
+                        .GetComponent<Button>();
+                    _optionButtons[i].transform.position =
                         _iconsParent.position + Quaternion.AngleAxis(i * angleInterval, Vector3.forward) *
                         Vector3.up * iconDistanceFromCenter;
                 }
             }
-            else if (_optionIcons.Length != numOptions)
+            else if (_optionButtons.Length != numOptions)
             {
-                for (var i = 0; i < _optionIcons.Length; ++i)
+                for (var i = 0; i < _optionButtons.Length; ++i)
                 {
-                    if (null != _optionIcons[i])
-                        DestroyInEditor(_optionIcons[i].gameObject);
-                    _optionIcons[i] = null;
+                    if (null != _optionButtons[i])
+                        DestroyInEditor(_optionButtons[i].gameObject);
+                    _optionButtons[i] = null;
                 }
 
-                Array.Resize(ref _optionIcons, numOptions);
+                Array.Resize(ref _optionButtons, numOptions);
                 for (var i = 0; i < numOptions; ++i)
                 {
-                    if (_optionIcons[i] == null)
-                        _optionIcons[i] =
+                    if (_optionButtons[i] == null)
+                        _optionButtons[i] =
                             Instantiate(iconPrefab, _iconsParent.position, Quaternion.identity, _iconsParent)
-                                .GetComponent<Image>();
-                    _optionIcons[i].transform.position =
+                                .GetComponent<Button>();
+                    _optionButtons[i].transform.position =
                         _iconsParent.position + Quaternion.AngleAxis(i * angleInterval, Vector3.forward) *
                         Vector3.up * iconDistanceFromCenter;
                 }
@@ -247,7 +263,8 @@ namespace UI
 
             for (var i = 0; i < numOptions; ++i)
             {
-                _optionIcons[i].sprite = options[i].sprite;
+                _optionButtons[i].gameObject.name = options[i].name;
+                _optionButtons[i].image.sprite = options[i].sprite;
             }
         }
 

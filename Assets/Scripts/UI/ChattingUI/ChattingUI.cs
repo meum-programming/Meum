@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,20 +12,29 @@ namespace UI.ChattingUI
     public class ChattingUI : MonoBehaviour
     {
         [Header("Log Container")]
-        [SerializeField, Range(300, 1000)] private float maxHeight = 500;
-        [SerializeField] public RectTransform containerView;
         [SerializeField] public ChattingLogContainer container;
+        [SerializeField] private float scrollDownAnimTime;
+
+        [Header("Toggle")] 
+        [SerializeField] private Sprite visibleSprite;
+        [SerializeField] private Sprite invisibleSprite;
+        [SerializeField] private GameObject toggledObjs;
+        [SerializeField] private Button toggleButton;
+        [SerializeField] private float toggleButtonScaleFactor;
+
+        [Header("Badge")] 
+        [SerializeField] private GameObject badge;
+        [SerializeField] private Text badgeText;
 
         [Header("Input Area")] 
         [SerializeField] private InputField inputField;
         [SerializeField] private Button sendButton;
-        [SerializeField] private Button toggleButton;
-        [SerializeField] private float toggleTime = 0.5f;
         
-        
-        private float _minHeight;
         private bool _toggled = false;
-        private IEnumerator _runningCo = null;
+        private int _notReadCnt = 0;
+        private List<ChattingLog> _badgeBeenSet = new List<ChattingLog>();
+
+        private AudioSource _audioSource;
         
         #region Singleton
         private static ChattingUI _instance = null;
@@ -55,7 +65,32 @@ namespace UI.ChattingUI
             toggleButton.onClick.RemoveAllListeners();
             toggleButton.onClick.AddListener(Toggle);
 
-            _minHeight = containerView.sizeDelta.y;
+            _audioSource = GetComponent<AudioSource>();
+        }
+
+        private void OnValidate()
+        {
+            // set togglebutton scale
+            var btnImageCompo = toggleButton.GetComponent<Image>();
+            var btnTransform = toggleButton.transform as RectTransform;
+            btnImageCompo.sprite = invisibleSprite;
+            btnImageCompo.SetNativeSize();
+            btnTransform.sizeDelta *= toggleButtonScaleFactor;
+        }
+
+        private void FixedUpdate()
+        {
+            if (_toggled && Input.GetKeyDown(KeyCode.Return))
+            {
+                if (inputField.isFocused)
+                    Send();
+                inputField.ActivateInputField();
+            }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                toggleButton.onClick.Invoke();
+            }
         }
 
         public bool InputFieldActivated()
@@ -63,81 +98,92 @@ namespace UI.ChattingUI
             return inputField.isFocused;
         }
 
-        public void AddMessage(string sender, string message)
+        public void AddMessage(string sender, string message, bool isMe)
         {
-            container.Add(sender, message);
+            var chattingLog = container.Add(sender, message, isMe);
+            
+            if(!isMe)
+                _audioSource.PlayOneShot(_audioSource.clip);
+
+            if (!_toggled)
+            {
+                _notReadCnt += 1;
+                badge.SetActive(true);
+                badgeText.text = _notReadCnt > 999 ? "999+" : _notReadCnt.ToString();
+
+                if (!isMe)
+                {
+                    chattingLog.EnableNotReadBadge();
+                    _badgeBeenSet.Add(chattingLog);
+                }
+            }
         }
 
         private void Send()
         {
+            Debug.Log("Send called");
             SendWithStr(inputField.text);
+            inputField.text = "";
         }
 
         private void SendWithStr(string str)
         {
+            if (str == "") return;
             Global.Socket.MeumSocket.Get().BroadCastChatting(str);
-            inputField.text = "";
         }
 
         private void Toggle()
         {
             if (_toggled)
             {
-                if(_runningCo != null)
-                    StopCoroutine(_runningCo);
-                StartCoroutine(_runningCo = Shrink());
+                toggledObjs.SetActive(false);
+                var btnImageCompo = toggleButton.GetComponent<Image>();
+                var btnTransform = toggleButton.transform as RectTransform;
+                btnImageCompo.sprite = invisibleSprite;
+                btnImageCompo.SetNativeSize();
+                btnTransform.sizeDelta *= toggleButtonScaleFactor;
+                
+                // remove badges
+                foreach(var chattingLog in _badgeBeenSet)
+                    chattingLog.DisableNotReadBadge();
+                _badgeBeenSet.Clear();
+                
+                _toggled = false;
             }
             else
             {
-                if(_runningCo != null)
-                    StopCoroutine(_runningCo);
-                StartCoroutine(_runningCo = Expand());
+                toggledObjs.SetActive(true);
+                var btnImageCompo = toggleButton.GetComponent<Image>();
+                var btnTransform = toggleButton.transform as RectTransform;
+                btnImageCompo.sprite = visibleSprite;
+                btnImageCompo.SetNativeSize();
+                btnTransform.sizeDelta *= toggleButtonScaleFactor;
+                
+                badge.SetActive(false);
+                badgeText.text = "";
+                _notReadCnt = 0;
+                _toggled = true;
             }
         }
 
-        private IEnumerator Shrink()
+        private IEnumerator ScrollDownContainerCoroutine()
         {
-            var sizeDelta = containerView.sizeDelta;
-            var containerPosition = container.transform.localPosition;
-            var startSizeDeltaY = sizeDelta.y;
-            var startContainerY = containerPosition.y;
             var t = 0.0f;
-            while (t < toggleTime)
+            var containerTransform = container.transform;
+            var originalPos = containerTransform.localPosition;
+            var targetPos = new Vector3(originalPos.x, 0, originalPos.z);
+            while (t < 1.0f)
             {
-                sizeDelta.y = Mathf.Lerp(startSizeDeltaY, _minHeight, t / toggleTime);
-                containerPosition.y = Mathf.Lerp(startContainerY, 0, t / toggleTime);
-                t += Time.deltaTime;
-                containerView.sizeDelta = sizeDelta;
-                container.transform.localPosition = containerPosition;
+                t += Time.deltaTime / scrollDownAnimTime;
+                containerTransform.localPosition = Vector3.Lerp(originalPos, targetPos, t);
                 yield return null;
             }
 
-            sizeDelta.y = _minHeight;
-            containerPosition.y = 0;
-            containerView.sizeDelta = sizeDelta;
-            container.transform.localPosition = containerPosition;
-
-            _toggled = false;
+            containerTransform.localPosition = targetPos;
         }
-
-        private IEnumerator Expand()
+        public void ScrollDownContainer()
         {
-            var sizeDelta = containerView.sizeDelta;
-            var start = sizeDelta.y;
-            var t = 0.0f;
-            while (t < toggleTime)
-            {
-                sizeDelta.y = Mathf.Lerp(start, maxHeight, t / toggleTime);
-                t += Time.deltaTime;
-                containerView.sizeDelta = sizeDelta;
-                yield return null;
-            }
-
-            sizeDelta.y = maxHeight;
-            containerView.sizeDelta = sizeDelta;
-
-            _toggled = true;
+            StartCoroutine(ScrollDownContainerCoroutine());
         }
-        
     }
 }

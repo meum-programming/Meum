@@ -49,7 +49,7 @@ namespace Gallery.Builder
         
         private IEnumerator LoadImage()
         {
-            var textureGetter = Global.MeumDB.Get().GetTexture(url);
+            var textureGetter = Global.MeumDB.Get().GetTextureCoroutine(url);
             yield return textureGetter.coroutine;
             var texture = textureGetter.result as Texture2D;
             SetTexture(texture);

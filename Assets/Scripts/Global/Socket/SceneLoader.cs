@@ -60,7 +60,7 @@ namespace Global.Socket {
             for (var i = 0; i < artworksDataLength; ++i)
             {
                 var artworkData = artworksData.paints[i];
-                var textureGetter = Global.MeumDB.Get().GetTexture(artworkData.url);
+                var textureGetter = Global.MeumDB.Get().GetTextureCoroutine(artworkData.url);
                 yield return textureGetter.coroutine;
                 progressBar.SetProgress((float)(i+1)/artworksDataLength);
                 yield return null;
@@ -74,7 +74,8 @@ namespace Global.Socket {
             
             // load scene
             progressBar.SetProgress(0);
-            sceneOpen = SceneManager.LoadSceneAsync(MeumSocket.Get().GetGallerySceneName(data.roomType));
+            // sceneOpen = SceneManager.LoadSceneAsync(MeumSocket.Get().GetGallerySceneName(data.roomType));
+            sceneOpen = SceneManager.LoadSceneAsync("ProceduralGallery");
             while (!sceneOpen.isDone)
             {
                 progressBar.SetProgress(sceneOpen.progress);
@@ -186,7 +187,7 @@ namespace Global.Socket {
             for (var i = 0; i < artworksCount; ++i)
             {
                 var artworkInfo = artworkInfos[i];
-                var textureGetter = Global.MeumDB.Get().GetTexture(artworkInfo.url);  // TODO: Change to thumbnail url
+                var textureGetter = Global.MeumDB.Get().GetTextureCoroutine(artworkInfo.url);  // TODO: Change to thumbnail url
                 yield return textureGetter.coroutine;
                 progressBar.SetProgress((float) (i + 1) / artworksCount);
                 yield return null;
@@ -194,7 +195,8 @@ namespace Global.Socket {
             
             // load scene
             progressBar.SetProgress(0);
-            sceneOpen = SceneManager.LoadSceneAsync(MeumSocket.Get().GetBuilderSceneName(_galleryData.roomType));
+            // sceneOpen = SceneManager.LoadSceneAsync(MeumSocket.Get().GetBuilderSceneName(_galleryData.roomType));
+            sceneOpen = SceneManager.LoadSceneAsync("ProceduralGalleryBuilder");
             while (!sceneOpen.isDone)
             {
                 progressBar.SetProgress(sceneOpen.progress);

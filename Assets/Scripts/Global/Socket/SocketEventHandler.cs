@@ -142,7 +142,7 @@ namespace Global.Socket
                     nickname = MeumSocket.Get().PlayerInfo.nickname;
                 else
                     nickname = DataSyncer.Get().ID2Nickname(data.id);
-                UI.ChattingUI.ChattingUI.Get().AddMessage(nickname, data.message);
+                UI.ChattingUI.ChattingUI.Get().AddMessage(nickname, data.message, data.id == _id);
             }
         }
         #endregion

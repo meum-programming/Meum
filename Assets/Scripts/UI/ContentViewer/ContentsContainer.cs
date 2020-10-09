@@ -7,18 +7,19 @@ namespace UI
         [SerializeField] private Vector2 startPos;
         [SerializeField] private Vector2 offset;
         [SerializeField] private int horizontalN;
-        [SerializeField] private float maskHeight;
         [SerializeField] private float loadingThreshold;
         [SerializeField] private GameObject contentPrefab;
 
         [SerializeField, HideInInspector] private RectTransform _transform;
         private Vector2 _contentSize;
+        private float _maskHeight;
         private bool _scrollToEndActivated = false;
 
         private void Awake()
         {
             _transform = GetComponent<RectTransform>();
             _contentSize = contentPrefab.GetComponent<RectTransform>().sizeDelta;
+            _maskHeight = (transform.parent as RectTransform).rect.height;
         }
 
         private void OnValidate()
@@ -29,11 +30,10 @@ namespace UI
 
         private void Update()
         {
-            if (_transform.anchoredPosition.y > _transform.sizeDelta.y - maskHeight + loadingThreshold)
+            if (_transform.anchoredPosition.y > _transform.sizeDelta.y - _maskHeight + loadingThreshold)
             {
                 if (_scrollToEndActivated == false)
                 {
-                    Debug.Log("scrolled to end");
                     _scrollToEndActivated = true;
                 }
             }
@@ -57,7 +57,6 @@ namespace UI
 
             var verticalN = childCount / horizontalN + (childCount % horizontalN == 0 ? 0 : 1);
             var containerSize = Vector2.zero;
-            containerSize.x = _contentSize.x * horizontalN + offset.x * (horizontalN + 1);
             containerSize.y = _contentSize.y * verticalN + offset.y * (verticalN + 1);
             _transform.sizeDelta = containerSize;
         }
