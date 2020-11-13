@@ -3,26 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using Gallery.Builder;
 using UnityEngine;
+using UnityEngine.Assertions;
 
-[System.Serializable]
-public class IVector2
+[Serializable]
+public struct LandInfo
 {
-    public IVector2(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
     public int x;
     public int y;
+    public int type;
 }
 
 public class ProceduralGalleryBuilder : MonoBehaviour
 {
-    [SerializeField] private GameObject floorPrefab;
+    [SerializeField] private GameObject[] floorPrefabs;
     [SerializeField] private GameObject wallPrefab;
     [SerializeField] private float edge_length;
-    [SerializeField] private IVector2[] positions;
-
+    
+    private LandInfo[] _landInfos;
     private Transform _walls;
     private Transform _floors;
 
@@ -32,23 +29,23 @@ public class ProceduralGalleryBuilder : MonoBehaviour
         _floors = transform.Find("floors");
     }
 
-    private void Start()
+    public LandInfo[] GetLandInfos()
     {
-        Build();
+        return _landInfos;
     }
 
-    public void Build()
+    public void Build(LandInfo[] landInfos)
     {
-        
-        BuildBlock(new IVector2(0, 0));
-        for(var i=0; i<positions.Length; ++i)
-            BuildBlock(positions[i]);
+        Assert.IsNotNull(landInfos);
+        _landInfos = landInfos;
+        for(var i=0; i<_landInfos.Length; ++i)
+            BuildBlock(_landInfos[i]);
     }
 
-    private void BuildBlock(IVector2 pos)
+    private void BuildBlock(LandInfo pos)
     {
         var position = new Vector3(pos.x * edge_length, 0, pos.y * edge_length);
-        var floor = Instantiate(floorPrefab, _floors);
+        var floor = Instantiate(floorPrefabs[pos.type], _floors);
         floor.transform.position = position;
         
         var wallY = wallPrefab.transform.position.y;
@@ -86,9 +83,9 @@ public class ProceduralGalleryBuilder : MonoBehaviour
     private bool Has(int x, int y)
     {
         if (x == 0 && y == 0) return true;
-        for (var i = 0; i < positions.Length; ++i)
+        for (var i = 0; i < _landInfos.Length; ++i)
         {
-            if (positions[i].x == x && positions[i].y == y)
+            if (_landInfos[i].x == x && _landInfos[i].y == y)
                 return true;
         }
         return false;

@@ -87,6 +87,11 @@ namespace Global.Socket
             }
         }
 
+        public int GetPlayerID()
+        {
+            return _eventHandler.GetPlayerID();
+        }
+
         private IEnumerator UpdatePlayerInfo()
         {
             var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo());
@@ -101,7 +106,8 @@ namespace Global.Socket
 
         public void LeaveToEdit()
         {
-            _loader.LeaveToEdit();
+            if (_state.IsSubOfGalleryOwn())
+                _loader.LeaveToEdit();
         }
 
         public void Return()
@@ -206,11 +212,6 @@ namespace Global.Socket
             BroadCastChattingData data;
             data.message = message;
             _socket.Emit("broadCastChatting", JsonConvert.SerializeObject(data));
-        }
-        
-        private void OnApplicationQuit()
-        {
-            _socket.Emit("disconnect");
         }
         #endregion
         

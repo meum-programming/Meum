@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 public abstract class DbBufferBase<T>
@@ -46,7 +47,7 @@ public class TextureBuffer : DbBufferBase<Texture2D>
             yield return Get(url);
         else
         {
-            UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
+            UnityWebRequest www =  UnityWebRequestTexture.GetTexture(url);
             yield return www.SendWebRequest();
 
             if (www.isNetworkError || www.isHttpError)
@@ -60,4 +61,34 @@ public class TextureBuffer : DbBufferBase<Texture2D>
             yield return texture;
         }
     }
-} 
+}
+
+public class Object3DBuffer : DbBufferBase<GameObject>
+{
+    protected override IEnumerator Load(string url)
+    {
+        if (Contains(url))
+            yield return Get(url);
+        else
+        {
+            UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(url);
+            yield return www.SendWebRequest();
+            
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+                yield break;
+            }
+
+            var bundle = ((DownloadHandlerAssetBundle) www.downloadHandler).assetBundle;
+            var allAssets = bundle.GetAllAssetNames();
+            Assert.AreNotEqual(allAssets.Length, 0);
+            var request = bundle.LoadAssetAsync(allAssets[0], typeof(GameObject));
+            yield return request;
+
+            var result = request.asset as GameObject;
+            Add(url, result);
+            yield return result;
+        }
+    }
+}

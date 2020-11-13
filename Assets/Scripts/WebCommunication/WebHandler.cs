@@ -9,12 +9,14 @@ public class WebHandler : MonoBehaviour
     
     public void SetToken(string token)
     {
+        Debug.Log("token has set");
         Global.MeumDB.Get().SetToken(token);
     }
 
     public void EnterRoom(string nickname)
     {
         if (!Global.MeumDB.Get().TokenExist()) Debug.LogError("SetToken first");
+        Debug.Log("entering " + nickname);
         Global.Socket.MeumSocket.Get().EnterGallery(nickname);
     }
 

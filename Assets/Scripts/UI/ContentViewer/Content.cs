@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Global;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -8,37 +9,37 @@ using UnityEngine.Video;
 
 namespace UI
 {
-    public class ContentData
-    {
-        public int id;
-        public string name;
-        public int like;
-        public int hate;
-        public string url;
-        public string thumbnail_url;
-    }
     public class Content : MonoBehaviour
     {
         public Text name;
         public RawImage image;
 
-        public ContentData data
+        public MeumDB.ArtworkInfo data
         {
             get { return _data; }
             set
             {
                 _data = value;
-                name.text = _data.name;
+                name.text = _data.title;
                 LoadImage();
             }
         }
         
-        private ContentData _data;
+        private MeumDB.ArtworkInfo _data;
 
         private void LoadImage()
         {
-            var texture = Global.MeumDB.Get().GetTexture(_data.thumbnail_url);
+            if (null == _data.thumbnail) return;
+            var texture = Global.MeumDB.Get().GetTexture(_data.thumbnail);
             image.texture = texture;
+
+            var imageTransform = image.rectTransform;
+            var localScale= imageTransform.localScale;
+            if (texture.width > texture.height)
+                localScale.y *= (float) texture.height / texture.width;
+            else
+                localScale.x *= (float) texture.width / texture.height;
+            imageTransform.localScale = localScale;
         }
     }
 }

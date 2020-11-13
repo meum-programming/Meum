@@ -31,12 +31,6 @@ public class LoadRoomBuilder : MonoBehaviour
         yield return cd.coroutine;
         var roomInfo = cd.result as Global.MeumDB.RoomInfo;
         if (null != roomInfo)
-        {
-            var spawnSite = GameObject.Find("SpawnSite").transform;
-            _cam.position = spawnSite.position;
-            _cam.rotation = spawnSite.rotation;
-            
             _serializer.SetJson(roomInfo.data_json);
-        }
     }
 }

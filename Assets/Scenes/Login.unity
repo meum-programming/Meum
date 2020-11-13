@@ -1483,9 +1483,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    url: ec2-52-78-99-172.ap-northeast-2.compute.amazonaws.com
+    url: socket.meum.me
     port: 3000
-    sslEnabled: 0
+    sslEnabled: 1
     reconnectTime: 500
     timeToDropAck: 250
     pingTimeout: 5

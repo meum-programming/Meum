@@ -1,39 +1,33 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnitySocketIO.Events;
 
 namespace UI.ChattingUI
 {
     public class ChattingUI : MonoBehaviour
     {
-        [Header("Log Container")]
-        [SerializeField] public ChattingLogContainer container;
-        [SerializeField] private float scrollDownAnimTime;
+        [Header("Log Container")] 
+        [SerializeField] private RectTransform container;
+        [SerializeField] private Image containerBackground;
+        [SerializeField] private GameObject logPrefab;
 
         [Header("Toggle")] 
-        [SerializeField] private Sprite visibleSprite;
-        [SerializeField] private Sprite invisibleSprite;
-        [SerializeField] private GameObject toggledObjs;
+        [SerializeField] private Sprite toggleSprite;
+        [SerializeField] private Sprite untoggleSprite;
         [SerializeField] private Button toggleButton;
-        [SerializeField] private float toggleButtonScaleFactor;
-
-        [Header("Badge")] 
-        [SerializeField] private GameObject badge;
-        [SerializeField] private Text badgeText;
+        [SerializeField] private float toggledHeight;
 
         [Header("Input Area")] 
         [SerializeField] private InputField inputField;
         [SerializeField] private Button sendButton;
         
+        private RectTransform _rectTransform;
         private bool _toggled = false;
-        private int _notReadCnt = 0;
-        private List<ChattingLog> _badgeBeenSet = new List<ChattingLog>();
-
+        private float _defaultHeight;
         private AudioSource _audioSource;
         
         #region Singleton
@@ -48,13 +42,19 @@ namespace UI.ChattingUI
         }
         
         public static bool InstanceExist() {
-            return _instance != null;
+            return !ReferenceEquals(_instance, null);
         }
 
         public static ChattingUI Get()
         {
             return _instance;
         }
+
+        private void OnDestroy()
+        {
+            _instance = null;
+        }
+
         #endregion
 
         private void Init()
@@ -65,34 +65,39 @@ namespace UI.ChattingUI
             toggleButton.onClick.RemoveAllListeners();
             toggleButton.onClick.AddListener(Toggle);
 
-            _audioSource = GetComponent<AudioSource>();
-        }
+            _rectTransform = GetComponent<RectTransform>();
+            _defaultHeight = _rectTransform.sizeDelta.y;
 
-        private void OnValidate()
-        {
-            // set togglebutton scale
-            var btnImageCompo = toggleButton.GetComponent<Image>();
-            var btnTransform = toggleButton.transform as RectTransform;
-            btnImageCompo.sprite = invisibleSprite;
-            btnImageCompo.SetNativeSize();
-            btnTransform.sizeDelta *= toggleButtonScaleFactor;
+            _audioSource = GetComponent<AudioSource>();
         }
 
         private void FixedUpdate()
         {
-            if (_toggled && Input.GetKeyDown(KeyCode.Return))
-            {
-                if (inputField.isFocused)
-                    Send();
-                inputField.ActivateInputField();
-            }
-
-            if (Input.GetKeyDown(KeyCode.C))
+            // if (!InputFieldActivated() && Input.GetKey(KeyCode.Return))
+            // {
+            //     Debug.Log("Return : activate input field");
+            //     inputField.ActivateInputField();
+            // }
+            if (!InputFieldActivated() && Input.GetKeyDown(KeyCode.C))
             {
                 toggleButton.onClick.Invoke();
             }
         }
 
+        public void OnEndEdit()
+        {
+            if (!EventSystem.current.alreadySelecting)
+            {
+                Debug.Log("Submit");
+                Send();
+                inputField.ActivateInputField();
+            }
+            else
+            {
+                Debug.Log("Deactivate");
+                inputField.GetComponent<WebGLSupport.WebGLInput>().DeactivateInputField();
+            }
+        }
         public bool InputFieldActivated()
         {
             return inputField.isFocused;
@@ -100,28 +105,21 @@ namespace UI.ChattingUI
 
         public void AddMessage(string sender, string message, bool isMe)
         {
-            var chattingLog = container.Add(sender, message, isMe);
+            var newLog = Instantiate(logPrefab, container);
+            var chattingLogCompo = newLog.GetComponent<ChattingLog>();
+            chattingLogCompo.SetData(sender, message, isMe);
+            newLog.transform.SetAsFirstSibling();
+
+            var containerPos = container.anchoredPosition;
+            containerPos.y = 0;
+            container.anchoredPosition = containerPos;
             
             if(!isMe)
                 _audioSource.PlayOneShot(_audioSource.clip);
-
-            if (!_toggled)
-            {
-                _notReadCnt += 1;
-                badge.SetActive(true);
-                badgeText.text = _notReadCnt > 999 ? "999+" : _notReadCnt.ToString();
-
-                if (!isMe)
-                {
-                    chattingLog.EnableNotReadBadge();
-                    _badgeBeenSet.Add(chattingLog);
-                }
-            }
         }
 
         private void Send()
         {
-            Debug.Log("Send called");
             SendWithStr(inputField.text);
             inputField.text = "";
         }
@@ -136,54 +134,22 @@ namespace UI.ChattingUI
         {
             if (_toggled)
             {
-                toggledObjs.SetActive(false);
                 var btnImageCompo = toggleButton.GetComponent<Image>();
-                var btnTransform = toggleButton.transform as RectTransform;
-                btnImageCompo.sprite = invisibleSprite;
-                btnImageCompo.SetNativeSize();
-                btnTransform.sizeDelta *= toggleButtonScaleFactor;
+                btnImageCompo.sprite = toggleSprite;
                 
-                // remove badges
-                foreach(var chattingLog in _badgeBeenSet)
-                    chattingLog.DisableNotReadBadge();
-                _badgeBeenSet.Clear();
-                
+                _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, _defaultHeight);
+
                 _toggled = false;
             }
             else
             {
-                toggledObjs.SetActive(true);
                 var btnImageCompo = toggleButton.GetComponent<Image>();
-                var btnTransform = toggleButton.transform as RectTransform;
-                btnImageCompo.sprite = visibleSprite;
-                btnImageCompo.SetNativeSize();
-                btnTransform.sizeDelta *= toggleButtonScaleFactor;
+                btnImageCompo.sprite = untoggleSprite;
                 
-                badge.SetActive(false);
-                badgeText.text = "";
-                _notReadCnt = 0;
+                _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, toggledHeight);
+                
                 _toggled = true;
             }
-        }
-
-        private IEnumerator ScrollDownContainerCoroutine()
-        {
-            var t = 0.0f;
-            var containerTransform = container.transform;
-            var originalPos = containerTransform.localPosition;
-            var targetPos = new Vector3(originalPos.x, 0, originalPos.z);
-            while (t < 1.0f)
-            {
-                t += Time.deltaTime / scrollDownAnimTime;
-                containerTransform.localPosition = Vector3.Lerp(originalPos, targetPos, t);
-                yield return null;
-            }
-
-            containerTransform.localPosition = targetPos;
-        }
-        public void ScrollDownContainer()
-        {
-            StartCoroutine(ScrollDownContainerCoroutine());
         }
     }
 }

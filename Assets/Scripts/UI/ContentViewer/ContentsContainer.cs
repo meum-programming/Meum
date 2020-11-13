@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Global;
+using UnityEngine;
 
 namespace UI
 {
@@ -61,14 +63,14 @@ namespace UI
             _transform.sizeDelta = containerSize;
         }
 
-        public void AddContent(ContentData data)
+        public void AddContent(MeumDB.ArtworkInfo data)
         {
             var newContentObj = Instantiate(contentPrefab, transform);
             newContentObj.GetComponent<Content>().data = data;
             AlignChild();
         }
 
-        public void AddContents(ContentData[] data)
+        public void AddContents(List<MeumDB.ArtworkInfo> data)
         {
             foreach(var v in data)
             {

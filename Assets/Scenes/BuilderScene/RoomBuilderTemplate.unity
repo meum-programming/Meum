@@ -1405,8 +1405,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0881c7d0b92dfe5448b5ef0606379b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 0.25
+  walkSpeed: 4
   lookSensitivity: 5
+  verifyModalManager: {fileID: 0}
   cam: {fileID: 92377508}
 --- !u!4 &1314036586
 Transform:
@@ -1818,7 +1819,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 370, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1652954035
 MonoBehaviour:
@@ -1835,7 +1836,6 @@ MonoBehaviour:
   startPos: {x: 0, y: -120}
   offset: {x: 0, y: 0}
   horizontalN: 1
-  maskHeight: 1080
   loadingThreshold: 200
   contentPrefab: {fileID: 5185023521528190596, guid: fbee5ea9c6e1acd4a834be9faa93502f, type: 3}
   _transform: {fileID: 1652954034}
@@ -1907,6 +1907,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paintPrefab: {fileID: 2688551444214508632, guid: d2a5fc7abab86d64482f0777677eb382, type: 3}
   cam: {fileID: 92377507}
+  snapGridSizeY: 0
+  toggleButton: {fileID: 0}
+  actionSelector: {fileID: 0}
+  verifyModalManager: {fileID: 0}
   scaleFactor: 0.3
   scaleLimit: 2
 --- !u!4 &2078008490

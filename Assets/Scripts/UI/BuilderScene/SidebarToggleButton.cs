@@ -13,7 +13,7 @@ namespace UI.BuilderScene
 
         private Button _button;
         
-        public bool toggled => transform.localScale.x > 0;
+        public bool toggled => transform.localScale.x < 0;
 
         public void InvokeButton()
         {

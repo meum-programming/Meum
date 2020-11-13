@@ -1,0 +1,18 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace UI.UserList
+{
+    public class UserListContent : MonoBehaviour
+    {
+        [SerializeField] private RawImage profileImage;
+        [SerializeField] private Text userName;
+
+        public void Setup(string name)
+        {
+            userName.text = name;
+        }
+    }
+}

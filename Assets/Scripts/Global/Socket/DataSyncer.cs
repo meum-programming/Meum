@@ -10,7 +10,6 @@ namespace Global.Socket
         [SerializeField] private List<GameObject> otherPlayerPrefabs;
 
         private Transform _player = null;
-        private Animator _playerAnimator = null;
 
         private OtherPlayerController[] _others = null;
 
@@ -50,7 +49,6 @@ namespace Global.Socket
             
             // setting player
             _player = Instantiate(playerPrefabs[0], transform).transform;
-            _playerAnimator = _player.GetComponent<Animator>();
             _player.position = spawnTransform.position;
             _player.rotation = spawnTransform.rotation;
         }
@@ -66,19 +64,22 @@ namespace Global.Socket
 
             _others = null;
             _player = null;
-            _playerAnimator = null;
         }
 
         public void DeactivatePlayer(int id)
         {
             if (id >= _others.Length)
             {
-                Debug.LogError("Globa.Socket.DataSyncer - Deactivate : idx out of range");
+                Debug.LogError("Global.Socket.DataSyncer - Deactivate : idx out of range");
                 Application.Quit(-1);
             }
             _others[id].UserPrimaryKey = -1;
             _others[id].Nickname = "";
             _others[id].gameObject.SetActive(false);
+            
+            var userList = UI.UserList.UserList.Get();
+            if(userList != null)
+                userList.RemoveUser(id);
         }
 
         public void UpdateOtherPlayer(SocketEventHandler.UserInfoEventData data)
@@ -89,6 +90,11 @@ namespace Global.Socket
 
             obj.UserPrimaryKey = data.userKey;
             obj.Nickname = data.nickname;
+            
+            // Update UserList
+            var userList = UI.UserList.UserList.Get();
+            if (userList != null && !userList.HasUser(data.id))
+                userList.AddUser(data.id, data.nickname);
         }
 
         public void AnimTrigger(int id, string triggerName)
@@ -119,7 +125,6 @@ namespace Global.Socket
             var pRotation = playerOld.rotation;
             
             _player = Instantiate(playerPrefabs[charId]).transform;
-            _playerAnimator = _player.GetComponent<Animator>();
             _player.position = pPosition;
             _player.rotation = pRotation;
             

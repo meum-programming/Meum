@@ -2,17 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Global;
 using UI;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Networking;
 
 namespace Gallery.Builder
 {
     public class ArtworksLoader : MonoBehaviour
     {
-        [SerializeField] private ContentsContainer container;
+        [SerializeField] private ContentsContainer container2d;
+        [SerializeField] private ContentsContainer container3d;
 
         private Global.MeumDB.ArtworkInfo[] _artworkInfos;
+        private Global.MeumDB.ArtworkInfo[] _purchasedArtworkInfos;
 
         public void Load()
         {
@@ -21,45 +25,43 @@ namespace Gallery.Builder
 
         private IEnumerator LoadArtworks()
         {
-            var cd = new CoroutineWithData(this, Global.MeumDB.Get().GetUserInfo());
-            yield return cd.coroutine;
-            var userInfo = cd.result as Global.MeumDB.UserInfo;
-            
-            Debug.Assert(userInfo != null);
-            cd = new CoroutineWithData(this, Global.MeumDB.Get().GetArtworks(userInfo.primaryKey));
+            var cd = new CoroutineWithData(this, Global.MeumDB.Get().GetArtworks());
             yield return cd.coroutine;
             _artworkInfos = cd.result as Global.MeumDB.ArtworkInfo[];
+            Assert.IsNotNull(_artworkInfos);
             
-            if(container != null)
+            cd = new CoroutineWithData(this, Global.MeumDB.Get().GetPurchasedArtworks());
+            yield return cd.coroutine;
+            _purchasedArtworkInfos = cd.result as Global.MeumDB.ArtworkInfo[];
+            Assert.IsNotNull(_purchasedArtworkInfos);
+            
+            if(container2d != null && container3d != null)
                 AddArtworksToContainer();
         }
         
         private void AddArtworksToContainer()
         {
-            var contentData = new ContentData[_artworkInfos.Length];
-            for (var i = 0; i < contentData.Length; ++i)
-                contentData[i] = CreateContentData(_artworkInfos[i]);
-            container.AddContents(contentData);
+            var artworkInfos2d = new List<MeumDB.ArtworkInfo>();
+            var artworkInfos3d = new List<MeumDB.ArtworkInfo>();
+            
+            for (var i = 0; i < _artworkInfos.Length; ++i)
+            {
+                if(_artworkInfos[i].type_artwork == 0)
+                    artworkInfos2d.Add(_artworkInfos[i]);
+                else
+                    artworkInfos3d.Add(_artworkInfos[i]);
+            }
+
+            for (var i = 0; i < _purchasedArtworkInfos.Length; ++i)
+            {
+                if(_purchasedArtworkInfos[i].type_artwork == 0)
+                    artworkInfos2d.Add(_purchasedArtworkInfos[i]);
+                else
+                    artworkInfos3d.Add(_purchasedArtworkInfos[i]);
+            }
+
+            container2d.AddContents(artworkInfos2d);
+            container3d.AddContents(artworkInfos3d);
         }
-
-        private string GetNameFromUrl(string url)
-        {
-            var uri = new Uri(url);
-            return uri.Segments.Last();
-        }
-
-        private UI.ContentData CreateContentData(Global.MeumDB.ArtworkInfo info)
-        {
-            var output = new UI.ContentData();
-            output.id = info.primaryKey;
-            output.name = GetNameFromUrl(info.url);
-            output.like = info.like;
-            output.hate = info.hate;
-            output.url = info.url;
-            output.thumbnail_url = info.url;
-
-            return output;
-        }
-
     }
 }

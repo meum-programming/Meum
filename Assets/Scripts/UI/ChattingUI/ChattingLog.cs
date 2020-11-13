@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class ChattingLog : MonoBehaviour
 {
-    [SerializeField] private Text sender;
     [SerializeField] private Text content;
-    [SerializeField] private Image notReadBadge;
+    [SerializeField] private RawImage profileImage;
     private RectTransform _transform;
 
     public bool isMe { get; private set; } = true;
@@ -27,24 +26,11 @@ public class ChattingLog : MonoBehaviour
     {
         if(null == _transform)
             _transform = GetComponent<RectTransform>();
-        sender.text = senderStr + ":";
-        content.text = contentStr;
+        content.text = senderStr + ": " + contentStr;
         this.isMe = isMe;
         
         var sizeDelta = _transform.sizeDelta;
         sizeDelta.y = content.preferredHeight + 40.0f;
         _transform.sizeDelta = sizeDelta;
-    }
-
-    public void EnableNotReadBadge()
-    {
-        if (notReadBadge == null) return;
-        notReadBadge.gameObject.SetActive(true);
-    }
-    
-    public void DisableNotReadBadge()
-    {
-        if (notReadBadge == null) return;
-        notReadBadge.gameObject.SetActive(false);
     }
 }

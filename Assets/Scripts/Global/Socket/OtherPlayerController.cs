@@ -2,16 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Global.Socket
 {
     public class OtherPlayerController : MonoBehaviour
     {
         [NonSerialized] public int UserPrimaryKey;
-        [NonSerialized] public string Nickname;
-        
+
+        public string Nickname
+        {
+            get { return _nickname; }
+            set { 
+                _nickname = value;
+                nicknameField.text = _nickname;
+            }
+        }
+        private string _nickname;
+
         [SerializeField] private float lerpTime;
         [SerializeField] private Renderer playerRenderer;
+        [SerializeField] private Text nicknameField;
 
         private Vector3 _posOrigin;
         private Vector3 _posDest;

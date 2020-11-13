@@ -8,24 +8,28 @@ using Gallery.MultiPlay;
 using Global.Socket;
 using UI.BuilderScene;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace Gallery.Builder
 {
     [Serializable]
-    struct ArtworksData
+    struct RoomData
     {
-        public ArtworkData[] paints;
+        public ArtworkData[] artworks;
+        public LandInfo[] lands;
 
-        public ArtworksData(int n)
+        public RoomData(int n)
         {
-            paints = new ArtworkData[n];
+            artworks = new ArtworkData[n];
+            lands = null;
         }
     }
 
     public class ArtworkSerializer : MonoBehaviour
     {
         [SerializeField] public GameObject paintPrefab;
+        [SerializeField] public GameObject object3DPrefab;
 
         private string _resetCheckpoint = "";
 
@@ -39,10 +43,14 @@ namespace Gallery.Builder
         private string GetJson()
         {
             var selfTransform = transform;
-            var data = new ArtworksData(selfTransform.childCount);
+            var data = new RoomData(selfTransform.childCount);
             for (int i = 0; i < selfTransform.childCount; ++i)
-                data.paints[i] = selfTransform.GetChild(i).GetComponent<ArtworkInfo>().GetData();
+                data.artworks[i] = selfTransform.GetChild(i).GetComponent<ArtworkInfo>().GetData();
 
+            var proceduralSpace = GameObject.Find("proceduralSpace");
+            Assert.IsNotNull(proceduralSpace);
+            data.lands = proceduralSpace.GetComponent<ProceduralGalleryBuilder>().GetLandInfos();
+            
             return JsonUtility.ToJson(data);
         }
 
@@ -60,14 +68,22 @@ namespace Gallery.Builder
 
         private void Serialize(string json)
         {
-            var data = JsonUtility.FromJson<ArtworksData>(json);
+            var data = JsonUtility.FromJson<RoomData>(json);
+            
+            var proceduralSpace = GameObject.Find("proceduralSpace");
+            Assert.IsNotNull(proceduralSpace);
+            proceduralSpace.GetComponent<ProceduralGalleryBuilder>().Build(data.lands);
 
             ClearChild();
-
-            for (var i = 0; i < data.paints.Length; ++i)
+            
+            for (var i = 0; i < data.artworks.Length; ++i)
             {
-                var paintInfo = Instantiate(paintPrefab, transform).GetComponent<ArtworkInfo>();
-                paintInfo.SetUpWithData(data.paints[i]);
+                ArtworkInfo artworkInfo = null;
+                if(data.artworks[i].artwork_type == 0)
+                    artworkInfo = Instantiate(paintPrefab, transform).GetComponent<ArtworkInfo>();
+                else if (data.artworks[i].artwork_type == 1)
+                    artworkInfo = Instantiate(object3DPrefab, transform).GetComponent<ArtworkInfo>();
+                artworkInfo.SetUpWithData(data.artworks[i]);
             }
 
             _resetCheckpoint = json;

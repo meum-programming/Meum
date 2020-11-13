@@ -20,12 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BuilderScene/ProceduralGalleryBuilder.unity
     guid: 30889ffb8c99ed448b78c3b68458623f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Galleries/Square.unity
     guid: 5eadd36e97c57f6418e4fdfff49f48a7
-  - enabled: 1
-    path: Assets/Scenes/Shop.unity
-    guid: 39ea59b9d0b58574688a02fc5672b7c2
   - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: 6f47842d73372fc4782f6b8a88885dc5

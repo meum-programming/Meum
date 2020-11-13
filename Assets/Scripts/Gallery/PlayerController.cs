@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Gallery.MultiPlay;
+using Global;
 using Global.Socket;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Gallery
 {
@@ -21,7 +24,7 @@ namespace Gallery
         [SerializeField] private Transform originalCamPos;
         [SerializeField] private Transform thirdCamPos;
         [SerializeField] private float switchSpeed;
-        private bool _firstPersonView = true;
+        private bool _firstPersonView;
         private IEnumerator _switching = null;
 
         [Header("Ground Check")] 
@@ -40,8 +43,10 @@ namespace Gallery
             _myRigid = GetComponent<Rigidbody>();
 
             var camTransform = theCamera.transform;
-            camTransform.localPosition = originalCamPos.localPosition;
-            camTransform.localRotation = originalCamPos.localRotation;
+            camTransform.localPosition = thirdCamPos.localPosition;
+            camTransform.localRotation = thirdCamPos.localRotation;
+            theCamera.cullingMask = ~0;
+            _firstPersonView = false;
             _defaultEulerAngle = camTransform.localEulerAngles;
 
             var capsuleCollider = GetComponent<CapsuleCollider>();
@@ -69,6 +74,17 @@ namespace Gallery
                 CharacterRotation();
             }
             CharacterRotationToFitCam();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                var ray = theCamera.ScreenPointToRay(Input.mousePosition);
+                var layerMask = ~0;
+                if (Physics.Raycast(ray, out var hit, 100.0f, layerMask))
+                {
+                    if(hit.transform.CompareTag("Paint"))
+                        HandleClick(hit);
+                }
+            }
 
             _animController.SetIsJumpEnded(IsJumpEnded());
 
@@ -150,6 +166,9 @@ namespace Gallery
 
         private IEnumerator SwitchView()
         {
+            if (_firstPersonView)
+                theCamera.cullingMask = ~0;
+            
             var camTransform = theCamera.transform;
             var r = 0.0f;
             var src = camTransform.localPosition;
@@ -173,6 +192,8 @@ namespace Gallery
             _defaultEulerAngle = camTransform.localEulerAngles;
             _currentCameraRotationX = 0;
             _firstPersonView = !_firstPersonView;
+            if (_firstPersonView)
+                theCamera.cullingMask = ~LayerMask.GetMask("Players");
             _switching = null;
         }
 
@@ -194,6 +215,40 @@ namespace Gallery
             var newRotCam = _defaultEulerAngle;
             newRotCam.x += _currentCameraRotationX;
             theCamera.transform.localEulerAngles = newRotCam;
+        }
+
+
+        [DllImport("__Internal")]
+        private static extern void OpenURLNewTab(string url);
+        
+        private void HandleClick(RaycastHit hit)
+        {
+            var artworkInfo = hit.transform.GetComponent<Builder.ArtworkInfo>();
+#if UNITY_WEBGL
+            if (artworkInfo.bannerUrl != "")
+            {
+                Debug.Log(artworkInfo.bannerUrl);
+                OpenURLNewTab(artworkInfo.bannerUrl);
+            }
+#endif
+            if (artworkInfo.bannerUrl == "")
+            {
+                var pk = artworkInfo.artworkInfo.primaryKey;
+                StartCoroutine(SetArtworkDescription(pk));
+            }
+        }
+
+        private IEnumerator SetArtworkDescription(int artworkPk)
+        {
+            var cd = new CoroutineWithData(this, MeumDB.Get().GetArtwork(artworkPk));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+            
+            var artworkInfo = cd.result as MeumDB.ArtworkInfo;
+            var artworkDescriptionUi = UI.ArtworkDescription.Get();
+            Assert.IsNotNull(artworkDescriptionUi);
+            artworkDescriptionUi.SetDescription(artworkInfo);
+            artworkDescriptionUi.Show();
         }
     }
 }

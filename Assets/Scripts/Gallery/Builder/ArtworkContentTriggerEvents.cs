@@ -6,9 +6,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Artwork2DContentTriggerEvents : MonoBehaviour
+public class ArtworkContentTriggerEvents : MonoBehaviour
 {
     [SerializeField] private float pressingTimeForMakeBanner = 0.0f;
+    [SerializeField] private bool is3D = false;
 
     private bool _pointerIn = false;
     private float _pressingTime = 0.0f;
@@ -38,7 +39,8 @@ public class Artwork2DContentTriggerEvents : MonoBehaviour
     {
         if(_timeRecording != null)
             StopCoroutine(_timeRecording);
-        StartCoroutine(_timeRecording = TimeRecording());
+        if(!is3D)
+            StartCoroutine(_timeRecording = TimeRecording());
     }
 
     public void PointerUp()
@@ -47,6 +49,13 @@ public class Artwork2DContentTriggerEvents : MonoBehaviour
             StopCoroutine(_timeRecording);
 
         if (!_pointerIn) return;
+
+        if (is3D)
+        {
+            var placer = GameObject.Find("Artworks").GetComponent<ArtworkPlacer>();
+            placer.Select3D(GetComponent<UI.Content>());
+            return;
+        }
         
         if (_pressingTime < pressingTimeForMakeBanner)
         {

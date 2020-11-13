@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UI.BuilderScene;
 using UnityEngine;
@@ -16,17 +17,34 @@ namespace Gallery.Builder
         [FormerlySerializedAs("camera")] [SerializeField]
         private Transform cam;
 
+        private void Start()
+        {
+            ResetPosition();
+        }
+
         // Update is called once per frame
         void Update()
         {
             if (verifyModalManager.showingModal) return;
 
+            Move();
             if (Input.GetMouseButton(1))
             {
-                Move();
                 VerticalRotation();
                 HorizontalRotation();
             }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ResetPosition();
+            }
+        }
+
+        private void ResetPosition()
+        {
+            var spawnSite = GameObject.Find("SpawnSite").transform;
+            transform.position = spawnSite.position;
+            transform.rotation = spawnSite.rotation;
         }
 
         private void Move()
@@ -37,7 +55,7 @@ namespace Gallery.Builder
             Vector3 moveHorizontal = cam.right * moveDirX;
             Vector3 moveVertical = cam.forward * moveDirZ;
 
-            Vector3 delta = (moveHorizontal + moveVertical).normalized * walkSpeed;
+            Vector3 delta = (moveHorizontal + moveVertical).normalized * (walkSpeed * Time.deltaTime);
 
             transform.position += delta;
         }

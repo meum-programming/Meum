@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using Global;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TutorialModal : MonoBehaviour
@@ -24,6 +26,25 @@ public class TutorialModal : MonoBehaviour
         
         prevButton.gameObject.SetActive(false);
         page.sprite = tutorialPages[_currentPage];
+    }
+
+    private void Start()
+    {
+        StartCoroutine(CheckIfTutorialAndActivate());
+    }
+
+    private IEnumerator CheckIfTutorialAndActivate()
+    {
+        var cd = new CoroutineWithData(this, MeumDB.Get().GetIsTutorial());
+        yield return cd.coroutine;
+        if (cd.result == null)
+            yield break;
+        var isTutorial = (bool)cd.result;
+        
+        if (isTutorial)
+            StartCoroutine(MeumDB.Get().PatchTutorialClear());
+        else
+            gameObject.SetActive(false);
     }
 
     private void NextPage()
@@ -57,5 +78,16 @@ public class TutorialModal : MonoBehaviour
     private void Close()
     {
         gameObject.SetActive(false);
+    }
+    
+    public void Show()
+    {
+        if (gameObject.activeSelf) return;
+
+        _currentPage = 0;
+        prevButton.gameObject.SetActive(false);
+        page.sprite = tutorialPages[_currentPage];
+
+        gameObject.SetActive(true);
     }
 }

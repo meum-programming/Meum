@@ -18,8 +18,8 @@ TagManager:
   - Players
   - Paint
   - Wall
-  - 
-  - 
+  - Placable
+  - NotPlaced
   - 
   - 
   - 

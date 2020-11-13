@@ -35,6 +35,11 @@ namespace Global.Socket
             _socket.On("updateArtworks", OnUpdateArtworks);
             _socket.On("chatting", OnChatting);
         }
+
+        public int GetPlayerID()
+        {
+            return _id;
+        }
     
         #region Event Handlers
         private void OnGalleryEnteringSuccess(SocketIOEvent e)
@@ -58,8 +63,9 @@ namespace Global.Socket
             if (_id == data.id)
             { 
                 MeumDB.Get().ClearTextureBuffer();
+                MeumDB.Get().ClearObject3DBuffer();
                 DataSyncer.Get().Reset();
-                SceneManager.LoadScene("Lobby");
+                // SceneManager.LoadScene("Lobby");
             }
             else
             {

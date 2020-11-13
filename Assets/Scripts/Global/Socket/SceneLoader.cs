@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Gallery.Builder;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace Global.Socket {
@@ -55,22 +57,46 @@ namespace Global.Socket {
             var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfo(data.roomId));
             yield return cd.coroutine;
             var roomInfo = cd.result as MeumDB.RoomInfo;
-            var artworksData = JsonUtility.FromJson<ArtworksData>(roomInfo.data_json);
-            var artworksDataLength = artworksData.paints.Length;
+            var artworksData = JsonUtility.FromJson<RoomData>(roomInfo.data_json);
+            var artworksDataLength = artworksData.artworks.Length;
+
+            var set2d = new HashSet<string>();
+            var set3d = new HashSet<string>();
             for (var i = 0; i < artworksDataLength; ++i)
             {
-                var artworkData = artworksData.paints[i];
-                var textureGetter = Global.MeumDB.Get().GetTextureCoroutine(artworkData.url);
-                yield return textureGetter.coroutine;
-                progressBar.SetProgress((float)(i+1)/artworksDataLength);
-                yield return null;
+                var artworkData = artworksData.artworks[i];
+                if (artworkData.artwork_type == 0)
+                    set2d.Add(artworkData.url);
+                else if (artworkData.artwork_type == 1)
+                    set3d.Add(artworkData.url);
+            }
+
+            var loadCompleteCnt = 1;
+            var totalCnt = set2d.Count + set3d.Count;
+            foreach (var url in set2d)
+            {
+                cd = MeumDB.Get().GetTextureCoroutine(url);
+                yield return cd.coroutine;
+                progressBar.SetProgress((float)loadCompleteCnt/totalCnt);
+                ++loadCompleteCnt;
+            }
+
+            foreach (var url in set3d)
+            {
+                cd = MeumDB.Get().GetObject3DCoroutine(url);
+                yield return cd.coroutine;
+                progressBar.SetProgress((float)loadCompleteCnt/totalCnt);
+                ++loadCompleteCnt;
             }
             
             // load userInfo data to check if player own gallery
             cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetUserInfo());
             yield return cd.coroutine;
             var userInfo = cd.result as MeumDB.UserInfo;
-            var ownRoomId = roomInfo.primaryKey;
+            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfoWithUser(userInfo.primaryKey));
+            yield return cd.coroutine;
+            var ownRoomInfo = cd.result as MeumDB.RoomInfo;
+            var ownRoomId = ownRoomInfo.primaryKey;
             
             // load scene
             progressBar.SetProgress(0);
@@ -98,6 +124,12 @@ namespace Global.Socket {
             
             // setting paints
             SerializeArtworks();
+            
+            // setting userList
+            var userList = UI.UserList.UserList.Get();
+            var socket = MeumSocket.Get();
+            userList.SetOwnerName(roomInfo.owner.nickname);
+            userList.AddUser(socket.GetPlayerID(), socket.PlayerInfo.nickname);
         }
         public void LoadGallery(SocketEventHandler.EnteringSuccessEventData data)
         {
@@ -176,20 +208,40 @@ namespace Global.Socket {
             var progressBar = GameObject.Find("ProgressBar").GetComponent<ProgressBar>();
             
             // load demanded textures
-            var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetUserInfo());
+            var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetArtworks());
             yield return cd.coroutine;
-            var userInfo = cd.result as MeumDB.UserInfo;
-            Debug.Assert(userInfo != null);
-            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetArtworks(userInfo.primaryKey));
+            var artworkInfos = cd.result as MeumDB.ArtworkInfo[];
+            Assert.IsNotNull(artworkInfos);
+            
+            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetPurchasedArtworks());
             yield return cd.coroutine;
-            var artworkInfos = cd.result as Global.MeumDB.ArtworkInfo[];
-            var artworksCount = artworkInfos.Length;
-            for (var i = 0; i < artworksCount; ++i)
+            var purchasedArtworkInfos = cd.result as MeumDB.ArtworkInfo[];
+            Assert.IsNotNull(purchasedArtworkInfos);
+
+            var artworksCount = artworkInfos.Length + purchasedArtworkInfos.Length;
+            for (var i = 0; i < artworkInfos.Length; ++i)
             {
                 var artworkInfo = artworkInfos[i];
-                var textureGetter = Global.MeumDB.Get().GetTextureCoroutine(artworkInfo.url);  // TODO: Change to thumbnail url
-                yield return textureGetter.coroutine;
+                if (!ReferenceEquals(null, artworkInfo.thumbnail))
+                {
+                    var textureGetter = Global.MeumDB.Get().GetTextureCoroutine(artworkInfo.thumbnail);
+                    yield return textureGetter.coroutine;
+                }
+
                 progressBar.SetProgress((float) (i + 1) / artworksCount);
+                yield return null;
+            }
+
+            for (var i = 0; i < purchasedArtworkInfos.Length; ++i)
+            {
+                var artworkInfo = purchasedArtworkInfos[i];
+                if (!ReferenceEquals(null, artworkInfo.thumbnail))
+                {
+                    var textureGetter = Global.MeumDB.Get().GetTextureCoroutine(artworkInfo.thumbnail);
+                    yield return textureGetter.coroutine;
+                }
+
+                progressBar.SetProgress((float) (artworkInfos.Length + i + 1) / artworksCount);
                 yield return null;
             }
             
