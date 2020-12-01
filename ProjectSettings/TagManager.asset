@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Paint
-  - SocketIO
   - Wall
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -16,11 +16,11 @@ TagManager:
   - UI
   - 
   - 
-  - Players
-  - Paint
-  - Wall
+  - LocalPlayer
   - 
   - 
+  - Placeable
+  - NotPlaced
   - 
   - 
   - 

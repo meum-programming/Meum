@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -500,6 +500,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 86950106}
   m_CullTransparentMesh: 0
+--- !u!1 &158615907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 158615908}
+  - component: {fileID: 158615909}
+  m_Layer: 0
+  m_Name: DataSynchronizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &158615908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158615907}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &158615909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158615907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d9c1939efa8114f9898c6af534a16e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefabs:
+  - {fileID: 9157458219296972478, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+  otherPlayerPrefabs:
+  - {fileID: 6261111249021333171, guid: e605f14b1d25a7a41805d456d3a85a28, type: 3}
 --- !u!1 &399676306
 GameObject:
   m_ObjectHideFlags: 0
@@ -727,7 +774,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter Email
+  m_Text: Enter Password
 --- !u!222 &659836874
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -906,16 +953,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 890148515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &890148517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1336,7 +1391,7 @@ GameObject:
   - component: {fileID: 1495629618}
   - component: {fileID: 1495629617}
   m_Layer: 5
-  m_Name: Text
+  m_Name: PanelTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1414,10 +1469,9 @@ GameObject:
   - component: {fileID: 1711982876}
   - component: {fileID: 1711982875}
   - component: {fileID: 1711982877}
-  - component: {fileID: 1711982878}
   m_Layer: 0
   m_Name: SocketIO
-  m_TagString: SocketIO
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1435,9 +1489,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    url: 127.0.0.1
+    url: socket.meum.me
     port: 3000
-    sslEnabled: 0
+    sslEnabled: 1
     reconnectTime: 500
     timeToDropAck: 250
     pingTimeout: 5
@@ -1465,33 +1519,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1711982874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72d9c1939efa8114f9898c6af534a16e, type: 3}
+  m_Script: {fileID: 11500000, guid: 686a70fe38eca8441afe15a6a9009969, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sendInterval: 0.125
-  receiveInterval: 0.125
-  playerPrefabs:
-  - {fileID: 6647103159993374495, guid: f83516f4011e5054b989824eca9fd7f5, type: 3}
-  - {fileID: 4462832844320068774, guid: 7bab11a47c4b08748851d0d992f3ea95, type: 3}
-  otherPlayerPrefabs:
-  - {fileID: 2442103649596044328, guid: b05db9a2f22f38148820783486da4919, type: 3}
-  - {fileID: 1278361466101436568, guid: 993f6e67de9b058428ed507d3101fbec, type: 3}
-  mapPrefabs:
-  - {fileID: 222819809479834012, guid: ad0ada51f6b4ef54bb701f5695e98390, type: 3}
-  - {fileID: 8276785843308883225, guid: 361bc6d25eaf9a64d8fb4418a7c421df, type: 3}
-  gallerySceneName: Gallery
---- !u!114 &1711982878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711982874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5df501133cde38c408a40150fcb08065, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2056064794
 GameObject:
   m_ObjectHideFlags: 0
