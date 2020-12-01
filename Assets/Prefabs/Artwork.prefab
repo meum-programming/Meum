@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2688551443372484275}
   - component: {fileID: 2688551443372484286}
   - component: {fileID: 2688551443372484285}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: frame
   m_TagString: Paint
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 2688551443530596206}
   - component: {fileID: 2688551443530596201}
   - component: {fileID: 2688551443530596200}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Paint
   m_TagString: Paint
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 2688551444214508633}
   - component: {fileID: 2688551444214508634}
   - component: {fileID: 6818819310556752803}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Artwork
   m_TagString: Paint
   m_Icon: {fileID: 0}

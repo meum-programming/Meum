@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Paint
   - Wall
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - UI
   - 
   - 
-  - Players
-  - Paint
-  - Wall
-  - Placable
+  - LocalPlayer
+  - 
+  - 
+  - Placeable
   - NotPlaced
   - 
   - 

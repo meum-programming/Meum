@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Gallery.MultiPlay;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class QuitButton : MonoBehaviour
@@ -11,7 +7,7 @@ public class QuitButton : MonoBehaviour
     {
         var button = GetComponent<Button>();
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(Global.Socket.MeumSocket.Get().Quit);
+        button.onClick.AddListener(Core.Socket.MeumSocket.Get().Quit);
     }
 }
 

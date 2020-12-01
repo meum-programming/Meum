@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Global.Socket;
+﻿using Core.Socket;
 using UnityEngine;
 
 public class SwitchCharacter : MonoBehaviour

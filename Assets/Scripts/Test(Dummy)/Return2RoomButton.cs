@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Return2RoomButton : MonoBehaviour
@@ -14,6 +11,6 @@ public class Return2RoomButton : MonoBehaviour
 
     private void ButtonAction()
     {
-        Global.Socket.MeumSocket.Get().Return();
+        Core.Socket.MeumSocket.Get().ReturnToGalleryScene();
     }
 }

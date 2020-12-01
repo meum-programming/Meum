@@ -336,7 +336,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b8485cded1072af46a846034ab8b9465, type: 3}
-    m_FontSize: 9
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -439,6 +439,7 @@ MonoBehaviour:
   ownerNameText: {fileID: 7821948166354812212}
   userCountText: {fileID: 7821948167124785057}
   toggleButton: {fileID: 7821948166248625906}
+  nameMaxLength: 7
   userList: {fileID: 7821948166879919579}
   userListContentPrefab: {fileID: 8227129297563230934, guid: ecbaac105f65d8441bfff93571f1a558, type: 3}
   defaultExpandedHeight: 100
@@ -586,7 +587,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b8485cded1072af46a846034ab8b9465, type: 3}
-    m_FontSize: 12
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1

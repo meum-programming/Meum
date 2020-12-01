@@ -4,4 +4,8 @@ mergeInto(LibraryManager.library, {
        var win = window.open(Pointer_stringify(url), '_blank');
        win.focus();
    },
+
+   FullScreen: function() {
+       document.querySelector("#unity-canvas").requestFullscreen();
+   },
 });

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Gallery.Builder;
+﻿using Game.Artwork;
 using UnityEngine;
 
 namespace UI.BuilderScene

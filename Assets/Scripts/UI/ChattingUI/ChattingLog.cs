@@ -24,13 +24,14 @@ public class ChattingLog : MonoBehaviour
 
     public void SetData(string senderStr, string contentStr, bool isMe)
     {
-        if(null == _transform)
+        if(ReferenceEquals(_transform, null))
             _transform = GetComponent<RectTransform>();
         content.text = senderStr + ": " + contentStr;
         this.isMe = isMe;
         
         var sizeDelta = _transform.sizeDelta;
-        sizeDelta.y = content.preferredHeight + 40.0f;
+        sizeDelta.y = content.preferredHeight + 6.0f;
+        Debug.Log(sizeDelta.y);
         _transform.sizeDelta = sizeDelta;
     }
 }

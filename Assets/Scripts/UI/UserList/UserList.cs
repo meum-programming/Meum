@@ -1,57 +1,40 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.UserList
 {
-    public class UserList : MonoBehaviour
+    public class UserList : Core.Singleton<UserList>
     {
+        #region SerializedFields
+        
         [SerializeField] private Text ownerNameText;
         [SerializeField] private Text userCountText;
         [SerializeField] private Button toggleButton;
+        [SerializeField] private int nameMaxLength;
 
-        [Header("UserList")] [SerializeField] private Transform userList;
+        [Header("UserList")] 
+        [SerializeField] private Transform userList;
         [SerializeField] private GameObject userListContentPrefab;
-        private float _userListContentHeight;
         [SerializeField] private float defaultExpandedHeight;
+        
+        #endregion
 
+        #region PrivateFields
+        
         private struct PlayerInfo
         {
             public string name;
             public GameObject display;
         }
-
         private Dictionary<int, PlayerInfo> _playerInfos = new Dictionary<int, PlayerInfo>();
-
         private bool _toggled = false;
+        private float _userListContentHeight;
         private float _defaultHeight;
-
         private RectTransform _rectTransform;
-
-        #region SingleTon
-
-        private static UserList _globalInstance;
         
-        private void Awake()
-        {
-            _globalInstance = this;
-        }
-
-        public static UserList Get()
-        {
-            return _globalInstance;
-        }
-
-        private void OnDestroy()
-        {
-            _globalInstance = null;
-        }
-
         #endregion
-        
+
         private void Start()
         {
             _rectTransform = GetComponent<RectTransform>();
@@ -62,14 +45,23 @@ namespace UI.UserList
             _userListContentHeight = userListContentPrefab.GetComponent<RectTransform>().sizeDelta.y;
         }
 
+        private string FitNameMaxLength(string s)
+        {
+            if (s.Length > nameMaxLength)
+                return s.Substring(0, nameMaxLength) + "...";
+            else
+                return s;
+        }
+
         public void SetOwnerName(string ownerName)
         {
-            ownerNameText.text = ownerName + "의 믐";
+            ownerNameText.text = FitNameMaxLength(ownerName) + "의 믐";
         }
 
         public void AddUser(int id, string userName)
         {
             PlayerInfo info;
+            userName = FitNameMaxLength(userName);
             info.name = userName;
 
             info.display = Instantiate(userListContentPrefab, userList);

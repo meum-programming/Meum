@@ -16,7 +16,7 @@ public class LoginButton : MonoBehaviour
     }
     private IEnumerator LoginCoroutine()
     {
-        var cd = new CoroutineWithData(this, Global.MeumDB.Get().Login(email.text, pwd.text));
+        var cd = new CoroutineWithData(this, Core.MeumDB.Get().Login(email.text, pwd.text));
         yield return cd.coroutine;
         var result = Convert.ToBoolean(cd.result);
         if (result)

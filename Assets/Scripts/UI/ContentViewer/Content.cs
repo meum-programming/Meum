@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Global;
+﻿using Core;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 namespace UI
 {
@@ -30,7 +25,7 @@ namespace UI
         private void LoadImage()
         {
             if (null == _data.thumbnail) return;
-            var texture = Global.MeumDB.Get().GetTexture(_data.thumbnail);
+            var texture = MeumDB.Get().GetTexture(_data.thumbnail);
             image.texture = texture;
 
             var imageTransform = image.rectTransform;

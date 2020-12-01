@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using Newtonsoft.Json;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnitySocketIO;
 
 namespace Gallery.MultiPlay
 {
@@ -20,7 +15,7 @@ namespace Gallery.MultiPlay
 
         private void Enter()
         {
-            Global.Socket.MeumSocket.Get().EnterGallery(nickname.text);
+            Core.Socket.MeumSocket.Get().EnterGallery(nickname.text);
         }
     }
 }

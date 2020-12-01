@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class SquareEnterButton : MonoBehaviour
@@ -12,6 +10,6 @@ public class SquareEnterButton : MonoBehaviour
 
     private void Enter()
     {
-        Global.Socket.MeumSocket.Get().EnterSquare();
+        Core.Socket.MeumSocket.Get().EnterSquare();
     }
 }

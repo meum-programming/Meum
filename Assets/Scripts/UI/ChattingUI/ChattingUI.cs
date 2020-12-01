@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.ChattingUI
 {
-    public class ChattingUI : MonoBehaviour
+    public class ChattingUI : Core.Singleton<ChattingUI>
     {
         [Header("Log Container")] 
         [SerializeField] private RectTransform container;
@@ -30,32 +26,10 @@ namespace UI.ChattingUI
         private float _defaultHeight;
         private AudioSource _audioSource;
         
-        #region Singleton
-        private static ChattingUI _instance = null;
         private void Awake() {
-            if(InstanceExist()) {
-                Debug.LogError("UI.ChattingUI.ChattingUI - Awake : only one ChattingUI can be exist");
-                Application.Quit(-1);
-            }
+            base.Awake();
             Init();
-            _instance = this;
         }
-        
-        public static bool InstanceExist() {
-            return !ReferenceEquals(_instance, null);
-        }
-
-        public static ChattingUI Get()
-        {
-            return _instance;
-        }
-
-        private void OnDestroy()
-        {
-            _instance = null;
-        }
-
-        #endregion
 
         private void Init()
         {
@@ -69,19 +43,6 @@ namespace UI.ChattingUI
             _defaultHeight = _rectTransform.sizeDelta.y;
 
             _audioSource = GetComponent<AudioSource>();
-        }
-
-        private void FixedUpdate()
-        {
-            // if (!InputFieldActivated() && Input.GetKey(KeyCode.Return))
-            // {
-            //     Debug.Log("Return : activate input field");
-            //     inputField.ActivateInputField();
-            // }
-            if (!InputFieldActivated() && Input.GetKeyDown(KeyCode.C))
-            {
-                toggleButton.onClick.Invoke();
-            }
         }
 
         public void OnEndEdit()
@@ -108,7 +69,7 @@ namespace UI.ChattingUI
             var newLog = Instantiate(logPrefab, container);
             var chattingLogCompo = newLog.GetComponent<ChattingLog>();
             chattingLogCompo.SetData(sender, message, isMe);
-            newLog.transform.SetAsFirstSibling();
+            newLog.transform.SetAsLastSibling();
 
             var containerPos = container.anchoredPosition;
             containerPos.y = 0;
@@ -127,7 +88,7 @@ namespace UI.ChattingUI
         private void SendWithStr(string str)
         {
             if (str == "") return;
-            Global.Socket.MeumSocket.Get().BroadCastChatting(str);
+            Core.Socket.MeumSocket.Get().BroadCastChatting(str);
         }
 
         private void Toggle()

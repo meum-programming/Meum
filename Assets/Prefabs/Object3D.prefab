@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5895836382571493859}
   - component: {fileID: 7632265930184126215}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Object3D
   m_TagString: Paint
   m_Icon: {fileID: 0}

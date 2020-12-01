@@ -19,7 +19,7 @@ public class BannerSetting : MonoBehaviour
 
     private void Apply()
     {
-        var placer = GameObject.Find("Artworks").GetComponent<Gallery.Builder.ArtworkPlacer>();
-        placer.SelectBanner(selectedContent, urlInputField.text);
+        var placer = GameObject.Find("Artworks").GetComponent<Game.Artwork.ArtworkPlacer>();
+        placer.CreateSelectedBanner(selectedContent, urlInputField.text);
     }
 }
