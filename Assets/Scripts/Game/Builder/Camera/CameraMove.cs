@@ -8,6 +8,9 @@ using UnityEngine.InputSystem;
 
 namespace Game.Builder.Camera
 {
+    /*
+     * @brief Build scene 에서 카메라의 이동(회전X)을 담당하는 컴포넌트
+     */
     public class CameraMove : MonoBehaviour
     {
         #region SerializeFields
@@ -31,14 +34,15 @@ namespace Game.Builder.Camera
 
         public void ResetPosition()
         {
-            // TODO: 좀 더 좋은 방식으로 바꾸기
             var spawnSite = GameObject.Find("SpawnSite").transform;
             transform.position = spawnSite.position;
         }
-
+        
+        /*
+         * @brief Update 함수에서 실제 이동을 함, OnMove는 moveVector 갱신만
+         */
         private void Update()
         {
-            // TODO: 좀 더 좋은 방식으로 바꾸기
             if (verifyModalManager.showingModal) return;
             
             var direction = camera.right * _moveVector.x +
@@ -48,7 +52,6 @@ namespace Game.Builder.Camera
             var delta = direction * (speed * Time.deltaTime);
             transform.Translate(delta, Space.World);
         }
-
 
         public void OnMove(InputAction.CallbackContext ctx)
         {

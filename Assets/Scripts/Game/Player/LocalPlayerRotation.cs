@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
+    /*
+     * @brief 플레이어의 회전을 제어하는 컴포넌트(화면기준 X방향 드래그시 회전)
+     */
     public class LocalPlayerRotation : MonoBehaviour
     {
         #region SerializeFields
@@ -52,9 +55,8 @@ namespace Game.Player
             _transform.rotation = Damp(_transform.rotation, targetRotation, 5.0f, Time.deltaTime);
 
             /*
-             * cam pivot is child of Player GameObject
-             * to prevent camera direction from rotating
-             * backup rotation value and put after rotating character
+             * cameraPivot은 플레이어의 child로 들어가서 플레이어가 회전하면 같이 돌아감 
+             * 카메라 방향은 돌아가면 안되기때문에 회전전에 저장하고 덮어씌움
              */
             cameraPivot.rotation = camPivotRotationBackup;
         }
@@ -74,10 +76,7 @@ namespace Game.Player
             if (value.sqrMagnitude < 1e-3) _isMoving = false;
             else _isMoving = true;
         }
-
-        /*
-         * @breif Rotate(캐릭터 회전) 콜백
-         */
+        
         public void OnRotate(InputAction.CallbackContext ctx)
         {
             if (cameraController.IsSwitchingView || !cameraController.IsFirstPersonView)

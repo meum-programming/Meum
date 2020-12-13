@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
+    /*
+     * @brief 플레이어가 클릭시에 Artwork의 설명창을 보여주거나 연결된 링크를 여는 컴포넌트
+     */
     public class LocalPlayerSelectArtwork : MonoBehaviour
     {
         [SerializeField] private Camera camera;
@@ -38,7 +41,10 @@ namespace Game.Player
                 }
             }
         }
-
+        
+        /*
+         * @brief 주어진 ArtworkInfo를 통해 ArtworkDescription UI를 보여줌
+         */
         private IEnumerator SetArtworkDescription(Artwork.ArtworkInfo info)
         {
             var cd = new CoroutineWithData(this, info.GetArtworkInfo());

@@ -7,13 +7,29 @@ using UnityEngine.UI;
 
 namespace UI.BuilderScene
 {
+    /*
+     * @brief Build scene에 있는 Sidebar를 토글하는 버튼 담당 컴포넌트
+     */
+    [RequireComponent(typeof(Button))]
     public class SidebarToggleButton : MonoBehaviour
     {
+        #region SerializeFields
+        
         [SerializeField] private UITogglePosition togglePosition;
 
-        private Button _button;
+        #endregion
+        
+        #region PublicFields
         
         public bool toggled => transform.localScale.x < 0;
+        
+        #endregion
+        
+        #region PrivateFields
+        
+        private Button _button;
+        
+        #endregion
 
         public void InvokeButton()
         {

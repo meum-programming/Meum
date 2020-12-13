@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Game.Player
 {
+    /*
+     * @brief 플레이어의 애니메이션 제어를 Wrap 해 놓음 (Socket.io 이벤트를 위함)
+     */
     public class PlayerAnimationController : MonoBehaviour
     {
         private Animator _animator;
@@ -12,6 +15,7 @@ namespace Game.Player
             public bool isJumpEnded;
             public float horizontalSpeed;
             public float verticalSpeed;
+            public bool running;
         }
 
         private AnimInfo _prev;
@@ -26,6 +30,7 @@ namespace Game.Player
             _prev.isJumpEnded = _animator.GetBool(Animator.StringToHash("isJumpEnded"));
             _prev.horizontalSpeed = _animator.GetFloat(Animator.StringToHash("horizontalSpeed"));
             _prev.verticalSpeed = _animator.GetFloat(Animator.StringToHash("verticalSpeed"));
+            _prev.running = _animator.GetBool(Animator.StringToHash("running"));
         }
 
         public void SetJumpTrigger()
@@ -56,6 +61,14 @@ namespace Game.Player
             _animator.SetFloat(Animator.StringToHash("verticalSpeed"), value);
             _prev.verticalSpeed = value;
             MeumSocket.Get().BroadCastAnimFloatChange("verticalSpeed", value);
+        }
+
+        public void SetRunning(bool value)
+        {
+            if (value == _prev.running) return;
+            _animator.SetBool(Animator.StringToHash("running"), value);
+            _prev.running = value;
+            MeumSocket.Get().BroadCastAnimBoolChange("running", value);
         }
 
         private static bool Equal(float a, float b)

@@ -23,6 +23,7 @@ namespace Game.Player
         #region SerializeFields
         
         [SerializeField] private float walkSpeed;
+        [SerializeField] private float runSpeed;
         [SerializeField] private float jumpHeight;
 
         [Header("Ground Checking")] 
@@ -41,8 +42,9 @@ namespace Game.Player
         private PlayerAnimationController _animController;
 
         private Vector3 _moveVector = Vector3.zero;
-        
         private float _velocityY;
+        private bool _running = false;
+        
         #endregion
         
         private void Awake()
@@ -131,6 +133,15 @@ namespace Game.Player
                 _velocityY = Mathf.Sqrt(2.0f * GRAVITY * jumpHeight);
                 _animController.SetJumpTrigger();
             }
+        }
+
+        public void OnRun(InputAction.CallbackContext ctx)
+        {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+            var value = ctx.ReadValue<float>();
+            _running = value > 0.5f;    // value is 1 or 0 (float)
+            _animController.SetRunning(_running);
         }
     }
 }
