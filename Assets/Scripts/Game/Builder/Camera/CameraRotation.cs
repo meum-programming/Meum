@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 namespace Game.Builder.Camera
 {
+    /*
+     * @brief Build scene에서 카메라 회전(이동X)을 담당하는 컴포넌트
+     */
     public class CameraRotation : MonoBehaviour
     {
         #region SerializeFields
@@ -27,7 +30,6 @@ namespace Game.Builder.Camera
 
         public void ResetRotation()
         {
-            // TODO: 좀 더 좋은 방식으로 바꾸기
             var spawnSite = GameObject.Find("SpawnSite").transform;
             transform.rotation = spawnSite.rotation;
         }
@@ -35,13 +37,14 @@ namespace Game.Builder.Camera
         public void OnRotate(InputAction.CallbackContext ctx)
         {
             if (!_isRotateEnabled) return;
+            if (verifyModalManager.showingModal) return;
 
             var value = ctx.ReadValue<Vector2>();
             
             transform.Rotate(Vector3.up, value.x * sensitivity);
             camera.Rotate(Vector3.right, -value.y * sensitivity);
         }
-
+        
         public void OnRotateEnable(InputAction.CallbackContext ctx)
         {
             var value = ctx.ReadValue<float>();

@@ -3,13 +3,24 @@ using UnityEngine;
 
 namespace UI.BuilderScene
 {
+    /*
+     * @brief Build scene에서 Artwork를 클릭할 시에 나타나는 action selector (move, delete) 담당 컴포넌트
+     */
     public class PlacerActionSelector : MonoBehaviour
     {
+        #region SerializeFields
+        
         [SerializeField] private ArtworkPlacer artworkPlacer;
         [SerializeField] private Camera cam;
 
+        #endregion
+        
+        #region PrivateFields
+        
         private Transform _selected;
 
+        #endregion
+        
         private void Update()
         {
             var pos = cam.WorldToScreenPoint(_selected.transform.position);

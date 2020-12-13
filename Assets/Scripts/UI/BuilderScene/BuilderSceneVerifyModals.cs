@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace UI.BuilderScene
 {
+    /*
+     * @brief 저장, 저장성공, 리셋, 클린, 나가기 버튼을 누를 시 나오는 모달을 담당하는 컴포넌트
+     */
     public class BuilderSceneVerifyModals : MonoBehaviour
     {
         [SerializeField] private GameObject verifySave;
@@ -13,19 +17,10 @@ namespace UI.BuilderScene
         [SerializeField] private GameObject verifyExit;
 
         public bool showingModal { get; private set; } = false;
-
-        private void CheckShowingOther()
-        {
-            if (showingModal)
-            {
-                Debug.LogError("cannot showing modal while showing other");
-                Application.Quit(-1);
-            }
-        }
-
+        
         public void ShowVerfiySaveModal()
         {
-            CheckShowingOther();
+            Assert.IsFalse(showingModal);
             verifySave.SetActive(true);
             gameObject.SetActive(true);
             showingModal = true;
@@ -33,7 +28,7 @@ namespace UI.BuilderScene
         
         public void ShowVerfiySaveSuccessModal()
         {
-            CheckShowingOther();
+            Assert.IsFalse(showingModal);
             verifySaveSuccess.SetActive(true);
             gameObject.SetActive(true);
             showingModal = true;
@@ -41,7 +36,7 @@ namespace UI.BuilderScene
 
         public void ShowVerfiyResetModal()
         {
-            CheckShowingOther();
+            Assert.IsFalse(showingModal);
             verifyReset.SetActive(true);
             gameObject.SetActive(true);
             showingModal = true;
@@ -49,7 +44,7 @@ namespace UI.BuilderScene
 
         public void ShowVerfiyCleanModal()
         {
-            CheckShowingOther();
+            Assert.IsFalse(showingModal);
             verifyClean.SetActive(true);
             gameObject.SetActive(true);
             showingModal = true;
@@ -57,7 +52,7 @@ namespace UI.BuilderScene
 
         public void ShowVerfiyExitModal()
         {
-            CheckShowingOther();
+            Assert.IsFalse(showingModal);
             verifyExit.SetActive(true);
             gameObject.SetActive(true);
             showingModal = true;

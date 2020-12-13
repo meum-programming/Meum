@@ -1,25 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class BannerSetting : MonoBehaviour
+namespace UI.BuilderScene
 {
-    [SerializeField] private InputField urlInputField;
-    [SerializeField] private UI.Content selectedContent;
-    [SerializeField] private Button applyBtn;
-
-    private void Awake()
+    /*
+     * @brief Sidebar의 banner 설정창을 담당하는 컴포넌트
+     */
+    public class BannerSetting : MonoBehaviour
     {
-        applyBtn.onClick.AddListener(Apply);
-    }
+        [SerializeField] private InputField urlInputField;
+        [SerializeField] private Content selectedContent;
+        [SerializeField] private Button applyBtn;
+        
+        private void Awake()
+        {
+            applyBtn.onClick.AddListener(Apply);
+        }
+    
+        public void SetSelectedContent(Content content)
+        {
+            selectedContent.data = content.data;
+        }
 
-    public void SetSelectedContent(UI.Content content)
-    {
-        selectedContent.data = content.data;
-    }
-
-    private void Apply()
-    {
-        var placer = GameObject.Find("Artworks").GetComponent<Game.Artwork.ArtworkPlacer>();
-        placer.CreateSelectedBanner(selectedContent, urlInputField.text);
+        private void Apply()
+        {
+            var placer = GameObject.Find("Artworks").GetComponent<Game.Artwork.ArtworkPlacer>();
+            Assert.IsNotNull(placer);
+            placer.CreateSelectedBanner(selectedContent, urlInputField.text);
+        }
     }
 }

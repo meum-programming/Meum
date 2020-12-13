@@ -21,7 +21,6 @@ namespace UI
         {
             base.Awake();
             Init();
-            Close();
         }
 
         private void Init()

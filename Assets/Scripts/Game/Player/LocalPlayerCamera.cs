@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
+    /*
+     * @brief 플레이어의 카메라를 제어하는 컴포넌트(화면기준 Y방향 드래그시 회전), 1인칭과 3인칭의 상황을 모두 제어
+     */
     [RequireComponent(typeof(Camera))]
     public class LocalPlayerCamera : MonoBehaviour
     {
@@ -13,6 +16,7 @@ namespace Game.Player
         [SerializeField] private float sensitivity;
         [SerializeField] private float cameraRotationLimit;
         [SerializeField] private Transform cameraPivot;
+        
         [Header("Switching")] 
         [SerializeField] private Transform firstPersonCamTransform;
         [SerializeField] private Transform thirdPersonCamTransform;
@@ -56,7 +60,7 @@ namespace Game.Player
             _defaultEulerAngle = _transform.localEulerAngles;
             _camera.cullingMask = ~0;
         }
-
+        
         public void OnRotate(InputAction.CallbackContext ctx)
         {
             if (IsSwitchingView) return;    // 인칭 전환중이라면 아무것도 안함
@@ -82,7 +86,11 @@ namespace Game.Player
             if(ctx.performed)
                 StartCoroutine(_switching = SwitchView());
         }
-
+        
+        /*
+         * @brief 1인칭과 3인칭을 전환하는 코루틴
+         * @details 카메라의 local transform을 바꾸고, 1인칭일시에 플레이어를 안보이게 함
+         */
         private IEnumerator SwitchView()
         {
             var posSrc = _transform.localPosition;

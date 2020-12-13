@@ -52,6 +52,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "run",
+                    "type": "Value",
+                    "id": "ca348f39-965e-4618-8b91-39ab555a8130",
+                    "expectedControlType": "Digital",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -206,6 +214,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rotate Enable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "838360ec-7de6-41f0-b308-2f4bdcff5810",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
