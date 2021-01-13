@@ -83,6 +83,9 @@ namespace Game.Player
 
         public void OnSwitchView(InputAction.CallbackContext ctx)
         {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+            
             if(ctx.performed)
                 StartCoroutine(_switching = SwitchView());
         }
@@ -131,8 +134,6 @@ namespace Game.Player
                 _camera.cullingMask = ~0;
             
             _switching = null;
-            
-            Debug.Log(IsFirstPersonView);
         }
         
         public void OnRotateEnable(InputAction.CallbackContext ctx)

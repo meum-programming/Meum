@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,8 @@ namespace UI.UserList
     {
         #region SerializedFields
         
-        [SerializeField] private Text ownerNameText;
-        [SerializeField] private Text userCountText;
+        [SerializeField] private TextMeshProUGUI ownerNameText;
+        [SerializeField] private TextMeshProUGUI userCountText;
         [SerializeField] private Button toggleButton;
         [SerializeField] private int nameMaxLength;
 

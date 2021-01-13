@@ -19,11 +19,11 @@ namespace UI.BuilderScene
 
         [SerializeField] private float containerTopDistOnBannerState = 200.0f;
 
-        [Header("Background Images")] 
-        [SerializeField] private Sprite object2dBG;
+        [Header("Background Objects")]
+        [SerializeField] private GameObject object2dBG;
 
-        [SerializeField] private Sprite bannerBG;
-        [SerializeField] private Sprite object3dBG;
+        [SerializeField] private GameObject bannerBG;
+        [SerializeField] private GameObject object3dBG;
         
         #endregion
 
@@ -54,7 +54,9 @@ namespace UI.BuilderScene
             container3d.gameObject.SetActive(false);
             bannerSetting.gameObject.SetActive(false);
 
-            _background.sprite = object2dBG;
+            object2dBG.SetActive(true);
+            object3dBG.SetActive(false);
+            bannerBG.SetActive(false);
             container2d.offsetMax = new Vector2(container2d.offsetMax.x, _defaultContainerTopDist);
 
             _state = State.Object2D;
@@ -66,7 +68,9 @@ namespace UI.BuilderScene
             container3d.gameObject.SetActive(false);
             bannerSetting.gameObject.SetActive(true);
 
-            _background.sprite = bannerBG;
+            object2dBG.SetActive(false);
+            object3dBG.SetActive(false);
+            bannerBG.SetActive(true);
             container2d.offsetMax = new Vector2(container2d.offsetMax.x, -containerTopDistOnBannerState);
 
             bannerSetting.SetSelectedContent(content);
@@ -80,7 +84,9 @@ namespace UI.BuilderScene
             container3d.gameObject.SetActive(true);
             bannerSetting.gameObject.SetActive(false);
 
-            _background.sprite = object3dBG;
+            object2dBG.SetActive(false);
+            object3dBG.SetActive(true);
+            bannerBG.SetActive(false);
             container2d.offsetMax = new Vector2(container2d.offsetMax.x, _defaultContainerTopDist);
 
             _state = State.Object3D;

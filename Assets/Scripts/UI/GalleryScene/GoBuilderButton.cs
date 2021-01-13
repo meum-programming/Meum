@@ -2,17 +2,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoBuilderButton : MonoBehaviour
+namespace UI.GalleryScene
 {
-    private void Awake()
+    public class GoBuilderButton : MonoBehaviour
     {
-        var button = GetComponent<Button>();
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(ButtonAction);
-    }
+        private void Awake()
+        {
+            var button = GetComponent<Button>();
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(ButtonAction);
+        }
 
-    private void ButtonAction()
-    {
-        MeumSocket.Get().GoToEditScene();
+        private void ButtonAction()
+        {
+            MeumSocket.Get().GoToEditScene();
+        }
     }
 }

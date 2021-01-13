@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,7 +9,6 @@ namespace UI.ChattingUI
     {
         [Header("Log Container")] 
         [SerializeField] private RectTransform container;
-        [SerializeField] private Image containerBackground;
         [SerializeField] private GameObject logPrefab;
 
         [Header("Toggle")] 
@@ -18,7 +18,7 @@ namespace UI.ChattingUI
         [SerializeField] private float toggledHeight;
 
         [Header("Input Area")] 
-        [SerializeField] private InputField inputField;
+        [SerializeField] private TMP_InputField inputField;
         [SerializeField] private Button sendButton;
         
         private RectTransform _rectTransform;
@@ -49,13 +49,11 @@ namespace UI.ChattingUI
         {
             if (!EventSystem.current.alreadySelecting)
             {
-                Debug.Log("Submit");
                 Send();
                 inputField.ActivateInputField();
             }
             else
             {
-                Debug.Log("Deactivate");
                 inputField.GetComponent<WebGLSupport.WebGLInput>().DeactivateInputField();
             }
         }
@@ -64,11 +62,11 @@ namespace UI.ChattingUI
             return inputField.isFocused;
         }
 
-        public void AddMessage(string sender, string message, bool isMe)
+        public void AddMessage(string sender, string message, bool isMe, int type)
         {
             var newLog = Instantiate(logPrefab, container);
             var chattingLogCompo = newLog.GetComponent<ChattingLog>();
-            chattingLogCompo.SetData(sender, message, isMe);
+            chattingLogCompo.SetData(sender, message, type);
             newLog.transform.SetAsLastSibling();
 
             var containerPos = container.anchoredPosition;
@@ -87,8 +85,29 @@ namespace UI.ChattingUI
 
         private void SendWithStr(string str)
         {
-            if (str == "") return;
-            Core.Socket.MeumSocket.Get().BroadCastChatting(str);
+            str = str.Trim();
+            if (str.Equals("")) return;
+
+            if (str[0] == '/')
+            {
+                var nickname = str.Split(' ')[0];
+                nickname = nickname.Substring(1);
+
+                var target = Core.Socket.DataSynchronizer.Get().Nickname2Id(nickname);
+                if (target != -1)
+                {
+                    var startIdx = str.IndexOf(' ') + 1;
+                    var content = str.Substring(startIdx);
+                    Debug.Log(content);
+                    Core.Socket.MeumSocket.Get().BroadCastChatting(1, target, content);
+                }
+                else
+                {
+                    Debug.Log("User " + nickname + " not exist");
+                }
+            }
+            else
+                Core.Socket.MeumSocket.Get().BroadCastChatting(0, -1, str);
         }
 
         private void Toggle()

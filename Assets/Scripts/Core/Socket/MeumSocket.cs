@@ -83,9 +83,26 @@ namespace Core.Socket
             return _eventHandler.GetLocalPlayerId();
         }
 
+        public int GetPlayerPk()
+        {
+            return _loader.GetPlayerPk();
+        }
+
+        public int GetRoomId()
+        {
+            return _loader.GetRoomId();
+        }
+
+        public bool IsInRoomOwn()
+        {
+            return _state.IsSubOfGalleryOwn();
+        }
+
         public void GoToEditScene()
         {
             Assert.IsTrue(_state.IsSubOfGalleryOwn());
+            if (!_state.IsSubOfGalleryOwn())
+                return;
             _loader.LoadEditScene();
         }
 
@@ -191,9 +208,11 @@ namespace Core.Socket
             _socket.Emit("broadcastUpdateArtworks");
         }
 
-        public void BroadCastChatting(string message)
+        public void BroadCastChatting(int type, int target, string message)
         {
             BroadCastChattingData data;
+            data.type = type;
+            data.target = target;
             data.message = message;
             _socket.Emit("broadCastChatting", JsonConvert.SerializeObject(data));
         }
@@ -239,6 +258,8 @@ namespace Core.Socket
 
         private struct BroadCastChattingData
         {
+            public int type;
+            public int target;
             public string message;
         }
         #endregion

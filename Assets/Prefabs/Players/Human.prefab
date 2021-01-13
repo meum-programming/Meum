@@ -2019,7 +2019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   runSpeed: 8
-  jumpHeight: 2
+  jumpHeight: 1.2
   groundDetectDistance: 0.1
   jumpEndDetectDistance: 0.7
   checkingMask:

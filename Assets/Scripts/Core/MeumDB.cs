@@ -121,19 +121,14 @@ namespace Core
             var data = cd.result as string;
             Assert.IsNotNull(data);
 
-            var output = new UserInfo();
             var jarray = JArray.Parse(data);
             Assert.IsNotNull(jarray);
             if (jarray.Count == 0)
                 yield return null;
             else
             {
-                var json = jarray[0];
-                output.primaryKey = json["user"]["pk"].Value<int>();
-                output.email = json["user"]["email"].Value<string>();
-                output.nickname = json["user"]["profile"]["nickname"].Value<string>();
-                output.phone = json["user"]["profile"]["phone"].Value<string>();
-                yield return output;
+                var json = jarray[0]["user"];
+                yield return ParseUserInfo(json);
             }
         }
 
@@ -149,11 +144,7 @@ namespace Core
             var output = new UserInfo();
             var json = JObject.Parse(data);
             Assert.IsNotNull(json);
-            output.primaryKey = json["pk"].Value<int>();
-            output.email = json["email"].Value<string>();
-            output.nickname = json["profile"]["nickname"].Value<string>();
-            output.phone = json["profile"]["phone"].Value<string>();
-            yield return output;
+            yield return ParseUserInfo(json);
         }
 
         public IEnumerator GetRoomInfoWithUser(int userPK)
@@ -173,18 +164,7 @@ namespace Core
             else
             {
                 var json = jarray[0];
-                output.primaryKey = json["pk"].Value<int>();
-                output.max_people = json["max_people"].Value<int>();
-                output.type_int = json["type_int"].Value<int>();
-                output.data_json = json["data_json"].Value<string>();
-                
-                var ownerObj = json["owner"];
-                output.owner = new UserInfo();
-                output.owner.primaryKey = ownerObj["pk"].Value<int>();
-                output.owner.email = ownerObj["email"].Value<string>();
-                output.owner.nickname = ownerObj["profile"]["nickname"].Value<string>();
-                output.owner.phone = ownerObj["profile"]["phone"].Value<string>();
-                yield return output;
+                yield return ParseRoomInfo(json);
             }
         }
 
@@ -200,18 +180,7 @@ namespace Core
             var output = new RoomInfo();
             var json = JObject.Parse(data);
             Assert.IsNotNull(json);
-            output.primaryKey = json["pk"].Value<int>();
-            output.max_people = json["max_people"].Value<int>();
-            output.type_int = json["type_int"].Value<int>();
-            output.data_json = json["data_json"].Value<string>();
-            
-            var ownerObj = json["owner"];
-            output.owner = new UserInfo();
-            output.owner.primaryKey = ownerObj["pk"].Value<int>();
-            output.owner.email = ownerObj["email"].Value<string>();
-            output.owner.nickname = ownerObj["profile"]["nickname"].Value<string>();
-            output.owner.phone = ownerObj["profile"]["phone"].Value<string>();
-            yield return output;
+            yield return ParseRoomInfo(json);
         }
 
         public IEnumerator PatchRoomJson(string jsonData)
@@ -241,29 +210,7 @@ namespace Core
             for (var i = 0; i < jarray.Count; ++i)
             {
                 var obj = jarray[i];
-                output[i] = new ArtworkInfo();
-                output[i].primaryKey = obj["pk"].Value<int>();
-                output[i].author = obj["owner"]["profile"]["nickname"].Value<string>();
-                output[i].title = obj["title"].Value<string>();
-                if(obj["size_w"].Type != JTokenType.Null)
-                    output[i].size_w = obj["size_w"].Value<int>() / 100.0f;
-                if(obj["size_h"].Type != JTokenType.Null)
-                    output[i].size_h = obj["size_h"].Value<int>() / 100.0f;
-                if(obj["year"].Type != JTokenType.Null)
-                    output[i].year = obj["year"].Value<int>();
-                if(obj["material"].Type != JTokenType.Null)
-                    output[i].material = obj["material"].Value<string>();
-                if(obj["object_file"].Type != JTokenType.Null)
-                    output[i].object_file = BASE_URL + obj["object_file"].Value<string>();
-                if (obj["image_file"].Type != JTokenType.Null)
-                    output[i].image_file = BASE_URL + obj["image_file"].Value<string>();
-                if (obj["thumbnail"].Type != JTokenType.Null)
-                    output[i].thumbnail = BASE_URL + obj["thumbnail"].Value<string>();
-                if(obj["instruction"].Type != JTokenType.Null)
-                    output[i].instruction = obj["instruction"].Value<string>();
-                output[i].like = obj["like"].Value<int>();
-                output[i].hate = obj["hate"].Value<int>();
-                output[i].type_artwork = obj["type_artwork"].Value<int>();
+                output[i] = ParseArtworkInfo(obj);
             }
 
             yield return output;
@@ -277,34 +224,10 @@ namespace Core
             Assert.IsNotNull(cd.result);
             var data = cd.result as string;
             Assert.IsNotNull(data);
-
+            
             var json = JObject.Parse(data);
             Assert.IsNotNull(json);
-            var output = new ArtworkInfo();
-            output.primaryKey = json["pk"].Value<int>();
-            output.author = json["owner"]["profile"]["nickname"].Value<string>();
-            output.title = json["title"].Value<string>();
-            if(json["size_w"].Type != JTokenType.Null)
-                output.size_w = json["size_w"].Value<int>() / 100.0f;
-            if(json["size_h"].Type != JTokenType.Null)
-                output.size_h = json["size_h"].Value<int>() / 100.0f;
-            if(json["year"].Type != JTokenType.Null)
-                output.year = json["year"].Value<int>();
-            if(json["material"].Type != JTokenType.Null)
-                output.material = json["material"].Value<string>();
-            if(json["object_file"].Type != JTokenType.Null)
-                output.object_file = BASE_URL + json["object_file"].Value<string>();
-            if (json["image_file"].Type != JTokenType.Null)
-                output.image_file = BASE_URL + json["image_file"].Value<string>();
-            if (json["thumbnail"].Type != JTokenType.Null)
-                output.thumbnail = BASE_URL + json["thumbnail"].Value<string>();
-            if(json["instruction"].Type != JTokenType.Null)
-                output.instruction = json["instruction"].Value<string>();
-            output.like = json["like"].Value<int>();
-            output.hate = json["hate"].Value<int>();
-            output.type_artwork = json["type_artwork"].Value<int>();
-
-            yield return output;
+            yield return ParseArtworkInfo(json);
         }
 
         public IEnumerator GetPurchasedArtworks()
@@ -322,29 +245,7 @@ namespace Core
             for (var i = 0; i < jarray.Count; ++i)
             {
                 var obj = jarray[i]["artwork"];
-                output[i] = new ArtworkInfo();
-                output[i].primaryKey = obj["pk"].Value<int>();
-                output[i].author = obj["owner"]["profile"]["nickname"].Value<string>();
-                output[i].title = obj["title"].Value<string>();
-                if(obj["size_w"].Type != JTokenType.Null)
-                    output[i].size_w = obj["size_w"].Value<int>() / 100.0f;
-                if(obj["size_h"].Type != JTokenType.Null)
-                    output[i].size_h = obj["size_h"].Value<int>() / 100.0f;
-                if(obj["year"].Type != JTokenType.Null)
-                    output[i].year = obj["year"].Value<int>();
-                if(obj["material"].Type != JTokenType.Null)
-                    output[i].material = obj["material"].Value<string>();
-                if(obj["object_file"].Type != JTokenType.Null)
-                    output[i].object_file = BASE_URL + obj["object_file"].Value<string>();
-                if (obj["image_file"].Type != JTokenType.Null)
-                    output[i].image_file = BASE_URL + obj["image_file"].Value<string>();
-                if (obj["thumbnail"].Type != JTokenType.Null)
-                    output[i].thumbnail = BASE_URL + obj["thumbnail"].Value<string>();
-                if(obj["instruction"].Type != JTokenType.Null)
-                    output[i].instruction = obj["instruction"].Value<string>();
-                output[i].like = obj["like"].Value<int>();
-                output[i].hate = obj["hate"].Value<int>();
-                output[i].type_artwork = obj["type_artwork"].Value<int>();
+                output[i] = ParseArtworkInfo(obj);
             }
 
             yield return output;
@@ -374,6 +275,188 @@ namespace Core
             var url = BASE_URL + "/tutorial";
             var cd = new CoroutineWithData(this, WebRequest(url, "PATCH", json));
             yield return cd.coroutine;
+        }
+
+        public IEnumerator GetGuestBooks(int roomPk)
+        {
+            var url = BASE_URL + "/guestbook/" + roomPk;
+            var cd = new CoroutineWithData(this, WebRequest(url, "GET"));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+            var data = cd.result as string;
+            Assert.IsNotNull(data);
+            
+            var jarray = JArray.Parse(data);
+            Assert.IsNotNull(jarray);
+            var output = new GuestBookInfo[jarray.Count];
+            for (var i = 0; i < jarray.Count; ++i)
+            {
+                var obj = jarray[i];
+                output[i] = ParseGuestBookInfo(obj);
+            }
+
+            yield return output;
+        }
+
+        public IEnumerator GetGuestBookStampCount(int roomPk)
+        {
+            var url = BASE_URL + "/guestbook/count/" + roomPk;
+            var cd = new CoroutineWithData(this, WebRequest(url, "GET"));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+            var data = cd.result as string;
+            Assert.IsNotNull(data);
+
+            var json = JObject.Parse(data);
+            Assert.IsNotNull(json);
+
+            yield return ParseGuestBookStampCountInfo(json);
+        }
+
+        public IEnumerator PostGuestBookCreate(int roomPk, int stampType, string content)
+        {
+            GuestBookCreateInfo data;
+            data.stamp_type = stampType;
+            data.content = content;
+
+            var json = JsonConvert.SerializeObject(data);
+            var url = BASE_URL + "/guestbook/" + roomPk;
+            var cd = new CoroutineWithData(this, WebRequest(url, "POST", json));
+            yield return cd.coroutine;
+        }
+
+        public IEnumerator DeleteGuestBook(int guestbookPk)
+        {
+            var url = BASE_URL + "/guestbook/detail/" + guestbookPk;
+            var cd = new CoroutineWithData(this, WebRequest(url, "DELETE"));
+            yield return cd.coroutine;
+        }
+
+        public IEnumerator GetComments(int artworkPk)
+        {
+            var url = BASE_URL + "/comment/artwork/" + artworkPk;
+            var cd = new CoroutineWithData(this, WebRequest(url, "GET"));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+            var data = cd.result as string;
+            Assert.IsNotNull(data);
+
+            var json = JObject.Parse(data);
+            Assert.IsNotNull(json);
+
+            var jarray = json["results"] as JArray;
+            Assert.IsNotNull(jarray);
+
+            var output = new CommentInfo[jarray.Count];
+            for (var i = 0; i < jarray.Count; ++i)
+            {
+                output[i] = ParseCommentInfo(jarray[i]);
+            }
+
+            yield return output;
+        }
+
+        public IEnumerator PostCommentCreate(int artworkPk, string content)
+        {
+            CommentCreateInfo data;
+            data.content = content;
+
+            var json = JsonConvert.SerializeObject(data);
+            var url = BASE_URL + "/comment/artwork/" + artworkPk;
+            var cd = new CoroutineWithData(this, WebRequest(url, "POST", json));
+            yield return cd.coroutine;
+        }
+
+        public IEnumerator DeleteComment(int commentPk)
+        {
+            var url = BASE_URL + "/comment/" + commentPk;
+            var cd = new CoroutineWithData(this, WebRequest(url, "DELETE"));
+            yield return cd.coroutine;
+        }
+        
+        #endregion
+        
+        #region Parsing functions
+
+        private static UserInfo ParseUserInfo(JToken obj)
+        {
+            var output = new UserInfo();
+            output.primaryKey = obj["pk"].Value<int>();
+            output.email = obj["email"].Value<string>();
+            output.nickname = obj["profile"]["nickname"].Value<string>();
+            output.phone = obj["profile"]["phone"].Value<string>();
+            return output;
+        }
+
+        private static RoomInfo ParseRoomInfo(JToken obj)
+        {
+            var output = new RoomInfo();
+            output.primaryKey = obj["pk"].Value<int>();
+            output.max_people = obj["max_people"].Value<int>();
+            output.type_int = obj["type_int"].Value<int>();
+            output.data_json = obj["data_json"].Value<string>();
+            output.owner = ParseUserInfo(obj["owner"]);
+            return output;
+        }
+
+        private static ArtworkInfo ParseArtworkInfo(JToken obj)
+        {
+            var output = new ArtworkInfo();
+            output.primaryKey = obj["pk"].Value<int>();
+            output.author = obj["owner"]["profile"]["nickname"].Value<string>();
+            output.title = obj["title"].Value<string>();
+            if(obj["size_w"].Type != JTokenType.Null)
+                output.size_w = obj["size_w"].Value<int>() / 100.0f;
+            if(obj["size_h"].Type != JTokenType.Null)
+                output.size_h = obj["size_h"].Value<int>() / 100.0f;
+            if(obj["year"].Type != JTokenType.Null)
+                output.year = obj["year"].Value<int>();
+            if(obj["author"].Type != JTokenType.Null)
+                output.author = obj["author"].Value<string>();
+            if(obj["object_file"].Type != JTokenType.Null)
+                output.object_file = BASE_URL + obj["object_file"].Value<string>();
+            if (obj["image_file"].Type != JTokenType.Null)
+                output.image_file = BASE_URL + obj["image_file"].Value<string>();
+            if (obj["thumbnail"].Type != JTokenType.Null)
+                output.thumbnail = BASE_URL + obj["thumbnail"].Value<string>();
+            if(obj["instruction"].Type != JTokenType.Null)
+                output.instruction = obj["instruction"].Value<string>();
+            output.like = obj["like"].Value<int>();
+            output.hate = obj["hate"].Value<int>();
+            output.type_artwork = obj["type_artwork"].Value<int>();
+            return output;
+        }
+
+        private static GuestBookInfo ParseGuestBookInfo(JToken obj)
+        {
+            var output = new GuestBookInfo();
+            output.pk = obj["pk"].Value<int>();
+            output.stamp_type = obj["stamp_type"].Value<int>();
+            output.content = obj["content"].Value<string>();
+            output.writer = ParseUserInfo(obj["writer"]);
+            output.created_at = obj["created_at"].Value<string>();
+            return output;
+        }
+
+        private static GuestBookStampCountInfo ParseGuestBookStampCountInfo(JToken obj)
+        {
+            var output = new GuestBookStampCountInfo();
+            output.one = obj["one_queryset"].Value<int>();
+            output.two = obj["two_queryset"].Value<int>();
+            output.three = obj["three_queryset"].Value<int>();
+            output.four = obj["four_queryset"].Value<int>();
+            return output;
+        }
+
+        private static CommentInfo ParseCommentInfo(JToken obj)
+        {
+            var output = new CommentInfo();
+            output.pk = obj["pk"].Value<int>();
+            output.artwork = ParseArtworkInfo(obj["artwork"]);
+            output.content = obj["content"].Value<string>();
+            output.writer = ParseUserInfo(obj["writer"]);
+            output.created_at = obj["created_at"].Value<string>();
+            return output;
         }
         
         #endregion
@@ -416,7 +499,6 @@ namespace Core
             public float size_w;
             public float size_h;
             public int year;
-            public string material;
             public string object_file;
             public string image_file;
             public string thumbnail;
@@ -430,7 +512,44 @@ namespace Core
         {
             public bool is_tutorial;
         }
-        
+
+        public class GuestBookInfo
+        {
+            public int pk;
+            public int stamp_type;
+            public string content;
+            public UserInfo writer;
+            public string created_at;
+        }
+
+        public class GuestBookStampCountInfo
+        {
+            public int one;
+            public int two;
+            public int three;
+            public int four;
+        }
+
+        private struct GuestBookCreateInfo
+        {
+            public int stamp_type;
+            public string content;
+        }
+
+        public struct CommentInfo
+        {
+            public int pk;
+            public ArtworkInfo artwork;
+            public string content;
+            public UserInfo writer;
+            public string created_at;
+        }
+
+        private struct CommentCreateInfo
+        {
+            public string content;
+        }
+
         #endregion
         
         /*
@@ -455,6 +574,11 @@ namespace Core
             if (uwr.isNetworkError)
             {
                 Debug.LogError(url + ": Error: " + uwr.error);
+                yield return null;
+            }
+            else if (uwr.isHttpError)
+            {
+                Debug.LogError(url + ": Error: " + uwr.responseCode);
                 yield return null;
             }
             else

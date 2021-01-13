@@ -41,8 +41,6 @@ namespace UI.SettingMenu
             AudioListener.volume = MasterVolume = masterSlider.value;
             EffectVolume = effectSlider.value;
             BgmVolume = bgmSlider.value;
-            
-            Debug.Log("sliders awake");
         }
 
         private void OnMasterSliderValueChanged(float val)

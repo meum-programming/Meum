@@ -1,4 +1,5 @@
 ﻿using Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,7 @@ namespace UI
 {
     public class Content : MonoBehaviour
     {
-        public Text name;
+        public TextMeshProUGUI name;
         public RawImage image;
 
         public MeumDB.ArtworkInfo data

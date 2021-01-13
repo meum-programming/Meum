@@ -16,6 +16,7 @@ namespace Game.Builder.Camera
         #region SerializeFields
         
         [SerializeField] private float speed;
+        [SerializeField] private float runSpeed;
         [SerializeField] private Transform camera;
         [SerializeField] private BuilderSceneVerifyModals verifyModalManager;
         
@@ -24,6 +25,7 @@ namespace Game.Builder.Camera
         #region PrivateFields
 
         private Vector3 _moveVector;
+        private bool _running;
 
         #endregion
 
@@ -49,7 +51,7 @@ namespace Game.Builder.Camera
                             camera.forward * _moveVector.y;
             direction.Normalize();
 
-            var delta = direction * (speed * Time.deltaTime);
+            var delta = direction * ((_running ? runSpeed : speed) * Time.deltaTime);
             transform.Translate(delta, Space.World);
         }
 
@@ -57,6 +59,12 @@ namespace Game.Builder.Camera
         {
             var value = ctx.ReadValue<Vector2>();
             _moveVector = value;
+        }
+        
+        public void OnRun(InputAction.CallbackContext ctx)
+        {
+            var value = ctx.ReadValue<float>();
+            _running = value > 0.5f;    // value is 1 or 0 (float)
         }
     }
 }

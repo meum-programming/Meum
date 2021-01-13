@@ -85,7 +85,7 @@ namespace Game.Player
                             selfTransform.forward * _moveVector.y;
             direction.Normalize();
 
-            var delta = Vector3.up * _velocityY + direction * walkSpeed;
+            var delta = Vector3.up * _velocityY + direction * (_running ? runSpeed : walkSpeed);
             _charController.Move(delta * Time.deltaTime);
         }
 

@@ -20,6 +20,7 @@ namespace Core.Socket {
         private MonoBehaviour _coroutineCaller;
         private SocketEventHandler.EnteringSuccessEventData _galleryData;
         private SocketEventHandler.SquareEnteringSuccessEventData _squareData;
+        private int _playerPk;
         
         #endregion
 
@@ -27,6 +28,16 @@ namespace Core.Socket {
         {
             _state = state;
             _coroutineCaller = caller;
+        }
+
+        public int GetRoomId()
+        {
+            return _galleryData.roomId;
+        }
+
+        public int GetPlayerPk()
+        {
+            return _playerPk;
         }
 
         #region Artworks Serialization
@@ -118,6 +129,7 @@ namespace Core.Socket {
             Assert.IsNotNull(cd.result);
             var userInfo = cd.result as MeumDB.UserInfo;
             Assert.IsNotNull(userInfo);
+            _playerPk = userInfo.primaryKey;
             cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfoWithUser(userInfo.primaryKey));
             yield return cd.coroutine;
             Assert.IsNotNull(cd.result);

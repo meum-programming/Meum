@@ -197,11 +197,27 @@ namespace Core.Socket
         }
         
         /*
-         * @brief 방에서 내부적으로 사용되는 userID 를 Nickname으로 변환
+         * @brief 방에서 내부적으로 사용되는 userID를 Nickname으로 변환
          */
         public string Id2Nickname(int id)
         {
             return _remotePlayers[id].Nickname;
+        }
+        
+        /*
+         * @brief Nickname을 방에서 내부적으로 사용되는 userID로 변환
+         */
+        public int Nickname2Id(string nickname)
+        {
+            for (var i = 0; i < _remotePlayers.Length; ++i)
+            {
+                if (!ReferenceEquals(_remotePlayers[i], null))
+                {
+                    if (_remotePlayers[i].Nickname == nickname)
+                        return i;
+                }
+            }
+            return -1;
         }
         
         /*
