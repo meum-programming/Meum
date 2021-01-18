@@ -25,8 +25,6 @@ namespace UI.GuestBook
             "기대되요!"
         };
 
-        #region SerializeFields
-
         [SerializeField] private Sprite[] iconTextures = new Sprite[4];
         [SerializeField] private Image background;
         [SerializeField] private Image icon;
@@ -36,13 +34,7 @@ namespace UI.GuestBook
         [SerializeField] private TextMeshProUGUI createdAt;
         [SerializeField] private Button deleteButton;
 
-        #endregion
-        
-        #region PrivateFields
-
         private Core.MeumDB.GuestBookInfo _info;
-        
-        #endregion
 
         private void Awake()
         {

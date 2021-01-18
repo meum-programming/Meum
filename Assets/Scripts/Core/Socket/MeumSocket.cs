@@ -14,32 +14,20 @@ namespace Core.Socket
      */
     public class MeumSocket : Singleton<MeumSocket>
     {
-        #region SerializedFields
-        
         [Header("Connection Info")] 
         [SerializeField] private float sendInterval;
 
-        #endregion
-        
-        #region PublicFields
-        
         /*
          * @brief LocalPlayer의 UserInfo(DB)를 담고있음
          */
         public MeumDB.UserInfo LocalPlayerInfo { get; private set; } = null;
-        
-        #endregion
-        
-        #region PrivateFields
-        
+
         private float _sendIntervalCounter = 0.0f;
         private SocketIOController _socket;
         private SceneState _state;
         private SceneLoader _loader;
         private SocketEventHandler _eventHandler;
 
-        #endregion
-        
         private void Init()
         {
             _socket = GetComponent<SocketIOController>();
@@ -82,12 +70,15 @@ namespace Core.Socket
         {
             return _eventHandler.GetLocalPlayerId();
         }
-
+        
+        /*
+         * LocalPlayer의 UserInfo(DB)의 primaryKey를 반환
+         */
         public int GetPlayerPk()
         {
             return _loader.GetPlayerPk();
         }
-
+        
         public int GetRoomId()
         {
             return _loader.GetRoomId();

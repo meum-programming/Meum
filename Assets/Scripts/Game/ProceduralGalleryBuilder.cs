@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -11,12 +12,15 @@ namespace Game
         public int y;
         public int type;
     }
-
+    
+    /*
+     * @brief 방 정보에 따라 알맞은 공간을 알맞은 위치에 생성하는 컴포넌트
+     */
     public class ProceduralGalleryBuilder : MonoBehaviour
     {
         [SerializeField] private GameObject[] floorPrefabs;
         [SerializeField] private GameObject wallPrefab;
-        [SerializeField] private float edge_length;
+        [FormerlySerializedAs("edge_length")] [SerializeField] private float edgeLength;
 
         private LandInfo[] _landInfos;
         private Transform _walls;
@@ -43,7 +47,7 @@ namespace Game
 
         private void BuildBlock(LandInfo pos)
         {
-            var position = new Vector3(pos.x * edge_length, 0, pos.y * edge_length);
+            var position = new Vector3(pos.x * edgeLength, 0, pos.y * edgeLength);
             var floor = Instantiate(floorPrefabs[pos.type], _floors);
             floor.transform.position = position;
 
@@ -52,14 +56,14 @@ namespace Game
             if (!Has(pos.x - 1, pos.y))
             {
                 var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x - edge_length / 2.0f, wallY, position.z);
+                var wallPos = new Vector3(position.x - edgeLength / 2.0f, wallY, position.z);
                 wall.transform.position = wallPos;
             }
 
             if (!Has(pos.x + 1, pos.y))
             {
                 var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x + edge_length / 2.0f, wallY, position.z);
+                var wallPos = new Vector3(position.x + edgeLength / 2.0f, wallY, position.z);
                 wall.transform.position = wallPos;
             }
 
@@ -67,7 +71,7 @@ namespace Game
             if (!Has(pos.x, pos.y - 1))
             {
                 var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x, wallY, position.z - edge_length / 2.0f);
+                var wallPos = new Vector3(position.x, wallY, position.z - edgeLength / 2.0f);
                 wall.transform.position = wallPos;
                 wall.transform.Rotate(Vector3.up, 90.0f);
             }
@@ -75,7 +79,7 @@ namespace Game
             if (!Has(pos.x, pos.y + 1))
             {
                 var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x, wallY, position.z + edge_length / 2.0f);
+                var wallPos = new Vector3(position.x, wallY, position.z + edgeLength / 2.0f);
                 wall.transform.position = wallPos;
                 wall.transform.Rotate(Vector3.up, -90.0f);
             }

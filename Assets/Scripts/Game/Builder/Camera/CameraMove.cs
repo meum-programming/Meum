@@ -13,21 +13,13 @@ namespace Game.Builder.Camera
      */
     public class CameraMove : MonoBehaviour
     {
-        #region SerializeFields
-        
         [SerializeField] private float speed;
         [SerializeField] private float runSpeed;
         [SerializeField] private Transform camera;
         [SerializeField] private BuilderSceneVerifyModals verifyModalManager;
-        
-        #endregion
-
-        #region PrivateFields
 
         private Vector3 _moveVector;
         private bool _running;
-
-        #endregion
 
         private void Start()
         {

@@ -12,19 +12,11 @@ namespace Game.Player
      */
     public class PlayerSound : MonoBehaviour
     {
-        #region SerializeFields
-        
         [SerializeField] private AudioClip stepClip;
         [SerializeField] private AudioClip jumpStartSound;
         [SerializeField] private AudioClip jumpEndSound;
 
-        #endregion
-
-        #region PrivateFields
-
         private AudioSource _audio;
-
-        #endregion
 
         private void Awake()
         {
@@ -35,9 +27,15 @@ namespace Game.Player
         {
             _audio.pitch = Random.Range(0.7f, 1.2f);
             var volumeSliders = UI.SettingMenu.VolumeSliders.Get();
-            Assert.IsNotNull(volumeSliders);
-            var effectVolume = volumeSliders.EffectVolume;
-            _audio.volume = Random.Range(effectVolume*0.7f, effectVolume*1.0f);
+            if (!ReferenceEquals(volumeSliders, null))
+            {
+                var effectVolume = volumeSliders.EffectVolume;
+                _audio.volume = Random.Range(effectVolume * 0.7f, effectVolume * 1.0f);
+            }
+            else
+            {
+                _audio.volume = 0.0f;
+            }
         }
 
         public void StepSound()

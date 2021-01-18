@@ -13,15 +13,11 @@ namespace Core
      */
     public class MeumDB : Singleton<MeumDB>
     {
-        #region PrivateFields
-        
         private TextureBuffer _textureBuffer = new TextureBuffer();
         private Object3DBuffer _object3DBuffer = new Object3DBuffer();
         private string _token = "";                                           // API 서버의 authorization token
-        private const string BASE_URL = "https://api.meum.me";                // API 서버의 BASE URL  
-        
-        #endregion
-        
+        private const string BASE_URL = "https://api.meum.me";                // API 서버의 BASE URL
+
         private void Awake()
         {
             base.Awake();

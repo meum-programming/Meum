@@ -14,16 +14,12 @@ namespace Core.Socket {
      */
     public class SceneLoader
     {
-        #region PrivateFields
-        
         private SceneState _state;
         private MonoBehaviour _coroutineCaller;
         private SocketEventHandler.EnteringSuccessEventData _galleryData;
         private SocketEventHandler.SquareEnteringSuccessEventData _squareData;
         private int _playerPk;
         
-        #endregion
-
         public SceneLoader(MonoBehaviour caller, SceneState state)
         {
             _state = state;
@@ -80,7 +76,7 @@ namespace Core.Socket {
         {
             var sceneOpen = SceneManager.LoadSceneAsync("Loading");
             while (!sceneOpen.isDone) yield return null;
-            var progressBar = GameObject.Find("ProgressBar").GetComponent<ProgressBar>();
+            var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
             Assert.IsNotNull(progressBar);
             
             // load demanded artworks
@@ -183,7 +179,7 @@ namespace Core.Socket {
         {
             var sceneOpen = SceneManager.LoadSceneAsync("Loading");
             while (!sceneOpen.isDone) yield return null;
-            var progressBar = GameObject.Find("ProgressBar").GetComponent<ProgressBar>();
+            var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
             
             // load scene
             sceneOpen = SceneManager.LoadSceneAsync("Square");
@@ -219,7 +215,7 @@ namespace Core.Socket {
             
             var sceneOpen = SceneManager.LoadSceneAsync("Loading");
             while (!sceneOpen.isDone) yield return null;
-            var progressBar = GameObject.Find("ProgressBar").GetComponent<ProgressBar>();
+            var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
             
             // load demanded textures
             var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetArtworks());

@@ -12,16 +12,11 @@ namespace Core.Socket
      */
     public class SocketEventHandler
     {
-        #region PrivateFields
-        
         private SocketIOController _socket;
         private SceneState _state;
         private SceneLoader _loader;
-        
         private int _id = -1;
 
-        #endregion
-        
         public SocketEventHandler(SocketIOController socket, 
                                   SceneState state, SceneLoader loader)
         {

@@ -9,8 +9,8 @@ namespace Game.Artwork
 {
     public class ArtworksLoader : MonoBehaviour
     {
-        [SerializeField] private ContentsContainer container2d;
-        [SerializeField] private ContentsContainer container3d;
+        [SerializeField] private UI.ContentViewer.ContentsContainer container2d;
+        [SerializeField] private UI.ContentViewer.ContentsContainer container3d;
 
         private Core.MeumDB.ArtworkInfo[] _artworkInfos;
         private Core.MeumDB.ArtworkInfo[] _purchasedArtworkInfos;

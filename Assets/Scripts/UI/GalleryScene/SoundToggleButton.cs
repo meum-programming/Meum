@@ -36,7 +36,6 @@ namespace UI.GalleryScene
 
         private void Unmute()
         {
-            // AudioListener.volume = 1.0f;
             AudioListener.pause = false;
             image.sprite = enabledImage;
             muted = false;
@@ -44,7 +43,6 @@ namespace UI.GalleryScene
 
         private void Mute()
         {
-            // AudioListener.volume = 0.0f;
             AudioListener.pause = true;
             image.sprite = disabledImage;
             muted = true;

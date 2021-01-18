@@ -11,8 +11,6 @@ namespace Game.Player
     [RequireComponent(typeof(Camera))]
     public class LocalPlayerCamera : MonoBehaviour
     {
-        #region SerializeFields
-        
         [SerializeField] private float sensitivity;
         [SerializeField] private float cameraRotationLimit;
         [SerializeField] private Transform cameraPivot;
@@ -22,28 +20,18 @@ namespace Game.Player
         [SerializeField] private Transform thirdPersonCamTransform;
         [SerializeField] private float switchingDuration;
         
-        #endregion
-
-        #region PublicFields
-        
         public bool IsFirstPersonView { get; private set; }
         public bool IsSwitchingView
         {
             get { return !ReferenceEquals(_switching, null); }
         }
-        
-        #endregion
 
-        #region PrivateFields
-        
         private Vector3 _defaultEulerAngle;
         private Vector3 _cameraRotationDelta;
         private Camera _camera;
         private Transform _transform;
         private IEnumerator _switching = null;
         private bool _isRotateEnabled;
-        
-        #endregion
 
         private void Awake()
         {

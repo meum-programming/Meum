@@ -12,21 +12,13 @@ namespace Game.Player
      */
     public class LocalPlayerRotation : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private Transform cameraPivot;
         [SerializeField] private float sensitivity;
         [SerializeField] private LocalPlayerCamera cameraController;
 
-        #endregion
-
-        #region PrivateFields
-        
         private Transform _transform;
         private bool _isMoving = false;
         private bool _isRotateEnabled = false;
-        
-        #endregion
 
         private void Awake()
         {

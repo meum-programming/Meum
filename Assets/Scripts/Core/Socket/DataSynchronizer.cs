@@ -11,21 +11,13 @@ namespace Core.Socket
      */
     public class DataSynchronizer : Singleton<DataSynchronizer>
     {
-        #region SerializedFields
-        
         [Header("Require Prefabs")] 
         [SerializeField] private List<GameObject> playerPrefabs;
         [SerializeField] private List<GameObject> otherPlayerPrefabs;
-        
-        #endregion
 
-        #region PrivateFields
-        
         private Transform _localPlayer = null;
         private RemotePlayerController[] _remotePlayers = null;
 
-        #endregion
-        
         private void Awake()
         {
             base.Awake();

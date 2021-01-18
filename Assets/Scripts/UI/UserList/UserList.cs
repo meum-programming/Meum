@@ -7,8 +7,6 @@ namespace UI.UserList
 {
     public class UserList : Core.Singleton<UserList>
     {
-        #region SerializedFields
-        
         [SerializeField] private TextMeshProUGUI ownerNameText;
         [SerializeField] private TextMeshProUGUI userCountText;
         [SerializeField] private Button toggleButton;
@@ -18,11 +16,7 @@ namespace UI.UserList
         [SerializeField] private Transform userList;
         [SerializeField] private GameObject userListContentPrefab;
         [SerializeField] private float defaultExpandedHeight;
-        
-        #endregion
 
-        #region PrivateFields
-        
         private struct PlayerInfo
         {
             public string name;
@@ -33,8 +27,6 @@ namespace UI.UserList
         private float _userListContentHeight;
         private float _defaultHeight;
         private RectTransform _rectTransform;
-        
-        #endregion
 
         private void Start()
         {

@@ -42,26 +42,14 @@ namespace Game.Artwork
      */
     public class ArtworkInfo : MonoBehaviour
     {
-        #region SerializedFields
-        
         [SerializeField] public Renderer paintRenderer;
         [SerializeField] public Material mat;
-        
-        #endregion
 
-        #region PublicFields
-        
         public string BannerUrl { get; set; }
         public int ArtworkType => _artworkData.artwork_type;
-        
-        #endregion
-        
-        #region PrivateFields
-        
+
         private ArtworkData _artworkData;
-        
-        #endregion
-        
+
         public ArtworkData GetArtworkData()
         {
             var selfTransform = transform;
@@ -107,28 +95,28 @@ namespace Game.Artwork
         /*
          * @brief UI.Content.data(ArtworkInfo(DB))를 통해 업데이트, BuilderScene에서 새로 설치할때 사용됨
          */
-        public void UpdateWithArtworkContent(UI.Content content)
+        public void UpdateWithArtworkContent(UI.ContentViewer.Content content)
         {
             if (ReferenceEquals(content, null) || 
-                ReferenceEquals(content.image.texture, null)) 
+                ReferenceEquals(content.Image.texture, null)) 
                 return;
 
-            _artworkData.artwork_pk = content.data.primaryKey;
-            _artworkData.artwork_type = content.data.type_artwork;
+            _artworkData.artwork_pk = content.Data.primaryKey;
+            _artworkData.artwork_type = content.Data.type_artwork;
 
             var scale = transform.localScale;
             if (_artworkData.artwork_type == 0)
             {
-                _artworkData.url = content.data.image_file;
+                _artworkData.url = content.Data.image_file;
                 StartCoroutine(LoadTextureCoroutine());
-                scale.x = content.data.size_w;
-                scale.z = content.data.size_h;
+                scale.x = content.Data.size_w;
+                scale.z = content.Data.size_h;
             }
             else if (_artworkData.artwork_type == 1)
             {
-                _artworkData.url = content.data.object_file;
+                _artworkData.url = content.Data.object_file;
                 StartCoroutine(LoadModelCoroutine());
-                scale.x = scale.y = scale.z = content.data.size_w;
+                scale.x = scale.y = scale.z = content.Data.size_w;
             }
             transform.localScale = scale;
             transform.rotation = Quaternion.identity;

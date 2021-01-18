@@ -8,15 +8,11 @@ namespace UI.GuestBook
 {
     public class GuestBook : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private TextMeshProUGUI[] stampCountTexts = new TextMeshProUGUI[4];
         [SerializeField] private Transform contents;
         [SerializeField] private GameObject guestBookContent;
         [SerializeField] private GuestBookWriter writerUi;
         [SerializeField] private InputActionAsset playerInput;
-
-        #endregion
 
         private void Awake()
         {

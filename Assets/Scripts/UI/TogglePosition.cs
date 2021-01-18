@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace UI
 {
-    public class UITogglePosition : MonoBehaviour
+    public class TogglePosition : MonoBehaviour
     {
         [SerializeField] private Vector3 moveOffset;
         [SerializeField] private float moveTime;

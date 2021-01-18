@@ -8,8 +8,6 @@ namespace Core.Socket
      */
     public class SceneState
     {
-        #region PrivateFields
-        
         private enum State
         {
             NotInTheGalleryOrSquare,
@@ -20,8 +18,6 @@ namespace Core.Socket
         }
         private State _currentState;
 
-        #endregion
-        
         public SceneState()
         {
             _currentState = State.NotInTheGalleryOrSquare;

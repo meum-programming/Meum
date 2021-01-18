@@ -10,9 +10,8 @@ namespace UI.GalleryScene
 {
     public class ArtworkDescription : Core.Singleton<ArtworkDescription>
     {
-        #region SerializeFields
-
         [SerializeField] private TabControl tabControl;
+        [SerializeField] private GameObject deleteModal;
         [SerializeField] private InputActionAsset playerInput;
         
         [Header("Description")]
@@ -27,14 +26,9 @@ namespace UI.GalleryScene
         [SerializeField] private Transform list;
         [SerializeField] private GameObject commentPrefab;
         
-        #endregion
-
-        #region PrivateFields
-
         private Core.MeumDB.ArtworkInfo _artworkInfo;
+        private ArtworkDescriptionComment _deletingComment;
 
-        #endregion
-        
         private void Awake()
         {
             base.Awake();
@@ -131,6 +125,25 @@ namespace UI.GalleryScene
             yield return cd.coroutine;
             inputField.text = "";
             StartCoroutine(LoadCommentsCoroutine());
+        }
+
+        public void ShowDeleteModal(ArtworkDescriptionComment comment)
+        {
+            _deletingComment = comment;
+            deleteModal.SetActive(true);
+        }
+
+        public void CloseModal()
+        {
+            _deletingComment = null;
+            deleteModal.SetActive(false);   
+        }
+
+        public void AcceptDelete()
+        {
+            Assert.IsNotNull(_deletingComment);
+            _deletingComment.Delete();
+            CloseModal();
         }
     }
 }

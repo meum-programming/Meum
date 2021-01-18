@@ -39,7 +39,7 @@ namespace UI.GalleryScene
             if (_commentInfo.writer.primaryKey == meumSocket.GetPlayerPk())
             {
                 deleteButton.gameObject.SetActive(true);
-                deleteButton.onClick.AddListener(Delete);
+                deleteButton.onClick.AddListener(ShowDeleteModal);
             }
             else
             {
@@ -47,7 +47,13 @@ namespace UI.GalleryScene
             }
         }
 
-        private void Delete()
+        private void ShowDeleteModal()
+        {
+            Assert.IsNotNull(_descriptionUi);
+            _descriptionUi.ShowDeleteModal(this);
+        }
+
+        public void Delete()
         {
             StartCoroutine(DeleteCoroutine());
         }

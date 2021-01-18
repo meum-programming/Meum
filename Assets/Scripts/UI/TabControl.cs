@@ -1,8 +1,6 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UI
@@ -12,10 +10,7 @@ namespace UI
      */
     public class TabControl : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private bool autoDisable;
-        
         [SerializeField] private Button[] buttons;
         [SerializeField] private TextMeshProUGUI[] buttonTexts;
         [SerializeField] private GameObject[] tabs;
@@ -26,7 +21,6 @@ namespace UI
         [SerializeField] private Color deactivatedColor;
         [SerializeField] private Color deactivatedTextColor;
         
-        #endregion
 
         private void Awake()
         {

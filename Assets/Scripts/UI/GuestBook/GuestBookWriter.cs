@@ -9,8 +9,6 @@ namespace UI.GuestBook
 {
     public class GuestBookWriter : MonoBehaviour
     {
-        #region SerializeFields
-
         [SerializeField] private Color activatedColor;
         [SerializeField] private Color deactivatedColor;
         [SerializeField] private Button[] stampButtons = new Button[4];
@@ -24,14 +22,8 @@ namespace UI.GuestBook
         [SerializeField] private Vector3 contentsHidePosition;
         [SerializeField] private float toggleTime;
 
-        #endregion
-
-        #region PrivateFields
-
         private Vector3 _contentsOriginalPosition;
         private int _currentStampIdx;
-
-        #endregion
 
         private void Awake()
         {

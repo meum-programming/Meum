@@ -11,7 +11,7 @@ namespace UI.BuilderScene
     public class BannerSetting : MonoBehaviour
     {
         [SerializeField] private TMP_InputField urlInputField;
-        [SerializeField] private Content selectedContent;
+        [SerializeField] private UI.ContentViewer.Content selectedContent;
         [SerializeField] private Button applyBtn;
         [SerializeField] private ContentsSidebar sidebar;
         
@@ -20,9 +20,9 @@ namespace UI.BuilderScene
             applyBtn.onClick.AddListener(Apply);
         }
     
-        public void SetSelectedContent(Content content)
+        public void SetSelectedContent(UI.ContentViewer.Content content)
         {
-            selectedContent.data = content.data;
+            selectedContent.Data = content.Data;
         }
 
         private void Apply()

@@ -27,19 +27,11 @@ namespace Game.Artwork
      */
     public class DataJsonSerializer : MonoBehaviour
     {
-        #region SerializedFields
-        
         [SerializeField] public GameObject paintPrefab;
         [SerializeField] public GameObject object3DPrefab;
 
-        #endregion
-        
-        #region PrivateFields
-        
         private string _resetCheckpoint = "";
 
-        #endregion
-        
         /*
          * @brief Awake 함수
          * @details Artwork들이 자식으로 들어가기때문에 Transform을 초기화해줌
