@@ -2,7 +2,7 @@
 using Core;
 using UnityEngine;
 
-namespace UI
+namespace UI.ContentViewer
 {
     public class ContentsContainer : MonoBehaviour
     {
@@ -66,7 +66,7 @@ namespace UI
         public void AddContent(MeumDB.ArtworkInfo data)
         {
             var newContentObj = Instantiate(contentPrefab, transform);
-            newContentObj.GetComponent<Content>().data = data;
+            newContentObj.GetComponent<Content>().Data = data;
             AlignChild();
         }
 
@@ -75,7 +75,7 @@ namespace UI
             foreach(var v in data)
             {
                 var newContentObj = Instantiate(contentPrefab, transform);
-                newContentObj.GetComponent<Content>().data = v;
+                newContentObj.GetComponent<Content>().Data = v;
             }
             AlignChild();
         }

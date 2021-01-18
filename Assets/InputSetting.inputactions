@@ -243,6 +243,14 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
+                    "name": "run",
+                    "type": "Value",
+                    "id": "fc3c886d-784c-4517-b8e8-57282f2188b2",
+                    "expectedControlType": "Digital",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Rotate Enable",
                     "type": "Value",
                     "id": "b4584555-26eb-42ed-883d-54d6140bde38",
@@ -476,6 +484,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Resize Artwork",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cfc647ec-b091-4c7e-9f1c-64e6bcbbd43c",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

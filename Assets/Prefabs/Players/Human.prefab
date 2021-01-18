@@ -273,7 +273,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -2019,7 +2019,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 5
   runSpeed: 8
-  jumpHeight: 2
+  jumpHeight: 1.2
   groundDetectDistance: 0.1
   jumpEndDetectDistance: 0.7
   checkingMask:
@@ -2294,6 +2294,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ca348f39-965e-4618-8b91-39ab555a8130
     m_ActionName: Gallery Scene/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc3c886d-784c-4517-b8e8-57282f2188b2
+    m_ActionName: Builder Scene/run[/Keyboard/shift]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gallery Scene

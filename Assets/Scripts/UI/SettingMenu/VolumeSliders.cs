@@ -10,22 +10,14 @@ namespace UI.SettingMenu
      */
     public class VolumeSliders : Singleton<VolumeSliders>
     {
-        #region SerializeFields
-
         [SerializeField] private Slider masterSlider;
         [SerializeField] private Slider effectSlider;
         [SerializeField] private Slider bgmSlider;
-        
-        #endregion
-        
-        #region PublicFields
-        
+
         public float MasterVolume { get; private set; }
         public float EffectVolume { get; private set; }
         public float BgmVolume { get; private set; }
-        
-        #endregion
-        
+
         private void Awake()
         {
             base.Awake();
@@ -41,8 +33,6 @@ namespace UI.SettingMenu
             AudioListener.volume = MasterVolume = masterSlider.value;
             EffectVolume = effectSlider.value;
             BgmVolume = bgmSlider.value;
-            
-            Debug.Log("sliders awake");
         }
 
         private void OnMasterSliderValueChanged(float val)

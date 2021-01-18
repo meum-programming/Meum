@@ -13,19 +13,13 @@ namespace Game.Builder.Camera
      */
     public class CameraMove : MonoBehaviour
     {
-        #region SerializeFields
-        
         [SerializeField] private float speed;
+        [SerializeField] private float runSpeed;
         [SerializeField] private Transform camera;
         [SerializeField] private BuilderSceneVerifyModals verifyModalManager;
-        
-        #endregion
-
-        #region PrivateFields
 
         private Vector3 _moveVector;
-
-        #endregion
+        private bool _running;
 
         private void Start()
         {
@@ -49,7 +43,7 @@ namespace Game.Builder.Camera
                             camera.forward * _moveVector.y;
             direction.Normalize();
 
-            var delta = direction * (speed * Time.deltaTime);
+            var delta = direction * ((_running ? runSpeed : speed) * Time.deltaTime);
             transform.Translate(delta, Space.World);
         }
 
@@ -57,6 +51,12 @@ namespace Game.Builder.Camera
         {
             var value = ctx.ReadValue<Vector2>();
             _moveVector = value;
+        }
+        
+        public void OnRun(InputAction.CallbackContext ctx)
+        {
+            var value = ctx.ReadValue<float>();
+            _running = value > 0.5f;    // value is 1 or 0 (float)
         }
     }
 }

@@ -12,16 +12,11 @@ namespace Core.Socket
      */
     public class SocketEventHandler
     {
-        #region PrivateFields
-        
         private SocketIOController _socket;
         private SceneState _state;
         private SceneLoader _loader;
-        
         private int _id = -1;
 
-        #endregion
-        
         public SocketEventHandler(SocketIOController socket, 
                                   SceneState state, SceneLoader loader)
         {
@@ -140,14 +135,17 @@ namespace Core.Socket
             if (_state.IsInGallery() || _state.IsInSquare())
             {
                 var data = JsonConvert.DeserializeObject<ChattingData>(e.data);
+                if (data.type == 1 && !(data.target == _id || data.id == _id))
+                    return;
+                
                 Assert.IsTrue(UI.ChattingUI.ChattingUI.InstanceExist());
 
-                string nickname = "";
+                var nickname = "";
                 if (_id == data.id)
                     nickname = MeumSocket.Get().LocalPlayerInfo.nickname;
                 else
                     nickname = DataSynchronizer.Get().Id2Nickname(data.id);
-                UI.ChattingUI.ChattingUI.Get().AddMessage(nickname, data.message, data.id == _id);
+                UI.ChattingUI.ChattingUI.Get().AddMessage(nickname, data.message, data.id == _id, data.type);
             }
         }
         #endregion
@@ -213,6 +211,8 @@ namespace Core.Socket
         {
             public int id;
             public string message;
+            public int type;
+            public int target;
         }
         #endregion
     }

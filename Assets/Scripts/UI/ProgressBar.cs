@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ProgressBar : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private RectTransform progress;
-
-    public void SetProgress(float v)
+    public class ProgressBar : MonoBehaviour
     {
-        v = Mathf.Clamp(v, 0, 1);
-        var localScale = progress.localScale;
-        localScale.x = v;
-        progress.localScale = localScale;
-    }
+        [SerializeField] private RectTransform progress;
 
-    public float GetProgress()
-    {
-        return progress.localScale.x;
+        public void SetProgress(float v)
+        {
+            v = Mathf.Clamp(v, 0, 1);
+            var localScale = progress.localScale;
+            localScale.x = v;
+            progress.localScale = localScale;
+        }
+
+        public float GetProgress()
+        {
+            return progress.localScale.x;
+        }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UI;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.BuilderScene
@@ -13,23 +9,11 @@ namespace UI.BuilderScene
     [RequireComponent(typeof(Button))]
     public class SidebarToggleButton : MonoBehaviour
     {
-        #region SerializeFields
-        
-        [SerializeField] private UITogglePosition togglePosition;
+        [SerializeField] private TogglePosition togglePosition;
 
-        #endregion
-        
-        #region PublicFields
-        
         public bool toggled => transform.localScale.x < 0;
-        
-        #endregion
-        
-        #region PrivateFields
-        
+
         private Button _button;
-        
-        #endregion
 
         public void InvokeButton()
         {

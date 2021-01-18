@@ -12,15 +12,9 @@ namespace Core.Socket
      */
     public class RemotePlayerController : MonoBehaviour
     {
-        #region SerializedFields
-        
         [SerializeField] private float lerpTime;
         [SerializeField] private Renderer playerRenderer;
         [SerializeField] private Text nicknameField;
-
-        #endregion
-
-        #region PublicFields
         
         [NonSerialized] public int UserPrimaryKey;
         public string Nickname
@@ -32,11 +26,7 @@ namespace Core.Socket
             }
         }
         private string _nickname;
-        
-        #endregion
-        
-        #region PrivateFields
-        
+
         private Vector3 _posOrigin;
         private Vector3 _posDest;
         private Quaternion _rotOrigin = Quaternion.identity;
@@ -44,8 +34,6 @@ namespace Core.Socket
         private float _lerpVal = 0.0f;
         private Transform _transform;
         private Animator _animator;
-        
-        #endregion
 
         private void Awake()
         {

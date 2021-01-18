@@ -1,40 +1,25 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-public class BillBoard : MonoBehaviour
+namespace UI
 {
-    private Transform _cam;
-    private IEnumerator _searchMainCamCoroutine;
-
-    private void Start()
+    public class BillBoard : MonoBehaviour
     {
-        // StartCoroutine(SearchCamCoroutine());
-    }
+        private Transform _cam;
+        private IEnumerator _searchMainCamCoroutine;
 
-    // private IEnumerator SearchCamCoroutine()
-    // {
-    //     while (_cam == null)
-    //     {
-    //         var mainCam = Camera.main;
-    //         if (mainCam != null)
-    //         {
-    //             _cam = mainCam.transform;
-    //             break;
-    //         }
-    //
-    //         yield return null;
-    //     }
-    // }
-
-    private void LateUpdate()
-    {
-        if (_cam == null)
+        private void LateUpdate()
         {
-            var mainCam = Camera.main;
-            if (mainCam != null)
-                _cam = mainCam.transform;
+            if (ReferenceEquals(_cam, null))
+            {
+                var mainCam = Camera.main;
+                if (!ReferenceEquals(mainCam, null))
+                    _cam = mainCam.transform;
+                else
+                    return;
+            }
+
+            transform.LookAt(transform.position + _cam.forward);
         }
-        transform.LookAt(transform.position + _cam.forward);
     }
 }

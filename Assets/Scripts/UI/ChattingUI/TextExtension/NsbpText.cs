@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
 
 namespace UI.ChattingUI.TextExtension
 {
-    public class NsbpText : Text
+    public class NsbpText : TextMeshProUGUI
     {
         public override string text
         {

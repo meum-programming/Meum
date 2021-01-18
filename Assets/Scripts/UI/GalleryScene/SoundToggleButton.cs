@@ -1,53 +1,51 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundToggleButton : MonoBehaviour
+namespace UI.GalleryScene
 {
-    [SerializeField] private Sprite enabledImage;
-    [SerializeField] private Sprite disabledImage;
-    
-    public bool muted { get; private set; } = false;
-    private Image _image;
-
-    private void Awake()
+    public class SoundToggleButton : MonoBehaviour
     {
-        var btn = GetComponent<Button>();
-        btn.onClick.AddListener(ButtonAction);
+        [SerializeField] private Sprite enabledImage;
+        [SerializeField] private Sprite disabledImage;
+        [SerializeField] private Image image;
 
-        _image = GetComponent<Image>();
+        public bool muted { get; private set; } = false;
 
-        if (AudioListener.volume < 1e-3)
-            Mute();
-        else
-            Unmute();
-    }
-
-    private void ButtonAction()
-    {
-        if (muted)
+        private void Awake()
         {
-            Unmute();
+            var btn = GetComponent<Button>();
+            btn.onClick.AddListener(ButtonAction);
+
+            if (AudioListener.volume < 1e-3)
+                Mute();
+            else
+                Unmute();
         }
-        else
+
+        private void ButtonAction()
         {
-            Mute();
+            if (muted)
+            {
+                Unmute();
+            }
+            else
+            {
+                Mute();
+            }
+        }
+
+        private void Unmute()
+        {
+            AudioListener.pause = false;
+            image.sprite = enabledImage;
+            muted = false;
+        }
+
+        private void Mute()
+        {
+            AudioListener.pause = true;
+            image.sprite = disabledImage;
+            muted = true;
         }
     }
-
-    private void Unmute()
-    {
-        // AudioListener.volume = 1.0f;
-        AudioListener.pause = false;
-        _image.sprite = enabledImage;
-        muted = false;
-    }
-
-    private void Mute()
-    {
-        // AudioListener.volume = 0.0f;
-        AudioListener.pause = true;
-        _image.sprite = disabledImage;
-        muted = true;
-    }
-    
 }

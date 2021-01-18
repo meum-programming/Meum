@@ -14,13 +14,8 @@ namespace Game.Player
                      typeof(PlayerAnimationController))]
     public class LocalPlayerMove : MonoBehaviour
     {
-        #region Constants
-        
         private const float GRAVITY = 9.8f;
         
-        #endregion
-        
-        #region SerializeFields
         
         [SerializeField] private float walkSpeed;
         [SerializeField] private float runSpeed;
@@ -31,22 +26,14 @@ namespace Game.Player
         [SerializeField] private float jumpEndDetectDistance = 0.7f;
         [SerializeField] private LayerMask checkingMask;
         
-        #endregion
-
-        #region PrivateFields
-        
         private Vector3 _colliderCenterPos;
         private float _distFromColliderCenterToGround;
-
         private CharacterController _charController;
         private PlayerAnimationController _animController;
-
         private Vector3 _moveVector = Vector3.zero;
         private float _velocityY;
         private bool _running = false;
-        
-        #endregion
-        
+
         private void Awake()
         {
             _charController = GetComponent<CharacterController>();
@@ -85,7 +72,7 @@ namespace Game.Player
                             selfTransform.forward * _moveVector.y;
             direction.Normalize();
 
-            var delta = Vector3.up * _velocityY + direction * walkSpeed;
+            var delta = Vector3.up * _velocityY + direction * (_running ? runSpeed : walkSpeed);
             _charController.Move(delta * Time.deltaTime);
         }
 

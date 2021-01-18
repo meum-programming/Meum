@@ -1,5 +1,6 @@
 ﻿using Game.Artwork;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace UI.BuilderScene
 {
@@ -8,19 +9,19 @@ namespace UI.BuilderScene
      */
     public class PlacerActionSelector : MonoBehaviour
     {
-        #region SerializeFields
-        
         [SerializeField] private ArtworkPlacer artworkPlacer;
         [SerializeField] private Camera cam;
+        [SerializeField] private LinkModal linkModal;
 
-        #endregion
-        
-        #region PrivateFields
-        
         private Transform _selected;
 
-        #endregion
-        
+        private void Awake()
+        {
+            Assert.IsNotNull(artworkPlacer);
+            Assert.IsNotNull(cam);
+            Assert.IsNotNull(linkModal);
+        }
+
         private void Update()
         {
             var pos = cam.WorldToScreenPoint(_selected.transform.position);
@@ -42,6 +43,21 @@ namespace UI.BuilderScene
             
             gameObject.SetActive(false);
             _selected = null;
+        }
+
+        public void OnRotateButton()
+        {
+            artworkPlacer.RotateSelected();
+        }
+
+        public void OnLinkButton()
+        {
+            var selected = artworkPlacer.GetSelected();
+            Assert.IsNotNull(selected);
+            var artworkInfo = selected.GetComponent<ArtworkInfo>();
+            Assert.IsNotNull(artworkInfo);
+            
+            linkModal.Show(artworkInfo);
         }
 
         public void OnDeleteButton()

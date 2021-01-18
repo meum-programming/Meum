@@ -51,8 +51,8 @@ namespace Game.Player
             yield return cd.coroutine;
             var artworkInfo = cd.result as Core.MeumDB.ArtworkInfo;
             Assert.IsNotNull(artworkInfo);
-
-            var artworkDescriptionUi = UI.ArtworkDescription.Get();
+            
+            var artworkDescriptionUi = UI.GalleryScene.ArtworkDescription.Get();
             Assert.IsNotNull(artworkDescriptionUi);
             artworkDescriptionUi.SetDescription(artworkInfo);
             artworkDescriptionUi.Show();

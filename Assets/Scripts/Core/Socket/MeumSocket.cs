@@ -14,32 +14,20 @@ namespace Core.Socket
      */
     public class MeumSocket : Singleton<MeumSocket>
     {
-        #region SerializedFields
-        
         [Header("Connection Info")] 
         [SerializeField] private float sendInterval;
 
-        #endregion
-        
-        #region PublicFields
-        
         /*
          * @brief LocalPlayer의 UserInfo(DB)를 담고있음
          */
         public MeumDB.UserInfo LocalPlayerInfo { get; private set; } = null;
-        
-        #endregion
-        
-        #region PrivateFields
-        
+
         private float _sendIntervalCounter = 0.0f;
         private SocketIOController _socket;
         private SceneState _state;
         private SceneLoader _loader;
         private SocketEventHandler _eventHandler;
 
-        #endregion
-        
         private void Init()
         {
             _socket = GetComponent<SocketIOController>();
@@ -82,10 +70,30 @@ namespace Core.Socket
         {
             return _eventHandler.GetLocalPlayerId();
         }
+        
+        /*
+         * LocalPlayer의 UserInfo(DB)의 primaryKey를 반환
+         */
+        public int GetPlayerPk()
+        {
+            return _loader.GetPlayerPk();
+        }
+        
+        public int GetRoomId()
+        {
+            return _loader.GetRoomId();
+        }
+
+        public bool IsInRoomOwn()
+        {
+            return _state.IsSubOfGalleryOwn();
+        }
 
         public void GoToEditScene()
         {
             Assert.IsTrue(_state.IsSubOfGalleryOwn());
+            if (!_state.IsSubOfGalleryOwn())
+                return;
             _loader.LoadEditScene();
         }
 
@@ -191,9 +199,11 @@ namespace Core.Socket
             _socket.Emit("broadcastUpdateArtworks");
         }
 
-        public void BroadCastChatting(string message)
+        public void BroadCastChatting(int type, int target, string message)
         {
             BroadCastChattingData data;
+            data.type = type;
+            data.target = target;
             data.message = message;
             _socket.Emit("broadCastChatting", JsonConvert.SerializeObject(data));
         }
@@ -239,6 +249,8 @@ namespace Core.Socket
 
         private struct BroadCastChattingData
         {
+            public int type;
+            public int target;
             public string message;
         }
         #endregion

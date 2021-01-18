@@ -9,11 +9,7 @@ namespace Game
     [RequireComponent(typeof(AudioSource))]
     public class BgmVolumeControl : MonoBehaviour
     {
-        #region PrivateFields
-        
         private AudioSource _audio;
-        
-        #endregion
 
         private void Awake()
         {

@@ -9,20 +9,12 @@ namespace Game.Builder.Camera
      */
     public class CameraRotation : MonoBehaviour
     {
-        #region SerializeFields
-        
         [SerializeField] private float sensitivity;
         [SerializeField] private Transform camera;
         [SerializeField] private BuilderSceneVerifyModals verifyModalManager;
-        
-        #endregion
-
-        #region PrivateFields
 
         private bool _isRotateEnabled = false;
 
-        #endregion
-        
         private void Start()
         {
             ResetRotation();

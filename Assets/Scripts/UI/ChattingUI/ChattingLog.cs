@@ -1,37 +1,36 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChattingLog : MonoBehaviour
+namespace UI.ChattingUI
 {
-    [SerializeField] private Text content;
-    [SerializeField] private RawImage profileImage;
-    private RectTransform _transform;
-
-    public bool isMe { get; private set; } = true;
-
-    public float height => _transform.sizeDelta.y;
-
-    // private const int defaultHeight = 65;
-    // private const int oneLineHeight = 22;
-
-    private void Awake()
+    public class ChattingLog : MonoBehaviour
     {
-        _transform = GetComponent<RectTransform>();
-    }
+        [SerializeField] private TextMeshProUGUI nickname;
+        [SerializeField] private TextMeshProUGUI content;
+        [SerializeField] private Image badgeImage;
+        [SerializeField] private Color[] colorByTypes;
 
-    public void SetData(string senderStr, string contentStr, bool isMe)
-    {
-        if(ReferenceEquals(_transform, null))
+        private RectTransform _transform;
+
+        private void Awake()
+        {
             _transform = GetComponent<RectTransform>();
-        content.text = senderStr + ": " + contentStr;
-        this.isMe = isMe;
-        
-        var sizeDelta = _transform.sizeDelta;
-        sizeDelta.y = content.preferredHeight + 6.0f;
-        Debug.Log(sizeDelta.y);
-        _transform.sizeDelta = sizeDelta;
+        }
+
+        public void SetData(string senderStr, string contentStr, int type)
+        {
+            if (ReferenceEquals(_transform, null))
+                _transform = GetComponent<RectTransform>();
+            nickname.text = senderStr;
+            content.text = contentStr;
+
+            nickname.color = colorByTypes[type];
+            content.color = colorByTypes[type];
+
+            var sizeDelta = _transform.sizeDelta;
+            sizeDelta.y = content.preferredHeight;
+            _transform.sizeDelta = sizeDelta;
+        }
     }
 }

@@ -12,7 +12,10 @@ namespace Game.Artwork
      */
     public class ArtworkPlacer : MonoBehaviour
     {
-        #region SerializedFields
+        
+        [SerializeField] private SidebarToggleButton toggleButton;
+        [SerializeField] private PlacerActionSelector actionSelector;
+        [SerializeField] private BuilderSceneVerifyModals verifyModalManager;
         
         [Header("Placing Info")]
         [SerializeField] private GameObject paintPrefab;
@@ -20,38 +23,34 @@ namespace Game.Artwork
         [SerializeField] private Camera cam;
         [SerializeField] private float snapGridSizeY;
 
-        [Header("Referencing Objs")]
-        [SerializeField] private SidebarToggleButton toggleButton;
-        [SerializeField] private PlacerActionSelector actionSelector;
-        [SerializeField] private BuilderSceneVerifyModals verifyModalManager;
-        
         [Header("Image scaling")] 
         [SerializeField] private float scaleFactor;
         [SerializeField] private float scaleLimit;
-        
-        #endregion
-        
-        #region PrivateFields
-        
+
         private float _nowScale = 0.5f;
         private float _defaultScaleZ = 0.0f;
-
         private Transform _selected = null;
         private bool _moving = false;
         private bool _nowEditing3D = false;
-        
-        #endregion
+
+        /*
+         * @brief 선택한 오브젝트를 반환 
+         */
+        public Transform GetSelected()
+        {
+            return _selected;
+        }
         
         /*
          * @brief 선택된 UI.Content에 해당하는 Artwork 오브젝트를 생성
          */
-        public void CreateSelected(UI.Content data)
+        public void CreateSelected(UI.ContentViewer.Content data)
         {
             Vector3 pos = Mouse.current.position.ReadValue();
             pos.z = -10.0f;
             pos = cam.ScreenToWorldPoint(pos);
 
-            _nowEditing3D = data.data.type_artwork == 1;
+            _nowEditing3D = data.Data.type_artwork == 1;
             _selected = Instantiate(_nowEditing3D ? object3DPrefab : paintPrefab, pos, Quaternion.identity, transform).transform;
             Assert.IsNotNull(_selected);
             var artworkInfo = _selected.GetComponent<ArtworkInfo>();
@@ -64,9 +63,9 @@ namespace Game.Artwork
         /*
          * @brief 선택된 UI.Content에 해당하는 2D Artwork 오브젝트를 배너로 생성
          */
-        public void CreateSelectedBanner(UI.Content data, string url)
+        public void CreateSelectedBanner(UI.ContentViewer.Content data, string url)
         {
-            Assert.IsTrue(data.data.type_artwork == 0);
+            Assert.IsTrue(data.Data.type_artwork == 0);
             
             Vector3 pos = Mouse.current.position.ReadValue();
             pos.z = -10.0f;
@@ -125,6 +124,14 @@ namespace Game.Artwork
                 StopMovingObj();
                 Destroy(_selected.gameObject);
                 _selected = null;
+            }
+        }
+
+        public void RotateSelected()
+        {
+            if (_selected)
+            {
+                _selected.rotation = Quaternion.Euler(_selected.up * 90.0f) * _selected.rotation;
             }
         }
         

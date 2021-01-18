@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -9,18 +10,19 @@ namespace UI.BuilderScene
      */
     public class BannerSetting : MonoBehaviour
     {
-        [SerializeField] private InputField urlInputField;
-        [SerializeField] private Content selectedContent;
+        [SerializeField] private TMP_InputField urlInputField;
+        [SerializeField] private UI.ContentViewer.Content selectedContent;
         [SerializeField] private Button applyBtn;
+        [SerializeField] private ContentsSidebar sidebar;
         
         private void Awake()
         {
             applyBtn.onClick.AddListener(Apply);
         }
     
-        public void SetSelectedContent(Content content)
+        public void SetSelectedContent(UI.ContentViewer.Content content)
         {
-            selectedContent.data = content.data;
+            selectedContent.Data = content.Data;
         }
 
         private void Apply()
@@ -28,6 +30,7 @@ namespace UI.BuilderScene
             var placer = GameObject.Find("Artworks").GetComponent<Game.Artwork.ArtworkPlacer>();
             Assert.IsNotNull(placer);
             placer.CreateSelectedBanner(selectedContent, urlInputField.text);
+            sidebar.Object2DState();
         }
     }
 }

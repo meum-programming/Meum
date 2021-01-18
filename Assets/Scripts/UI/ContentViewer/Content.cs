@@ -1,24 +1,33 @@
 ﻿using Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace UI.ContentViewer
 {
     public class Content : MonoBehaviour
     {
-        public Text name;
-        public RawImage image;
+        [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private RawImage image;
+        [SerializeField] private int titleMaxLength;
 
-        public MeumDB.ArtworkInfo data
+        public MeumDB.ArtworkInfo Data
         {
             get { return _data; }
             set
             {
                 _data = value;
-                name.text = _data.title;
+                var titleText = _data.title;
+                if (titleText.Length >= titleMaxLength)
+                {
+                    titleText = titleText.Substring(0, titleMaxLength);
+                    titleText += "...";
+                }
+                title.text = titleText;
                 LoadImage();
             }
         }
+        public RawImage Image => image;
         
         private MeumDB.ArtworkInfo _data;
 

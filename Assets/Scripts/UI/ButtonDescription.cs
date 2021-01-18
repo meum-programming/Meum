@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ButtonDescription : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private GameObject descriptionObj;
-
-    private void Awake()
+    public class ButtonDescription : MonoBehaviour
     {
-        descriptionObj.SetActive(false);
-    }
+        [SerializeField] private GameObject descriptionObj;
 
-    public void Show()
-    {
-        descriptionObj.SetActive(true);
-    }
+        private void Awake()
+        {
+            descriptionObj.SetActive(false);
+        }
 
-    public void Hide()
-    {
-        descriptionObj.SetActive(false);
+        public void Show()
+        {
+            descriptionObj.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            descriptionObj.SetActive(false);
+        }
     }
 }
