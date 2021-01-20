@@ -45,7 +45,7 @@ namespace Game.Artwork
         [SerializeField] public Renderer paintRenderer;
         [SerializeField] public Material mat;
 
-        public string BannerUrl { get; set; }
+        [HideInInspector] public string bannerUrl;
         public int ArtworkType => _artworkData.artwork_type;
 
         private ArtworkData _artworkData;
@@ -56,7 +56,7 @@ namespace Game.Artwork
             _artworkData.position = selfTransform.localPosition;
             _artworkData.eulerAngle = selfTransform.localEulerAngles;
             _artworkData.scale = selfTransform.localScale;
-            _artworkData.bannerUrl = BannerUrl;
+            _artworkData.bannerUrl = bannerUrl;
             return _artworkData;
         }
         
@@ -84,7 +84,7 @@ namespace Game.Artwork
             selfTransform.localScale = data.scale;
 
             _artworkData = data;
-            BannerUrl = data.bannerUrl;
+            bannerUrl = data.bannerUrl;
             
             if (data.artwork_type == 0)
                 StartCoroutine(LoadTextureCoroutine());

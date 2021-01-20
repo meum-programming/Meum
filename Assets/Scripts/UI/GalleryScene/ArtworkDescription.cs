@@ -3,6 +3,7 @@ using TMPro;
 using UI.ChattingUI.TextExtension;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
@@ -144,6 +145,19 @@ namespace UI.GalleryScene
             Assert.IsNotNull(_deletingComment);
             _deletingComment.Delete();
             CloseModal();
+        }
+        
+        public void OnEndEdit()
+        {
+            if (!EventSystem.current.alreadySelecting)
+            {
+                PostComment();
+                inputField.ActivateInputField();
+            }
+            else
+            {
+                inputField.GetComponent<WebGLSupport.WebGLInput>().DeactivateInputField();
+            }
         }
     }
 }

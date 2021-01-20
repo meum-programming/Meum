@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0.8
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ec3b7573c0550254888bd2a138c9c65b, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: b6c9329c7bf2d4e7d89f3ee71506bcac, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -461,7 +461,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1}
+  m_SizeDelta: {x: 0, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &75092975
 MonoBehaviour:
@@ -1334,8 +1334,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -4.999999}
-  m_SizeDelta: {x: -10, y: -14.000001}
+  m_AnchoredPosition: {x: 0, y: -1.499999}
+  m_SizeDelta: {x: -10, y: -7.000001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &268596307
 MonoBehaviour:
@@ -4368,6 +4368,7 @@ GameObject:
   - component: {fileID: 944232176}
   - component: {fileID: 944232179}
   - component: {fileID: 944232178}
+  - component: {fileID: 944232180}
   - component: {fileID: 944232177}
   m_Layer: 5
   m_Name: InputField (TMP)
@@ -4487,7 +4488,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: b81d3e1d762056d4cb38443e29304770, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -4532,6 +4533,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 944232175}
   m_CullTransparentMesh: 0
+--- !u!114 &944232180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944232175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc33a39070010f94fb1c2dd721c1286d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showHtmlElement: 0
 --- !u!1 &945338951
 GameObject:
   m_ObjectHideFlags: 0
@@ -4803,8 +4817,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b81d3e1d762056d4cb38443e29304770, type: 2}
+  m_sharedMaterial: {fileID: -8481388929621703346, guid: b81d3e1d762056d4cb38443e29304770, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8436,7 +8450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5174549088773532235, guid: b93fcfb0c264c104a959008bd2b19138, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5174549088773532235, guid: b93fcfb0c264c104a959008bd2b19138, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8923,8 +8937,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b81d3e1d762056d4cb38443e29304770, type: 2}
+  m_sharedMaterial: {fileID: -8481388929621703346, guid: b81d3e1d762056d4cb38443e29304770, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10253,6 +10267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   urlInputField: {fileID: 944232177}
   checkObject: {fileID: 245838296}
+  playerInput: {fileID: -944628639613478452, guid: deb4b60f012fb0f44a256c38f4bec7d2, type: 3}
 --- !u!1 &2078008488
 GameObject:
   m_ObjectHideFlags: 0
@@ -10284,13 +10299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 278234557236eac46bc5de68bff52556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggleButton: {fileID: 434081468}
+  actionSelector: {fileID: 929547811}
+  verifyModalManager: {fileID: 1549710064}
   paintPrefab: {fileID: 2688551444214508632, guid: d2a5fc7abab86d64482f0777677eb382, type: 3}
   object3DPrefab: {fileID: 5895836382571493856, guid: 3d7bfbc6764375b4eb3d48d2f5d21273, type: 3}
   cam: {fileID: 92377507}
   snapGridSizeY: 0.5
-  toggleButton: {fileID: 434081468}
-  actionSelector: {fileID: 929547811}
-  verifyModalManager: {fileID: 1549710064}
   scaleFactor: 1
   scaleLimit: 2
 --- !u!4 &2078008490

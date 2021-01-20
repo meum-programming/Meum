@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
@@ -32,6 +33,7 @@ namespace Game.Player
         private Transform _transform;
         private IEnumerator _switching = null;
         private bool _isRotateEnabled;
+        private float _thirdPersonCamDistance;
 
         private void Awake()
         {
@@ -47,8 +49,31 @@ namespace Game.Player
             _transform.localRotation = thirdPersonCamTransform.localRotation;
             _defaultEulerAngle = _transform.localEulerAngles;
             _camera.cullingMask = ~0;
+
+            _thirdPersonCamDistance = (cameraPivot.position - thirdPersonCamTransform.position).magnitude;
         }
-        
+
+        private void Update()
+        {
+            if (!IsFirstPersonView)
+            {
+                RaycastHit hit;
+                var rayDir = (thirdPersonCamTransform.position - cameraPivot.position).normalized;
+                var layerMask = 1 << LayerMask.NameToLayer("LocalPlayer") | 1 << LayerMask.NameToLayer("RemotePlayer");
+                layerMask = ~layerMask;
+                if (Physics.Raycast(cameraPivot.position, rayDir, out hit, _thirdPersonCamDistance, layerMask))
+                {
+                    var cameraPosition = cameraPivot.position + rayDir * hit.distance * 0.96f;
+                    cameraPosition.y = thirdPersonCamTransform.position.y;
+                    _camera.transform.position = cameraPosition;
+                }
+                else
+                {
+                    _transform.position = cameraPivot.position + rayDir * _thirdPersonCamDistance;
+                }
+            }
+        }
+
         public void OnRotate(InputAction.CallbackContext ctx)
         {
             if (IsSwitchingView) return;    // 인칭 전환중이라면 아무것도 안함
@@ -62,7 +87,9 @@ namespace Game.Player
                 cameraRotationLimit);
 
             if (!IsFirstPersonView)
+            {
                 cameraPivot.Rotate(Vector3.up, value.x * sensitivity);
+            }
 
             var newCameraRotation = _defaultEulerAngle;
             newCameraRotation += _cameraRotationDelta;

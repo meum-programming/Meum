@@ -354,11 +354,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorPrefabs:
-  - {fileID: 9050478193926011379, guid: 41ad0c826ed2c2748889027d4eaaa4d2, type: 3}
+  - {fileID: 8266742639423753298, guid: 5ca1a2d5f80d9d24b9e6fe45892030fe, type: 3}
   - {fileID: 1442819567479109226, guid: 2e3e05e27328663499d376df130a5b1e, type: 3}
   - {fileID: 9070464549837300298, guid: 8cb176001b0d92548bff1e688aa841ad, type: 3}
   - {fileID: 7579459698209365305, guid: 8b3c0294c0d903f4aa70ea09b837e0ca, type: 3}
   - {fileID: 4030194005475324818, guid: 21bf3672c2f2f7c4bb36e05d61ca4f72, type: 3}
   - {fileID: 8512949799821195839, guid: 959adb21cecff0d4caabfe9eca53f2bf, type: 3}
+  - {fileID: 6003056252023715544, guid: a1bf6b97149344a408d39968f1761429, type: 3}
+  - {fileID: 0}
+  - {fileID: 9050478193926011379, guid: 41ad0c826ed2c2748889027d4eaaa4d2, type: 3}
   wallPrefab: {fileID: 5020865614187686739, guid: be63466724c2baa49a00a60829cf251c, type: 3}
-  edge_length: 40
+  edgeLength: 40
