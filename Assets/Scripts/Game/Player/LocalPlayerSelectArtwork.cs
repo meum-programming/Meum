@@ -28,13 +28,13 @@ namespace Game.Player
                 {
                     var artworkInfo = hit.transform.GetComponent<Artwork.ArtworkInfo>();
 #if UNITY_WEBGL
-                    if (artworkInfo.BannerUrl != "")
+                    if (artworkInfo.bannerUrl != "")
                     {
-                        Debug.Log(artworkInfo.BannerUrl);
-                        OpenURLNewTab(artworkInfo.BannerUrl);
+                        Debug.Log(artworkInfo.bannerUrl);
+                        OpenURLNewTab(artworkInfo.bannerUrl);
                     }
 #endif
-                    if (artworkInfo.BannerUrl == "")
+                    if (artworkInfo.bannerUrl == "")
                     {
                         StartCoroutine(SetArtworkDescription(artworkInfo));
                     }

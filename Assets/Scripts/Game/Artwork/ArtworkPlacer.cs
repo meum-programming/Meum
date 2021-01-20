@@ -76,7 +76,7 @@ namespace Game.Artwork
             var paintInfo = _selected.GetComponent<ArtworkInfo>();
             Assert.IsNotNull(paintInfo);
             paintInfo.UpdateWithArtworkContent(data);
-            paintInfo.BannerUrl = url;
+            paintInfo.bannerUrl = url;
 
             StartMovingObj();
         }
