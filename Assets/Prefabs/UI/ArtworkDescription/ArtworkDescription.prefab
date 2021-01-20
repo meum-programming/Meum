@@ -3458,6 +3458,7 @@ GameObject:
   - component: {fileID: 9068767891450939322}
   - component: {fileID: 9068767891450939316}
   - component: {fileID: 9068767891450939323}
+  - component: {fileID: 910986324742896654}
   m_Layer: 5
   m_Name: ArtworkDescription
   m_TagString: Untagged
@@ -3501,7 +3502,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabControl: {fileID: 3211212721817546480}
   deleteModal: {fileID: 1759174803971951457}
-  playerInput: {fileID: -944628639613478452, guid: deb4b60f012fb0f44a256c38f4bec7d2, type: 3}
   title: {fileID: 5303612704709028622}
   author: {fileID: 8875151544377514029}
   year: {fileID: 3692296556781211686}
@@ -3548,6 +3548,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &910986324742896654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9068767891450939320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48547e59ae6f84a46b7ae7a88c15172e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInput: {fileID: -944628639613478452, guid: deb4b60f012fb0f44a256c38f4bec7d2, type: 3}
 --- !u!1 &9068767891512949069
 GameObject:
   m_ObjectHideFlags: 0

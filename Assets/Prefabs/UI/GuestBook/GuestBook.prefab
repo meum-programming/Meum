@@ -3146,6 +3146,7 @@ GameObject:
   - component: {fileID: 6507349364849361270}
   - component: {fileID: 661023153792739488}
   - component: {fileID: 7293164457740966552}
+  - component: {fileID: 7724682494315554385}
   m_Layer: 5
   m_Name: GuestBook
   m_TagString: Untagged
@@ -3202,6 +3203,18 @@ MonoBehaviour:
   contents: {fileID: 2055714130464209208}
   guestBookContent: {fileID: 2058568546884942738, guid: 7e2917c026f06024f96c189fd93ba21a, type: 3}
   writerUi: {fileID: 5088111232656736568}
+--- !u!114 &7724682494315554385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507349364849361269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48547e59ae6f84a46b7ae7a88c15172e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   playerInput: {fileID: -944628639613478452, guid: deb4b60f012fb0f44a256c38f4bec7d2, type: 3}
 --- !u!1 &6543791283166886546
 GameObject:
