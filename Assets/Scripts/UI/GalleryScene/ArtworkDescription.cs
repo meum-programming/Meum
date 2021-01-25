@@ -13,7 +13,6 @@ namespace UI.GalleryScene
     {
         [SerializeField] private TabControl tabControl;
         [SerializeField] private GameObject deleteModal;
-        [SerializeField] private InputActionAsset playerInput;
         
         [Header("Description")]
         [SerializeField] private TextMeshProUGUI title;
@@ -39,7 +38,6 @@ namespace UI.GalleryScene
         private void Init()
         {
             Assert.IsNotNull(tabControl);
-            Assert.IsNotNull(playerInput);
             Assert.IsNotNull(title);
             Assert.IsNotNull(author);
             Assert.IsNotNull(year);
@@ -59,7 +57,6 @@ namespace UI.GalleryScene
         {
             gameObject.SetActive(false);
             _artworkInfo = null;
-            playerInput.Enable();
         }
 
         public void SetDescription(Core.MeumDB.ArtworkInfo info)
@@ -81,7 +78,6 @@ namespace UI.GalleryScene
         {
             gameObject.SetActive(true);
             tabControl.ChangeTab(0);
-            playerInput.Disable();
         }
 
         public void LoadComments()

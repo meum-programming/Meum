@@ -12,7 +12,6 @@ namespace UI.GuestBook
         [SerializeField] private Transform contents;
         [SerializeField] private GameObject guestBookContent;
         [SerializeField] private GuestBookWriter writerUi;
-        [SerializeField] private InputActionAsset playerInput;
 
         private void Awake()
         {
@@ -24,7 +23,6 @@ namespace UI.GuestBook
 
         public void Show()
         {
-            playerInput.Disable();
             gameObject.SetActive(true);
             LoadContents();
         }
@@ -77,7 +75,6 @@ namespace UI.GuestBook
         
         public void Close()
         {
-            playerInput.Enable();
             gameObject.SetActive(false);
         }
 
