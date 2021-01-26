@@ -3507,6 +3507,7 @@ MonoBehaviour:
   year: {fileID: 3692296556781211686}
   description: {fileID: 9068767891318363719}
   closeBtn: {fileID: 9068767891512949071}
+  title_comments_tab: {fileID: 4413326898265327015}
   inputField: {fileID: 3928924862569701644}
   list: {fileID: 6819345240160695913}
   commentPrefab: {fileID: 8220479331544717131, guid: ccc3c5ae931501742a4e0ead38e09a24, type: 3}
