@@ -126,10 +126,14 @@ namespace Core.Socket {
             var userInfo = cd.result as MeumDB.UserInfo;
             Assert.IsNotNull(userInfo);
             _playerPk = userInfo.primaryKey;
+
             cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfoWithUser(userInfo.primaryKey));
             yield return cd.coroutine;
             Assert.IsNotNull(cd.result);
             var ownRoomInfo = cd.result as MeumDB.RoomInfo;
+
+            MeumDB.Get().myRoomInfo = ownRoomInfo;
+
             Assert.IsNotNull(ownRoomInfo);
             var ownRoomId = ownRoomInfo.primaryKey;
             
@@ -205,7 +209,7 @@ namespace Core.Socket {
         
         public void LoadEditScene()
         {
-            Assert.IsTrue(_state.IsSubOfGalleryOwn());
+            //Assert.IsTrue(_state.IsSubOfGalleryOwn());
             _coroutineCaller.StartCoroutine(LoadEditSceneCoroutine());
         }
         

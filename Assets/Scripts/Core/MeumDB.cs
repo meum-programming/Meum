@@ -18,6 +18,9 @@ namespace Core
         private string _token = "";                                           // API 서버의 authorization token
         private const string BASE_URL = "https://api.meum.me";                // API 서버의 BASE URL
 
+        public RoomInfo currentRoomInfo = null;
+        public RoomInfo myRoomInfo = null;
+
         private void Awake()
         {
             base.Awake();
@@ -91,7 +94,10 @@ namespace Core
             Assert.IsNotNull(cd.result);
             var data = cd.result as string;
             Assert.IsNotNull(data);
-            
+
+            Debug.LogWarning("login");
+            Debug.LogWarning(data);
+
             var obj = JObject.Parse(data);
             Assert.IsNotNull(obj);
             if (ReferenceEquals(obj["token"], null))
@@ -152,7 +158,12 @@ namespace Core
             var data = cd.result as string;
             Assert.IsNotNull(data);
 
+            Debug.LogWarning("Get roomOwner ");
+            Debug.LogWarning(data);
+
             var output = new RoomInfo();
+            //roomInfo = output;
+
             var jarray = JArray.Parse(data);
             Assert.IsNotNull(jarray);
             if (jarray.Count == 0)
@@ -189,6 +200,36 @@ namespace Core
             var cd = new CoroutineWithData(this, WebRequest(url, "PATCH", json));
             yield return cd.coroutine;
             // var response = cd.result as string;
+        }
+
+        public IEnumerator PatchRoomBGM(int bgm_Index)
+        {
+            PatchRoomBGMData data;
+            data.bgm_type_int = bgm_Index;
+
+            var json = JsonConvert.SerializeObject(data);
+            var url = BASE_URL + "/room/ownerBGM";
+            var cd = new CoroutineWithData(this, WebRequest(url, "PATCH", json));
+            yield return cd.coroutine;
+            var response = cd.result as string;
+
+            Debug.LogWarning(response);
+
+        }
+
+        public IEnumerator PatchRoomSKY(int sky_Index)
+        {
+            PatchRoomSKYData data;
+            data.sky_type_int = sky_Index;
+
+            var json = JsonConvert.SerializeObject(data);
+            var url = BASE_URL + "/room/ownerSKY";
+            var cd = new CoroutineWithData(this, WebRequest(url, "PATCH", json));
+            yield return cd.coroutine;
+            var response = cd.result as string;
+
+            Debug.LogWarning(response);
+
         }
 
         public IEnumerator GetArtworks()
@@ -390,6 +431,10 @@ namespace Core
             output.primaryKey = obj["pk"].Value<int>();
             output.max_people = obj["max_people"].Value<int>();
             output.type_int = obj["type_int"].Value<int>();
+            output.sky_type_int = obj["sky_type_int"].Value<int>();
+            output.sky_addValue_string = obj["sky_addValue_string"].Value<string>();
+            output.bgm_type_int = obj["bgm_type_int"].Value<int>();
+            output.bgm_addValue_string = obj["bgm_addValue_string"].Value<string>();
             output.data_json = obj["data_json"].Value<string>();
             output.owner = ParseUserInfo(obj["owner"]);
             return output;
@@ -478,6 +523,10 @@ namespace Core
             public int primaryKey;
             public int max_people;
             public int type_int;
+            public int sky_type_int;
+            public string sky_addValue_string;
+            public int bgm_type_int;
+            public string bgm_addValue_string;
             public string data_json;
             public UserInfo owner;
         }
@@ -486,7 +535,16 @@ namespace Core
         {
             public string data_json;
         }
-        
+
+        private struct PatchRoomBGMData
+        {
+            public int bgm_type_int;
+        }
+        private struct PatchRoomSKYData
+        {
+            public int sky_type_int;
+        }
+
         public class ArtworkInfo
         {
             public int primaryKey;

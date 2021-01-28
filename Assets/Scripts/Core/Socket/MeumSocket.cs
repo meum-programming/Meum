@@ -91,9 +91,9 @@ namespace Core.Socket
 
         public void GoToEditScene()
         {
-            Assert.IsTrue(_state.IsSubOfGalleryOwn());
-            if (!_state.IsSubOfGalleryOwn())
-                return;
+            //Assert.IsTrue(_state.IsSubOfGalleryOwn());
+            //if (!_state.IsSubOfGalleryOwn())
+              //  return;
             _loader.LoadEditScene();
         }
 
@@ -133,8 +133,11 @@ namespace Core.Socket
                 cd = new CoroutineWithData(this, MeumDB.Get().GetRoomInfoWithUser(userInfo.primaryKey));
                 yield return cd.coroutine;
                 var roomInfo = cd.result as MeumDB.RoomInfo;
+
                 if (null != roomInfo)
                 {
+                    MeumDB.Get().currentRoomInfo = roomInfo;
+
                     StartCoroutine(LoadLocalPlayerInfo());
                     EnteringGalleryData data;
                     data.roomId = roomInfo.primaryKey;
