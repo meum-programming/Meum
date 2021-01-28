@@ -22,6 +22,7 @@ namespace UI.GalleryScene
         [SerializeField] private Button closeBtn;
 
         [Header("Comments")] 
+        [SerializeField] private TextMeshProUGUI title_comments_tab;
         [SerializeField] private TMP_InputField inputField;
         [SerializeField] private Transform list;
         [SerializeField] private GameObject commentPrefab;
@@ -43,6 +44,7 @@ namespace UI.GalleryScene
             Assert.IsNotNull(year);
             Assert.IsNotNull(description);
             Assert.IsNotNull(closeBtn);
+            Assert.IsNotNull(title_comments_tab);
             Assert.IsNotNull(inputField);
             Assert.IsNotNull(list);
             Assert.IsNotNull(commentPrefab);
@@ -63,6 +65,7 @@ namespace UI.GalleryScene
         {
             _artworkInfo = info;
             title.text = _artworkInfo.title;
+            title_comments_tab.text = _artworkInfo.title;
             author.text = _artworkInfo.author;
             if (info.year != 0)
                 year.text = _artworkInfo.year.ToString();
