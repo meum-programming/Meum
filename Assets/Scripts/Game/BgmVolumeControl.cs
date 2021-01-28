@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace Game
@@ -9,24 +10,11 @@ namespace Game
     [RequireComponent(typeof(AudioSource))]
     public class BgmVolumeControl : MonoBehaviour
     {
-        private AudioSource _audio;
-
         private void Awake()
         {
-            _audio = GetComponent<AudioSource>();
-            Assert.IsNotNull(_audio);
+            //int bgmIndex = MeumDB.Get().currentRoomInfo.bgm_type_int;
+            //SoundManager.Instance.PlayBGM((BGMEnum)bgmIndex);
         }
         
-        private void Start()
-        {
-            Update();
-        }
-
-        private void Update()
-        {
-            var volumeSliders = UI.SettingMenu.VolumeSliders.Get();
-            if(volumeSliders)
-                _audio.volume = volumeSliders.BgmVolume;
-        }
     }
 }

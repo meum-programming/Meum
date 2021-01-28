@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c670fce5a36a043a4971e6e7e27eec, type: 3}
+  m_Name: MeumSaveData
+  m_EditorClassIdentifier: 
+  bgmDataList:
+  - bgmEnum: -1
+    name: 
+    audioClip: {fileID: 0}
+  - bgmEnum: 0
+    name: A New Beginning - Esther Abrami
+    audioClip: {fileID: 8300000, guid: c630d62a21ecf6546a08871d7173f9e8, type: 3}
+  - bgmEnum: 1
+    name: Ready or Not - Trevor Garrod
+    audioClip: {fileID: 8300000, guid: 19f54fc3fd07b114597c84c95ac53a73, type: 3}
+  - bgmEnum: 2
+    name: Shadowing - Corbyn Kites
+    audioClip: {fileID: 8300000, guid: ac62a46b8ea70734783a855a48197cee, type: 3}
+  - bgmEnum: 3
+    name: Rounded
+    audioClip: {fileID: 8300000, guid: e99d4e51122f5ee4ea465246a88e61ed, type: 3}
+  skyDataList:
+  - skyBoxEnum: -1
+    name: 
+    material: {fileID: 0}
+  - skyBoxEnum: 0
+    name: "\uC5EC\uB984 \uC815\uC624"
+    material: {fileID: 2100000, guid: b6c9329c7bf2d4e7d89f3ee71506bcac, type: 2}
+  - skyBoxEnum: 1
+    name: "\uC870\uC6A9\uD55C \uAD6C\uB984"
+    material: {fileID: 2100000, guid: a7360fd7ed66c45edac3d45188adc78c, type: 2}
+  - skyBoxEnum: 2
+    name: "\uBC31\uC0C9\uACF5\uAC04"
+    material: {fileID: 2100000, guid: 835f60c2a79c81343986250f2351f75f, type: 2}
+  - skyBoxEnum: 3
+    name: "\uD751\uC0C9 \uACF5\uAC04"
+    material: {fileID: 2100000, guid: 8501a18039160a64aa030a56ba7b4fcd, type: 2}
+  - skyBoxEnum: 4
+    name: I Will Greet The Sun Again
+    material: {fileID: 2100000, guid: 51171c937f4c81a4db1ad9bd5994810a, type: 2}

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Core;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
@@ -26,10 +28,28 @@ namespace Game
         private Transform _walls;
         private Transform _floors;
 
+        public List<Material> matList = new List<Material>();
+
         private void Awake()
         {
             _walls = transform.Find("walls");
             _floors = transform.Find("floors");
+
+            BGMSet();
+            SkyBoxSet();
+        }
+
+        public void BGMSet()
+        {
+            int bgmIndex = MeumDB.Get().currentRoomInfo.bgm_type_int;
+            SoundManager.Instance.PlayBGM((BGMEnum)bgmIndex);
+        }
+
+        public void SkyBoxSet()
+        {
+            int index = MeumDB.Get().currentRoomInfo.sky_type_int;
+            SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
+            RenderSettings.skybox = skydata.material;
         }
 
         public LandInfo[] GetLandInfos()
