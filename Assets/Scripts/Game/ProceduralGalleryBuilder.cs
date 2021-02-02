@@ -28,15 +28,23 @@ namespace Game
         private Transform _walls;
         private Transform _floors;
 
-        public List<Material> matList = new List<Material>();
+        [SerializeField] private RectTransform editBtn;
 
         private void Awake()
+        {
+            Init();
+        }
+
+        void Init()
         {
             _walls = transform.Find("walls");
             _floors = transform.Find("floors");
 
             BGMSet();
             SkyBoxSet();
+
+            bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.primaryKey == MeumDB.Get().currentRoomInfo.owner.primaryKey;
+            editBtn.gameObject.SetActive(isOwnerRoom);
         }
 
         public void BGMSet()

@@ -41,6 +41,11 @@ namespace Game.Player
 
             _colliderCenterPos = _charController.center;
             _distFromColliderCenterToGround = _charController.bounds.extents.y;
+
+            if (FindObjectOfType<Joystick>())
+            {
+                FindObjectOfType<Joystick>().moveEventOn += OnMoveJoystick;
+            }
         }
 
         private void Update()
@@ -104,6 +109,22 @@ namespace Game.Player
             }
 
             var value = ctx.ReadValue<Vector2>();
+            _moveVector = value;
+
+            // animation
+            _animController.SetHorizontalSpeed(value.x);
+            _animController.SetVerticalSpeed(value.y);
+        }
+
+        public void OnMoveJoystick(Vector2 value)
+        {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            {
+                _animController.SetHorizontalSpeed(0.0f);
+                _animController.SetVerticalSpeed(0.0f);
+                return;
+            }
+
             _moveVector = value;
 
             // animation

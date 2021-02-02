@@ -26,6 +26,11 @@ namespace Game.Player
             Assert.IsNotNull(cameraController);
             
             _transform = transform;
+
+            if (FindObjectOfType<Joystick>())
+            {
+                FindObjectOfType<Joystick>().moveEventOn += OnMoveJoystick;
+            }
         }
 
         private void Update()
@@ -68,7 +73,17 @@ namespace Game.Player
             if (value.sqrMagnitude < 1e-3) _isMoving = false;
             else _isMoving = true;
         }
-        
+
+        public void OnMoveJoystick(Vector2 value)
+        {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+
+            if (value.sqrMagnitude < 1e-3) _isMoving = false;
+            else _isMoving = true;
+        }
+
+
         public void OnRotate(InputAction.CallbackContext ctx)
         {
             if (cameraController.IsSwitchingView || !cameraController.IsFirstPersonView)

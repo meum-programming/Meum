@@ -16,9 +16,19 @@ namespace Game.Player
         [DllImport("__Internal")]
         private static extern void OpenURLNewTab(string url);
 
+        [SerializeField] Joystick joystick;
+
+        public void Awake()
+        {
+            joystick = FindObjectOfType<Joystick>();
+        }
+
         public void OnSelect(InputAction.CallbackContext ctx)
         {
-            if (!ctx.performed) return;
+            if (!ctx.canceled) return;
+
+            if (joystick.moveOn)
+               return;
 
             var ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
             var layerMask = ~0;

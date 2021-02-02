@@ -60,6 +60,14 @@
                     "expectedControlType": "Digital",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Rotate-keybord",
+                    "type": "Value",
+                    "id": "7036f0b8-05c4-445a-8989-cd6e8522c11a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -227,6 +235,61 @@
                     "action": "run",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "IJKL",
+                    "id": "375c4dc9-7a6a-4469-9908-2739290cb71b",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate-keybord",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "82538e93-0e57-48df-8a21-53941a865799",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Rotate-keybord",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "8549597b-4906-4dc0-88bb-f5bf41fd064e",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Rotate-keybord",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "6a42a4bc-e4cc-401c-9a47-ffabd3e71855",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Rotate-keybord",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "143c66af-6c4e-422a-9ae5-e4ce19a8d48b",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Rotate-keybord",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

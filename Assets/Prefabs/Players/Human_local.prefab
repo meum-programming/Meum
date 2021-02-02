@@ -329,6 +329,7 @@ MonoBehaviour:
   m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1
+  m_AllowXRRendering: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -1918,7 +1919,7 @@ GameObject:
   - component: {fileID: 936583000424706514}
   - component: {fileID: 1346440494122024205}
   m_Layer: 8
-  m_Name: Human
+  m_Name: Human_local
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2298,6 +2299,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: fc3c886d-784c-4517-b8e8-57282f2188b2
     m_ActionName: Builder Scene/run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5981749485781786878}
+        m_TargetAssemblyTypeName: Game.Player.LocalPlayerCamera, Assembly-CSharp
+        m_MethodName: OnRotateKeybordInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7036f0b8-05c4-445a-8989-cd6e8522c11a
+    m_ActionName: Gallery Scene/Rotate-J[/Keyboard/j]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gallery Scene

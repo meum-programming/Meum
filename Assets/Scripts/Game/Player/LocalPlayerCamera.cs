@@ -72,6 +72,9 @@ namespace Game.Player
                     _transform.position = cameraPivot.position + rayDir * _thirdPersonCamDistance;
                 }
             }
+
+            InputCheck();
+
         }
 
         public void OnRotate(InputAction.CallbackContext ctx)
@@ -95,6 +98,56 @@ namespace Game.Player
             newCameraRotation += _cameraRotationDelta;
             _transform.localEulerAngles = newCameraRotation;
         }
+
+
+        bool cameraRotFlag = false;
+        Vector2 carmeraRotValue = Vector2.zero;
+
+        public void OnRotateKeybordInput(InputAction.CallbackContext ctx)
+        {
+            if (ctx.action.phase == InputActionPhase.Started)
+            {
+                cameraRotFlag = true;
+                carmeraRotValue = ctx.ReadValue<Vector2>() * 10;
+            }
+            else if (ctx.action.phase == InputActionPhase.Performed)
+            {
+                cameraRotFlag = true;
+                carmeraRotValue = ctx.ReadValue<Vector2>() * 10;
+            }
+            else if (ctx.action.phase == InputActionPhase.Canceled)
+            {
+                cameraRotFlag = false;
+                carmeraRotValue = Vector2.zero;
+            }
+
+            Debug.LogWarning(ctx.action.phase);
+
+            
+        }
+
+
+        void InputCheck()
+        {
+            if (cameraRotFlag)
+            {
+                _cameraRotationDelta.x -= carmeraRotValue.y * sensitivity;
+                _cameraRotationDelta.x = Mathf.Clamp(
+                    _cameraRotationDelta.x,
+                    -cameraRotationLimit,
+                    cameraRotationLimit);
+
+                if (!IsFirstPersonView)
+                {
+                    cameraPivot.Rotate(Vector3.up, carmeraRotValue.x * sensitivity);
+                }
+
+                var newCameraRotation = _defaultEulerAngle;
+                newCameraRotation += _cameraRotationDelta;
+                _transform.localEulerAngles = newCameraRotation;
+            }
+        }
+
 
         public void OnSwitchView(InputAction.CallbackContext ctx)
         {
