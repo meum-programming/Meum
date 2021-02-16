@@ -20,7 +20,6 @@ public class Test_WebWaiting_Room : MonoBehaviour
 
     public void TokenSetBtnClick()
     {
-        //webHandler.SetToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxNDcsInVzZXJuYW1lIjoiaGFueWFuZzA3IiwiZXhwIjoxNjEzNDYzNjAxLCJlbWFpbCI6ImhhbnlhbmcwN0BuYXZlci5jb20iLCJvcmlnX2lhdCI6MTYxMzQ1NjQwMX0.66bNLFY-gXy_4EwG0qj3tQY8jPqa3McM0ouF86xrbuI");
         webHandler.SetToken("1");
     }
 
