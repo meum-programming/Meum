@@ -45,7 +45,7 @@ namespace Core.Socket {
         public void SerializeArtworks()
         {
             Assert.IsTrue(_state.IsInGallery() || _state.IsSubOfGalleryOwn());
-            _coroutineCaller.StartCoroutine(SerializeArtworksCoroutine(_galleryData.roomId));
+            _coroutineCaller.StartCoroutine(SerializeArtworksCoroutine2(_galleryData.roomId));
         }
         
         private IEnumerator SerializeArtworksCoroutine(int roomId)
@@ -61,15 +61,45 @@ namespace Core.Socket {
             
             paintsSerializer.SetJson(roomInfo.data_json);
         }
-        
+
+        private IEnumerator SerializeArtworksCoroutine2(int roomId)
+        {
+            var paintsSerializer = GameObject.Find("Artworks").GetComponent<DataJsonSerializer>();
+            Assert.IsNotNull(paintsSerializer);
+
+            var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfo2(roomId));
+            yield return cd.coroutine;
+
+            MeumDB.RoomInfoData roomInfoData = cd.result as MeumDB.RoomInfoData;
+            MeumDB.RoomInfo roomInfo = new MeumDB.RoomInfo();
+
+            roomInfo.primaryKey = roomInfoData.id;
+            roomInfo.max_people = roomInfoData.max_people;
+            roomInfo.type_int = roomInfoData.type_int;
+            roomInfo.sky_type_int = roomInfoData.sky_type_int;
+            roomInfo.sky_addValue_string = roomInfoData.sky_addValue_string;
+            roomInfo.bgm_type_int = roomInfoData.bgm_type_in;
+            roomInfo.bgm_addValue_string = roomInfoData.bgm_addValue_string;
+
+            roomInfo.data_json = roomInfoData.data_json;
+            roomInfo.owner = new MeumDB.UserInfo();
+            roomInfo.owner.nickname = "nickName";
+
+            Assert.IsNotNull(cd.result);
+            //var roomInfo = cd.result as MeumDB.RoomInfo;
+            Assert.IsNotNull(roomInfo);
+
+            paintsSerializer.SetJson(roomInfo.data_json);
+        }
+
         #endregion
-        
+
         #region LoadGallery
-        
+
         public void LoadGallery(SocketEventHandler.EnteringSuccessEventData data)
         {
             Assert.IsTrue(_state.IsNotInGalleryOrSquare() || _state.IsSubOfGalleryOwn());
-            _coroutineCaller.StartCoroutine(LoadGalleryCoroutine(data));
+            _coroutineCaller.StartCoroutine(LoadGalleryCoroutine2(data));
         }
         
         private IEnumerator LoadGalleryCoroutine(SocketEventHandler.EnteringSuccessEventData data)
@@ -169,10 +199,150 @@ namespace Core.Socket {
             userList.SetOwnerName(roomInfo.owner.nickname);
             userList.AddUser(socket.GetPlayerId(), socket.LocalPlayerInfo.nickname);
         }
+
+
+        private IEnumerator LoadGalleryCoroutine2(SocketEventHandler.EnteringSuccessEventData data)
+        {
+            var sceneOpen = SceneManager.LoadSceneAsync("Loading");
+            while (!sceneOpen.isDone) yield return null;
+            var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
+            Assert.IsNotNull(progressBar);
+
+            // load demanded artworks
+            var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfo2(data.roomId));
+            yield return cd.coroutine;
+
+
+            MeumDB.RoomInfoData roomInfoData = cd.result as MeumDB.RoomInfoData;
+            MeumDB.RoomInfo roomInfo = new MeumDB.RoomInfo();
+
+            roomInfo.primaryKey = roomInfoData.id;
+            roomInfo.max_people = roomInfoData.max_people;
+            roomInfo.type_int = roomInfoData.type_int;
+            roomInfo.sky_type_int = roomInfoData.sky_type_int;
+            roomInfo.sky_addValue_string = roomInfoData.sky_addValue_string;
+            roomInfo.bgm_type_int = roomInfoData.bgm_type_in;
+            roomInfo.bgm_addValue_string = roomInfoData.bgm_addValue_string;
+
+            roomInfo.data_json = roomInfoData.data_json;
+            roomInfo.owner = new MeumDB.UserInfo();
+            roomInfo.owner.nickname = "nickName";
+
+            Debug.LogWarning(cd.result);
+
+            //Assert.IsNotNull(cd.result);
+            //var roomInfo = cd.result as MeumDB.RoomInfo;
+            Assert.IsNotNull(roomInfo);
+            var artworksData = JsonUtility.FromJson<RoomData>(roomInfo.data_json);
+            var artworksDataLength = artworksData.artworks.Length;
+
+            var set2d = new HashSet<string>();
+            var set3d = new HashSet<string>();
+            for (var i = 0; i < artworksDataLength; ++i)
+            {
+                var artworkData = artworksData.artworks[i];
+                if (artworkData.artwork_type == 0)
+                    set2d.Add(artworkData.url);
+                else if (artworkData.artwork_type == 1)
+                    set3d.Add(artworkData.url);
+            }
+
+            var loadCompleteCnt = 1;
+            var totalCnt = set2d.Count + set3d.Count;
+            foreach (var url in set2d)
+            {
+                cd = MeumDB.Get().GetTextureCoroutine(url);
+                yield return cd.coroutine;
+                Assert.IsNotNull(cd.result);
+                progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
+                ++loadCompleteCnt;
+            }
+
+            foreach (var url in set3d)
+            {
+                cd = MeumDB.Get().GetObject3DCoroutine(url);
+                yield return cd.coroutine;
+                Assert.IsNotNull(cd.result);
+                progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
+                ++loadCompleteCnt;
+            }
+
+            // load userInfo data to check if player own gallery
+            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetUserInfo2());
+            yield return cd.coroutine;
+
+            MeumDB.UserData userData = cd.result as MeumDB.UserData;
+            MeumDB.UserInfo userInfo = new MeumDB.UserInfo();
+            userInfo.primaryKey = userData.user_id;
+            userInfo.nickname = userData.nickname;
+            userInfo.phone = userData.phone;
+
+            _playerPk = userInfo.primaryKey;
+
+            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfoWithUser2(userInfo.primaryKey));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+            //var ownRoomInfo = cd.result as MeumDB.RoomInfo;
+
+            MeumDB.RoomInfoData ownRoomInfoData = cd.result as MeumDB.RoomInfoData;
+            MeumDB.RoomInfo ownRoomInfo = new MeumDB.RoomInfo();
+
+            ownRoomInfo.primaryKey = ownRoomInfoData.id;
+            ownRoomInfo.max_people = ownRoomInfoData.max_people;
+            ownRoomInfo.type_int = ownRoomInfoData.type_int;
+            ownRoomInfo.sky_type_int = ownRoomInfoData.sky_type_int;
+            ownRoomInfo.sky_addValue_string = ownRoomInfoData.sky_addValue_string;
+            ownRoomInfo.bgm_type_int = ownRoomInfoData.bgm_type_in;
+            ownRoomInfo.bgm_addValue_string = ownRoomInfoData.bgm_addValue_string;
+
+            ownRoomInfo.data_json = ownRoomInfoData.data_json;
+            ownRoomInfo.owner = new MeumDB.UserInfo();
+            ownRoomInfo.owner.primaryKey = ownRoomInfoData.owner_id;
+
+            MeumDB.Get().myRoomInfo = ownRoomInfo;
+
+            Assert.IsNotNull(ownRoomInfo);
+            var ownRoomId = ownRoomInfo.primaryKey;
+
+            // load scene
+            progressBar.SetProgress(0);
+            sceneOpen = SceneManager.LoadSceneAsync("ProceduralGallery");
+            while (!sceneOpen.isDone)
+            {
+                progressBar.SetProgress(sceneOpen.progress);
+                yield return null;
+            }
+
+            if (_state.IsSubOfGallery())
+                DataSynchronizer.Get().ShowPlayers();
+            else
+                DataSynchronizer.Get().Setup(data.maxN);
+
+
+            if (ownRoomId == data.roomId)
+                _state.EnterGalleryOwn();
+            else
+                _state.EnterGallery();
+
+            // save galleryData
+            _galleryData = data;
+
+            // setting paints
+            SerializeArtworks();
+
+            // setting userList
+            var userList = UI.UserList.UserList.Get();
+            var socket = MeumSocket.Get();
+            userList.SetOwnerName(roomInfo.owner.nickname);
+
+            //userList.AddUser(socket.GetPlayerId(), socket.LocalPlayerInfo.nickname);
+            userList.AddUser(socket.GetPlayerId(), "nickName");
+        }
+
         #endregion
-        
+
         #region Load Square
-        
+
         public void LoadSquare(SocketEventHandler.SquareEnteringSuccessEventData data)
         {
             Assert.IsTrue(_state.IsNotInGalleryOrSquare());

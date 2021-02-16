@@ -101,19 +101,35 @@ namespace Core.Socket
         {
             _loader.Return();
         }
-        
+
         /*
          * @brief LocalPlayer의 UserInfo 를 불러옴
          */
         private IEnumerator LoadLocalPlayerInfo()
         {
             if (!ReferenceEquals(LocalPlayerInfo, null)) yield break;
-            
+
             var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo());
             yield return cd.coroutine;
             LocalPlayerInfo = cd.result as MeumDB.UserInfo;
         }
-        
+
+        private IEnumerator LoadLocalPlayerInfo2()
+        {
+            if (!ReferenceEquals(LocalPlayerInfo, null)) yield break;
+
+            var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo2());
+            yield return cd.coroutine;
+
+            MeumDB.UserData userData = cd.result as MeumDB.UserData;
+            MeumDB.UserInfo userInfo = new MeumDB.UserInfo();
+            userInfo.primaryKey = userData.user_id;
+            userInfo.nickname = userData.nickname;
+            userInfo.phone = userData.phone;
+
+            LocalPlayerInfo = userInfo;
+        }
+
         /*
          * 이벤트를 Emit하는 함수들 
          */
@@ -121,7 +137,7 @@ namespace Core.Socket
         public void EnterGallery(string nickname)
         {
             Assert.IsTrue(_state.IsNotInGalleryOrSquare());
-            StartCoroutine(EnterGalleryCoroutine(nickname));
+            StartCoroutine(EnterGalleryCoroutine2(nickname));
         }
         private IEnumerator EnterGalleryCoroutine(string nickname)
         {
@@ -139,6 +155,61 @@ namespace Core.Socket
                     MeumDB.Get().currentRoomInfo = roomInfo;
 
                     StartCoroutine(LoadLocalPlayerInfo());
+                    EnteringGalleryData data;
+                    data.roomId = roomInfo.primaryKey;
+                    data.roomType = roomInfo.type_int;
+                    data.maxN = roomInfo.max_people;
+                    _socket.Emit("enteringGallery", JsonConvert.SerializeObject(data));
+                }
+            }
+        }
+
+        private IEnumerator EnterGalleryCoroutine2(string nickname)
+        {
+            Debug.LogWarning("start");
+            var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo2(nickname));
+            yield return cd.coroutine;
+
+            Debug.LogWarning(cd.result);
+
+            MeumDB.UserData userData = cd.result as MeumDB.UserData;
+            MeumDB.UserInfo userInfo = new MeumDB.UserInfo();
+            userInfo.primaryKey = userData.user_id;
+            userInfo.nickname = userData.nickname;
+            userInfo.phone = userData.phone;
+
+            if (null != userInfo)
+            {
+                cd = new CoroutineWithData(this, MeumDB.Get().GetRoomInfoWithUser2(userInfo.primaryKey));
+                yield return cd.coroutine;
+
+                MeumDB.RoomInfoData roomInfoData = cd.result as MeumDB.RoomInfoData;
+                MeumDB.RoomInfo roomInfo = new MeumDB.RoomInfo();
+
+                roomInfo.primaryKey = roomInfoData.id;
+                roomInfo.max_people = roomInfoData.max_people;
+                roomInfo.type_int = roomInfoData.type_int;
+                roomInfo.sky_type_int = roomInfoData.sky_type_int;
+                roomInfo.sky_addValue_string = roomInfoData.sky_addValue_string;
+                roomInfo.bgm_type_int = roomInfoData.bgm_type_in;
+                roomInfo.bgm_addValue_string = roomInfoData.bgm_addValue_string;
+
+                roomInfo.data_json = roomInfoData.data_json;
+
+                roomInfo.owner = new MeumDB.UserInfo();
+                roomInfo.owner.primaryKey = roomInfoData.owner_id;
+                roomInfo.owner.nickname = "nickName";
+                //roomInfo.owner = roomInfoData.owner_id;
+
+
+
+                //var roomInfo = cd.result as MeumDB.RoomInfo;
+
+                if (null != roomInfo)
+                {
+                    MeumDB.Get().currentRoomInfo = roomInfo;
+
+                    StartCoroutine(LoadLocalPlayerInfo2());
                     EnteringGalleryData data;
                     data.roomId = roomInfo.primaryKey;
                     data.roomType = roomInfo.type_int;

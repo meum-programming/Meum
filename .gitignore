@@ -10,3 +10,4 @@ obj
 *.csproj
 
 .DS_Store
+Temp/
