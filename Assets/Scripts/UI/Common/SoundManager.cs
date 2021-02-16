@@ -123,7 +123,12 @@ public class SoundManager : MonoBehaviour
 
 		currentPlaybgmEnum = bgmEnum;
 
-		bgmAudio.clip = meumSaveData.GetBGMData(bgmEnum).audioClip;
+		BGMSaveData bGMSaveData = meumSaveData.GetBGMData(bgmEnum);
+
+        if (bGMSaveData == null)
+			return;
+		
+		bgmAudio.clip = bGMSaveData.audioClip;
 		bgmAudio.loop = true;
 		bgmAudio.Play();
 	}

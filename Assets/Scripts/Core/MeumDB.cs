@@ -17,6 +17,7 @@ namespace Core
         private Object3DBuffer _object3DBuffer = new Object3DBuffer();
         private string _token = "";                                           // API 서버의 authorization token
         private const string BASE_URL = "https://api.meum.me";                // API 서버의 BASE URL
+        private const string BASE_URL2 = "https://dev.meum.me/nodeTest";                // API 서버의 BASE URL
 
         public RoomInfo currentRoomInfo = null;
         public RoomInfo myRoomInfo = null;
@@ -134,6 +135,78 @@ namespace Core
             }
         }
 
+        public IEnumerator GetUserInfo2(string nickname)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("nickname", nickname);
+
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "profileByNickname", form));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+
+            Debug.LogWarning("cd.result = " + cd.result);
+
+            var data = cd.result as string;
+            Assert.IsNotNull(data);
+            UserInfoRespons resultData = GetData<UserInfoRespons>(data);
+            yield return resultData.result;
+
+        }
+
+        public T GetData<T>(string jsonData)
+        {
+            T data = JsonUtility.FromJson<T>(jsonData);
+
+            return data;
+        }
+
+        public class BaseRespons
+        {
+            public string success;
+            public int id = 0;
+        }
+
+
+        public class UserInfoRespons : BaseRespons
+        {
+            public UserData result = new UserData();
+        }
+
+        [System.Serializable]
+        public class UserData : BaseRespons
+        {
+            public int user_id;
+            public string nickname;
+            public string phone;
+            public int cash;
+            public int subscribe = 0;
+
+            public int is_tutorial = 0;
+            public int is_admin = 0;
+            public int max_inventory = 0;
+        }
+
+        public class RoomInfoRespons : BaseRespons
+        {
+            public RoomInfoData result = new RoomInfoData();
+        }
+
+
+        [System.Serializable]
+        public class RoomInfoData : BaseRespons
+        {
+            public int max_people;
+
+            public int type_int;
+            public int sky_type_int;
+            public string sky_addValue_string;
+            public int bgm_type_in;
+            public string bgm_addValue_string;
+            public string data_json;
+            public string created_at;
+            public int owner_id;
+        }
+
         public IEnumerator GetUserInfo()
         {
             var url = BASE_URL + "/user";
@@ -147,6 +220,25 @@ namespace Core
             var json = JObject.Parse(data);
             Assert.IsNotNull(json);
             yield return ParseUserInfo(json);
+        }
+
+
+        public IEnumerator GetUserInfo2()
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("uid", _token);
+
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "user", form));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+
+            Debug.LogWarning("cd.result = " + cd.result);
+
+            var data = cd.result as string;
+            Assert.IsNotNull(data);
+            UserInfoRespons resultData = GetData<UserInfoRespons>(data);
+            yield return resultData.result;
+
         }
 
         public IEnumerator GetRoomInfoWithUser(int userPK)
@@ -175,6 +267,23 @@ namespace Core
             }
         }
 
+
+        public IEnumerator GetRoomInfoWithUser2(int uid)
+        {
+
+            WWWForm form = new WWWForm();
+            form.AddField("uid", uid);
+
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "roomOwner", form));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+
+            Debug.LogWarning(cd.result);
+
+            RoomInfoRespons resultData = GetData<RoomInfoRespons>(cd.result as string);
+            yield return resultData.result;
+        }
+
         public IEnumerator GetRoomInfo(int roomPK)
         {
             var url = BASE_URL + "/room/" + roomPK;
@@ -188,6 +297,22 @@ namespace Core
             var json = JObject.Parse(data);
             Assert.IsNotNull(json);
             yield return ParseRoomInfo(json);
+        }
+
+        public IEnumerator GetRoomInfo2(int roomId)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("roomId", roomId);
+
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "roomById", form));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+
+            Debug.LogWarning(cd.result);
+
+            RoomInfoRespons resultData = GetData<RoomInfoRespons>(cd.result as string);
+            yield return resultData.result;
+
         }
 
         public IEnumerator PatchRoomJson(string jsonData)
@@ -637,6 +762,30 @@ namespace Core
             }
             else
             {
+                yield return uwr.downloadHandler.text;
+            }
+        }
+
+        private IEnumerator WebReques2(string url, string method, WWWForm form)
+        {
+            var uwr = UnityWebRequest.Post(url+"/"+ method, form);
+            uwr.downloadHandler = new DownloadHandlerBuffer();
+            
+            yield return uwr.SendWebRequest();
+
+            if (uwr.isNetworkError)
+            {
+                Debug.LogError(url + ": Error: " + uwr.error);
+                yield return null;
+            }
+            else if (uwr.isHttpError)
+            {
+                Debug.LogError(url + ": Error: " + uwr.responseCode);
+                yield return null;
+            }
+            else
+            {
+                Debug.LogWarning("uwr.downloadHandler.text = " + uwr.downloadHandler.text);
                 yield return uwr.downloadHandler.text;
             }
         }
