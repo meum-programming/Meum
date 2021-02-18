@@ -72,12 +72,19 @@ namespace UI.GuestBook
 
         public void Delete()
         {
-            StartCoroutine(DeleteCoroutine());
+            //StartCoroutine(DeleteCoroutine());
+            StartCoroutine(DeleteCoroutine2());
         }
 
         private IEnumerator DeleteCoroutine()
         {
             yield return StartCoroutine(Core.MeumDB.Get().DeleteGuestBook(_info.pk));
+            Destroy(gameObject);
+        }
+
+        private IEnumerator DeleteCoroutine2()
+        {
+            yield return StartCoroutine(Core.MeumDB.Get().DeleteGuestBook2(_info.pk));
             Destroy(gameObject);
         }
     }

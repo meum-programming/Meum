@@ -96,7 +96,8 @@ namespace Game.Artwork
 
         public void Save()
         {
-            StartCoroutine(PatchRoomJson(GetJson()));
+            //StartCoroutine(PatchRoomJson(GetJson()));
+            StartCoroutine(PatchRoomJson2(GetJson()));
         }
 
         private IEnumerator PatchRoomJson(string json)
@@ -106,7 +107,22 @@ namespace Game.Artwork
 
             _resetCheckpoint = json;
         }
-        
+        private IEnumerator PatchRoomJson2(string json)
+        {
+            new RoomRequest()
+            {
+                requestStatus = 4,
+                uid = MeumDB.Get().GetToken(),
+                data_json = json,
+            }.RequestOn();
+
+            Core.Socket.MeumSocket.Get().BroadCastUpdateArtworks();
+
+            _resetCheckpoint = json;
+
+            yield return null;
+        }
+
         public void Clean()
         {
             var artworkPlacer = GetComponent<ArtworkPlacer>();

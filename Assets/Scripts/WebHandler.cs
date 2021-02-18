@@ -2,6 +2,7 @@
 using Core.Socket;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class WebHandler : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class WebHandler : MonoBehaviour
 
     public void EnterRoom(string nickname)
     {
+        nickname = UnityWebRequest.UnEscapeURL(nickname);
         Debug.Log(nickname);
         if (!MeumDB.Get().TokenExist()) Debug.LogError("SetToken first");
         MeumSocket.Get().EnterGallery(nickname);

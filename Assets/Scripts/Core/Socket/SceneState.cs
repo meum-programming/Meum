@@ -42,8 +42,7 @@ namespace Core.Socket
 
         public void EnterGallery()
         {
-            Assert.IsTrue(_currentState == State.NotInTheGalleryOrSquare);
-
+            //Assert.IsTrue(_currentState == State.NotInTheGalleryOrSquare);
             _currentState = State.InTheGallery;
         }
 
@@ -57,8 +56,7 @@ namespace Core.Socket
 
         public void EnterEdit()
         {
-            Assert.IsTrue(_currentState == State.InTheGalleryOwn);
-            
+            //Assert.IsTrue(_currentState == State.InTheGalleryOwn);
             _currentState = State.InTheGalleryOwnEdit;
         }
 

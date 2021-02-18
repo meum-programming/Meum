@@ -55,6 +55,7 @@ namespace Game.Artwork
             Assert.IsNotNull(_selected);
             var artworkInfo = _selected.GetComponent<ArtworkInfo>();
             Assert.IsNotNull(artworkInfo);
+
             artworkInfo.UpdateWithArtworkContent(data);
 
             StartMovingObj();
@@ -66,7 +67,7 @@ namespace Game.Artwork
         public void CreateSelectedBanner(UI.ContentViewer.Content data, string url)
         {
             Assert.IsTrue(data.Data.type_artwork == 0);
-            
+
             Vector3 pos = Mouse.current.position.ReadValue();
             pos.z = -10.0f;
             pos = cam.ScreenToWorldPoint(pos);
@@ -182,8 +183,9 @@ namespace Game.Artwork
         public void OnResizeArtwork(InputAction.CallbackContext ctx)
         {
             if (!ctx.performed) return;
-            
-            var value = ctx.ReadValue<float>() / 120.0f;    // scroll raw value: [-120, 120]
+
+            var value = ctx.ReadValue<float>() / 2400.0f;    // scroll raw value: [-120, 120]
+
             if (_selected && _moving && Mathf.Abs(value) > 1e-10)
             {
                 var scale = _selected.localScale;

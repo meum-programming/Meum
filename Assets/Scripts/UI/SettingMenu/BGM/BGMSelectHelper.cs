@@ -63,7 +63,15 @@ public class BGMSelectHelper : MonoBehaviour
 
         BGMPlay(currentSelectIndex);
 
-        StartCoroutine(MeumDB.Get().PatchRoomBGM(currentSelectIndex));
+        new RoomRequest()
+        {
+            requestStatus = 3,
+            uid = MeumDB.Get().GetToken(),
+            bgm_type_int = currentSelectIndex,
+        }.RequestOn();
+
+        MeumDB.Get().currentRoomInfo.bgm_type_int = index;
+
     }
 
 

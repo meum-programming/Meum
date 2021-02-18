@@ -85,7 +85,7 @@ namespace UI.GalleryScene
 
         public void LoadComments()
         {
-            StartCoroutine(LoadCommentsCoroutine());
+            StartCoroutine(LoadCommentsCoroutine2());
         }
 
         private IEnumerator LoadCommentsCoroutine()
@@ -110,11 +110,34 @@ namespace UI.GalleryScene
             }
         }
 
+        private IEnumerator LoadCommentsCoroutine2()
+        {
+            foreach (Transform child in list)
+            {
+                Destroy(child.gameObject);
+            }
+
+            Assert.IsNotNull(_artworkInfo);
+            var cd = new CoroutineWithData(this, Core.MeumDB.Get().GetComments2(_artworkInfo.primaryKey));
+            yield return cd.coroutine;
+            Assert.IsNotNull(cd.result);
+            var commentInfos = cd.result as Core.MeumDB.CommentInfo[];
+            Assert.IsNotNull(commentInfos);
+
+            for (var i = 0; i < commentInfos.Length; ++i)
+            {
+                var comment = Instantiate(commentPrefab, list).GetComponent<ArtworkDescriptionComment>();
+                Assert.IsNotNull(comment);
+                comment.SetContent(commentInfos[i], this);
+            }
+        }
+
         public void PostComment()
         {
             if (inputField.text.Equals(""))
                 return;
-            StartCoroutine(PostCommentCoroutine());
+            //StartCoroutine(PostCommentCoroutine());
+            StartCoroutine(PostCommentCoroutine2());
         }
 
         private IEnumerator PostCommentCoroutine()
@@ -125,6 +148,16 @@ namespace UI.GalleryScene
             yield return cd.coroutine;
             inputField.text = "";
             StartCoroutine(LoadCommentsCoroutine());
+        }
+
+        private IEnumerator PostCommentCoroutine2()
+        {
+            Assert.IsNotNull(_artworkInfo);
+            var cd = new CoroutineWithData(this,
+                Core.MeumDB.Get().PostCommentCreate2(_artworkInfo.primaryKey, inputField.text));
+            yield return cd.coroutine;
+            inputField.text = "";
+            StartCoroutine(LoadCommentsCoroutine2());
         }
 
         public void ShowDeleteModal(ArtworkDescriptionComment comment)

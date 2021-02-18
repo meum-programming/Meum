@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
 namespace Core
 {
@@ -36,7 +37,12 @@ namespace Core
         {
             _token = token;
         }
-        
+
+        public int GetToken()
+        {
+            return int.Parse(_token);
+        }
+
         /*
          * @brief 토큰이 존재한다면 true 반환
          */
@@ -96,9 +102,6 @@ namespace Core
             var data = cd.result as string;
             Assert.IsNotNull(data);
 
-            Debug.LogWarning("login");
-            Debug.LogWarning(data);
-
             var obj = JObject.Parse(data);
             Assert.IsNotNull(obj);
             if (ReferenceEquals(obj["token"], null))
@@ -142,9 +145,6 @@ namespace Core
 
             var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "profileByNickname", form));
             yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-
-            Debug.LogWarning("cd.result = " + cd.result);
 
             var data = cd.result as string;
             Assert.IsNotNull(data);
@@ -186,27 +186,6 @@ namespace Core
             public int max_inventory = 0;
         }
 
-        public class RoomInfoRespons : BaseRespons
-        {
-            public RoomInfoData result = new RoomInfoData();
-        }
-
-
-        [System.Serializable]
-        public class RoomInfoData : BaseRespons
-        {
-            public int max_people;
-
-            public int type_int;
-            public int sky_type_int;
-            public string sky_addValue_string;
-            public int bgm_type_in;
-            public string bgm_addValue_string;
-            public string data_json;
-            public string created_at;
-            public int owner_id;
-        }
-
         public IEnumerator GetUserInfo()
         {
             var url = BASE_URL + "/user";
@@ -221,7 +200,7 @@ namespace Core
             Assert.IsNotNull(json);
             yield return ParseUserInfo(json);
         }
-
+        
 
         public IEnumerator GetUserInfo2()
         {
@@ -230,9 +209,6 @@ namespace Core
 
             var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "user", form));
             yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-
-            Debug.LogWarning("cd.result = " + cd.result);
 
             var data = cd.result as string;
             Assert.IsNotNull(data);
@@ -249,9 +225,6 @@ namespace Core
             Assert.IsNotNull(cd.result);
             var data = cd.result as string;
             Assert.IsNotNull(data);
-
-            Debug.LogWarning("Get roomOwner ");
-            Debug.LogWarning(data);
 
             var output = new RoomInfo();
             //roomInfo = output;
@@ -276,14 +249,12 @@ namespace Core
 
             var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "roomOwner", form));
             yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-
-            Debug.LogWarning(cd.result);
 
             RoomInfoRespons resultData = GetData<RoomInfoRespons>(cd.result as string);
             yield return resultData.result;
         }
 
+        /*
         public IEnumerator GetRoomInfo(int roomPK)
         {
             var url = BASE_URL + "/room/" + roomPK;
@@ -298,6 +269,7 @@ namespace Core
             Assert.IsNotNull(json);
             yield return ParseRoomInfo(json);
         }
+        */
 
         public IEnumerator GetRoomInfo2(int roomId)
         {
@@ -306,9 +278,6 @@ namespace Core
 
             var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "roomById", form));
             yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-
-            Debug.LogWarning(cd.result);
 
             RoomInfoRespons resultData = GetData<RoomInfoRespons>(cd.result as string);
             yield return resultData.result;
@@ -327,35 +296,6 @@ namespace Core
             // var response = cd.result as string;
         }
 
-        public IEnumerator PatchRoomBGM(int bgm_Index)
-        {
-            PatchRoomBGMData data;
-            data.bgm_type_int = bgm_Index;
-
-            var json = JsonConvert.SerializeObject(data);
-            var url = BASE_URL + "/room/ownerBGM";
-            var cd = new CoroutineWithData(this, WebRequest(url, "PATCH", json));
-            yield return cd.coroutine;
-            var response = cd.result as string;
-
-            Debug.LogWarning(response);
-
-        }
-
-        public IEnumerator PatchRoomSKY(int sky_Index)
-        {
-            PatchRoomSKYData data;
-            data.sky_type_int = sky_Index;
-
-            var json = JsonConvert.SerializeObject(data);
-            var url = BASE_URL + "/room/ownerSKY";
-            var cd = new CoroutineWithData(this, WebRequest(url, "PATCH", json));
-            yield return cd.coroutine;
-            var response = cd.result as string;
-
-            Debug.LogWarning(response);
-
-        }
 
         public IEnumerator GetArtworks()
         {
@@ -378,6 +318,37 @@ namespace Core
             yield return output;
         }
 
+        public IEnumerator GetArtworks2()
+        {
+            bool nextOn = false;
+
+            List<ArtWorkData> artWorkDataList = new List<ArtWorkData>();
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 1,
+                uid = GetToken(),
+                successOn = ResultData =>
+                {
+                    artWorkDataList = ((ArtWorkRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+
+            var output = new ArtworkInfo[artWorkDataList.Count];
+            for (var i = 0; i < artWorkDataList.Count; ++i)
+            {
+                output[i] = Game.Player.LocalPlayerSelectArtwork.ArtWorkDataToArtworkInfo(artWorkDataList[i]);
+            }
+
+            yield return output;
+        }
+
+
         public IEnumerator GetArtwork(int primaryKey)
         {
             var url = BASE_URL + "/artwork/" + primaryKey;
@@ -386,6 +357,23 @@ namespace Core
             Assert.IsNotNull(cd.result);
             var data = cd.result as string;
             Assert.IsNotNull(data);
+            
+            var json = JObject.Parse(data);
+            Assert.IsNotNull(json);
+            yield return ParseArtworkInfo(json);
+        }
+
+        public IEnumerator GetArtwork2(int primaryKey)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("id", primaryKey);
+
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "artWorkById", form));
+            
+            yield return cd.coroutine;
+            
+            var data = cd.result as string;
+
             
             var json = JObject.Parse(data);
             Assert.IsNotNull(json);
@@ -410,6 +398,34 @@ namespace Core
                 output[i] = ParseArtworkInfo(obj);
             }
 
+            yield return output;
+        }
+
+        public IEnumerator GetPurchasedArtworks2()
+        {
+            bool nextOn = false;
+
+            List<ShopByArtWorkData> shopByArtWorkDataList = new List<ShopByArtWorkData>();
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 2,
+                uid = GetToken(),
+                successOn = ResultData =>
+                {
+                    shopByArtWorkDataList = ((ShopByArtWorkRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            var output = new ArtworkInfo[shopByArtWorkDataList.Count];
+            for (var i = 0; i < shopByArtWorkDataList.Count; ++i)
+            {
+                output[i] = Game.Player.LocalPlayerSelectArtwork.ArtWorkDataToArtworkInfo(shopByArtWorkDataList[i].artwork);
+            }
             yield return output;
         }
 
@@ -438,7 +454,7 @@ namespace Core
             var cd = new CoroutineWithData(this, WebRequest(url, "PATCH", json));
             yield return cd.coroutine;
         }
-
+        
         public IEnumerator GetGuestBooks(int roomPk)
         {
             var url = BASE_URL + "/guestbook/" + roomPk;
@@ -460,6 +476,35 @@ namespace Core
             yield return output;
         }
 
+        public IEnumerator GetGuestBooks2(int roomPk)
+        {
+            bool nextOn = false;
+
+            List<GuestBooksData> guestBooksDataList = new List<GuestBooksData>();
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 0,
+                roomId = roomPk,
+                successOn = ResultData =>
+                {
+                    guestBooksDataList = ((GuestBooksRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            var output = new GuestBookInfo[guestBooksDataList.Count];
+            for (var i = 0; i < guestBooksDataList.Count; ++i)
+            {
+                output[i] = MeumDB.GuestBooksDataDataToGuestBookInfo(guestBooksDataList[i]);
+            }
+
+            yield return output;
+        }
+
         public IEnumerator GetGuestBookStampCount(int roomPk)
         {
             var url = BASE_URL + "/guestbook/count/" + roomPk;
@@ -475,6 +520,29 @@ namespace Core
             yield return ParseGuestBookStampCountInfo(json);
         }
 
+        public IEnumerator GetGuestBookStampCount2(int roomPk)
+        {
+            bool nextOn = false;
+
+            GuestBooksStempData guestBooksStempData = null;
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 1,
+                roomId = roomPk,
+                successOn = ResultData =>
+                {
+                    guestBooksStempData = ((GuestBooksStempRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            yield return GuestBooksStempDataToGuestBookStampCountInfo(guestBooksStempData);
+        }
+
         public IEnumerator PostGuestBookCreate(int roomPk, int stampType, string content)
         {
             GuestBookCreateInfo data;
@@ -487,11 +555,50 @@ namespace Core
             yield return cd.coroutine;
         }
 
+        public IEnumerator PostGuestBookCreate2(int roomPk, int stampType, string content)
+        {
+            bool nextOn = false;
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 2,
+                roomId = roomPk,
+                stamp_type = stampType,
+                content = content,
+                writer_id = GetToken(),
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+        }
+
         public IEnumerator DeleteGuestBook(int guestbookPk)
         {
             var url = BASE_URL + "/guestbook/detail/" + guestbookPk;
             var cd = new CoroutineWithData(this, WebRequest(url, "DELETE"));
             yield return cd.coroutine;
+        }
+
+        public IEnumerator DeleteGuestBook2(int guestbookPk)
+        {
+            bool nextOn = false;
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 3,
+                id = guestbookPk,
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
         }
 
         public IEnumerator GetComments(int artworkPk)
@@ -518,6 +625,46 @@ namespace Core
             yield return output;
         }
 
+        public IEnumerator GetComments2(int artworkPk)
+        {
+            bool nextOn = false;
+
+            List<ArtWorkCommentData> resultList = new List<ArtWorkCommentData>();
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 3,
+                id = artworkPk,
+                successOn = ResultData =>
+                {
+                    resultList = ((ArtWorkCommentRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            var output = new CommentInfo[resultList.Count];
+            for (var i = 0; i < resultList.Count; ++i)
+            {
+                output[i] = ArtWorkCommentDataToCommentInfo(resultList[i]);
+            }
+
+            yield return output;
+        }
+
+        public static CommentInfo ArtWorkCommentDataToCommentInfo(ArtWorkCommentData data)
+        {
+            var output = new CommentInfo();
+            output.pk = data.id;
+            //output.artwork = ParseArtworkInfo(obj["artwork"]);
+            output.content = data.content;
+            output.writer = Socket.MeumSocket.UserDataToUserInfo(data.owner);
+            output.created_at = data.created_at;
+            return output;
+        }
+
         public IEnumerator PostCommentCreate(int artworkPk, string content)
         {
             CommentCreateInfo data;
@@ -529,15 +676,53 @@ namespace Core
             yield return cd.coroutine;
         }
 
+        public IEnumerator PostCommentCreate2(int artworkPk, string content)
+        {
+            bool nextOn = false;
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 4,
+                id = artworkPk,
+                content = content,
+                uid = GetToken(),
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+        }
+
         public IEnumerator DeleteComment(int commentPk)
         {
             var url = BASE_URL + "/comment/" + commentPk;
             var cd = new CoroutineWithData(this, WebRequest(url, "DELETE"));
             yield return cd.coroutine;
         }
-        
+
+        public IEnumerator DeleteComment2(int commentPk)
+        {
+            bool nextOn = false;
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 5,
+                id = commentPk,
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+        }
+
         #endregion
-        
+
         #region Parsing functions
 
         private static UserInfo ParseUserInfo(JToken obj)
@@ -603,6 +788,30 @@ namespace Core
             output.created_at = obj["created_at"].Value<string>();
             return output;
         }
+
+        public static GuestBookInfo GuestBooksDataDataToGuestBookInfo(GuestBooksData data)
+        {
+            var output = new GuestBookInfo();
+            output.pk = data.id;
+            output.stamp_type = data.stamp_type;
+            output.content = data.content;
+            output.writer = Socket.MeumSocket.UserDataToUserInfo(data.owner);
+            output.created_at = data.created_at;
+            return output;
+        }
+
+        public static GuestBookStampCountInfo GuestBooksStempDataToGuestBookStampCountInfo(GuestBooksStempData guestBooksStempData)
+        {
+            var output = new GuestBookStampCountInfo();
+
+            output.one = guestBooksStempData.one_queryset;
+            output.two = guestBooksStempData.two_queryset;
+            output.three = guestBooksStempData.three_queryset;
+            output.four = guestBooksStempData.four_queryset;
+
+            return output;
+        }
+
 
         private static GuestBookStampCountInfo ParseGuestBookStampCountInfo(JToken obj)
         {
@@ -785,7 +994,6 @@ namespace Core
             }
             else
             {
-                Debug.LogWarning("uwr.downloadHandler.text = " + uwr.downloadHandler.text);
                 yield return uwr.downloadHandler.text;
             }
         }

@@ -72,7 +72,29 @@ namespace Game.Artwork
 
             yield return cd.result;
         }
-        
+        public IEnumerator GetArtworkInfo2()
+        {
+            bool nextOn = false;
+
+            ArtWorkData data = null;
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 0,
+                id = _artworkData.artwork_pk,
+                successOn = ResultData =>
+                {
+                    data = ((ArtWorkResponsOnlyOne)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            yield return data;
+        }
+
         /*
          * @brief ArtworkData로 정보를 업데이트, 방을 불러오며 data_json을 통해 Artwork들을 설치할때 사용됨
          */
@@ -109,8 +131,8 @@ namespace Game.Artwork
             {
                 _artworkData.url = content.Data.image_file;
                 StartCoroutine(LoadTextureCoroutine());
-                scale.x = content.Data.size_w;
-                scale.z = content.Data.size_h;
+                scale.x = content.Data.size_w ;
+                scale.z = content.Data.size_h ;
             }
             else if (_artworkData.artwork_type == 1)
             {
@@ -119,6 +141,7 @@ namespace Game.Artwork
                 scale.x = scale.y = scale.z = content.Data.size_w;
             }
             transform.localScale = scale;
+
             transform.rotation = Quaternion.identity;
         }
 
@@ -127,11 +150,21 @@ namespace Game.Artwork
          */
         private IEnumerator LoadTextureCoroutine()
         {
-            var textureGetter = MeumDB.Get().GetTextureCoroutine(_artworkData.url);
+            string url = _artworkData.url;
+
+            string baseURL = "https://api.meum.me/datas/";
+            int index = url.IndexOf(baseURL);
+
+            if (index == -1)
+            {
+                url = baseURL + url;
+            }
+
+            var textureGetter = MeumDB.Get().GetTextureCoroutine(url);
             yield return textureGetter.coroutine;
-            Assert.IsNotNull(textureGetter.result);
+            //Assert.IsNotNull(textureGetter.result);
             var texture = textureGetter.result as Texture2D;
-            Assert.IsNotNull(texture);
+            //Assert.IsNotNull(texture);
             
             paintRenderer.material = new Material(mat);
             paintRenderer.material.mainTexture = texture;
@@ -142,7 +175,17 @@ namespace Game.Artwork
          */
         private IEnumerator LoadModelCoroutine()
         {
-            var object3DGetter = MeumDB.Get().GetObject3DCoroutine(_artworkData.url);
+            string url = _artworkData.url;
+
+            string baseURL = "https://api.meum.me/datas/";
+            int index = url.IndexOf(baseURL);
+
+            if (index == -1)
+            {
+                url = baseURL + url;
+            }
+
+            var object3DGetter = MeumDB.Get().GetObject3DCoroutine(url);
             yield return object3DGetter.coroutine;
             Assert.IsNotNull(object3DGetter.result);
             var loadedObject = object3DGetter.result as GameObject;

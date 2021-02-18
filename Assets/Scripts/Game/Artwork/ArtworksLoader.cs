@@ -22,12 +22,12 @@ namespace Game.Artwork
 
         private IEnumerator LoadArtworks()
         {
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetArtworks());
+            var cd = new CoroutineWithData(this, MeumDB.Get().GetArtworks2());
             yield return cd.coroutine;
             _artworkInfos = cd.result as MeumDB.ArtworkInfo[];
             Assert.IsNotNull(_artworkInfos);
             
-            cd = new CoroutineWithData(this, MeumDB.Get().GetPurchasedArtworks());
+            cd = new CoroutineWithData(this, MeumDB.Get().GetPurchasedArtworks2());
             yield return cd.coroutine;
             _purchasedArtworkInfos = cd.result as MeumDB.ArtworkInfo[];
             Assert.IsNotNull(_purchasedArtworkInfos);

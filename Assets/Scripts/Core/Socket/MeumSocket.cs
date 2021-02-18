@@ -105,6 +105,7 @@ namespace Core.Socket
         /*
          * @brief LocalPlayer의 UserInfo 를 불러옴
          */
+
         private IEnumerator LoadLocalPlayerInfo()
         {
             if (!ReferenceEquals(LocalPlayerInfo, null)) yield break;
@@ -164,46 +165,77 @@ namespace Core.Socket
             }
         }
 
-        private IEnumerator EnterGalleryCoroutine2(string nickname)
+        public static MeumDB.UserInfo UserDataToUserInfo(UserData userData)
         {
-            Debug.LogWarning("start");
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo2(nickname));
-            yield return cd.coroutine;
-
-            Debug.LogWarning(cd.result);
-
-            MeumDB.UserData userData = cd.result as MeumDB.UserData;
             MeumDB.UserInfo userInfo = new MeumDB.UserInfo();
             userInfo.primaryKey = userData.user_id;
             userInfo.nickname = userData.nickname;
             userInfo.phone = userData.phone;
 
+            return userInfo;
+        }
+
+        public static MeumDB.RoomInfo RoomInfoDataToRoomInfo(RoomInfoData roomInfoData)
+        {
+            MeumDB.RoomInfo roomInfo = new MeumDB.RoomInfo();
+
+            roomInfo.primaryKey = roomInfoData.id;
+            roomInfo.max_people = roomInfoData.max_people;
+            roomInfo.type_int = roomInfoData.type_int;
+            roomInfo.sky_type_int = roomInfoData.sky_type_int;
+            roomInfo.sky_addValue_string = roomInfoData.sky_addValue_string;
+            roomInfo.bgm_type_int = roomInfoData.bgm_type_int;
+            roomInfo.bgm_addValue_string = roomInfoData.bgm_addValue_string;
+
+            roomInfo.data_json = roomInfoData.data_json;
+
+            roomInfo.owner = UserDataToUserInfo(roomInfoData.owner);
+
+            return roomInfo;
+        }
+
+        private IEnumerator EnterGalleryCoroutine2(string nickname)
+        {
+
+            bool nextOn = false;
+
+            MeumDB.UserInfo userInfo = null;
+
+            UserInfoRequest userInfoRequest = new UserInfoRequest()
+            {
+                requestStatus = 1,
+                nickName = nickname,
+                successOn = ResultData =>
+                {
+                    UserInfoRespons data = (UserInfoRespons)ResultData;
+                    userInfo = UserDataToUserInfo(data.result);
+                    nextOn = true;
+                }
+            };
+            userInfoRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
             if (null != userInfo)
             {
-                cd = new CoroutineWithData(this, MeumDB.Get().GetRoomInfoWithUser2(userInfo.primaryKey));
-                yield return cd.coroutine;
+                nextOn = false;
 
-                MeumDB.RoomInfoData roomInfoData = cd.result as MeumDB.RoomInfoData;
-                MeumDB.RoomInfo roomInfo = new MeumDB.RoomInfo();
+                MeumDB.RoomInfo roomInfo = null;
 
-                roomInfo.primaryKey = roomInfoData.id;
-                roomInfo.max_people = roomInfoData.max_people;
-                roomInfo.type_int = roomInfoData.type_int;
-                roomInfo.sky_type_int = roomInfoData.sky_type_int;
-                roomInfo.sky_addValue_string = roomInfoData.sky_addValue_string;
-                roomInfo.bgm_type_int = roomInfoData.bgm_type_in;
-                roomInfo.bgm_addValue_string = roomInfoData.bgm_addValue_string;
+                RoomRequest roomRequest = new RoomRequest()
+                {
+                    requestStatus = 1,
+                    uid = userInfo.primaryKey,
+                    successOn = ResultData =>
+                    {
+                        RoomInfoRespons data = (RoomInfoRespons)ResultData;
+                        roomInfo = RoomInfoDataToRoomInfo(data.result);
+                        nextOn = true;
+                    }
+                };
+                roomRequest.RequestOn();
 
-                roomInfo.data_json = roomInfoData.data_json;
-
-                roomInfo.owner = new MeumDB.UserInfo();
-                roomInfo.owner.primaryKey = roomInfoData.owner_id;
-                roomInfo.owner.nickname = "nickName";
-                //roomInfo.owner = roomInfoData.owner_id;
-
-
-
-                //var roomInfo = cd.result as MeumDB.RoomInfo;
+                yield return new WaitUntil(() => nextOn);
 
                 if (null != roomInfo)
                 {

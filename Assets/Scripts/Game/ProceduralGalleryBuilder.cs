@@ -43,8 +43,13 @@ namespace Game
             BGMSet();
             SkyBoxSet();
 
-            bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.primaryKey == MeumDB.Get().currentRoomInfo.owner.primaryKey;
-            editBtn.gameObject.SetActive(isOwnerRoom);
+            if (editBtn != null)
+            {
+                bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.primaryKey == MeumDB.Get().currentRoomInfo.owner.primaryKey;
+                editBtn.gameObject.SetActive(isOwnerRoom);
+            }
+
+            
         }
 
         public void BGMSet()

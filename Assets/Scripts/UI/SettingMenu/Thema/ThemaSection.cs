@@ -118,8 +118,12 @@ public class ThemaSection : MonoBehaviour
 
         DropDownOpen(false);
 
-        StartCoroutine(MeumDB.Get().PatchRoomSKY(index));
-
+        new RoomRequest()
+        {
+            requestStatus = 2,
+            uid = MeumDB.Get().GetToken(),
+            sky_type_int = currentSelectIndex,
+        }.RequestOn();
 
         MeumDB.Get().currentRoomInfo.sky_type_int = currentSelectIndex;
 
@@ -152,9 +156,12 @@ public class ThemaSection : MonoBehaviour
 
     public void ThemaSectionOn(int index)
     {
-        StartCoroutine(MeumDB.Get().PatchRoomSKY(index));
-
-        Debug.LogWarning("index = " + index);
+        new RoomRequest()
+        {
+            requestStatus = 2,
+            uid = MeumDB.Get().GetToken(),
+            sky_type_int = index,
+        }.RequestOn();
     }
 
 }

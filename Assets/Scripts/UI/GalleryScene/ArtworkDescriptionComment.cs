@@ -55,13 +55,20 @@ namespace UI.GalleryScene
 
         public void Delete()
         {
-            StartCoroutine(DeleteCoroutine());
+            //StartCoroutine(DeleteCoroutine());
+            StartCoroutine(DeleteCoroutine2());
         }
 
         private IEnumerator DeleteCoroutine()
         {
             Assert.IsNotNull(_descriptionUi);
             yield return Core.MeumDB.Get().DeleteComment(_commentInfo.pk);
+            _descriptionUi.LoadComments();
+        }
+        private IEnumerator DeleteCoroutine2()
+        {
+            Assert.IsNotNull(_descriptionUi);
+            yield return Core.MeumDB.Get().DeleteComment2(_commentInfo.pk);
             _descriptionUi.LoadComments();
         }
     }

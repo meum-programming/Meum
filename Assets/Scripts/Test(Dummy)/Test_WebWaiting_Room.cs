@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Test_WebWaiting_Room : MonoBehaviour
 {
@@ -9,7 +11,6 @@ public class Test_WebWaiting_Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -20,11 +21,13 @@ public class Test_WebWaiting_Room : MonoBehaviour
 
     public void TokenSetBtnClick()
     {
-        webHandler.SetToken("1");
+        webHandler.SetToken("61");
+        //webHandler.SetToken("59");
     }
 
     public void RoomSetBtnClick()
     {
-        webHandler.EnterRoom("violetlemon2020");
+        webHandler.EnterRoom("Guest");
+        //webHandler.EnterRoom("믐대표서비스");
     }
 }
