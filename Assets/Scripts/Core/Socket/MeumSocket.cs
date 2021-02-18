@@ -20,7 +20,7 @@ namespace Core.Socket
         /*
          * @brief LocalPlayer의 UserInfo(DB)를 담고있음
          */
-        public MeumDB.UserInfo LocalPlayerInfo { get; private set; } = null;
+        public UserData LocalPlayerInfo { get; private set; } = null;
 
         private float _sendIntervalCounter = 0.0f;
         private SocketIOController _socket;
@@ -105,16 +105,6 @@ namespace Core.Socket
         /*
          * @brief LocalPlayer의 UserInfo 를 불러옴
          */
-
-        private IEnumerator LoadLocalPlayerInfo()
-        {
-            if (!ReferenceEquals(LocalPlayerInfo, null)) yield break;
-
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo());
-            yield return cd.coroutine;
-            LocalPlayerInfo = cd.result as MeumDB.UserInfo;
-        }
-
         private IEnumerator LoadLocalPlayerInfo2()
         {
             if (!ReferenceEquals(LocalPlayerInfo, null)) yield break;
@@ -122,13 +112,8 @@ namespace Core.Socket
             var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo2());
             yield return cd.coroutine;
 
-            MeumDB.UserData userData = cd.result as MeumDB.UserData;
-            MeumDB.UserInfo userInfo = new MeumDB.UserInfo();
-            userInfo.primaryKey = userData.user_id;
-            userInfo.nickname = userData.nickname;
-            userInfo.phone = userData.phone;
-
-            LocalPlayerInfo = userInfo;
+            UserData userData = cd.result as UserData;
+            LocalPlayerInfo = userData;
         }
 
         /*
@@ -140,66 +125,12 @@ namespace Core.Socket
             Assert.IsTrue(_state.IsNotInGalleryOrSquare());
             StartCoroutine(EnterGalleryCoroutine2(nickname));
         }
-        private IEnumerator EnterGalleryCoroutine(string nickname)
-        {
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetUserInfo(nickname));
-            yield return cd.coroutine;
-            var userInfo = cd.result as MeumDB.UserInfo;
-            if (null != userInfo)
-            {
-                cd = new CoroutineWithData(this, MeumDB.Get().GetRoomInfoWithUser(userInfo.primaryKey));
-                yield return cd.coroutine;
-                var roomInfo = cd.result as MeumDB.RoomInfo;
-
-                if (null != roomInfo)
-                {
-                    MeumDB.Get().currentRoomInfo = roomInfo;
-
-                    StartCoroutine(LoadLocalPlayerInfo());
-                    EnteringGalleryData data;
-                    data.roomId = roomInfo.primaryKey;
-                    data.roomType = roomInfo.type_int;
-                    data.maxN = roomInfo.max_people;
-                    _socket.Emit("enteringGallery", JsonConvert.SerializeObject(data));
-                }
-            }
-        }
-
-        public static MeumDB.UserInfo UserDataToUserInfo(UserData userData)
-        {
-            MeumDB.UserInfo userInfo = new MeumDB.UserInfo();
-            userInfo.primaryKey = userData.user_id;
-            userInfo.nickname = userData.nickname;
-            userInfo.phone = userData.phone;
-
-            return userInfo;
-        }
-
-        public static MeumDB.RoomInfo RoomInfoDataToRoomInfo(RoomInfoData roomInfoData)
-        {
-            MeumDB.RoomInfo roomInfo = new MeumDB.RoomInfo();
-
-            roomInfo.primaryKey = roomInfoData.id;
-            roomInfo.max_people = roomInfoData.max_people;
-            roomInfo.type_int = roomInfoData.type_int;
-            roomInfo.sky_type_int = roomInfoData.sky_type_int;
-            roomInfo.sky_addValue_string = roomInfoData.sky_addValue_string;
-            roomInfo.bgm_type_int = roomInfoData.bgm_type_int;
-            roomInfo.bgm_addValue_string = roomInfoData.bgm_addValue_string;
-
-            roomInfo.data_json = roomInfoData.data_json;
-
-            roomInfo.owner = UserDataToUserInfo(roomInfoData.owner);
-
-            return roomInfo;
-        }
 
         private IEnumerator EnterGalleryCoroutine2(string nickname)
         {
-
             bool nextOn = false;
 
-            MeumDB.UserInfo userInfo = null;
+            UserData userInfo = null;
 
             UserInfoRequest userInfoRequest = new UserInfoRequest()
             {
@@ -208,7 +139,7 @@ namespace Core.Socket
                 successOn = ResultData =>
                 {
                     UserInfoRespons data = (UserInfoRespons)ResultData;
-                    userInfo = UserDataToUserInfo(data.result);
+                    userInfo = data.result;
                     nextOn = true;
                 }
             };
@@ -220,16 +151,20 @@ namespace Core.Socket
             {
                 nextOn = false;
 
-                MeumDB.RoomInfo roomInfo = null;
+                RoomInfoData roomInfo = null;
 
                 RoomRequest roomRequest = new RoomRequest()
                 {
                     requestStatus = 1,
-                    uid = userInfo.primaryKey,
+                    uid = userInfo.user_id,
                     successOn = ResultData =>
                     {
                         RoomInfoRespons data = (RoomInfoRespons)ResultData;
-                        roomInfo = RoomInfoDataToRoomInfo(data.result);
+                        roomInfo = data.result;
+
+                        Debug.LogWarning("userInfo.id =  " + userInfo.id);
+                        Debug.LogWarning("roomInfo.id =  " + roomInfo.id);
+
                         nextOn = true;
                     }
                 };
@@ -243,7 +178,7 @@ namespace Core.Socket
 
                     StartCoroutine(LoadLocalPlayerInfo2());
                     EnteringGalleryData data;
-                    data.roomId = roomInfo.primaryKey;
+                    data.roomId = roomInfo.id;
                     data.roomType = roomInfo.type_int;
                     data.maxN = roomInfo.max_people;
                     _socket.Emit("enteringGallery", JsonConvert.SerializeObject(data));
@@ -259,7 +194,7 @@ namespace Core.Socket
 
         private IEnumerator EnterSquareCoroutine()
         {
-            StartCoroutine(LoadLocalPlayerInfo());
+            StartCoroutine(LoadLocalPlayerInfo2());
             yield return null;
             _socket.Emit("enteringSquare");
         }

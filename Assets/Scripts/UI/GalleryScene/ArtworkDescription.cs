@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 namespace UI.GalleryScene
 {
@@ -27,7 +28,7 @@ namespace UI.GalleryScene
         [SerializeField] private Transform list;
         [SerializeField] private GameObject commentPrefab;
         
-        private Core.MeumDB.ArtworkInfo _artworkInfo;
+        private ArtWorkData _artworkInfo;
         private ArtworkDescriptionComment _deletingComment;
 
         private void Awake()
@@ -61,7 +62,7 @@ namespace UI.GalleryScene
             _artworkInfo = null;
         }
 
-        public void SetDescription(Core.MeumDB.ArtworkInfo info)
+        public void SetDescription(ArtWorkData info)
         {
             _artworkInfo = info;
             title.text = _artworkInfo.title;
@@ -88,28 +89,6 @@ namespace UI.GalleryScene
             StartCoroutine(LoadCommentsCoroutine2());
         }
 
-        private IEnumerator LoadCommentsCoroutine()
-        {
-            foreach (Transform child in list)
-            {
-                Destroy(child.gameObject);
-            }
-            
-            Assert.IsNotNull(_artworkInfo);
-            var cd = new CoroutineWithData(this, Core.MeumDB.Get().GetComments(_artworkInfo.primaryKey));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var commentInfos = cd.result as Core.MeumDB.CommentInfo[];
-            Assert.IsNotNull(commentInfos);
-
-            for (var i = 0; i < commentInfos.Length; ++i)
-            {
-                var comment = Instantiate(commentPrefab, list).GetComponent<ArtworkDescriptionComment>();
-                Assert.IsNotNull(comment);
-                comment.SetContent(commentInfos[i], this);
-            }
-        }
-
         private IEnumerator LoadCommentsCoroutine2()
         {
             foreach (Transform child in list)
@@ -117,18 +96,28 @@ namespace UI.GalleryScene
                 Destroy(child.gameObject);
             }
 
-            Assert.IsNotNull(_artworkInfo);
-            var cd = new CoroutineWithData(this, Core.MeumDB.Get().GetComments2(_artworkInfo.primaryKey));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var commentInfos = cd.result as Core.MeumDB.CommentInfo[];
-            Assert.IsNotNull(commentInfos);
+            bool nextOn = false;
 
-            for (var i = 0; i < commentInfos.Length; ++i)
+            List<ArtWorkCommentData> resultList = new List<ArtWorkCommentData>();
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 3,
+                id = _artworkInfo.id,
+                successOn = ResultData =>
+                {
+                    resultList = ((ArtWorkCommentRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            for (var i = 0; i < resultList.Count; ++i)
             {
                 var comment = Instantiate(commentPrefab, list).GetComponent<ArtworkDescriptionComment>();
-                Assert.IsNotNull(comment);
-                comment.SetContent(commentInfos[i], this);
+                comment.SetContent(resultList[i], this);
             }
         }
 
@@ -136,26 +125,28 @@ namespace UI.GalleryScene
         {
             if (inputField.text.Equals(""))
                 return;
-            //StartCoroutine(PostCommentCoroutine());
             StartCoroutine(PostCommentCoroutine2());
-        }
-
-        private IEnumerator PostCommentCoroutine()
-        {
-            Assert.IsNotNull(_artworkInfo);
-            var cd = new CoroutineWithData(this, 
-                Core.MeumDB.Get().PostCommentCreate(_artworkInfo.primaryKey, inputField.text));
-            yield return cd.coroutine;
-            inputField.text = "";
-            StartCoroutine(LoadCommentsCoroutine());
         }
 
         private IEnumerator PostCommentCoroutine2()
         {
-            Assert.IsNotNull(_artworkInfo);
-            var cd = new CoroutineWithData(this,
-                Core.MeumDB.Get().PostCommentCreate2(_artworkInfo.primaryKey, inputField.text));
-            yield return cd.coroutine;
+            bool nextOn = false;
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 4,
+                id = _artworkInfo.id,
+                content = inputField.text,
+                uid = Core.MeumDB.Get().GetToken(),
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
             inputField.text = "";
             StartCoroutine(LoadCommentsCoroutine2());
         }

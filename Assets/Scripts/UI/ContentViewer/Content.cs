@@ -11,7 +11,7 @@ namespace UI.ContentViewer
         [SerializeField] private RawImage image;
         [SerializeField] private int titleMaxLength;
 
-        public MeumDB.ArtworkInfo Data
+        public ArtWorkData Data
         {
             get { return _data; }
             set
@@ -29,7 +29,7 @@ namespace UI.ContentViewer
         }
         public RawImage Image => image;
         
-        private MeumDB.ArtworkInfo _data;
+        private ArtWorkData _data;
 
         private void LoadImage()
         {

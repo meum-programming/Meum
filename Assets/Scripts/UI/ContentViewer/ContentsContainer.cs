@@ -63,14 +63,14 @@ namespace UI.ContentViewer
             _transform.sizeDelta = containerSize;
         }
 
-        public void AddContent(MeumDB.ArtworkInfo data)
+        public void AddContent(ArtWorkData data)
         {
             var newContentObj = Instantiate(contentPrefab, transform);
             newContentObj.GetComponent<Content>().Data = data;
             AlignChild();
         }
 
-        public void AddContents(List<MeumDB.ArtworkInfo> data)
+        public void AddContents(List<ArtWorkData> data)
         {
             foreach(var v in data)
             {

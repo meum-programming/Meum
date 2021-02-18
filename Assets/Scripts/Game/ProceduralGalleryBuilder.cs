@@ -45,7 +45,7 @@ namespace Game
 
             if (editBtn != null)
             {
-                bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.primaryKey == MeumDB.Get().currentRoomInfo.owner.primaryKey;
+                bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.id == MeumDB.Get().currentRoomInfo.owner.id;
                 editBtn.gameObject.SetActive(isOwnerRoom);
             }
 

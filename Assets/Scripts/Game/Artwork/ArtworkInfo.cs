@@ -64,14 +64,7 @@ namespace Game.Artwork
          * @brief 해당하는 Artwork의 ArtworkInfo(DB) 를 불러옴
          * @details 컴포넌트에서 ArtworkData 만 가지고 있으므로 ArtworkInfo는 DB에서 불러와야함
          */
-        public IEnumerator GetArtworkInfo()
-        {
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetArtwork(_artworkData.artwork_pk));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
 
-            yield return cd.result;
-        }
         public IEnumerator GetArtworkInfo2()
         {
             bool nextOn = false;
@@ -123,7 +116,7 @@ namespace Game.Artwork
                 ReferenceEquals(content.Image.texture, null)) 
                 return;
 
-            _artworkData.artwork_pk = content.Data.primaryKey;
+            _artworkData.artwork_pk = content.Data.id;
             _artworkData.artwork_type = content.Data.type_artwork;
 
             var scale = transform.localScale;

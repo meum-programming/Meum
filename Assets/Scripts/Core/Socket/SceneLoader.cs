@@ -73,25 +73,7 @@ namespace Core.Socket {
             yield return cd.coroutine;
 
             RoomInfoData roomInfoData = cd.result as RoomInfoData;
-            MeumDB.RoomInfo roomInfo = new MeumDB.RoomInfo();
-
-            roomInfo.primaryKey = roomInfoData.id;
-            roomInfo.max_people = roomInfoData.max_people;
-            roomInfo.type_int = roomInfoData.type_int;
-            roomInfo.sky_type_int = roomInfoData.sky_type_int;
-            roomInfo.sky_addValue_string = roomInfoData.sky_addValue_string;
-            roomInfo.bgm_type_int = roomInfoData.bgm_type_int;
-            roomInfo.bgm_addValue_string = roomInfoData.bgm_addValue_string;
-
-            roomInfo.data_json = roomInfoData.data_json;
-            roomInfo.owner = new MeumDB.UserInfo();
-            roomInfo.owner.nickname = "nickName";
-
-            Assert.IsNotNull(cd.result);
-            //var roomInfo = cd.result as MeumDB.RoomInfo;
-            Assert.IsNotNull(roomInfo);
-
-            paintsSerializer.SetJson(roomInfo.data_json);
+            paintsSerializer.SetJson(roomInfoData.data_json);
         }
 
         #endregion
@@ -103,106 +85,7 @@ namespace Core.Socket {
             Assert.IsTrue(_state.IsNotInGalleryOrSquare() || _state.IsSubOfGalleryOwn());
             _coroutineCaller.StartCoroutine(LoadGalleryCoroutine2(data));
         }
-        /*
-        private IEnumerator LoadGalleryCoroutine(SocketEventHandler.EnteringSuccessEventData data)
-        {
-            var sceneOpen = SceneManager.LoadSceneAsync("Loading");
-            while (!sceneOpen.isDone) yield return null;
-            var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
-            Assert.IsNotNull(progressBar);
-            
-            // load demanded artworks
-            var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfo(data.roomId));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var roomInfo = cd.result as MeumDB.RoomInfo;
-            Assert.IsNotNull(roomInfo);
-            var artworksData = JsonUtility.FromJson<RoomData>(roomInfo.data_json);
-            var artworksDataLength = artworksData.artworks.Length;
-
-            var set2d = new HashSet<string>();
-            var set3d = new HashSet<string>();
-            for (var i = 0; i < artworksDataLength; ++i)
-            {
-                var artworkData = artworksData.artworks[i];
-                if (artworkData.artwork_type == 0)
-                    set2d.Add(artworkData.url);
-                else if (artworkData.artwork_type == 1)
-                    set3d.Add(artworkData.url);
-            }
-
-            var loadCompleteCnt = 1;
-            var totalCnt = set2d.Count + set3d.Count;
-            foreach (var url in set2d)
-            {
-                cd = MeumDB.Get().GetTextureCoroutine(url);
-                yield return cd.coroutine;
-                Assert.IsNotNull(cd.result);
-                progressBar.SetProgress((float)loadCompleteCnt/totalCnt);
-                ++loadCompleteCnt;
-            }
-
-            foreach (var url in set3d)
-            {
-                cd = MeumDB.Get().GetObject3DCoroutine(url);
-                yield return cd.coroutine;
-                Assert.IsNotNull(cd.result);
-                progressBar.SetProgress((float)loadCompleteCnt/totalCnt);
-                ++loadCompleteCnt;
-            }
-            
-            // load userInfo data to check if player own gallery
-            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetUserInfo());
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var userInfo = cd.result as MeumDB.UserInfo;
-            Assert.IsNotNull(userInfo);
-            _playerPk = userInfo.primaryKey;
-
-            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetRoomInfoWithUser(userInfo.primaryKey));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var ownRoomInfo = cd.result as MeumDB.RoomInfo;
-
-            MeumDB.Get().myRoomInfo = ownRoomInfo;
-
-            Assert.IsNotNull(ownRoomInfo);
-            var ownRoomId = ownRoomInfo.primaryKey;
-            
-            // load scene
-            progressBar.SetProgress(0);
-            sceneOpen = SceneManager.LoadSceneAsync("ProceduralGallery");
-            while (!sceneOpen.isDone)
-            {
-                progressBar.SetProgress(sceneOpen.progress);
-                yield return null;
-            }
-
-            if (_state.IsSubOfGallery())
-                DataSynchronizer.Get().ShowPlayers();
-            else
-                DataSynchronizer.Get().Setup(data.maxN);
-            
-            
-            if(ownRoomId == data.roomId)
-                _state.EnterGalleryOwn();
-            else
-                _state.EnterGallery();
-            
-            // save galleryData
-            _galleryData = data;
-            
-            // setting paints
-            SerializeArtworks();
-            
-            // setting userList
-            var userList = UI.UserList.UserList.Get();
-            var socket = MeumSocket.Get();
-            userList.SetOwnerName(roomInfo.owner.nickname);
-            userList.AddUser(socket.GetPlayerId(), socket.LocalPlayerInfo.nickname);
-        }
-        */
-
+        
         private IEnumerator LoadGalleryCoroutine2(SocketEventHandler.EnteringSuccessEventData data)
         {
             var sceneOpen = SceneManager.LoadSceneAsync("Loading");
@@ -212,7 +95,7 @@ namespace Core.Socket {
 
             bool nextOn = false;
 
-            MeumDB.RoomInfo roomInfo = null;
+            RoomInfoData roomInfo = null;
 
             RoomRequest roomRequest = new RoomRequest()
             {
@@ -221,7 +104,7 @@ namespace Core.Socket {
                 successOn = ResultData =>
                 {
                     RoomInfoRespons respons = (RoomInfoRespons)ResultData;
-                    roomInfo = MeumSocket.RoomInfoDataToRoomInfo(respons.result);
+                    roomInfo = respons.result;
                     nextOn = true;
                 }
             };
@@ -230,6 +113,7 @@ namespace Core.Socket {
             yield return new WaitUntil(() => nextOn);
 
             Assert.IsNotNull(roomInfo);
+
             var artworksData = JsonUtility.FromJson<RoomData>(roomInfo.data_json);
             var artworksDataLength = artworksData.artworks.Length;
 
@@ -266,7 +150,7 @@ namespace Core.Socket {
 
             nextOn = false;
 
-            MeumDB.UserInfo userInfo = null;
+            UserData userInfo = null;
 
             UserInfoRequest userInfoRequest = new UserInfoRequest()
             {
@@ -275,7 +159,7 @@ namespace Core.Socket {
                 successOn = ResultData =>
                 {
                     UserInfoRespons respons = (UserInfoRespons)ResultData;
-                    userInfo = MeumSocket.UserDataToUserInfo(respons.result);
+                    userInfo = respons.result;
                     nextOn = true;
                 }
             };
@@ -283,19 +167,19 @@ namespace Core.Socket {
 
             yield return new WaitUntil(() => nextOn);
 
-            _playerPk = userInfo.primaryKey;
+            _playerPk = userInfo.user_id;
 
-            MeumDB.RoomInfo ownRoomInfo = null;
+            RoomInfoData ownRoomInfo = null;
 
             nextOn = false;
             RoomRequest roomRequest2 = new RoomRequest()
             {
                 requestStatus = 1,
-                uid = userInfo.primaryKey,
+                uid = userInfo.user_id,
                 successOn = ResultData =>
                 {
                     RoomInfoRespons respons = (RoomInfoRespons)ResultData;
-                    ownRoomInfo = MeumSocket.RoomInfoDataToRoomInfo(respons.result);
+                    ownRoomInfo = respons.result;
 
                     nextOn = true;
                 }
@@ -306,7 +190,7 @@ namespace Core.Socket {
 
             MeumDB.Get().myRoomInfo = ownRoomInfo;
 
-            var ownRoomId = ownRoomInfo.owner.primaryKey;
+            var ownRoomId = ownRoomInfo.owner.id;
 
             // load scene
             progressBar.SetProgress(0);
@@ -395,18 +279,58 @@ namespace Core.Socket {
             while (!sceneOpen.isDone) yield return null;
             var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
             
-            // load demanded textures
-            var cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetArtworks2());
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var artworkInfos = cd.result as MeumDB.ArtworkInfo[];
-            Assert.IsNotNull(artworkInfos);
-            
-            cd = new CoroutineWithData(_coroutineCaller, MeumDB.Get().GetPurchasedArtworks2());
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var purchasedArtworkInfos = cd.result as MeumDB.ArtworkInfo[];
-            Assert.IsNotNull(purchasedArtworkInfos);
+            bool nextOn = false;
+
+            List<ArtWorkData> artWorkDataList = new List<ArtWorkData>();
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 1,
+                uid = MeumDB.Get().GetToken(),
+                successOn = ResultData =>
+                {
+                    artWorkDataList = ((ArtWorkRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+
+            var output = new ArtWorkData[artWorkDataList.Count];
+            for (var i = 0; i < artWorkDataList.Count; ++i)
+            {
+                output[i] = artWorkDataList[i];
+            }
+
+            var artworkInfos = output;
+
+            nextOn = false;
+
+            List<ShopByArtWorkData> shopByArtWorkDataList = new List<ShopByArtWorkData>();
+
+            ArtWorkRequest artWorkRequest2 = new ArtWorkRequest()
+            {
+                requestStatus = 2,
+                uid = MeumDB.Get().GetToken(),
+                successOn = ResultData =>
+                {
+                    shopByArtWorkDataList = ((ShopByArtWorkRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest2.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            var output2 = new ArtWorkData[shopByArtWorkDataList.Count];
+            for (var i = 0; i < shopByArtWorkDataList.Count; ++i)
+            {
+                output2[i] = shopByArtWorkDataList[i].artwork;
+            }
+
+            var purchasedArtworkInfos = output2;
 
             string baseURL = "https://api.meum.me/datas/";
 

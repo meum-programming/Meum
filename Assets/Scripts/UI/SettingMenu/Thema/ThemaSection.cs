@@ -35,7 +35,7 @@ public class ThemaSection : MonoBehaviour
 
     void Init()
     {
-        isOwnerRoom = MeumDB.Get().myRoomInfo.owner.primaryKey == MeumDB.Get().currentRoomInfo.owner.primaryKey;
+        isOwnerRoom = MeumDB.Get().myRoomInfo.owner.id == MeumDB.Get().currentRoomInfo.owner.id;
 
         SKYDataSet();
         DropDownItemSet();

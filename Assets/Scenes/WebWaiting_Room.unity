@@ -1263,3 +1263,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b3d8235e50e3f40baec855f2b5d51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRoomInfo:
+    success: 
+    id: 0
+    created_at: 
+    updated_at: 
+    deleted_at: 
+    max_people: 0
+    type_int: 0
+    sky_type_int: 0
+    sky_addValue_string: 
+    bgm_type_int: 0
+    bgm_addValue_string: 
+    data_json: 
+    owner:
+      success: 
+      id: 0
+      created_at: 
+      updated_at: 
+      deleted_at: 
+      user_id: 0
+      nickname: 
+      email: 
+      phone: 
+      cash: 0
+      subscribe: 0
+      is_tutorial: 0
+      is_admin: 0
+      max_inventory: 0
+  myRoomInfo:
+    success: 
+    id: 0
+    created_at: 
+    updated_at: 
+    deleted_at: 
+    max_people: 0
+    type_int: 0
+    sky_type_int: 0
+    sky_addValue_string: 
+    bgm_type_int: 0
+    bgm_addValue_string: 
+    data_json: 
+    owner:
+      success: 
+      id: 0
+      created_at: 
+      updated_at: 
+      deleted_at: 
+      user_id: 0
+      nickname: 
+      email: 
+      phone: 
+      cash: 0
+      subscribe: 0
+      is_tutorial: 0
+      is_admin: 0
+      max_inventory: 0

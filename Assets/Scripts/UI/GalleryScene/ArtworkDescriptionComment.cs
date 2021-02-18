@@ -15,7 +15,7 @@ namespace UI.GalleryScene
         [SerializeField] private float heightWithoutContent;
  
         private RectTransform _transform;
-        private Core.MeumDB.CommentInfo _commentInfo;
+        private ArtWorkCommentData _commentInfo;
         private ArtworkDescription _descriptionUi;
 
         private void Awake()
@@ -23,12 +23,12 @@ namespace UI.GalleryScene
             _transform = GetComponent<RectTransform>();
         }
 
-        public void SetContent(Core.MeumDB.CommentInfo info, ArtworkDescription descriptionUi)
+        public void SetContent(ArtWorkCommentData info, ArtworkDescription descriptionUi)
         {
             _commentInfo = info;
             _descriptionUi = descriptionUi;
             
-            writer.text = _commentInfo.writer.nickname;
+            writer.text = _commentInfo.owner.nickname;
             content.text = _commentInfo.content;
             
             var sizeDelta = _transform.sizeDelta;
@@ -36,7 +36,7 @@ namespace UI.GalleryScene
             _transform.sizeDelta = sizeDelta;
 
             var meumSocket = Core.Socket.MeumSocket.Get();
-            if (_commentInfo.writer.primaryKey == meumSocket.GetPlayerPk())
+            if (_commentInfo.owner.id == meumSocket.GetPlayerPk())
             {
                 deleteButton.gameObject.SetActive(true);
                 deleteButton.onClick.AddListener(ShowDeleteModal);
@@ -55,20 +55,28 @@ namespace UI.GalleryScene
 
         public void Delete()
         {
-            //StartCoroutine(DeleteCoroutine());
             StartCoroutine(DeleteCoroutine2());
         }
 
-        private IEnumerator DeleteCoroutine()
-        {
-            Assert.IsNotNull(_descriptionUi);
-            yield return Core.MeumDB.Get().DeleteComment(_commentInfo.pk);
-            _descriptionUi.LoadComments();
-        }
         private IEnumerator DeleteCoroutine2()
         {
             Assert.IsNotNull(_descriptionUi);
-            yield return Core.MeumDB.Get().DeleteComment2(_commentInfo.pk);
+
+            bool nextOn = false;
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 5,
+                id = _commentInfo.id,
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
             _descriptionUi.LoadComments();
         }
     }

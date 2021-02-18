@@ -70,14 +70,30 @@ public class ArtWorkRequest : BaseRequest
         if (requestStatus == 0)
         {
             data = GetData<ArtWorkResponsOnlyOne>(jsonData);
+            ArtWorkResponsOnlyOne artWorkResponsOnlyOne = (ArtWorkResponsOnlyOne)data;
+            artWorkResponsOnlyOne.result = SizeReset(artWorkResponsOnlyOne.result);
+            data = artWorkResponsOnlyOne;
         }
         else if (requestStatus == 1)
         {
             data = GetData<ArtWorkRespons>(jsonData);
+            ArtWorkRespons artWorkRespons = ((ArtWorkRespons)data);
+            for (int i = 0; i < artWorkRespons.result.Count; i++)
+            {
+                artWorkRespons.result[i] = SizeReset(artWorkRespons.result[i]);
+            }
+            data = artWorkRespons;
         }
         else if (requestStatus == 2)
         {
             data = GetData<ShopByArtWorkRespons>(jsonData);
+            ShopByArtWorkRespons artWorkRespons = ((ShopByArtWorkRespons)data);
+            for (int i = 0; i < artWorkRespons.result.Count; i++)
+            {
+                artWorkRespons.result[i].artwork = SizeReset(artWorkRespons.result[i].artwork);
+            }
+            data = artWorkRespons;
+
         }
         else if (requestStatus == 3)
         {
@@ -96,6 +112,23 @@ public class ArtWorkRequest : BaseRequest
         {
             successOn(data);
         }
+    }
+
+    void SizeResetList(List<ArtWorkData> artWorkDataList)
+    {
+        for (int i = 0; i < artWorkDataList.Count; i++)
+        {
+            artWorkDataList[i] = SizeReset(artWorkDataList[i]);
+        }
+    }
+
+
+    ArtWorkData SizeReset(ArtWorkData data)
+    {
+        data.size_h /= 100.0f;
+        data.size_w /= 100.0f;
+
+        return data;
     }
 
 }
@@ -150,8 +183,8 @@ public class ArtWorkData : BaseRespons
     public int price = 0;
     public int owner_id = 0;
     public string instruction = string.Empty;
-    public int size_h = 0;
-    public int size_w = 0;
+    public float size_h = 0;
+    public float size_w = 0;
     public string title = string.Empty;
     public int year = 0;
 

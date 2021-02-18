@@ -12,8 +12,8 @@ namespace Game.Artwork
         [SerializeField] private UI.ContentViewer.ContentsContainer container2d;
         [SerializeField] private UI.ContentViewer.ContentsContainer container3d;
 
-        private Core.MeumDB.ArtworkInfo[] _artworkInfos;
-        private Core.MeumDB.ArtworkInfo[] _purchasedArtworkInfos;
+        private ArtWorkData[] _artworkInfos;
+        private ArtWorkData[] _purchasedArtworkInfos;
 
         public void Load()
         {
@@ -22,15 +22,58 @@ namespace Game.Artwork
 
         private IEnumerator LoadArtworks()
         {
-            var cd = new CoroutineWithData(this, MeumDB.Get().GetArtworks2());
-            yield return cd.coroutine;
-            _artworkInfos = cd.result as MeumDB.ArtworkInfo[];
-            Assert.IsNotNull(_artworkInfos);
-            
-            cd = new CoroutineWithData(this, MeumDB.Get().GetPurchasedArtworks2());
-            yield return cd.coroutine;
-            _purchasedArtworkInfos = cd.result as MeumDB.ArtworkInfo[];
-            Assert.IsNotNull(_purchasedArtworkInfos);
+            bool nextOn = false;
+
+            List<ArtWorkData> artWorkDataList = new List<ArtWorkData>();
+
+            ArtWorkRequest artWorkRequest = new ArtWorkRequest()
+            {
+                requestStatus = 1,
+                uid = MeumDB.Get().GetToken(),
+                successOn = ResultData =>
+                {
+                    artWorkDataList = ((ArtWorkRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+
+            var output = new ArtWorkData[artWorkDataList.Count];
+            for (var i = 0; i < artWorkDataList.Count; ++i)
+            {
+                output[i] = artWorkDataList[i];
+            }
+
+            _artworkInfos = output;
+
+            nextOn = false;
+
+            List<ShopByArtWorkData> shopByArtWorkDataList = new List<ShopByArtWorkData>();
+
+            ArtWorkRequest artWorkRequest2 = new ArtWorkRequest()
+            {
+                requestStatus = 2,
+                uid = MeumDB.Get().GetToken(),
+                successOn = ResultData =>
+                {
+                    shopByArtWorkDataList = ((ShopByArtWorkRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            artWorkRequest2.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            var output2 = new ArtWorkData[shopByArtWorkDataList.Count];
+            for (var i = 0; i < shopByArtWorkDataList.Count; ++i)
+            {
+                output2[i] = shopByArtWorkDataList[i].artwork;
+            }
+
+            _purchasedArtworkInfos = output2;
             
             if(container2d != null && container3d != null)
                 AddArtworksToContainer();
@@ -38,8 +81,8 @@ namespace Game.Artwork
         
         private void AddArtworksToContainer()
         {
-            var artworkInfos2d = new List<MeumDB.ArtworkInfo>();
-            var artworkInfos3d = new List<MeumDB.ArtworkInfo>();
+            var artworkInfos2d = new List<ArtWorkData>();
+            var artworkInfos3d = new List<ArtWorkData>();
             
             for (var i = 0; i < _artworkInfos.Length; ++i)
             {

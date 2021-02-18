@@ -30,44 +30,32 @@ namespace UI.GuestBook
         
         public void LoadContents()
         {
-            //StartCoroutine(LoadContentsCoroutine());
-            //StartCoroutine(LoadStampCountCoroutine());
-
             StartCoroutine(LoadContentsCoroutine2());
             StartCoroutine(LoadStampCountCoroutine2());
         }
 
-        private IEnumerator LoadContentsCoroutine()
-        {
-            var roomId = Core.Socket.MeumSocket.Get().GetRoomId();
-            var cd = new CoroutineWithData(this, Core.MeumDB.Get().GetGuestBooks(roomId));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var output = cd.result as Core.MeumDB.GuestBookInfo[];
-            Assert.IsNotNull(output);
-            
-            for (var i = 0; i < contents.childCount; ++i)
-            {
-                var child = contents.GetChild(i);
-                if(!ReferenceEquals(child, null))
-                    Destroy(child.gameObject);
-            }
-            
-            for (var i = 0; i < output.Length; ++i)
-            {
-                var data = output[i];
-                var content = Instantiate(guestBookContent, contents).GetComponent<GuestBookContent>();
-                Assert.IsNotNull(content);
-                content.Setup(data);
-            }
-        }
         private IEnumerator LoadContentsCoroutine2()
         {
             var roomId = Core.Socket.MeumSocket.Get().GetRoomId();
-            var cd = new CoroutineWithData(this, Core.MeumDB.Get().GetGuestBooks2(roomId));
-            yield return cd.coroutine;
 
-            var output = cd.result as Core.MeumDB.GuestBookInfo[];
+            bool nextOn = false;
+
+            List<GuestBooksData> guestBooksDataList = new List<GuestBooksData>();
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 0,
+                roomId = roomId,
+                successOn = ResultData =>
+                {
+                    guestBooksDataList = ((GuestBooksRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
 
             for (var i = 0; i < contents.childCount; ++i)
             {
@@ -76,44 +64,40 @@ namespace UI.GuestBook
                     Destroy(child.gameObject);
             }
 
-            for (var i = 0; i < output.Length; ++i)
+            for (var i = 0; i < guestBooksDataList.Count; ++i)
             {
-                var data = output[i];
                 var content = Instantiate(guestBookContent, contents).GetComponent<GuestBookContent>();
                 Assert.IsNotNull(content);
-                content.Setup(data);
+                content.Setup(guestBooksDataList[i]);
             }
         }
-
-        private IEnumerator LoadStampCountCoroutine()
-        {
-            var roomId = Core.Socket.MeumSocket.Get().GetRoomId();
-            var cd = new CoroutineWithData(this, Core.MeumDB.Get().GetGuestBookStampCount(roomId));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var output = cd.result as Core.MeumDB.GuestBookStampCountInfo;
-            Assert.IsNotNull(output);
-
-            stampCountTexts[0].text = output.one.ToString();
-            stampCountTexts[1].text = output.two.ToString();
-            stampCountTexts[2].text = output.three.ToString();
-            stampCountTexts[3].text = output.four.ToString();
-        }
-
 
         private IEnumerator LoadStampCountCoroutine2()
         {
             var roomId = Core.Socket.MeumSocket.Get().GetRoomId();
-            var cd = new CoroutineWithData(this, Core.MeumDB.Get().GetGuestBookStampCount2(roomId));
-            yield return cd.coroutine;
-            Assert.IsNotNull(cd.result);
-            var output = cd.result as Core.MeumDB.GuestBookStampCountInfo;
-            Assert.IsNotNull(output);
 
-            stampCountTexts[0].text = output.one.ToString();
-            stampCountTexts[1].text = output.two.ToString();
-            stampCountTexts[2].text = output.three.ToString();
-            stampCountTexts[3].text = output.four.ToString();
+            bool nextOn = false;
+
+            GuestBooksStempData guestBooksStempData = null;
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 1,
+                roomId = roomId,
+                successOn = ResultData =>
+                {
+                    guestBooksStempData = ((GuestBooksStempRespons)ResultData).result;
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
+            stampCountTexts[0].text = guestBooksStempData.one_queryset.ToString();
+            stampCountTexts[1].text = guestBooksStempData.two_queryset.ToString();
+            stampCountTexts[2].text = guestBooksStempData.three_queryset.ToString();
+            stampCountTexts[3].text = guestBooksStempData.four_queryset.ToString();
         }
 
         public void Close()

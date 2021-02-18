@@ -34,7 +34,7 @@ namespace UI.GuestBook
         [SerializeField] private TextMeshProUGUI createdAt;
         [SerializeField] private Button deleteButton;
 
-        private Core.MeumDB.GuestBookInfo _info;
+        private GuestBooksData _info;
 
         private void Awake()
         {
@@ -47,7 +47,7 @@ namespace UI.GuestBook
             Assert.IsNotNull(createdAt);
         }
 
-        public void Setup(Core.MeumDB.GuestBookInfo info)
+        public void Setup(GuestBooksData info)
         {
             _info = info;
             var type = _info.stamp_type - 1;
@@ -60,11 +60,11 @@ namespace UI.GuestBook
 
             title.text = _titleByTypes[type];
             detail.text = _info.content;
-            writer.text = _info.writer.nickname;
+            writer.text = _info.owner.nickname;
             createdAt.text = _info.created_at;
 
             var meumSocket = Core.Socket.MeumSocket.Get();
-            if(_info.writer.primaryKey == meumSocket.GetPlayerPk())
+            if(_info.owner.id == meumSocket.GetPlayerPk())
                 deleteButton.gameObject.SetActive(true);
             else if(meumSocket.IsInRoomOwn())
                 deleteButton.gameObject.SetActive(true);
@@ -72,19 +72,26 @@ namespace UI.GuestBook
 
         public void Delete()
         {
-            //StartCoroutine(DeleteCoroutine());
             StartCoroutine(DeleteCoroutine2());
-        }
-
-        private IEnumerator DeleteCoroutine()
-        {
-            yield return StartCoroutine(Core.MeumDB.Get().DeleteGuestBook(_info.pk));
-            Destroy(gameObject);
         }
 
         private IEnumerator DeleteCoroutine2()
         {
-            yield return StartCoroutine(Core.MeumDB.Get().DeleteGuestBook2(_info.pk));
+            bool nextOn = false;
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 3,
+                id = _info.id,
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
+
             Destroy(gameObject);
         }
     }

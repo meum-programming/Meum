@@ -174,7 +174,7 @@ namespace Core.Socket
             result.rotation = _localPlayer.eulerAngles;
 
             var playerInfo = MeumSocket.Get().LocalPlayerInfo;
-            result.userKey = playerInfo.primaryKey;
+            result.userKey = playerInfo.id;
             result.nickname = playerInfo.nickname;
             
             return result;

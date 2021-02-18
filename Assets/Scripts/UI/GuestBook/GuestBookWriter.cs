@@ -64,26 +64,30 @@ namespace UI.GuestBook
 
         public void Submit()
         {
-            //StartCoroutine(SubmitCoroutine());
             StartCoroutine(SubmitCoroutine2());
         }
 
-        private IEnumerator SubmitCoroutine()
-        {
-            var roomId = Core.Socket.MeumSocket.Get().GetRoomId();
-            var cd = new CoroutineWithData(this, 
-                MeumDB.Get().PostGuestBookCreate(roomId, _currentStampIdx, contentInputField.text));
-            yield return cd.coroutine;
-
-            Hide();
-            guestBook.LoadContents();
-        }
         private IEnumerator SubmitCoroutine2()
         {
             var roomId = Core.Socket.MeumSocket.Get().GetRoomId();
-            var cd = new CoroutineWithData(this,
-                MeumDB.Get().PostGuestBookCreate2(roomId, _currentStampIdx, contentInputField.text));
-            yield return cd.coroutine;
+
+            bool nextOn = false;
+
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 2,
+                roomId = roomId,
+                stamp_type = _currentStampIdx,
+                content = contentInputField.text,
+                writer_id = MeumDB.Get().GetToken(),
+                successOn = ResultData =>
+                {
+                    nextOn = true;
+                }
+            };
+            guestBooksRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
 
             Hide();
             guestBook.LoadContents();
