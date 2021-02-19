@@ -37,6 +37,8 @@ public class SoundManager : MonoBehaviour
 
 	MeumSaveData meumSaveData = null;
 
+	public bool soundOff = false;
+
 	void Awake()
 	{
 		Init();

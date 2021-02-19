@@ -16,10 +16,15 @@ namespace UI.GalleryScene
             var btn = GetComponent<Button>();
             btn.onClick.AddListener(ButtonAction);
 
-            if (AudioListener.volume < 1e-3)
+            if (SoundManager.Instance.soundOff) 
+            {
                 Mute();
+            }
             else
+            {
                 Unmute();
+            }
+                   
         }
 
         private void ButtonAction()
@@ -39,6 +44,8 @@ namespace UI.GalleryScene
             AudioListener.pause = false;
             image.sprite = enabledImage;
             muted = false;
+
+            SoundManager.Instance.soundOff = false;
         }
 
         private void Mute()
@@ -46,6 +53,9 @@ namespace UI.GalleryScene
             AudioListener.pause = true;
             image.sprite = disabledImage;
             muted = true;
+
+            SoundManager.Instance.soundOff = true;
+
         }
     }
 }

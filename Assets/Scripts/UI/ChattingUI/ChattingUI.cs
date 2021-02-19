@@ -18,7 +18,8 @@ namespace UI.ChattingUI
         [SerializeField] private float toggledHeight;
 
         [Header("Input Area")] 
-        [SerializeField] private TMP_InputField inputField;
+        //[SerializeField] private TMP_InputField inputField;
+        [SerializeField] private InputField inputField;
         [SerializeField] private Button sendButton;
         
         private RectTransform _rectTransform;
@@ -85,6 +86,8 @@ namespace UI.ChattingUI
 
         private void SendWithStr(string str)
         {
+            Debug.LogWarning("str = " + str);
+
             str = str.Trim();
             if (str.Equals("")) return;
 

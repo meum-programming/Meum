@@ -161,10 +161,6 @@ namespace Core.Socket
                     {
                         RoomInfoRespons data = (RoomInfoRespons)ResultData;
                         roomInfo = data.result;
-
-                        Debug.LogWarning("userInfo.id =  " + userInfo.id);
-                        Debug.LogWarning("roomInfo.id =  " + roomInfo.id);
-
                         nextOn = true;
                     }
                 };

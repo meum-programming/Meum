@@ -184,8 +184,8 @@ namespace Game.Artwork
         {
             if (!ctx.performed) return;
 
-            var value = ctx.ReadValue<float>() / 2400.0f;    // scroll raw value: [-120, 120]
-
+            var value = ctx.ReadValue<float>() / 120.0f;    // scroll raw value: [-120, 120]
+            
             if (_selected && _moving && Mathf.Abs(value) > 1e-10)
             {
                 var scale = _selected.localScale;

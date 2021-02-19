@@ -6,8 +6,12 @@ namespace UI.ChattingUI
 {
     public class ChattingLog : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI nickname;
-        [SerializeField] private TextMeshProUGUI content;
+        //[SerializeField] private TextMeshProUGUI nickname;
+        //[SerializeField] private TextMeshProUGUI content;
+
+        [SerializeField] private Text nickname;
+        [SerializeField] private Text content;
+
         [SerializeField] private Image badgeImage;
         [SerializeField] private Color[] colorByTypes;
 

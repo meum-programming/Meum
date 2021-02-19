@@ -40,8 +40,6 @@ public class Joystick : MonoBehaviour
         if (moveOn == false)  
             return;
 
-        Debug.LogWarning("moveOn");
-
         MoveEventOn();
     }
 

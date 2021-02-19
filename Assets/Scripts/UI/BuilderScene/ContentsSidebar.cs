@@ -31,7 +31,8 @@ namespace UI.BuilderScene
             container2d.gameObject.SetActive(false);
             container3d.gameObject.SetActive(true);
 
-            container2d.offsetMax = new Vector2(container2d.offsetMax.x, _defaultContainerTopDist);
+            container3d.offsetMax = new Vector2(container3d.offsetMax.x, _defaultContainerTopDist);
+
         }
     }
 }

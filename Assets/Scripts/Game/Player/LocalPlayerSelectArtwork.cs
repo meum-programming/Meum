@@ -27,7 +27,7 @@ namespace Game.Player
         {
             if (!ctx.canceled) return;
 
-            if (joystick.moveOn)
+            if (joystick != null && joystick.moveOn)
                return;
 
             var ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());

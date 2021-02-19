@@ -105,6 +105,9 @@ namespace Game.Player
 
         public void OnRotateKeybordInput(InputAction.CallbackContext ctx)
         {
+            if (IsSwitchingView) return;    // 인칭 전환중이라면 아무것도 안함
+            if (!_isRotateEnabled) return;
+
             if (ctx.action.phase == InputActionPhase.Started)
             {
                 cameraRotFlag = true;

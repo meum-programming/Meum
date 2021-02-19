@@ -193,7 +193,7 @@ namespace Game.Artwork
             // 불러온 오브젝트를 ArtworkInfo를 포함한 게임오브젝트의 자식으로 붙이기 때문에 이렇게 할 필요가 있음
             // 옮긴 콜라이더는 트리거가 되고, 유저의 클릭, 다른 오브젝트 설치시에 사용됨
             var col = obj.GetComponent<Collider>();
-            Assert.IsNotNull(col);
+            //Assert.IsNotNull(col);
             CopyComponent(col, gameObject).isTrigger = true;
             col.enabled = false;
         }
