@@ -86,8 +86,6 @@ namespace UI.ChattingUI
 
         private void SendWithStr(string str)
         {
-            Debug.LogWarning("str = " + str);
-
             str = str.Trim();
             if (str.Equals("")) return;
 
