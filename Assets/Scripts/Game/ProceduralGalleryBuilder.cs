@@ -1,8 +1,10 @@
 ﻿using Core;
+using Core.Socket;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace Game
@@ -129,5 +131,12 @@ namespace Game
 
             return false;
         }
+
+        public void ChaEditBtnClick()
+        {
+            MeumSocket.Get().GoToChaEditScene();
+        }
+
+
     }
 }

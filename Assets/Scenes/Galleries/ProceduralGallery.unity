@@ -4291,7 +4291,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2067616413}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5933453786122352552}
+        m_TargetAssemblyTypeName: Game.ProceduralGalleryBuilder, Assembly-CSharp
+        m_MethodName: ChaEditBtnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2067616413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4675,3 +4687,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+--- !u!114 &5933453786122352552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+  m_PrefabInstance: {fileID: 5933453786122352551}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792b0dc7078e4dd478ea7db580103753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

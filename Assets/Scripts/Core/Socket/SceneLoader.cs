@@ -82,7 +82,7 @@ namespace Core.Socket {
 
         public void LoadGallery(SocketEventHandler.EnteringSuccessEventData data)
         {
-            Assert.IsTrue(_state.IsNotInGalleryOrSquare() || _state.IsSubOfGalleryOwn());
+            //Assert.IsTrue(_state.IsNotInGalleryOrSquare() || _state.IsSubOfGalleryOwn());
             _coroutineCaller.StartCoroutine(LoadGalleryCoroutine2(data));
         }
         
@@ -260,11 +260,35 @@ namespace Core.Socket {
             
             _state.EnterSquare();
         }
-        
+
         #endregion
 
         #region LoadEditScene
-        
+
+        public void LoadChaEditScene()
+        {
+            _coroutineCaller.StartCoroutine(LoadEditChaSceneCoroutine());
+        }
+
+        private IEnumerator LoadEditChaSceneCoroutine()
+        {
+            DataSynchronizer.Get().HidePlayers();
+
+            var sceneOpen = SceneManager.LoadSceneAsync("Loading");
+            while (!sceneOpen.isDone) yield return null;
+            var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
+
+            // load scene
+            progressBar.SetProgress(0);
+            sceneOpen = SceneManager.LoadSceneAsync("AnimTest");
+            while (!sceneOpen.isDone)
+            {
+                progressBar.SetProgress(sceneOpen.progress);
+                yield return null;
+            }
+        }
+
+
         public void LoadEditScene()
         {
             //Assert.IsTrue(_state.IsSubOfGalleryOwn());

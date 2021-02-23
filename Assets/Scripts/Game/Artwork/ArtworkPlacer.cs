@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 namespace Game.Artwork
 {
@@ -32,6 +33,8 @@ namespace Game.Artwork
         private Transform _selected = null;
         private bool _moving = false;
         private bool _nowEditing3D = false;
+
+        Tween scaleTween = null;
 
         /*
          * @brief 선택한 오브젝트를 반환 
@@ -185,7 +188,7 @@ namespace Game.Artwork
             if (!ctx.performed) return;
 
             var value = ctx.ReadValue<float>() / 120.0f;    // scroll raw value: [-120, 120]
-            
+
             if (_selected && _moving && Mathf.Abs(value) > 1e-10)
             {
                 var scale = _selected.localScale;
@@ -196,7 +199,14 @@ namespace Game.Artwork
                 scale.x = scale.z * ratioX;
                 if(_nowEditing3D)
                     scale.y = scale.z * ratioY;
-                _selected.localScale = scale;
+                //_selected.localScale = scale;
+
+                if (scaleTween != null && scaleTween.IsPlaying())
+                {
+                    scaleTween.Kill();
+                }
+
+                scaleTween =  _selected.DOScale(scale, 0.5f);
             }
         }
 

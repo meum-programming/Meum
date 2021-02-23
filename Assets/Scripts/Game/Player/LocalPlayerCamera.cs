@@ -105,8 +105,10 @@ namespace Game.Player
 
         public void OnRotateKeybordInput(InputAction.CallbackContext ctx)
         {
-            if (IsSwitchingView) return;    // 인칭 전환중이라면 아무것도 안함
-            if (!_isRotateEnabled) return;
+            if (UI.ChattingUI.ChattingUI.Get() != null && UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            {
+                return;
+            }
 
             if (ctx.action.phase == InputActionPhase.Started)
             {
@@ -123,10 +125,6 @@ namespace Game.Player
                 cameraRotFlag = false;
                 carmeraRotValue = Vector2.zero;
             }
-
-            Debug.LogWarning(ctx.action.phase);
-
-            
         }
 
 

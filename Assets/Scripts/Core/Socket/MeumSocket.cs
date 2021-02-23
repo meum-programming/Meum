@@ -89,6 +89,11 @@ namespace Core.Socket
             return _state.IsSubOfGalleryOwn();
         }
 
+        public void GoToChaEditScene()
+        {
+            _loader.LoadChaEditScene();
+        }
+
         public void GoToEditScene()
         {
             //Assert.IsTrue(_state.IsSubOfGalleryOwn());
@@ -122,7 +127,7 @@ namespace Core.Socket
         #region Socket Emitters
         public void EnterGallery(string nickname)
         {
-            Assert.IsTrue(_state.IsNotInGalleryOrSquare());
+            //Assert.IsTrue(_state.IsNotInGalleryOrSquare());
             StartCoroutine(EnterGalleryCoroutine2(nickname));
         }
 
