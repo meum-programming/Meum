@@ -3,13 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class AnimTestContoller : MonoBehaviour
 {
     [SerializeField] Animator anim;
     [SerializeField] Transform modelParant;
     [SerializeField] PlayerChaChange playerChaChange;
-    
+    [SerializeField] Text saveOnText;
+    Tween saveOnTextEventTween = null;
+    Coroutine saveOnTextEvent = null;
+
     //private SkinnedMeshRenderer skinMesh;
     private List<SkinnedMeshRenderer>  skinMesh = new List<SkinnedMeshRenderer>();
     private List<SkinnedMeshRenderer> hairMesh = new List<SkinnedMeshRenderer>();
@@ -17,6 +22,8 @@ public class AnimTestContoller : MonoBehaviour
     int currentSkinStatus = 1;
 
     ChaCustomizingSaveData chaCustomizingSaveData = null;
+
+    [SerializeField] RectTransform goHomePopup;
 
     enum AnimStatus
     {
@@ -213,7 +220,6 @@ public class AnimTestContoller : MonoBehaviour
     {
         currentSkinStatus = index;
         SkinColorSet();
-        Debug.LogWarning(index);
     }
 
 
@@ -238,10 +244,41 @@ public class AnimTestContoller : MonoBehaviour
         chaCustomizingSaveData.maskIndex = playerChaChange.maskIndex;
         chaCustomizingSaveData.dressIndex = playerChaChange.dressIndex;
 
+        //이전에 실행중인 이벤트가 있으면 멈춘다
+        if (saveOnTextEvent != null)
+        {
+            StopCoroutine(saveOnTextEvent);
+        }
 
+        //변경 완료 텍스트 이벤트 실행
+        saveOnTextEvent =  StartCoroutine(SaveOnTextSet());
+    }
 
-        Debug.LogWarning("save On");
+    /// <summary>
+    /// 저장 완료 문구 출력 이벤트
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator SaveOnTextSet()
+    {
+        saveOnText.gameObject.SetActive(true);
 
+        if (saveOnTextEventTween != null && saveOnTextEventTween.IsPlaying())
+        {
+            saveOnTextEventTween.Kill();
+        }
+
+        saveOnTextEventTween =  saveOnText.DOFade(1, 0.1f);
+
+        yield return new WaitForSeconds(1);
+
+        saveOnTextEventTween = saveOnText.DOFade(0, 1f);
+
+        yield return new WaitForSeconds(1);
+    }
+
+    public void GoHomePopupOpen(bool active)
+    {
+        goHomePopup.gameObject.SetActive(active);
     }
 
     public void GoHomeBtnClick()
@@ -252,7 +289,6 @@ public class AnimTestContoller : MonoBehaviour
     public void ReturnBtnClick()
     {
         ChangeAllData(chaCustomizingSaveData);
-        Debug.LogWarning("ReturnBtnClick");
     }
 
     public void RandomSetBtnClick()

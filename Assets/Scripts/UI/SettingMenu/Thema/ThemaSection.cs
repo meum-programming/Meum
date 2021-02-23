@@ -127,9 +127,9 @@ public class ThemaSection : MonoBehaviour
 
         MeumDB.Get().currentRoomInfo.sky_type_int = currentSelectIndex;
 
-        if (FindObjectOfType<ProceduralGalleryBuilder>() != null)
+        if (FindObjectOfType<GalleryController>() != null)
         {
-            FindObjectOfType<ProceduralGalleryBuilder>().SkyBoxSet();
+            FindObjectOfType<GalleryController>().SkyBoxSet();
         }
         
     }

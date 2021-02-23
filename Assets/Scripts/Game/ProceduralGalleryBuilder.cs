@@ -30,8 +30,6 @@ namespace Game
         private Transform _walls;
         private Transform _floors;
 
-        [SerializeField] private RectTransform editBtn;
-
         private void Awake()
         {
             Init();
@@ -41,30 +39,6 @@ namespace Game
         {
             _walls = transform.Find("walls");
             _floors = transform.Find("floors");
-
-            BGMSet();
-            SkyBoxSet();
-
-            if (editBtn != null)
-            {
-                bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.id == MeumDB.Get().currentRoomInfo.owner.id;
-                editBtn.gameObject.SetActive(isOwnerRoom);
-            }
-
-            
-        }
-
-        public void BGMSet()
-        {
-            int bgmIndex = MeumDB.Get().currentRoomInfo.bgm_type_int;
-            SoundManager.Instance.PlayBGM((BGMEnum)bgmIndex);
-        }
-
-        public void SkyBoxSet()
-        {
-            int index = MeumDB.Get().currentRoomInfo.sky_type_int;
-            SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
-            RenderSettings.skybox = skydata.material;
         }
 
         public LandInfo[] GetLandInfos()
@@ -131,12 +105,6 @@ namespace Game
 
             return false;
         }
-
-        public void ChaEditBtnClick()
-        {
-            MeumSocket.Get().GoToChaEditScene();
-        }
-
 
     }
 }
