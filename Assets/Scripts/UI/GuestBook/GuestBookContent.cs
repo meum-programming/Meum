@@ -34,7 +34,7 @@ namespace UI.GuestBook
         [SerializeField] private TextMeshProUGUI createdAt;
         [SerializeField] private Button deleteButton;
 
-        private GuestBooksData _info;
+        public GuestBooksData _info;
 
         private void Awake()
         {
@@ -72,7 +72,9 @@ namespace UI.GuestBook
 
         public void Delete()
         {
-            StartCoroutine(DeleteCoroutine2());
+            transform.GetComponentInParent<GuestBook>().DeletePopupOpen(this);
+
+            //StartCoroutine(DeleteCoroutine2());
         }
 
         private IEnumerator DeleteCoroutine2()

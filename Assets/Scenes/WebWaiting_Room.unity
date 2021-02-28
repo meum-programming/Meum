@@ -1291,6 +1291,10 @@ MonoBehaviour:
       is_tutorial: 0
       is_admin: 0
       max_inventory: 0
+      hairIndex: 0
+      maskIndex: 0
+      dressIndex: 0
+      skinIndex: 0
   myRoomInfo:
     success: 
     id: 0
@@ -1319,3 +1323,7 @@ MonoBehaviour:
       is_tutorial: 0
       is_admin: 0
       max_inventory: 0
+      hairIndex: 0
+      maskIndex: 0
+      dressIndex: 0
+      skinIndex: 0

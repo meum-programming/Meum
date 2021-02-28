@@ -8,7 +8,7 @@ namespace Game.Player
      */
     public class PlayerAnimationController : MonoBehaviour
     {
-        private Animator _animator;
+        public Animator _animator;
 
         private struct AnimInfo
         {
@@ -22,7 +22,7 @@ namespace Game.Player
 
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
+            //_animator =  GetComponent<Animator>();
         }
 
         private void Start()

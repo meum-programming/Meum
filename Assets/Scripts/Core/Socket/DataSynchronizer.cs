@@ -47,12 +47,28 @@ namespace Core.Socket
                 _remotePlayers[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
                 _remotePlayers[i].SetOriginalTransform(spawnPos, spawnRot);
             }
-            
+
+            LocalPlayerSet();
+        }
+
+        void LocalPlayerSet()
+        {
+            var spawnTransform = GameObject.Find("SpawnSite").transform;
+
             // setting localplayer
             _localPlayer = Instantiate(playerPrefabs[0],
                 spawnTransform.position, spawnTransform.rotation,
                 transform).transform;
+
+            var playerInfo = MeumSocket.Get().LocalPlayerInfo;
+
+            ChaCustomizingSaveData localPlayerData = new ChaCustomizingSaveData(playerInfo.hairIndex, playerInfo.maskIndex, playerInfo.dressIndex, playerInfo.skinIndex);
+
+            DataManager.Instance.chaCustomizingSaveData = localPlayerData;
+
+            _localPlayer.GetComponentInChildren<PlayerChaChange>().GetChaCustomizingSaveData();
         }
+
         
         /*
          * @brief DataSynchronizer의 Clean 함수
@@ -176,7 +192,12 @@ namespace Core.Socket
             var playerInfo = MeumSocket.Get().LocalPlayerInfo;
             result.userKey = playerInfo.id;
             result.nickname = playerInfo.nickname;
-            
+
+            result.hairIndex = playerInfo.hairIndex;
+            result.maskIndex = playerInfo.maskIndex;
+            result.dressIndex = playerInfo.dressIndex;
+            result.skinIndex = playerInfo.skinIndex;
+
             return result;
         }
         
@@ -238,6 +259,9 @@ namespace Core.Socket
                     _remotePlayers[i].SetRendererEnabled(true);
             }
             _localPlayer.gameObject.SetActive(true);
+
+            _localPlayer.GetComponentInChildren<PlayerChaChange>().GetChaCustomizingSaveData();
+            Debug.LogWarning("Show Player!!");
         }
 
     }

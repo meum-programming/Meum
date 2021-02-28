@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 namespace Game.Player
 {
@@ -33,6 +34,8 @@ namespace Game.Player
         private Vector3 _moveVector = Vector3.zero;
         private float _velocityY;
         private bool _running = false;
+
+        private Tween chaRotTween;
 
         private void Awake()
         {
@@ -79,6 +82,42 @@ namespace Game.Player
 
             var delta = Vector3.up * _velocityY + direction * (_running ? runSpeed : walkSpeed);
             _charController.Move(delta * Time.deltaTime);
+
+            Transform chaTransform = _animController._animator.gameObject.transform;
+            float value = 0;
+
+
+            float xValue = ((int)(_moveVector.x * 10)) * 0.1f;
+            float yValue = ((int)(_moveVector.y * 10)) * 0.1f;
+
+            if (yValue == 1 || yValue == -1)
+            {
+                value = yValue == 1 ? 0 : 180;
+            }
+            else if (xValue == 1 || xValue == -1)
+            {
+                value = xValue == 1 ? 90 : -90;
+            }
+            else 
+            {
+                if (xValue == -0.7 && yValue == 0.7)
+                {
+                    value = 45;
+                }
+                else if (xValue == 0.7 && yValue == 0.7)
+                {
+                    value = -45;
+                }
+            }
+            
+
+            if (chaRotTween != null && chaRotTween.IsPlaying())
+            {
+                chaRotTween.Kill();
+            }
+
+            chaRotTween = chaTransform.transform.DOLocalRotate(new Vector3(0, value, 0), 0.3f);
+
         }
 
         private bool IsGrounded()

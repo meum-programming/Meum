@@ -5,25 +5,23 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
+using Core;
 
 public class AnimTestContoller : MonoBehaviour
 {
-    [SerializeField] Animator anim;
     [SerializeField] Transform modelParant;
     [SerializeField] PlayerChaChange playerChaChange;
     [SerializeField] Text saveOnText;
     Tween saveOnTextEventTween = null;
     Coroutine saveOnTextEvent = null;
 
-    //private SkinnedMeshRenderer skinMesh;
-    private List<SkinnedMeshRenderer>  skinMesh = new List<SkinnedMeshRenderer>();
-    private List<SkinnedMeshRenderer> hairMesh = new List<SkinnedMeshRenderer>();
-
-    int currentSkinStatus = 1;
-
-    ChaCustomizingSaveData chaCustomizingSaveData = null;
-
     [SerializeField] RectTransform goHomePopup;
+
+    ChaCustomizingSaveData tempData = new ChaCustomizingSaveData();
+
+    [SerializeField] Text hairName;
+    [SerializeField] Text maskName;
+    [SerializeField] Text dressName;
 
     enum AnimStatus
     {
@@ -42,186 +40,8 @@ public class AnimTestContoller : MonoBehaviour
 
     void Init()
     {
-        SkinMetarialSet();
-
-        GetChaCustomizingSaveData();
-
-        ChangeAllData(chaCustomizingSaveData);
-    }
-
-    void GetChaCustomizingSaveData()
-    {
-        chaCustomizingSaveData = new ChaCustomizingSaveData(0, 0, 0, 0);
         
     }
-
-    void ChangeAllData(ChaCustomizingSaveData data)
-    {
-        currentSkinStatus = data.skinStatus;
-        SkinColorSet();
-        playerChaChange.AllChangeData(data);
-    }
-
-
-    /// <summary>
-    /// 피부색을 담당하는 메테리얼 세팅
-    /// </summary>
-    void SkinMetarialSet()
-    {
-        skinMesh = new List<SkinnedMeshRenderer>();
-
-        //skinMesh.Add(anim.transform.Find("person_model_default").GetComponent<SkinnedMeshRenderer>());
-        skinMesh.Add(anim.transform.Find("person_model_short_clothes").GetComponent<SkinnedMeshRenderer>());
-
-        //skinMesh.material.SetFloat("_Smoothness", 0.1f);
-
-        hairMesh = new List<SkinnedMeshRenderer>();
-        hairMesh.Add(anim.transform.Find("hair_1").GetComponent<SkinnedMeshRenderer>());
-        hairMesh.Add(anim.transform.Find("hair_2").GetComponent<SkinnedMeshRenderer>());
-        hairMesh.Add(anim.transform.Find("hair_3").GetComponent<SkinnedMeshRenderer>());
-        hairMesh.Add(anim.transform.Find("hair_4").GetComponent<SkinnedMeshRenderer>());
-        hairMesh.Add(anim.transform.Find("hair_5").GetComponent<SkinnedMeshRenderer>());
-        hairMesh.Add(anim.transform.Find("hair_6").GetComponent<SkinnedMeshRenderer>());
-        hairMesh.Add(anim.transform.Find("hair_7").GetComponent<SkinnedMeshRenderer>());
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    /// <summary>
-    /// 애니메이션 변경 버튼 클릭시 호출
-    /// </summary>
-    /// <param name="status"></param>
-    public void AnimPlayBtnClick(int status)
-    {
-        AnimPlay((AnimStatus)status);
-    }
-
-    /// <summary>
-    /// 애니메이션 재생
-    /// </summary>
-    /// <param name="animStatus"></param>
-    private void AnimPlay(AnimStatus animStatus)
-    {
-        anim.Play(animStatus.ToString());
-    }
-
-    /// <summary>
-    /// 피부색 변경 버튼 클릭시 호출
-    /// </summary>
-    public void SkinChangeBtnClick(int skinStatus)
-    {
-        currentSkinStatus = skinStatus;
-        SkinColorSet();
-    }
-
-    /// <summary>
-    /// 피부색 변경
-    /// </summary>
-    void SkinColorSet()
-    {
-        //4C3530
-
-        for (int i = 0; i < skinMesh.Count; i++)
-        {
-            skinMesh[i].material.color = GetSkinColor();
-        }
-
-
-        for (int i = 0; i < hairMesh.Count; i++)
-        {
-            hairMesh[i].material.color = GetHairColor();
-        }
-    }
-
-    private Color GetHairColor()
-    {
-        string hexCode = "#625F5E";
-
-        switch (currentSkinStatus)
-        {
-            case 0:
-                hexCode = "#625F5E";
-                break;
-            case 1:
-                hexCode = "#35434F";
-                break;
-            case 2:
-                hexCode = "#101010";
-                break;
-            case 3:
-                hexCode = "#FFFEF4";
-                break;
-            case 4:
-                hexCode = "#9ABBAD";
-                break;
-            case 5:
-                hexCode = "#EFE6E1";
-                break;
-            case 6:
-                hexCode = "#BED0D9";
-                break;
-            case 7:
-                hexCode = "#AE9ABB";
-                break;
-        }
-
-        Color color;
-        ColorUtility.TryParseHtmlString(hexCode, out color);
-
-        return color;
-
-    }
-
-    private Color GetSkinColor()
-    {
-        string hexCode = "#F6EBE5";
-
-        switch (currentSkinStatus)
-        {
-            case 0:
-                hexCode = "#F6EBE5";
-                break;
-            case 1:
-                hexCode = "#E4C6B5";
-                break;
-            case 2:
-                hexCode = "#B38B7D";
-                break;
-            case 3:
-                hexCode = "#4C3530";
-                break;
-            case 4:
-                hexCode = "#E7D3E4";
-                break;
-            case 5:
-                hexCode = "#7C292B";
-                break;
-            case 6:
-                hexCode = "#969EB0";
-                break;
-            case 7:
-                hexCode = "#6652CA";
-                break;
-        }
-
-        Color color;
-        ColorUtility.TryParseHtmlString(hexCode, out color);
-
-        return color;
-
-    }
-
-    public void SkinSetChangeBtnClick(int index)
-    {
-        currentSkinStatus = index;
-        SkinColorSet();
-    }
-
 
     /// <summary>
     /// 드래그 시 호출 - 캐릭터 회전용
@@ -231,27 +51,46 @@ public class AnimTestContoller : MonoBehaviour
     {
         PointerEventData peData = (PointerEventData)eventData;
 
-        Vector3 rotValue = modelParant.localRotation.eulerAngles;
-        rotValue.y -= (peData.delta.x/2);
+        Vector3 rotValue = modelParant.rotation.eulerAngles;
+        rotValue.y -= (peData.delta.x);
+
         modelParant.rotation = Quaternion.Euler(rotValue);
     }
 
 
     public void SaveBtnClick() 
     {
-        chaCustomizingSaveData.skinStatus = currentSkinStatus;
-        chaCustomizingSaveData.hairIndex = playerChaChange.hairIndex;
-        chaCustomizingSaveData.maskIndex = playerChaChange.maskIndex;
-        chaCustomizingSaveData.dressIndex = playerChaChange.dressIndex;
+        ChaCustomizingSaveData newSaveData = new ChaCustomizingSaveData();
+        newSaveData.skinIndex = tempData.skinIndex;
+        newSaveData.hairIndex = tempData.hairIndex;
+        newSaveData.maskIndex = tempData.maskIndex;
+        newSaveData.dressIndex = tempData.dressIndex;
 
-        //이전에 실행중인 이벤트가 있으면 멈춘다
-        if (saveOnTextEvent != null)
+        UserInfoRequest userInfoRequest = new UserInfoRequest()
         {
-            StopCoroutine(saveOnTextEvent);
-        }
+            requestStatus = 2,
+            uid = MeumDB.Get().GetToken(),
+            hairIndex = newSaveData.hairIndex,
+            maskIndex = newSaveData.maskIndex,
+            dressIndex = newSaveData.dressIndex,
+            skinIndex = newSaveData.skinIndex,
 
-        //변경 완료 텍스트 이벤트 실행
-        saveOnTextEvent =  StartCoroutine(SaveOnTextSet());
+            successOn = ResultData =>
+            {
+                DataManager.Instance.chaCustomizingSaveData = newSaveData;
+                playerChaChange.chaCustomizingSaveData = newSaveData;
+
+                //이전에 실행중인 이벤트가 있으면 멈춘다
+                if (saveOnTextEvent != null)
+                {
+                    StopCoroutine(saveOnTextEvent);
+                }
+
+                //변경 완료 텍스트 이벤트 실행
+                saveOnTextEvent = StartCoroutine(SaveOnTextSet());
+            }
+        };
+        userInfoRequest.RequestOn();
     }
 
     /// <summary>
@@ -288,20 +127,116 @@ public class AnimTestContoller : MonoBehaviour
 
     public void ReturnBtnClick()
     {
-        ChangeAllData(chaCustomizingSaveData);
+        tempData = new ChaCustomizingSaveData();
+        tempData.skinIndex = playerChaChange.chaCustomizingSaveData.skinIndex;
+        tempData.hairIndex = playerChaChange.chaCustomizingSaveData.hairIndex;
+        tempData.maskIndex = playerChaChange.chaCustomizingSaveData.maskIndex;
+        tempData.dressIndex = playerChaChange.chaCustomizingSaveData.dressIndex;
+
+        AllDataSet();
     }
 
     public void RandomSetBtnClick()
     {
-        ChaCustomizingSaveData tempData = new ChaCustomizingSaveData();
-
-        tempData.skinStatus = Random.Range(0, 8);
+        tempData.skinIndex = Random.Range(0, 8);
         tempData.hairIndex = Random.Range(0, 7);
         tempData.maskIndex = Random.Range(0, 2);
         tempData.dressIndex = Random.Range(0, 5);
 
-        ChangeAllData(tempData);
+        AllDataSet();
     }
+
+    public void AllDataSet()
+    {
+        playerChaChange.AllChangeData(tempData);
+    }
+
+    public void SkinColorSet(int currentSkinStatus)
+    {
+        playerChaChange.SkinColorSet(currentSkinStatus);
+    }
+
+    public void DrassIndexChangeBtnClick(bool next)
+    {
+        playerChaChange.DrassIndexChangeBtnClick(next);
+
+        string dressStr = "";
+
+        switch ((int)playerChaChange.currentChaStatus)
+        {
+            case 0:
+                dressStr = "단정한 복장";
+                break;
+            case 1:
+                dressStr = "작업자 복장";
+                break;
+            case 2:
+                dressStr = "따뜻한 복장";
+                break;
+            case 3:
+                dressStr = "정중한 복장";
+                break;
+            case 4:
+                dressStr = "시원한 복장";
+                break;
+        }
+        dressName.text = dressStr;
+    }
+
+    public void HairIndexChangeBtnClick(bool next)
+    {
+        playerChaChange.HairIndexChangeBtnClick(next);
+
+        string hairStr = "";
+
+        switch (playerChaChange.hairIndex)
+        {
+            case 0:
+                hairStr = "곱슬머리 헤어";
+                break;
+            case 1:
+                hairStr = "꽁지머리 헤어";
+                break;
+            case 2:
+                hairStr = "깔끔한 헤어";
+                break;
+            case 3:
+                hairStr = "단정한 헤어";
+                break;
+            case 4:
+                hairStr = "포니 헤어";
+                break;
+            case 5:
+                hairStr = "러프 헤어";
+                break;
+            case 6:
+                hairStr = "정열적인 헤어";
+                break;
+        }
+        hairName.text = hairStr;
+    }
+
+    public void MaskIndexChangeBtnClick(bool next)
+    {
+        playerChaChange.MaskIndexChangeBtnClick(next);
+
+        if (maskName != null)
+        {
+            string maskStr = "";
+
+            switch (playerChaChange.maskIndex)
+            {
+                case 0:
+                    maskStr = "늑대 가면";
+                    break;
+                case 1:
+                    maskStr = "토끼 가면";
+                    break;
+            }
+            maskName.text = maskStr;
+        }
+    }
+
 
 }
 
@@ -310,7 +245,7 @@ public class ChaCustomizingSaveData
     public int hairIndex = 0;
     public int maskIndex = 0;
     public int dressIndex = 0;
-    public int skinStatus = 1;
+    public int skinIndex = 1;
 
     public ChaCustomizingSaveData() { }
     public ChaCustomizingSaveData(int hairIndex, int maskIndex, int dressIndex, int currentSkinStatus ) 
@@ -318,6 +253,6 @@ public class ChaCustomizingSaveData
         this.hairIndex = hairIndex;
         this.maskIndex = maskIndex;
         this.dressIndex = dressIndex;
-        this.skinStatus = currentSkinStatus;
+        this.skinIndex = currentSkinStatus;
     }
 }

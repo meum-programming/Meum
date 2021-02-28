@@ -7,8 +7,12 @@ using UnityEngine;
 /// </summary>
 public class UserInfoRequest : BaseRequest
 {
-    public int uid;
-    public string nickName;
+    public int uid = 0;
+    public string nickName = string.Empty;
+    public int hairIndex = 0;
+    public int maskIndex = 0;
+    public int dressIndex = 0;
+    public int skinIndex = 0;
 
     public override void RequestOn()
     {
@@ -29,6 +33,18 @@ public class UserInfoRequest : BaseRequest
             requestType = RequestType.POST;
 
             form.AddField("nickname", nickName);
+        }
+        //캐릭터 정보 수정
+        else if (requestStatus == 2)
+        {
+            classValue = "updateChaData";
+            requestType = RequestType.POST;
+
+            form.AddField("uid", uid);
+            form.AddField("hairIndex", hairIndex);
+            form.AddField("maskIndex", maskIndex);
+            form.AddField("dressIndex", dressIndex);
+            form.AddField("skinIndex", skinIndex);
         }
 
         base.RequestOn();
@@ -65,4 +81,9 @@ public class UserData : BaseRespons
     public int is_tutorial = 0;
     public int is_admin = 0;
     public int max_inventory = 0;
+
+    public int hairIndex = 0;
+    public int maskIndex = 0;
+    public int dressIndex = 0;
+    public int skinIndex = 0;
 }

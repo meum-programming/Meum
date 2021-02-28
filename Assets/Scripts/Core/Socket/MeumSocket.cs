@@ -265,6 +265,11 @@ namespace Core.Socket
             public Vector3 rotation;
             public int userKey;
             public string nickname;
+
+            public int hairIndex;
+            public int maskIndex;
+            public int dressIndex;
+            public int skinIndex;
         }
         
         private struct BroadCastAnimTriggerData

@@ -13,6 +13,9 @@ namespace UI.GuestBook
         [SerializeField] private Transform contents;
         [SerializeField] private GameObject guestBookContent;
         [SerializeField] private GuestBookWriter writerUi;
+        [SerializeField] private RectTransform guestBookDeletePopup;
+
+        private GuestBookContent deleteData;
 
         private void Awake()
         {
@@ -108,6 +111,32 @@ namespace UI.GuestBook
         public void ShowWriterUI()
         {
             StartCoroutine(writerUi.ShowCoroutine());
+        }
+
+        public void DeletePopupOpen(GuestBookContent guestBookContent)
+        {
+            deleteData = guestBookContent;
+            guestBookDeletePopup.gameObject.SetActive(true);
+        }
+
+        public void DeleteBtnClick()
+        {
+            guestBookDeletePopup.gameObject.SetActive(false);
+
+            if (deleteData == null)
+                return;
+            
+            GuestBooksRequest guestBooksRequest = new GuestBooksRequest()
+            {
+                requestStatus = 3,
+                id = deleteData._info.id,
+                successOn = ResultData =>
+                {
+                    Destroy(deleteData.gameObject);
+                    deleteData = null;
+                }
+            };
+            guestBooksRequest.RequestOn();
         }
     }
 }
