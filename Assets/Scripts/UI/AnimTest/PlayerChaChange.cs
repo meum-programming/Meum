@@ -15,19 +15,19 @@ public class PlayerChaChange : MonoBehaviour
 
     private List<Transform> hairObjList = new List<Transform>();
     private List<Transform> maskObjList = new List<Transform>();
+    private List<SkinnedMeshRenderer> skinMesh = new List<SkinnedMeshRenderer>();
+    private List<SkinnedMeshRenderer> hairMesh = new List<SkinnedMeshRenderer>();
 
     public PlayerChaStatus currentChaStatus;
 
     public int hairIndex = 0;
     public int maskIndex = 0;
     public int dressIndex = 0;
-
-    private List<SkinnedMeshRenderer> skinMesh = new List<SkinnedMeshRenderer>();
-    private List<SkinnedMeshRenderer> hairMesh = new List<SkinnedMeshRenderer>();
-
-    int currentSkinStatus = 1;
+    int skinIndex = 1;
 
     public ChaCustomizingSaveData chaCustomizingSaveData = null;
+
+    public bool localPlayer = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -136,9 +136,10 @@ public class PlayerChaChange : MonoBehaviour
     /// </summary>
     public void SkinColorSet(int currentSkinStatus)
     {
-        //4C3530
-
-        this.currentSkinStatus = currentSkinStatus;
+        //if (this.skinIndex == currentSkinStatus)
+          //  return;
+        
+        this.skinIndex = currentSkinStatus;
 
         for (int i = 0; i < skinMesh.Count; i++)
         {
@@ -156,7 +157,7 @@ public class PlayerChaChange : MonoBehaviour
     {
         string hexCode = "#625F5E";
 
-        switch (currentSkinStatus)
+        switch (skinIndex)
         {
             case 0:
                 hexCode = "#625F5E";
@@ -195,7 +196,7 @@ public class PlayerChaChange : MonoBehaviour
     {
         string hexCode = "#F6EBE5";
 
-        switch (currentSkinStatus)
+        switch (skinIndex)
         {
             case 0:
                 hexCode = "#F6EBE5";
@@ -262,6 +263,9 @@ public class PlayerChaChange : MonoBehaviour
 
     public void PlayerChaChangeOn(PlayerChaStatus playerChaStatus)
     {
+        //if (currentChaStatus == playerChaStatus)
+          //  return;
+        
         currentChaStatus = playerChaStatus;
 
         for (int i = 0; i < chaPartList.Count; i++)
@@ -305,6 +309,9 @@ public class PlayerChaChange : MonoBehaviour
 
     public void PlayerHairChangeOn(int status)
     {
+        //if (hairIndex == status)
+          //  return;
+        
         hairIndex = status;
 
         for (int i = 0; i < hairObjList.Count; i++)
@@ -339,6 +346,9 @@ public class PlayerChaChange : MonoBehaviour
     }
     public void PlayerMaskChangeOn(int status)
     {
+        //if (maskIndex == status)
+          //  return;
+       
         maskIndex = status;
 
         for (int i = 0; i < maskObjList.Count; i++)

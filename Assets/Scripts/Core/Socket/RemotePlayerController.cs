@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,20 +34,25 @@ namespace Core.Socket
         private Quaternion _rotDest = Quaternion.identity;
         private float _lerpVal = 0.0f;
         private Transform _transform;
-        private Animator _animator;
+        [SerializeField] Animator _animator;
+        public PlayerChaChange playerChaChange;
 
+        private Tween chaPosTween;
+        private Tween chaRotTween;
+        
         private void Awake()
         {
             Debug.Assert(playerRenderer);
             
             _transform = transform;
-            _animator = GetComponent<Animator>();
+            //_animator = GetComponent<Animator>();
             Debug.Assert(_animator);
         }
 
         public void SetRendererEnabled(bool val)
         {
-            playerRenderer.enabled = val;
+            playerChaChange.gameObject.SetActive(val);
+            //playerRenderer.enabled = val;
         }
 
         public void SetOriginalTransform(Vector3 pos, Quaternion rot)
@@ -61,8 +67,22 @@ namespace Core.Socket
             _posDest = posDest;
             _rotOrigin = _transform.rotation;
             _rotDest = Quaternion.identity;
-            _rotDest.eulerAngles = rotDest;
+            //_rotDest.eulerAngles = rotDest;
+            //_animator.transform.eulerAngles = rotDest;
             _lerpVal = 0.0f;
+
+            if (chaPosTween != null && chaPosTween.IsPlaying())
+            {
+                chaPosTween.Kill();
+            }
+            chaPosTween = transform.DOLocalMove(posDest, 0.3f);
+
+            if (chaRotTween != null && chaRotTween.IsPlaying())
+            {
+                chaRotTween.Kill();
+            }
+            chaRotTween = _animator.transform.DOLocalRotate(rotDest, 0.3f);
+
         }
 
         public void AnimBoolChange(int id, bool value)
@@ -84,8 +104,8 @@ namespace Core.Socket
         void Update()
         {
             _lerpVal = Mathf.Clamp(_lerpVal + Time.deltaTime / lerpTime, 0, 1);
-            _transform.position = Vector3.Lerp(_posOrigin, _posDest, _lerpVal);
-            _transform.rotation = Quaternion.Lerp(_rotOrigin, _rotDest, _lerpVal);
+            //_transform.position = Vector3.Lerp(_posOrigin, _posDest, _lerpVal);
+            //_transform.rotation = Quaternion.Lerp(_rotOrigin, _rotDest, _lerpVal);
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Core.Socket
         private void OnUserInfo(SocketIOEvent e)
         {
             if (_state.IsNotInGalleryOrSquare()) return;
-            
+
             var data = JsonConvert.DeserializeObject<UserInfoEventData>(e.data);
             if (data.id != _id)
             {
@@ -89,7 +89,9 @@ namespace Core.Socket
         private void OnAnimTrigger(SocketIOEvent e)
         {
             if (_state.IsNotInGalleryOrSquare()) return;
-            
+
+            Debug.LogWarning("anim = " + e.data);
+
             var data = JsonConvert.DeserializeObject<AnimTriggerEventData>(e.data);
             if (data.id == _id) return;
             DataSynchronizer.Get().AnimTrigger(data.id, data.name);
@@ -177,6 +179,11 @@ namespace Core.Socket
             public Vector3 rotation;
             public int userKey;
             public string nickname;
+
+            public int hairIndex;
+            public int maskIndex;
+            public int dressIndex;
+            public int skinIndex;
         }
         
         private struct AnimTriggerEventData

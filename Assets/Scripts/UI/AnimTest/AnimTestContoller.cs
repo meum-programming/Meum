@@ -40,7 +40,16 @@ public class AnimTestContoller : MonoBehaviour
 
     void Init()
     {
-        
+        ChaCustomizingSaveData saveData = DataManager.Instance.chaCustomizingSaveData;
+        tempData = new ChaCustomizingSaveData();
+        tempData.hairIndex = saveData.hairIndex;
+        tempData.maskIndex = saveData.maskIndex;
+        tempData.dressIndex = saveData.dressIndex;
+        tempData.skinIndex = saveData.skinIndex;
+
+        HairTextSet();
+        MaskTextSet();
+        DressTextSet();
     }
 
     /// <summary>
@@ -149,10 +158,15 @@ public class AnimTestContoller : MonoBehaviour
     public void AllDataSet()
     {
         playerChaChange.AllChangeData(tempData);
+
+        DressTextSet();
+        HairTextSet();
+        MaskTextSet();
     }
 
     public void SkinColorSet(int currentSkinStatus)
     {
+        tempData.skinIndex = currentSkinStatus;
         playerChaChange.SkinColorSet(currentSkinStatus);
     }
 
@@ -160,9 +174,15 @@ public class AnimTestContoller : MonoBehaviour
     {
         playerChaChange.DrassIndexChangeBtnClick(next);
 
+        tempData.dressIndex = playerChaChange.dressIndex;
+
+        DressTextSet();
+    }
+    void DressTextSet()
+    {
         string dressStr = "";
 
-        switch ((int)playerChaChange.currentChaStatus)
+        switch (tempData.dressIndex)
         {
             case 0:
                 dressStr = "단정한 복장";
@@ -187,9 +207,16 @@ public class AnimTestContoller : MonoBehaviour
     {
         playerChaChange.HairIndexChangeBtnClick(next);
 
+        tempData.dressIndex = playerChaChange.hairIndex;
+
+        HairTextSet();
+    }
+
+    void HairTextSet()
+    {
         string hairStr = "";
 
-        switch (playerChaChange.hairIndex)
+        switch (tempData.dressIndex)
         {
             case 0:
                 hairStr = "곱슬머리 헤어";
@@ -216,15 +243,24 @@ public class AnimTestContoller : MonoBehaviour
         hairName.text = hairStr;
     }
 
+
+
     public void MaskIndexChangeBtnClick(bool next)
     {
         playerChaChange.MaskIndexChangeBtnClick(next);
 
+        tempData.maskIndex = playerChaChange.maskIndex;
+
+        MaskTextSet();
+    }
+
+    void MaskTextSet()
+    {
         if (maskName != null)
         {
             string maskStr = "";
 
-            switch (playerChaChange.maskIndex)
+            switch (tempData.maskIndex)
             {
                 case 0:
                     maskStr = "늑대 가면";

@@ -116,14 +116,18 @@ namespace Core
                 }
 
                 var bundle = ((DownloadHandlerAssetBundle) www.downloadHandler).assetBundle;
-                var allAssets = bundle.GetAllAssetNames();
-                Assert.AreNotEqual(allAssets.Length, 0);
-                var request = bundle.LoadAssetAsync(allAssets[0], typeof(GameObject));
-                yield return request;
 
-                var result = request.asset as GameObject;
-                Add(url, result);
-                yield return result;
+                if (bundle != null)
+                {
+                    var allAssets = bundle.GetAllAssetNames();
+                    var request = bundle.LoadAssetAsync(allAssets[0], typeof(GameObject));
+                    yield return request;
+
+                    var result = request.asset as GameObject;
+                    Add(url, result);
+                    yield return result;
+                }
+
             }
         }
     }

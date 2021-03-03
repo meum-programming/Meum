@@ -18,6 +18,8 @@ namespace Core.Socket
         private Transform _localPlayer = null;
         private RemotePlayerController[] _remotePlayers = null;
 
+        int maxN = 0;
+
         private void Awake()
         {
             base.Awake();
@@ -31,24 +33,14 @@ namespace Core.Socket
         public void Setup(int maxN)
         {
             Clean();
-            
-            _remotePlayers = new RemotePlayerController[maxN];
 
-            var spawnTransform = GameObject.Find("SpawnSite").transform;
-            Assert.IsNotNull(spawnTransform);
-            var spawnPos = spawnTransform.position;
-            var spawnRot = spawnTransform.rotation;
-            for (int i = 0; i < _remotePlayers.Length; ++i)
-            {
-                _remotePlayers[i] = Instantiate(otherPlayerPrefabs[0], transform).GetComponent<RemotePlayerController>();
-                Assert.IsNotNull(_remotePlayers[i]);
-                _remotePlayers[i].gameObject.SetActive(false);
-                
-                _remotePlayers[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
-                _remotePlayers[i].SetOriginalTransform(spawnPos, spawnRot);
-            }
+            this.maxN = maxN;
+
+            //_remotePlayers = new RemotePlayerController[maxN];
+            _remotePlayers = new RemotePlayerController[this.maxN];
 
             LocalPlayerSet();
+
         }
 
         void LocalPlayerSet()
@@ -104,9 +96,12 @@ namespace Core.Socket
                 Debug.LogError("Global.Socket.DataSyncer - Deactivate : idx out of range");
                 Application.Quit(-1);
             }
-            _remotePlayers[id].UserPrimaryKey = -1;
-            _remotePlayers[id].Nickname = "";
-            _remotePlayers[id].gameObject.SetActive(false);
+
+            var obj = GetRemotePlayer(id);
+
+            obj.UserPrimaryKey = -1;
+            obj.Nickname = "";
+            obj.gameObject.SetActive(false);
             
             var userList = UI.UserList.UserList.Get();
             if(userList != null)
@@ -117,13 +112,15 @@ namespace Core.Socket
         
         public void UpdateOtherPlayer(SocketEventHandler.UserInfoEventData data)
         {
-            var obj = _remotePlayers[data.id];
+            var obj = GetRemotePlayer(data.id);
             obj.gameObject.SetActive(true);
             obj.UpdateTransform(data.position, data.rotation);
 
             obj.UserPrimaryKey = data.userKey;
             obj.Nickname = data.nickname;
-            
+
+            obj.playerChaChange.AllChangeData(new ChaCustomizingSaveData(data.hairIndex, data.maskIndex, data.dressIndex, data.skinIndex));
+
             // Update UserList
             var userList = UI.UserList.UserList.Get();
             if (userList != null && !userList.HasUser(data.id))
@@ -132,23 +129,50 @@ namespace Core.Socket
 
         public void AnimTrigger(int id, string triggerName)
         {
-            var obj = _remotePlayers[id];
+            var obj = GetRemotePlayer(id);
             if (obj.isActiveAndEnabled)
                 obj.AnimTrigger(Animator.StringToHash(triggerName));
         }
 
         public void AnimBoolChange(int id, string boolName, bool value)
         {
-            var obj = _remotePlayers[id];
+            var obj = GetRemotePlayer(id);
             if (obj.isActiveAndEnabled)
                 obj.AnimBoolChange(Animator.StringToHash(boolName), value);
         }
 
         public void AnimFloatChange(int id, string floatName, float value)
         {
-            var obj = _remotePlayers[id];
+            var obj = GetRemotePlayer(id);
             if (obj.isActiveAndEnabled)
                 obj.AnimFloatChange(Animator.StringToHash(floatName), value);
+        }
+
+        RemotePlayerController GetRemotePlayer(int id)
+        {
+            if (_remotePlayers[id] == null)
+            {
+                var spawnTransform = GameObject.Find("SpawnSite").transform;
+                Assert.IsNotNull(spawnTransform);
+                var spawnPos = spawnTransform.position;
+                var spawnRot = spawnTransform.rotation;
+
+                for (int i = 0; i < id+1; ++i)
+                {
+                    if (_remotePlayers[i] == null)
+                    {
+                        _remotePlayers[i] = Instantiate(otherPlayerPrefabs[0], transform).GetComponent<RemotePlayerController>();
+                        Assert.IsNotNull(_remotePlayers[i]);
+                        _remotePlayers[i].gameObject.SetActive(false);
+
+                        _remotePlayers[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
+                        _remotePlayers[i].SetOriginalTransform(spawnPos, spawnRot);
+                    }
+                }
+            }
+
+            return _remotePlayers[id];
+
         }
 
         public void ChangePlayerCharacter(int charId)
@@ -187,7 +211,7 @@ namespace Core.Socket
         {
             MeumSocket.BroadCastUserInfoData result;
             result.position = _localPlayer.position;
-            result.rotation = _localPlayer.eulerAngles;
+            result.rotation = _localPlayer.Find("character_prefab").eulerAngles;
 
             var playerInfo = MeumSocket.Get().LocalPlayerInfo;
             result.userKey = playerInfo.id;

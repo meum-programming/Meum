@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 01_ceiling_top
-  m_Shader: {fileID: -6465566751694194690, guid: bfd9c3bb4d433ba4a99b5dee3fbe172f, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: f2cb7f21824e8054fb9bca3c36b93a87, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

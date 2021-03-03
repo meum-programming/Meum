@@ -72,7 +72,7 @@ namespace Game.Player
             if (UI.ChattingUI.ChattingUI.Get() != null && UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
             {
                 _moveVector = Vector3.zero;
-                return;
+               // return;
             }
             
             var selfTransform = transform;

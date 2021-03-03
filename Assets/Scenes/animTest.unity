@@ -6707,6 +6707,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1763649564}
     m_Modifications:
+    - target: {fileID: 1629264116630685103, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4703642108382625686, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
       propertyPath: m_Name
       value: character_prefab
