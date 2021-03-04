@@ -2144,7 +2144,7 @@ Animator:
   m_GameObject: {fileID: 4703642108382625686}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6f874a8529c434241ac40cb04bfcb385, type: 2}
+  m_Controller: {fileID: 9100000, guid: ff827f8729020b64d86426448b3eb947, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2165,46 +2165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f91556fc23452468a7e446a81fc1af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cha_0_part:
-  - {fileID: 4076051159375017076}
-  - {fileID: 4262605206362157956}
-  - {fileID: 5253599955921691428}
-  cha_1_part:
-  - {fileID: 7883934003204770071}
-  - {fileID: 2021146351696000128}
-  cha_2_part:
-  - {fileID: 1029850721502292012}
-  - {fileID: 7025529817041924674}
-  cha_3_part:
-  - {fileID: 8973747796356280910}
-  - {fileID: 5362930619477725558}
-  - {fileID: 2985023707943905761}
-  cha_4_part:
-  - {fileID: 3174727302492145175}
-  - {fileID: 8634259604428074614}
-  - {fileID: 5808155850942117796}
-  hairObjList:
-  - {fileID: 2704033694587204303}
-  - {fileID: 7177896112252578844}
-  - {fileID: 5688969198614973349}
-  - {fileID: 7421186122026555994}
-  - {fileID: 1247190653231535243}
-  - {fileID: 629683822320867290}
-  - {fileID: 1737158282383629905}
-  maskObjList:
-  - {fileID: 5851650919866794060}
-  - {fileID: 2524736776651206844}
-  skinMesh:
-  - {fileID: 1629264116630685103}
-  - {fileID: 6555862313722033335}
-  hairMesh:
-  - {fileID: 137988764030597247}
-  - {fileID: 3099419304975024345}
-  - {fileID: 1680075960090643860}
-  - {fileID: 6010109767838271858}
-  - {fileID: 8221834689657403897}
-  - {fileID: 7111098413597166288}
-  - {fileID: 6135560007273401721}
   currentChaStatus: 0
   hairIndex: 0
   maskIndex: 0

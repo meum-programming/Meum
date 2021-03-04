@@ -100,6 +100,11 @@ namespace Core.Socket
             _animator.SetTrigger(id);
         }
 
+        public void AnimGesture(string name)
+        {
+            _animator.Play(name);
+        }
+
         // Update is called once per frame
         void Update()
         {

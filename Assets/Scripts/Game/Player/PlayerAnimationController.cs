@@ -50,6 +50,13 @@ namespace Game.Player
         public void SetHorizontalSpeed(float value)
         {
             if (Equal(value, _prev.horizontalSpeed)) return;
+
+            if (value != 0)
+            {
+                _animator.Play("Human_Walking_Forward");
+                MeumSocket.Get().BroadCastAnimGesture("Human_Walking_Forward");
+            }
+
             _animator.SetFloat(Animator.StringToHash("horizontalSpeed"), value);
             _prev.horizontalSpeed = value;
             MeumSocket.Get().BroadCastAnimFloatChange("horizontalSpeed", value);
@@ -58,6 +65,13 @@ namespace Game.Player
         public void SetVerticalSpeed(float value)
         {
             if (Equal(value, _prev.verticalSpeed)) return;
+
+            if (value != 0)
+            {
+                _animator.Play("Human_Walking_Forward");
+                MeumSocket.Get().BroadCastAnimGesture("Human_Walking_Forward");
+            }
+
             _animator.SetFloat(Animator.StringToHash("verticalSpeed"), value);
             _prev.verticalSpeed = value;
             MeumSocket.Get().BroadCastAnimFloatChange("verticalSpeed", value);
@@ -76,5 +90,17 @@ namespace Game.Player
             const float threshold = 1e-5f;
             return Mathf.Abs(a - b) < threshold;
         }
+
+
+        public void PlayGestureAnim(string animName)
+        {
+            if (animName != string.Empty)
+            {
+                _animator.Play(animName);
+                MeumSocket.Get().BroadCastAnimGesture(animName);
+            }
+        }
+
+
     }
 }

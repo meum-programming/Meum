@@ -273,7 +273,6 @@ public class AnimTestContoller : MonoBehaviour
         }
     }
 
-
 }
 
 public class ChaCustomizingSaveData

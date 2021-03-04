@@ -134,6 +134,13 @@ namespace Core.Socket
                 obj.AnimTrigger(Animator.StringToHash(triggerName));
         }
 
+        public void AnimGesture(int id, string animName)
+        {
+            var obj = GetRemotePlayer(id);
+            if (obj.isActiveAndEnabled)
+                obj.AnimGesture(animName);
+        }
+
         public void AnimBoolChange(int id, string boolName, bool value)
         {
             var obj = GetRemotePlayer(id);
@@ -286,6 +293,11 @@ namespace Core.Socket
 
             _localPlayer.GetComponentInChildren<PlayerChaChange>().GetChaCustomizingSaveData();
             Debug.LogWarning("Show Player!!");
+        }
+
+        public Transform GetLocalPlayer()
+        {
+            return _localPlayer;
         }
 
     }

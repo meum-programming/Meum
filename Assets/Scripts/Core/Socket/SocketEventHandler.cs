@@ -32,6 +32,7 @@ namespace Core.Socket
             _socket.On("userQuit", OnUserQuit);
             _socket.On("userInfo", OnUserInfo);
             _socket.On("animTrigger", OnAnimTrigger);
+            _socket.On("animGesture", OnAnimGesture);
             _socket.On("animBoolChange", OnAnimBoolChange);
             _socket.On("animFloatChange", OnAnimFloatChange);
             _socket.On("changeCharacter", OnChangeCharacter);
@@ -90,13 +91,20 @@ namespace Core.Socket
         {
             if (_state.IsNotInGalleryOrSquare()) return;
 
-            Debug.LogWarning("anim = " + e.data);
-
             var data = JsonConvert.DeserializeObject<AnimTriggerEventData>(e.data);
             if (data.id == _id) return;
             DataSynchronizer.Get().AnimTrigger(data.id, data.name);
         }
 
+        private void OnAnimGesture(SocketIOEvent e)
+        {
+            if (_state.IsNotInGalleryOrSquare()) return;
+
+            var data = JsonConvert.DeserializeObject<AnimTriggerEventData>(e.data);
+            if (data.id == _id) return;
+            DataSynchronizer.Get().AnimGesture(data.id, data.name);
+        }
+        
         private void OnAnimBoolChange(SocketIOEvent e)
         {
             if (_state.IsNotInGalleryOrSquare()) return;

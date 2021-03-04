@@ -213,6 +213,13 @@ namespace Core.Socket
             _socket.Emit("broadCastAnimTrigger", JsonConvert.SerializeObject(data));
         }
 
+        public void BroadCastAnimGesture(string paramName)
+        {
+            BroadCastAnimTriggerData data;
+            data.name = paramName;
+            _socket.Emit("broadCastAnimGesture", JsonConvert.SerializeObject(data));
+        }
+
         public void BroadCastAnimBoolChange(string paramName, bool value)
         {
             BroadCastAnimBoolChangeData data;
