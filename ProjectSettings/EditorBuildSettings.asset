@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/WebWaiting_Room.unity
     guid: b35ebad0ba54073459a361af48bb9366
   - enabled: 1
-    path: Assets/Scenes/animTest.unity
-    guid: 19760930d820bb84fa7fe27f5478adb9
-  - enabled: 1
     path: Assets/Scenes/Galleries/ProceduralGallery.unity
     guid: 91159e9a7652da9418861baf2e8b48d8
   - enabled: 1
@@ -29,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Loading.unity
     guid: 6f47842d73372fc4782f6b8a88885dc5
+  - enabled: 0
+    path: Assets/Scenes/animTest.unity
+    guid: 19760930d820bb84fa7fe27f5478adb9
+  - enabled: 0
+    path: Assets/Scenes/mp4Test_utube.unity
+    guid: 0489bbcf9671bc44d8e5cc7dbb5512dd
   m_configObjects: {}
