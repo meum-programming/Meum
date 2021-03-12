@@ -74,20 +74,27 @@ public class Joystick : MonoBehaviour
         float absX = Mathf.Abs(joySticPos.x);
         float absY = Mathf.Abs(joySticPos.y);
 
+        float moveValueX = joySticPos.x / Mathf.Abs(joySticPos.x);
+        float moveValueY = joySticPos.y / Mathf.Abs(joySticPos.y);
+
         if (joySticPos == Vector2.zero)
         {
             moveValue = Vector2.zero;
         }
-        //절대값y 보다 절대값x이 더 크다면
-        else if (absX > absY)
+        //조이스틱 방향이 위나 아래라면
+        else if (absX > absY && absX > 65)
         {
-            float moveValueX = joySticPos.x / Mathf.Abs(joySticPos.x);
             moveValue = new Vector2(moveValueX, 0);
         }
+        //조이스틱 방향이 오른쪽 이나 왼쪽이라면
+        else if (absY > absX && absY > 65)
+        {
+            moveValue = new Vector2(0, moveValueY);
+        }
+        //조이스틱 방향이 대각선이라면
         else
         {
-            float moveValueY = joySticPos.y / Mathf.Abs(joySticPos.y);
-            moveValue = new Vector2(0, moveValueY);
+            moveValue = new Vector2(moveValueX * 0.75f, moveValueY * 0.75f);
         }
     }
 

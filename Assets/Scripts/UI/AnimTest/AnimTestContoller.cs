@@ -207,7 +207,7 @@ public class AnimTestContoller : MonoBehaviour
     {
         playerChaChange.HairIndexChangeBtnClick(next);
 
-        tempData.dressIndex = playerChaChange.hairIndex;
+        tempData.hairIndex = playerChaChange.hairIndex;
 
         HairTextSet();
     }
@@ -216,7 +216,7 @@ public class AnimTestContoller : MonoBehaviour
     {
         string hairStr = "";
 
-        switch (tempData.dressIndex)
+        switch (tempData.hairIndex)
         {
             case 0:
                 hairStr = "곱슬머리 헤어";

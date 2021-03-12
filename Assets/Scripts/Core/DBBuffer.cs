@@ -54,7 +54,7 @@ namespace Core
          */
         protected void Add(string url, T value)
         {
-            if (_buffer.ContainsKey(url) != false)
+            if (_buffer.ContainsKey(url) == false)
             {
                 _buffer.Add(url, value);
             }

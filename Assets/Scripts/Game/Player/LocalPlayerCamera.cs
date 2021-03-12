@@ -20,7 +20,9 @@ namespace Game.Player
         [SerializeField] private Transform firstPersonCamTransform;
         [SerializeField] private Transform thirdPersonCamTransform;
         [SerializeField] private float switchingDuration;
-        
+
+        [SerializeField] LocalPlayerRotation localPlayerRotation;
+
         public bool IsFirstPersonView { get; private set; }
         public bool IsSwitchingView
         {
@@ -146,6 +148,11 @@ namespace Game.Player
                 var newCameraRotation = _defaultEulerAngle;
                 newCameraRotation += _cameraRotationDelta;
                 _transform.localEulerAngles = newCameraRotation;
+
+                if (IsFirstPersonView)
+                {
+                    localPlayerRotation.OnRotateKeybordInput(carmeraRotValue);
+                }
             }
         }
 

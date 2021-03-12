@@ -21,7 +21,7 @@ public class GalleryController : MonoBehaviour
 
         if (editBtn != null)
         {
-            bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.id == MeumDB.Get().currentRoomInfo.owner.id;
+            bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.user_id == MeumDB.Get().currentRoomInfo.owner.user_id;
             editBtn.gameObject.SetActive(isOwnerRoom);
         }
     }
@@ -29,7 +29,7 @@ public class GalleryController : MonoBehaviour
     public void BGMSet()
     {
         int bgmIndex = MeumDB.Get().currentRoomInfo.bgm_type_int;
-        SoundManager.Instance.PlayBGM((BGMEnum)bgmIndex);
+        SoundManager.Instance.PlayBGM(bgmIndex);
     }
 
     public void SkyBoxSet()
@@ -38,7 +38,6 @@ public class GalleryController : MonoBehaviour
         SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
         RenderSettings.skybox = skydata.material;
     }
-
 
     // Start is called before the first frame update
     void Start()
@@ -57,45 +56,5 @@ public class GalleryController : MonoBehaviour
         MeumSocket.Get().GoToChaEditScene();
     }
 
-    public void PlayGestureAnim(int status)
-    {
-        string animName = string.Empty;
-
-        switch (status)
-        {
-            case 0:
-                animName = "Gesture_BigWave";
-                break;
-            case 1:
-                animName = "Gesture_Clap";
-                break;
-            case 2:
-                animName = "Gesture_No";
-                break;
-            case 3:
-                animName = "Gesture_Yes";
-                break;
-            case 4:
-                animName = "Gesture_Pointing";
-                break;
-            case 5:
-                animName = "Gesture_Thankful";
-                break;
-            case 6:
-                animName = "Gesture_Sad";
-                break;
-        }
-
-        if (animName != string.Empty)
-        {
-            PlayerAnimationController playerAnimationController = DataSynchronizer.Get().GetLocalPlayer().GetComponent<PlayerAnimationController>();
-            playerAnimationController.PlayGestureAnim(animName);
-        }
-    }
-
-    public void GestureSettingPopupOpen(bool open)
-    {
-        Debug.LogWarning(open);
-    }
 
 }

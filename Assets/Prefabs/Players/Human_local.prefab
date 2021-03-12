@@ -350,6 +350,7 @@ MonoBehaviour:
   firstPersonCamTransform: {fileID: 1066372007988660072}
   thirdPersonCamTransform: {fileID: 1066372006047018191}
   switchingDuration: 0.2
+  localPlayerRotation: {fileID: 2044259846400871705}
 --- !u!1 &1066372007744653964
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066372007988660073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.65, z: 0.5}
+  m_LocalPosition: {x: 0, y: 1.65, z: 0.15}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 1066372007744653967}
@@ -1127,7 +1128,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5341167788750676433}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2315,8 +2316,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2044259846400871705}
+        m_TargetAssemblyTypeName: Game.Player.LocalPlayerRotation, Assembly-CSharp
+        m_MethodName: OnRotate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7036f0b8-05c4-445a-8989-cd6e8522c11a
     m_ActionName: Gallery Scene/Rotate-J[/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8528761651032148934}
+        m_TargetAssemblyTypeName: Game.Player.LocalPlayerMove, Assembly-CSharp
+        m_MethodName: OnChat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e7e4ba58-9774-4f09-88bf-26acd7085049
+    m_ActionName: Gallery Scene/Enter[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gallery Scene
@@ -2429,6 +2458,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: character_prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4703642108382625686, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5336028056815887660, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2439,7 +2472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5336028056815887660, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5336028056815887660, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
       propertyPath: m_LocalRotation.x

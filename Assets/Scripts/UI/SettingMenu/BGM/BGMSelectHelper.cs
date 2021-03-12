@@ -18,12 +18,11 @@ public class BGMSelectHelper : MonoBehaviour
 
     List<BGMSaveData> activeBGMList = new List<BGMSaveData>();
 
+    int currentSelectID = -1;
     int currentSelectIndex = -1;
     List<BGMItem> bgmItemList = new List<BGMItem>();
 
     bool isOwnerRoom = false;
-
-    int defaultMaxValue = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -38,9 +37,16 @@ public class BGMSelectHelper : MonoBehaviour
         BGMDataSet();
         DropDownItemSet();
 
-        currentSelectIndex = MeumDB.Get().currentRoomInfo.bgm_type_int;
+        currentSelectID = MeumDB.Get().currentRoomInfo.bgm_type_int;
 
-        SelectOnDataSet(currentSelectIndex);
+        for (int i = 0; i < activeBGMList.Count; i++)
+        {
+            if (activeBGMList[i].bgmId == currentSelectID)
+            {
+                SelectOnDataSet(i);
+                break;
+            }
+        }
 
         if (isOwnerRoom == false)
         {
@@ -52,38 +58,49 @@ public class BGMSelectHelper : MonoBehaviour
     void SelectOnDataSet(int index)
     {
         currentSelectIndex = index;
+        currentSelectID = activeBGMList[index].bgmId;
         selectBGMName.text = activeBGMList[index].name;
 
         for (int i = 0; i < bgmItemList.Count; i++)
         {
-            bgmItemList[i].SelectOnReset(i == currentSelectIndex);
+            bgmItemList[i].SelectOnReset(i == index);
         }
         
         DropDownOpen(false);
 
-        BGMPlay(currentSelectIndex);
+        BGMPlay(currentSelectID);
 
         new RoomRequest()
         {
             requestStatus = 3,
             uid = MeumDB.Get().GetToken(),
-            bgm_type_int = currentSelectIndex,
+            bgm_type_int = currentSelectID,
         }.RequestOn();
 
-        MeumDB.Get().currentRoomInfo.bgm_type_int = index;
+        MeumDB.Get().currentRoomInfo.bgm_type_int = currentSelectID;
 
     }
 
 
     void BGMDataSet()
     {
+        List<int> hideIDList = new List<int>()
+        {
+            4
+        };
+
         MeumSaveData meumSaveData = Resources.Load<MeumSaveData>("MeumSaveData");
 
         List<BGMSaveData> bgmSaveDataList = meumSaveData.bgmDataList;
 
-        for (int i = 1; i <= defaultMaxValue +1; i++)
+        for (int i = 1; i < bgmSaveDataList.Count; i++)
         {
-            activeBGMList.Add(bgmSaveDataList[i]);
+            int id = bgmSaveDataList[i].bgmId;
+
+            if (hideIDList.Contains(id) == false)
+            {
+                activeBGMList.Add(bgmSaveDataList[i]);
+            }
         }
 
         string[] splitData = MeumDB.Get().currentRoomInfo.bgm_addValue_string.Split(',');
@@ -96,14 +113,11 @@ public class BGMSelectHelper : MonoBehaviour
 
             int.TryParse(data, out addType);
 
-            if (addType > defaultMaxValue)
-            {
-                BGMSaveData bGMSaveData = meumSaveData.GetBGMData((BGMEnum)addType);
+            BGMSaveData bGMSaveData = meumSaveData.GetBGMData(addType);
 
-                if (bGMSaveData != null && activeBGMList.Contains(bGMSaveData) == false)
-                {
-                    activeBGMList.Add(bGMSaveData);
-                }
+            if (bGMSaveData != null && activeBGMList.Contains(bGMSaveData) == false)
+            {
+                activeBGMList.Add(bGMSaveData);
             }
         }
     }
@@ -119,11 +133,14 @@ public class BGMSelectHelper : MonoBehaviour
             bGMItem.gameObject.SetActive(true);
 
             bgmItemList.Add(bGMItem);
+        
         }
+
+        float itemSize_y = itemIns.GetComponent<RectTransform>().sizeDelta.y;
 
         RectTransform rect = scrollRect.GetComponent<RectTransform>();
         Vector2 pos = rect.sizeDelta;
-        pos.y = 30 * activeBGMList.Count;
+        pos.y = itemSize_y * activeBGMList.Count + 10;
         rect.sizeDelta = pos;
     }
 
@@ -136,20 +153,20 @@ public class BGMSelectHelper : MonoBehaviour
                 bgmItemList[i].PlayOnReset(i == index);
             }
 
-            BGMPlay(index);
+            BGMPlay(activeBGMList[index].bgmId);
         }
         else
         {
             bgmItemList[index].PlayOnReset(false);
             bgmItemList[currentSelectIndex].PlayOnReset(true);
-            BGMPlay(currentSelectIndex);
+            BGMPlay(activeBGMList[currentSelectIndex].bgmId);
         }
         
     }
 
     void BGMPlay(int index)
     {
-        SoundManager.Instance.PlayBGM((BGMEnum)index);
+        SoundManager.Instance.PlayBGM(index);
     }
 
     // Update is called once per frame

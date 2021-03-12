@@ -13,21 +13,66 @@ MonoBehaviour:
   m_Name: MeumSaveData
   m_EditorClassIdentifier: 
   bgmDataList:
-  - bgmEnum: -1
+  - bgmId: -1
     name: 
     audioClip: {fileID: 0}
-  - bgmEnum: 0
-    name: A New Beginning - Esther Abrami
+  - bgmId: 1
+    name: "[\uD074\uB798\uC2DD] A New Beginning - Esther Abrami"
     audioClip: {fileID: 8300000, guid: c630d62a21ecf6546a08871d7173f9e8, type: 3}
-  - bgmEnum: 1
-    name: Ready or Not - Trevor Garrod
+  - bgmId: 2
+    name: "[\uC2E0\uB514] Ready or Not - Trevor Garrod"
     audioClip: {fileID: 8300000, guid: 19f54fc3fd07b114597c84c95ac53a73, type: 3}
-  - bgmEnum: 2
-    name: Shadowing - Corbyn Kites
+  - bgmId: 3
+    name: "[\uC2E0\uB514] Shadowing - Corbyn Kites"
     audioClip: {fileID: 8300000, guid: ac62a46b8ea70734783a855a48197cee, type: 3}
-  - bgmEnum: 3
-    name: Rounded
+  - bgmId: 4
+    name: "[\uC2E0\uB514] Rounded - \uC724\uC9C0\uC6D0"
     audioClip: {fileID: 8300000, guid: e99d4e51122f5ee4ea465246a88e61ed, type: 3}
+  - bgmId: 5
+    name: "[\uC77C\uB809\uD2B8\uB9AD] Global - Emmit Fenn"
+    audioClip: {fileID: 8300000, guid: 05a02775fe248e342b4fd83634e924bb, type: 3}
+  - bgmId: 6
+    name: "[\uC2E0\uB514] AnaCaptainslogue  - Noir et Blanc Vie"
+    audioClip: {fileID: 8300000, guid: f323cb73cde3d5948ad6d6ef30398e6d, type: 3}
+  - bgmId: 7
+    name: "[\uC7AC\uC988] BeeyornandRaysd - Noir et Blanc Vie"
+    audioClip: {fileID: 8300000, guid: 92db32df7abbd56498b08bec3d6007bd, type: 3}
+  - bgmId: 8
+    name: "[\uD074\uB798\uC2DD] Watercolor Lilies - Aaron Kenny"
+    audioClip: {fileID: 8300000, guid: 5b3488228e5cc724ab10d730121def75, type: 3}
+  - bgmId: 9
+    name: "[\uC7AC\uC988] This is a Jazz Space - Midnight North"
+    audioClip: {fileID: 8300000, guid: 9bdf8170028217a43a94578cc365b33b, type: 3}
+  - bgmId: 10
+    name: "[\uC790\uC5F0] Sea Space - Emily A.Sprague "
+    audioClip: {fileID: 8300000, guid: e8c7ee9d3873af54196d3b4b4b5e694d, type: 3}
+  - bgmId: 11
+    name: "[\uC2E0\uB514] King of Peace - Twin Musicom "
+    audioClip: {fileID: 8300000, guid: 088937f2e6f4bed41b18229d4850e16f, type: 3}
+  - bgmId: 12
+    name: "[\uD31D] Happydays - Unknown"
+    audioClip: {fileID: 8300000, guid: cf432c1fe4ec6b345be38d7a83701dd3, type: 3}
+  - bgmId: 13
+    name: "[\uD31D] Cozy up with coffee - Unknown"
+    audioClip: {fileID: 8300000, guid: 8e7f17b74a2370c4bb507e82cd77e98d, type: 3}
+  - bgmId: 14
+    name: "[\uC2E0\uB514] Altitude - Unknown"
+    audioClip: {fileID: 8300000, guid: d3e40c65b87273841908cd0237fee13b, type: 3}
+  - bgmId: 15
+    name: "[\uC2E0\uB514] Lion Happy - Unknown"
+    audioClip: {fileID: 8300000, guid: bee04cf3d8af7e444aa21b4b3f098a4e, type: 3}
+  - bgmId: 16
+    name: "[\uD31D] Sunny - Unknown"
+    audioClip: {fileID: 8300000, guid: 3cc35964d6923c643925d982d2c06ce7, type: 3}
+  - bgmId: 17
+    name: "[\uC5BC\uD130\uB124\uC774\uD2F0\uBE0C] This Too Shall Pass - Unknown"
+    audioClip: {fileID: 8300000, guid: 8c5765d154401fe4f96987da48663b5e, type: 3}
+  - bgmId: 18
+    name: "[\uD31D] Tropical Evening - Unknown"
+    audioClip: {fileID: 8300000, guid: f37f5b455dc65e640a8f7fc5db71df8c, type: 3}
+  - bgmId: 19
+    name: "[\uC77C\uB809\uD2B8\uB9AD] Take me down to the fashion Show - NoMBe"
+    audioClip: {fileID: 8300000, guid: ccf157e28b96725428d2ed1b813bf264, type: 3}
   skyDataList:
   - skyBoxEnum: -1
     name: 
@@ -47,3 +92,37 @@ MonoBehaviour:
   - skyBoxEnum: 4
     name: I Will Greet The Sun Again
     material: {fileID: 2100000, guid: 51171c937f4c81a4db1ad9bd5994810a, type: 2}
+  gestureModelList:
+  - id: -1
+    name: "\uC124\uC815"
+    sprite: {fileID: 3000760550738844563, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 0
+    name: "\uC778\uC0AC"
+    sprite: {fileID: 7236876837725877094, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 1
+    name: "\uBC15\uC218"
+    sprite: {fileID: 8535183387608243075, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 2
+    name: "\uBD80\uC815"
+    sprite: {fileID: -5934292899908515180, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 3
+    name: "\uB3D9\uC758"
+    sprite: {fileID: 5322609086175675633, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 4
+    name: "\uC548\uB0B4"
+    sprite: {fileID: -6944372836819911362, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 5
+    name: "\uC9DC\uC99D"
+    sprite: {fileID: 1784348164499887600, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 6
+    name: "\uC6B0\uC6B8"
+    sprite: {fileID: -342994691566557850, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 7
+    name: "\uD558\uD488"
+    sprite: {fileID: -8485452556426783278, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 8
+    name: "\uB35C\uB35C"
+    sprite: {fileID: -4404137018198919472, guid: af370a3559185f84fb876655121ac46c, type: 3}
+  - id: 9
+    name: "\uC2E0\uB0A8"
+    sprite: {fileID: -8927030222741045821, guid: af370a3559185f84fb876655121ac46c, type: 3}

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -290,9 +291,30 @@ namespace Core.Socket
                     _remotePlayers[i].SetRendererEnabled(true);
             }
             _localPlayer.gameObject.SetActive(true);
-
             _localPlayer.GetComponentInChildren<PlayerChaChange>().GetChaCustomizingSaveData();
-            Debug.LogWarning("Show Player!!");
+
+            //겔러리 돌아갔을때 발이 파묻혀서 임시로 중력을 없앰
+            StartCoroutine(GravitySet());
+        }
+
+        private IEnumerator GravitySet()
+        {
+            GravitySet(_localPlayer.GetComponent<CharacterController>(), 0);
+
+            yield return new WaitForSeconds(1);
+
+            GravitySet(_localPlayer.GetComponent<CharacterController>(), 0.9f);
+        }
+
+        private void GravitySet(CharacterController controller , float value) 
+        {
+            Vector3 center = controller.center;
+            center.y = value;
+            controller.center = center;
+
+            Vector3 pos = controller.transform.localPosition;
+            pos.y += 0.01f;
+            controller.transform.localPosition = pos;
         }
 
         public Transform GetLocalPlayer()

@@ -8,12 +8,13 @@ public class MeumSaveData : ScriptableObject
 {
     public List<BGMSaveData> bgmDataList = new List<BGMSaveData>();
     public List<SkyBoxSaveData> skyDataList = new List<SkyBoxSaveData>();
+    public List<GestureModel> gestureModelList = new List<GestureModel>();
 
-    public BGMSaveData GetBGMData(BGMEnum bgmEnumValue)
+    public BGMSaveData GetBGMData(int bgmId)
     {
         foreach (var bgmData in bgmDataList)
         {
-            if (bgmData.bgmEnum == bgmEnumValue)
+            if (bgmData.bgmId == bgmId)
             {
                 return bgmData;
             }
@@ -39,7 +40,7 @@ public class MeumSaveData : ScriptableObject
 [Serializable]
 public class BGMSaveData
 {
-    public BGMEnum bgmEnum;
+    public int bgmId;
     public string name;
     public AudioClip audioClip;
 }
@@ -70,4 +71,22 @@ public enum SkyBoxEnum
     SkyBox_2,
     SkyBox_3,
     SkyBox_4,
+}
+
+
+[Serializable]
+public class GestureModel
+{
+    public int id = 0;
+    public string name = string.Empty;
+    public Sprite sprite = null;
+
+
+    public GestureModel() { }
+    public GestureModel(int id, string name)
+    {
+        this.id = id;
+        this.name = name;
+    }
+
 }

@@ -33,7 +33,7 @@ public class SoundManager : MonoBehaviour
 	public float bgmValue = 0;
 	public float seValue = 0;
 
-	BGMEnum currentPlaybgmEnum = BGMEnum.None;
+	int currentPlaybgmId = -1;
 
 	MeumSaveData meumSaveData = null;
 
@@ -118,18 +118,18 @@ public class SoundManager : MonoBehaviour
 		bgmAudio.Play();
 	}
 
-	public void PlayBGM(BGMEnum bgmEnum)
+	public void PlayBGM(int bgmID)
 	{
-		if (currentPlaybgmEnum == bgmEnum)
+		if (currentPlaybgmId == bgmID)
 			return;
 
-		currentPlaybgmEnum = bgmEnum;
+		currentPlaybgmId = bgmID;
 
-		BGMSaveData bGMSaveData = meumSaveData.GetBGMData(bgmEnum);
+		BGMSaveData bGMSaveData = meumSaveData.GetBGMData(bgmID);
 
         if (bGMSaveData == null)
 			return;
-		
+
 		bgmAudio.clip = bGMSaveData.audioClip;
 		bgmAudio.loop = true;
 		bgmAudio.Play();

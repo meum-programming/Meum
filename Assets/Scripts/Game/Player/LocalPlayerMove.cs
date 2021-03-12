@@ -86,27 +86,40 @@ namespace Game.Player
             Transform chaTransform = _animController._animator.gameObject.transform;
             float value = 0;
 
+            //이동 방향값을 인트값으로 변환
+            float xValue = ((int)(_moveVector.x * 10)); //* 0.1f;
+            float yValue = ((int)(_moveVector.y * 10)); //* 0.1f;
 
-            float xValue = ((int)(_moveVector.x * 10)) * 0.1f;
-            float yValue = ((int)(_moveVector.y * 10)) * 0.1f;
-
-            if (yValue == 1 || yValue == -1)
+            //이동 방향에 따른 8방향 회전 세팅
+            if (yValue == 10 || yValue == -10)
             {
-                value = yValue == 1 ? 0 : 180;
+                value = yValue == 10 ? 0 : 180;
             }
-            else if (xValue == 1 || xValue == -1)
+            else if (xValue == 10 || xValue == -10)
             {
-                value = xValue == 1 ? 90 : -90;
+                value = xValue == 10 ? 90 : -90;
             }
             else 
             {
-                if (xValue == -0.7 && yValue == 0.7)
+                //왼쪽 + 앞
+                if (xValue == -7 && yValue == 7)
+                {
+                    value = -45;
+                }
+                //오른쪽 + 앞
+                else if (xValue == 7 && yValue == 7)
                 {
                     value = 45;
                 }
-                else if (xValue == 0.7 && yValue == 0.7)
+                //왼쪽 + 뒤
+                else if (xValue == -7 && yValue == -7)
                 {
-                    value = -45;
+                    value = 225;
+                }
+                //오른쪽 + 뒤
+                else if (xValue == 7 && yValue == -7)
+                {
+                    value = 135;
                 }
             }
             
@@ -189,6 +202,14 @@ namespace Game.Player
             var value = ctx.ReadValue<float>();
             _running = value > 0.5f;    // value is 1 or 0 (float)
             _animController.SetRunning(_running);
+        }
+
+        public void OnChat(InputAction.CallbackContext ctx)
+        {
+            if (ctx.action.phase == InputActionPhase.Started)
+            {
+                UI.ChattingUI.ChattingUI.Get().SetInputFieldActive();
+            }
         }
     }
 }

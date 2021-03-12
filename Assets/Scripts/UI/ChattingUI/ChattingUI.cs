@@ -51,16 +51,31 @@ namespace UI.ChattingUI
             if (!EventSystem.current.alreadySelecting)
             {
                 Send();
-                inputField.ActivateInputField();
+                //inputField.ActivateInputField();
             }
             else
             {
                 inputField.GetComponent<WebGLSupport.WebGLInput>().DeactivateInputField();
             }
+
+            //방향키를 계속 입력시 인풋필드가 가끔 활성화 될때가 있어서 처리
+            if (EventSystem.current.currentSelectedGameObject == inputField.transform.gameObject)
+            {
+                EventSystem.current.SetSelectedGameObject(null, new BaseEventData(EventSystem.current));
+            }
         }
         public bool InputFieldActivated()
         {
             return inputField.isFocused;
+        }
+
+        public void SetInputFieldActive()
+        {
+            if (InputFieldActivated())
+                return;
+            
+            inputField.ActivateInputField();
+            inputField.Select();
         }
 
         public void AddMessage(string sender, string message, bool isMe, int type)

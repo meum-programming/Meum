@@ -96,6 +96,11 @@ namespace Game.Player
             transform.Rotate(Vector3.up, value.x * sensitivity);
         }
 
+        public void OnRotateKeybordInput(Vector2 value)
+        {
+            transform.Rotate(Vector3.up, value.x * sensitivity);
+        }
+
         public void OnRotateEnable(InputAction.CallbackContext ctx)
         {
             var value = ctx.ReadValue<float>();
