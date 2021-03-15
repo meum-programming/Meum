@@ -44,14 +44,30 @@ namespace Core.Socket
 
         }
 
+        public Vector3 GetSpawnPos()
+        {
+            //현재 룸 정보 가져오기
+            RoomInfoData roomInfoData = MeumDB.Get().currentRoomInfo;
+
+            //룸 정보에서 시작 위치 가져오기
+            Vector3 spawnPos = new Vector3(roomInfoData.startPos_x, 1.5f, roomInfoData.startPos_z);
+
+            return spawnPos;
+        }
+
+        public Quaternion GetSpawnRot()
+        {
+            //로테이트 값 세팅
+            Quaternion spawnRot = Quaternion.Euler(new Vector3(0, 90, 0));
+
+            return spawnRot;
+        }
+
+
         void LocalPlayerSet()
         {
-            var spawnTransform = GameObject.Find("SpawnSite").transform;
-
             // setting localplayer
-            _localPlayer = Instantiate(playerPrefabs[0],
-                spawnTransform.position, spawnTransform.rotation,
-                transform).transform;
+            _localPlayer = Instantiate(playerPrefabs[0], GetSpawnPos(), GetSpawnRot(), transform).transform;
 
             var playerInfo = MeumSocket.Get().LocalPlayerInfo;
 

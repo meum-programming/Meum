@@ -44,7 +44,7 @@ namespace Game.Artwork
     {
         [SerializeField] public Renderer paintRenderer;
         [SerializeField] public Material mat;
-
+        [SerializeField] public YoutubePlayer player;
         [HideInInspector] public string bannerUrl;
         public int ArtworkType => _artworkData.artwork_type;
 
@@ -197,7 +197,14 @@ namespace Game.Artwork
             CopyComponent(col, gameObject).isTrigger = true;
             col.enabled = false;
         }
-        
+
+        public void LoadVideoCoroutine(string url)
+        {
+            player.Play(url);
+            player.videoPlayer.GetTargetAudioSource(0).mute = true;
+            player.videoPlayer.SetDirectAudioMute(0, true);
+        }
+
         /*
          * @brief 컴포넌트 복사함수, Collider 옮기는데 사용됨
          * @details https://answers.unity.com/questions/458207/copy-a-component-at-runtime.html?_ga=2.240204931.1217398672.1604318035-771045389.1596531803

@@ -1295,6 +1295,8 @@ MonoBehaviour:
       maskIndex: 0
       dressIndex: 0
       skinIndex: 0
+    startPos_x: -10
+    startPos_z: 0
   myRoomInfo:
     success: 
     id: 0
@@ -1327,3 +1329,5 @@ MonoBehaviour:
       maskIndex: 0
       dressIndex: 0
       skinIndex: 0
+    startPos_x: -10
+    startPos_z: 0

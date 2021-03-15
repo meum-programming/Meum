@@ -1,4 +1,5 @@
-﻿using UI.BuilderScene;
+﻿using Core.Socket;
+using UI.BuilderScene;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,8 +23,9 @@ namespace Game.Builder.Camera
 
         public void ResetRotation()
         {
-            var spawnSite = GameObject.Find("SpawnSite").transform;
-            transform.rotation = spawnSite.rotation;
+            //var spawnSite = GameObject.Find("SpawnSite").transform;
+            //transform.rotation = spawnSite.rotation;
+            transform.rotation = DataSynchronizer.Get().GetSpawnRot();
         }
 
         public void OnRotate(InputAction.CallbackContext ctx)

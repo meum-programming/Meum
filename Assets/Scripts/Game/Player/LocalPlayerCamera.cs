@@ -46,9 +46,16 @@ namespace Game.Player
             _camera = GetComponent<Camera>();
             _transform = transform;
 
-            IsFirstPersonView = false;
-            _transform.localPosition = thirdPersonCamTransform.localPosition;
-            _transform.localRotation = thirdPersonCamTransform.localRotation;
+            //IsFirstPersonView = false;
+            //_transform.localPosition = thirdPersonCamTransform.localPosition;
+            //_transform.localRotation = thirdPersonCamTransform.localRotation;
+
+            //1인칭 시점으로 세팅
+            IsFirstPersonView = true;
+            _transform.localPosition = firstPersonCamTransform.localPosition;
+            _transform.localRotation = firstPersonCamTransform.localRotation;
+            //StartCoroutine(SwitchView());
+
             _defaultEulerAngle = _transform.localEulerAngles;
             _camera.cullingMask = ~0;
 

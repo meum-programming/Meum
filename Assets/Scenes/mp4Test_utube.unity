@@ -387,8 +387,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoPlay: 1
-  url: https://youtu.be/fMKCS7_AL_E
-  player: {fileID: 114643940735775910}
+  url: https://www.youtube.com/watch?v=v1DWS9-0zSc
+  player: {fileID: 0}
   loadingText: {fileID: 1501203593}
   inputField: {fileID: 1455956744}
 --- !u!1 &960325267

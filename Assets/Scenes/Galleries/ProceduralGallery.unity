@@ -831,6 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paintPrefab: {fileID: 2688551444214508632, guid: 60901c54206a0554fb1ecef834db7173, type: 3}
   object3DPrefab: {fileID: 5895836382571493856, guid: 3d7bfbc6764375b4eb3d48d2f5d21273, type: 3}
+  videoPrefab: {fileID: 2688551444214508632, guid: 9f859261ae1488c4e9b18edb7dbc1bce, type: 3}
 --- !u!1 &147663616
 GameObject:
   m_ObjectHideFlags: 0
@@ -10347,6 +10348,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5933453787565019818, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 7443365122788229296, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -79,6 +79,15 @@ namespace Core
                 yield return Get(url);
             else
             {
+
+                string baseURL = "https://api.meum.me/datas/";
+                int index = url.IndexOf(baseURL);
+
+                if (index == -1)
+                {
+                    url = baseURL + url;
+                }
+
                 UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
                 yield return www.SendWebRequest();
 

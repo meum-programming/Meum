@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Socket;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -28,10 +29,11 @@ namespace Game.Builder.Camera
 
         public void ResetPosition()
         {
-            var spawnSite = GameObject.Find("SpawnSite").transform;
-            transform.position = spawnSite.position;
+            //var spawnSite = GameObject.Find("SpawnSite").transform;
+            //transform.position = spawnSite.position;
+            transform.position = DataSynchronizer.Get().GetSpawnPos();
         }
-        
+
         /*
          * @brief Update 함수에서 실제 이동을 함, OnMove는 moveVector 갱신만
          */

@@ -10,6 +10,15 @@ namespace UI
 
         private Vector3 _originalPos;
         private bool _toggled = true;
+
+        public bool toggled
+        {
+            get 
+            {
+                return _toggled;
+            }
+        }
+
         private IEnumerator _runningCo = null;
 
         private void Awake()

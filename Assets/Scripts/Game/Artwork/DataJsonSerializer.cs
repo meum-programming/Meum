@@ -29,6 +29,7 @@ namespace Game.Artwork
     {
         [SerializeField] public GameObject paintPrefab;
         [SerializeField] public GameObject object3DPrefab;
+        [SerializeField] public GameObject videoPrefab;
 
         private string _resetCheckpoint = "";
 
@@ -82,6 +83,17 @@ namespace Game.Artwork
                     artworkInfo = Instantiate(object3DPrefab, transform).GetComponent<ArtworkInfo>();
                 Assert.IsNotNull(artworkInfo);
                 artworkInfo.UpdateWithArtworkData(data.artworks[i]);
+            }
+
+            //영상 테스트 용
+            if (MeumDB.Get().currentRoomInfo.id == 146 && MeumDB.Get().myRoomInfo.owner.user_id == 149)
+            {
+                ArtworkInfo videoArtworkInfo = Instantiate(videoPrefab, transform).GetComponent<ArtworkInfo>();
+
+                videoArtworkInfo.transform.position = new Vector3(10.2f, 2.4f, -4.6f);
+                videoArtworkInfo.transform.eulerAngles = new Vector3(270, 0, 270);
+                videoArtworkInfo.transform.localScale = new Vector3(6.5f, 1, 4);
+                videoArtworkInfo.LoadVideoCoroutine("https://www.youtube.com/watch?v=v1DWS9-0zSc");
             }
 
             _resetCheckpoint = json;

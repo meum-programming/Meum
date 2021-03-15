@@ -11,6 +11,8 @@ namespace UI.BuilderScene
     {
         [SerializeField] private TogglePosition togglePosition;
 
+        [SerializeField] private Image iconImage;
+
         public bool toggled => transform.localScale.x < 0;
 
         private Button _button;
@@ -35,9 +37,8 @@ namespace UI.BuilderScene
         {
             togglePosition.Toggle();
 
-            var scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
+            float rotZValue = togglePosition.toggled ? 180 : 0;
+            iconImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotZValue));
         }
     }
 }

@@ -87,4 +87,6 @@ public class RoomInfoData : BaseRespons
     public string bgm_addValue_string = string.Empty;
     public string data_json = string.Empty;
     public UserData owner = null;
+    public float startPos_x = -10;
+    public float startPos_z = 0;
 }

@@ -23,11 +23,13 @@ public class Test_WebWaiting_Room : MonoBehaviour
     {
         webHandler.SetToken("61");
         //webHandler.SetToken("59");
+        //webHandler.SetToken("149");
     }
 
     public void RoomSetBtnClick()
     {
         webHandler.EnterRoom("Guest");
         //webHandler.EnterRoom("믐대표서비스");
+        //webHandler.EnterRoom("blackgallery");
     }
 }
