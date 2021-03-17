@@ -50,15 +50,30 @@ namespace Core.Socket
             RoomInfoData roomInfoData = MeumDB.Get().currentRoomInfo;
 
             //룸 정보에서 시작 위치 가져오기
-            Vector3 spawnPos = new Vector3(roomInfoData.startPos_x, 1.5f, roomInfoData.startPos_z);
+            Vector3 spawnPos = new Vector3(-10f, 1.5f, 0);
+
+            if (roomInfoData.startPoint_json != string.Empty) 
+            {
+                StartPointData startPointData = JsonUtility.FromJson<StartPointData>(roomInfoData.startPoint_json);
+                spawnPos = startPointData.position;
+            }
 
             return spawnPos;
         }
 
         public Quaternion GetSpawnRot()
         {
+            //현재 룸 정보 가져오기
+            RoomInfoData roomInfoData = MeumDB.Get().currentRoomInfo;
+
             //로테이트 값 세팅
             Quaternion spawnRot = Quaternion.Euler(new Vector3(0, 90, 0));
+
+            if (roomInfoData.startPoint_json != string.Empty)
+            {
+                StartPointData startPointData = JsonUtility.FromJson<StartPointData>(roomInfoData.startPoint_json);
+                spawnRot = Quaternion.Euler(startPointData.eulerAngle);
+            }
 
             return spawnRot;
         }

@@ -88,7 +88,18 @@ public class BaseRequest
     
     public T GetData<T>(string jsonData)
     {
-        T data = JsonUtility.FromJson<T>(jsonData);
+        T data = default;
+
+        try
+        {
+            data = JsonUtility.FromJson<T>(jsonData);
+        }
+        catch (Exception)
+        {
+            Debug.LogWarning("error = "+jsonData);
+            throw;
+        }
+        
 
         return data;
     }

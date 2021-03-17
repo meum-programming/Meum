@@ -135,7 +135,7 @@ namespace Game.Artwork
         {
             if (_selected)
             {
-                _selected.rotation = Quaternion.Euler(_selected.up * 90.0f) * _selected.rotation;
+                _selected.rotation = Quaternion.Euler(_selected.up * 15.0f) * _selected.rotation;
             }
         }
         
@@ -176,7 +176,7 @@ namespace Game.Artwork
             if (_selected && _moving && ctx.performed)
             {
                 var value = ctx.ReadValue<float>();
-                _selected.rotation = Quaternion.Euler(_selected.up * (90.0f * value)) * _selected.rotation;
+                _selected.rotation = Quaternion.Euler(_selected.up * (15.0f * value)) * _selected.rotation;
             }
         }
         

@@ -1,7 +1,12 @@
-﻿using Core.Socket;
+﻿using Core;
+using Core.Socket;
+using DG.Tweening;
+using Game.Builder.Camera;
 using Game.Player;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI.BuilderScene
 {
@@ -21,6 +26,12 @@ namespace UI.BuilderScene
 
         int subTabStatus = 0;
         [SerializeField] List<RectTransform> subTabPanelList = new List<RectTransform>();
+
+
+        [SerializeField] Text saveOnText;
+        Tween saveOnTextEventTween = null;
+        Coroutine saveOnTextEvent = null;
+
 
         private void Start()
         {
@@ -84,9 +95,44 @@ namespace UI.BuilderScene
 
         public void ChangeStartPoint()
         {
-            Transform playerTransfrom = DataSynchronizer.Get().GetLocalPlayer();
+            Transform startPoint = FindObjectOfType<CameraMove>().transform;
 
-            Debug.LogWarning("ChangeStartPoint"+ playerTransfrom.localPosition);
+            RoomRequest roomRequest = new RoomRequest()
+            {
+                requestStatus = 5,
+                id = MeumDB.Get().currentRoomInfo.id,
+                startPointData = new StartPointData(startPoint),
+                successOn = ResultData =>
+                {
+                    //이전에 실행중인 이벤트가 있으면 멈춘다
+                    if (saveOnTextEvent != null)
+                    {
+                        StopCoroutine(saveOnTextEvent);
+                    }
+
+                    saveOnTextEvent = StartCoroutine(StartPointChangeClear());
+                }
+            };
+            roomRequest.RequestOn();
+
+        }
+
+        IEnumerator StartPointChangeClear()
+        {
+            saveOnText.gameObject.SetActive(true);
+
+            if (saveOnTextEventTween != null && saveOnTextEventTween.IsPlaying())
+            {
+                saveOnTextEventTween.Kill();
+            }
+
+            saveOnTextEventTween = saveOnText.DOFade(1, 0.1f);
+
+            yield return new WaitForSeconds(1);
+
+            saveOnTextEventTween = saveOnText.DOFade(0, 1f);
+
+            yield return new WaitForSeconds(1);
         }
 
         public void ChangeStartPointClear()

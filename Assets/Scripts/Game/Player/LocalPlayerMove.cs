@@ -74,7 +74,7 @@ namespace Game.Player
                 _moveVector = Vector3.zero;
                // return;
             }
-            
+
             var selfTransform = transform;
             var direction = selfTransform.right * _moveVector.x + 
                             selfTransform.forward * _moveVector.y;
@@ -153,35 +153,32 @@ namespace Game.Player
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
+            
+            
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
             {
-                _animController.SetHorizontalSpeed(0.0f);
-                _animController.SetVerticalSpeed(0.0f);
+                if (IsGrounded())
+                    _animController.SetVerticalSpeed(0.0f);
                 return;
             }
 
             var value = ctx.ReadValue<Vector2>();
             _moveVector = value;
-
-            // animation
-            _animController.SetHorizontalSpeed(value.x);
-            _animController.SetVerticalSpeed(value.y);
+            if (IsGrounded())
+                _animController.SetVerticalSpeed(Mathf.Abs(value.x) + Mathf.Abs(value.y));
+                
         }
 
         public void OnMoveJoystick(Vector2 value)
         {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
             {
-                _animController.SetHorizontalSpeed(0.0f);
                 _animController.SetVerticalSpeed(0.0f);
                 return;
             }
 
             _moveVector = value;
-
-            // animation
-            _animController.SetHorizontalSpeed(value.x);
-            _animController.SetVerticalSpeed(value.y);
+            _animController.SetVerticalSpeed(Mathf.Abs(value.x + value.y));
         }
 
         public void OnJump(InputAction.CallbackContext ctx)

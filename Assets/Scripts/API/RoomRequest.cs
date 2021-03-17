@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class RoomRequest : BaseRequest
     public int sky_type_int;
     public int bgm_type_int;
     public string data_json = string.Empty;
+    public StartPointData startPointData = null;
+
     public override void RequestOn()
     {
         requestType = RequestType.POST;
@@ -50,6 +53,13 @@ public class RoomRequest : BaseRequest
             form.AddField("uid", uid);
             form.AddField("data_json", data_json);
         }
+        //스타트포인트 수정
+        else if (requestStatus == 5)
+        {
+            classValue = "updateRoomStartPoint";
+            form.AddField("id", id);
+            form.AddField("startPoint_json", JsonUtility.ToJson(startPointData));
+        }
 
 
         base.RequestOn();
@@ -74,6 +84,11 @@ public class RoomInfoRespons : BaseRespons
     public RoomInfoData result = new RoomInfoData();
 }
 
+public class StartPointRespons : BaseRespons
+{
+    public StartPointData result = new StartPointData();
+}
+
 
 [System.Serializable]
 public class RoomInfoData : BaseRespons
@@ -87,6 +102,37 @@ public class RoomInfoData : BaseRespons
     public string bgm_addValue_string = string.Empty;
     public string data_json = string.Empty;
     public UserData owner = null;
-    public float startPos_x = -10;
-    public float startPos_z = 0;
+    public string startPoint_json = string.Empty;
+
+}
+
+[System.Serializable]
+public class StartPointData
+{
+    public Vector3 position = Vector3.zero;
+    public Vector3 eulerAngle = Vector3.zero;
+
+    public void SetPositon(Vector3 position)
+    {
+        this.position = position;
+    }
+
+
+    public void SetEulerAngle(Vector3 eulerAngle)
+    {
+        this.eulerAngle = eulerAngle;
+    }
+
+    public StartPointData() { }
+    public StartPointData(Vector3 position , Vector3 eulerAngle)
+    {
+        SetPositon(position);
+        SetEulerAngle(eulerAngle);
+    }
+    public StartPointData(Transform tranform)
+    {
+        SetPositon(tranform.localPosition);
+        SetEulerAngle(tranform.rotation.eulerAngles);
+    }
+
 }

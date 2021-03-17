@@ -1,4 +1,5 @@
 ﻿using Game.Artwork;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -12,6 +13,7 @@ namespace UI.BuilderScene
         [SerializeField] private ArtworkPlacer artworkPlacer;
         [SerializeField] private Camera cam;
         [SerializeField] private LinkModal linkModal;
+        [SerializeField] private List<RectTransform> btnList = new List<RectTransform>();
 
         private Transform _selected;
 
@@ -35,6 +37,19 @@ namespace UI.BuilderScene
             gameObject.SetActive(true);
             _selected = obj;
             transform.position = cam.WorldToScreenPoint(_selected.transform.position);
+
+            for (int i = 0; i < btnList.Count; i++)
+            {
+                bool activeOn = true;
+
+                if (i > 1 && _selected.name == "Startpoint")
+                {
+                    activeOn = false;
+                }
+
+                btnList[i].gameObject.SetActive(activeOn);
+            }
+
         }
 
         public void OnMoveButton()

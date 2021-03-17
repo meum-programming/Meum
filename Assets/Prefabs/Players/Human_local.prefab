@@ -2020,7 +2020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae658a55d38e224a8504aec75d457f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
+  walkSpeed: 2.5
   runSpeed: 8
   jumpHeight: 1.2
   groundDetectDistance: 0.1
@@ -2028,6 +2028,7 @@ MonoBehaviour:
   checkingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  testValue: 1
 --- !u!114 &2044259846400871705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2454,6 +2455,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8385142957625115652}
     m_Modifications:
+    - target: {fileID: 3578107650058769671, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4703642108382625686, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
       propertyPath: m_Name
       value: character_prefab
@@ -2670,6 +2675,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ff827f8729020b64d86426448b3eb947, type: 2}
+    - target: {fileID: 8619966773958713817, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e937cb7319f9244aa69bebc5e9b32cb, type: 3}
 --- !u!4 &6099519395400154080 stripped

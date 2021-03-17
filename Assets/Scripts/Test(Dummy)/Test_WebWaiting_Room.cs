@@ -11,6 +11,8 @@ public class Test_WebWaiting_Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TokenSetBtnClick();
+        RoomSetBtnClick();
     }
 
     // Update is called once per frame
