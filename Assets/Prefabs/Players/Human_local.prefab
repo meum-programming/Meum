@@ -2028,7 +2028,6 @@ MonoBehaviour:
   checkingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  testValue: 1
 --- !u!114 &2044259846400871705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2347,6 +2346,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e7e4ba58-9774-4f09-88bf-26acd7085049
     m_ActionName: Gallery Scene/Enter[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9157458219296972469}
+        m_TargetAssemblyTypeName: Game.Player.PlayerAnimationController, Assembly-CSharp
+        m_MethodName: OnGestureHotKey
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ba3bef54-0931-46cd-ab54-e20ccecaa898
+    m_ActionName: Gallery Scene/Gesture[/Keyboard/1,/Keyboard/2,/Keyboard/3]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gallery Scene

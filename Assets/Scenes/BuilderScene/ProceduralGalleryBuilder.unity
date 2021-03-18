@@ -693,9 +693,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: floorPrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 6486467048730052173, guid: 64d133ea998ead84a996666bf561a90d, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[9]
+      value: 
+      objectReference: {fileID: 4599362270735638478, guid: 140711631e69025409adf929891064a8, type: 3}
     - target: {fileID: 7784460449287985674, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: m_Name
       value: proceduralSpace

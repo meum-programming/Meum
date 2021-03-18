@@ -201,12 +201,6 @@ namespace Core.Socket {
                 yield return null;
             }
 
-            if (_state.IsSubOfGallery())
-                DataSynchronizer.Get().ShowPlayers();
-            else
-                DataSynchronizer.Get().Setup(data.maxN);
-
-
             if (ownRoomId == data.roomId)
                 _state.EnterGalleryOwn();
             else
@@ -216,7 +210,9 @@ namespace Core.Socket {
             _galleryData = data;
 
             // setting paints
-            SerializeArtworks();
+            //SerializeArtworks();
+            var paintsSerializer = GameObject.Find("Artworks").GetComponent<DataJsonSerializer>();
+            paintsSerializer.SetJson(roomInfo.data_json);
 
             // setting userList
             var userList = UI.UserList.UserList.Get();
@@ -225,6 +221,15 @@ namespace Core.Socket {
 
             userList.AddUser(socket.GetPlayerId(), socket.LocalPlayerInfo.nickname);
             //userList.AddUser(socket.GetPlayerId(), "nickName");
+
+            if (DataSynchronizer.Get().maxN != data.maxN) 
+            {
+                DataSynchronizer.Get().Setup(data.maxN);
+            }
+            else
+            {
+                DataSynchronizer.Get().ShowPlayers();
+            }   
         }
 
         #endregion

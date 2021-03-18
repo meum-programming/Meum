@@ -16,29 +16,47 @@ namespace Core.Socket
         [SerializeField] private List<GameObject> playerPrefabs;
         [SerializeField] private List<GameObject> otherPlayerPrefabs;
 
-        private Transform _localPlayer = null;
-        private RemotePlayerController[] _remotePlayers = null;
+        public Transform _localPlayer = null;
+        private List<RemotePlayerController> _remotePlayers = null;
 
-        int maxN = 0;
+        public int maxN = 0;
 
         private void Awake()
         {
             base.Awake();
             DontDestroyOnLoad(gameObject);
+
+            Init();
+
         }
-        
+
+        void Init()
+        {
+            _remotePlayers = new List<RemotePlayerController>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                CreateRemoteObj();
+            }
+        }
+
+        void CreateRemoteObj()
+        {
+            RemotePlayerController obj = Instantiate(otherPlayerPrefabs[0], transform).GetComponent<RemotePlayerController>();
+            obj.gameObject.SetActive(false);
+            _remotePlayers.Add(obj);
+        }
+
+
         /*
          * @brief DataSynchronizer의 초기화 함수
          * @details RemotePlayer들과 LocalPlayer를 생성 (DataSynchronizer의 자식으로 들어감)
          */
         public void Setup(int maxN)
         {
-            Clean();
+            //Clean();
 
             this.maxN = maxN;
-
-            //_remotePlayers = new RemotePlayerController[maxN];
-            _remotePlayers = new RemotePlayerController[this.maxN];
 
             LocalPlayerSet();
 
@@ -82,7 +100,8 @@ namespace Core.Socket
         void LocalPlayerSet()
         {
             // setting localplayer
-            _localPlayer = Instantiate(playerPrefabs[0], GetSpawnPos(), GetSpawnRot(), transform).transform;
+            _localPlayer.transform.localPosition = GetSpawnPos();
+            _localPlayer.transform.rotation = GetSpawnRot();
 
             var playerInfo = MeumSocket.Get().LocalPlayerInfo;
 
@@ -91,6 +110,8 @@ namespace Core.Socket
             DataManager.Instance.chaCustomizingSaveData = localPlayerData;
 
             _localPlayer.GetComponentInChildren<PlayerChaChange>().GetChaCustomizingSaveData();
+
+            _localPlayer.gameObject.SetActive(true);
         }
 
         
@@ -102,7 +123,7 @@ namespace Core.Socket
         {
             if (!ReferenceEquals(_remotePlayers, null))
             {
-                for (var i = 0; i < _remotePlayers.Length; ++i)
+                for (var i = 0; i < _remotePlayers.Count; ++i)
                 {
                     if (!ReferenceEquals(_remotePlayers[i], null))
                         Destroy(_remotePlayers[i].gameObject);
@@ -123,7 +144,7 @@ namespace Core.Socket
          */
         public void DeactivatePlayer(int id)
         {
-            if (id >= _remotePlayers.Length)
+            if (id >= _remotePlayers.Count)
             {
                 Debug.LogError("Global.Socket.DataSyncer - Deactivate : idx out of range");
                 Application.Quit(-1);
@@ -189,24 +210,19 @@ namespace Core.Socket
 
         RemotePlayerController GetRemotePlayer(int id)
         {
-            if (_remotePlayers[id] == null)
+            if (id >= _remotePlayers.Count)
             {
                 var spawnTransform = GameObject.Find("SpawnSite").transform;
                 Assert.IsNotNull(spawnTransform);
                 var spawnPos = spawnTransform.position;
                 var spawnRot = spawnTransform.rotation;
 
-                for (int i = 0; i < id+1; ++i)
+                for (int i = _remotePlayers.Count; i <= id; ++i)
                 {
-                    if (_remotePlayers[i] == null)
-                    {
-                        _remotePlayers[i] = Instantiate(otherPlayerPrefabs[0], transform).GetComponent<RemotePlayerController>();
-                        Assert.IsNotNull(_remotePlayers[i]);
-                        _remotePlayers[i].gameObject.SetActive(false);
+                    CreateRemoteObj();
 
-                        _remotePlayers[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
-                        _remotePlayers[i].SetOriginalTransform(spawnPos, spawnRot);
-                    }
+                    _remotePlayers[i].UpdateTransform(spawnPos, spawnRot.eulerAngles);
+                    _remotePlayers[i].SetOriginalTransform(spawnPos, spawnRot);
                 }
             }
 
@@ -285,7 +301,7 @@ namespace Core.Socket
          */
         public int Nickname2Id(string nickname)
         {
-            for (var i = 0; i < _remotePlayers.Length; ++i)
+            for (var i = 0; i < _remotePlayers.Count; ++i)
             {
                 if (!ReferenceEquals(_remotePlayers[i], null))
                 {
@@ -302,7 +318,7 @@ namespace Core.Socket
          */
         public void HidePlayers()
         {
-            for (var i = 0; i < _remotePlayers.Length; ++i)
+            for (var i = 0; i < _remotePlayers.Count; ++i)
             {
                 if(!ReferenceEquals(_remotePlayers[i], null))
                     _remotePlayers[i].SetRendererEnabled(false);
@@ -316,7 +332,7 @@ namespace Core.Socket
          */
         public void ShowPlayers()
         {
-            for (var i = 0; i < _remotePlayers.Length; ++i)
+            for (var i = 0; i < _remotePlayers.Count; ++i)
             {
                 if(!ReferenceEquals(_remotePlayers[i], null))
                     _remotePlayers[i].SetRendererEnabled(true);

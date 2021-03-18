@@ -13,7 +13,7 @@ namespace UI.BuilderScene
 
         [SerializeField] private Image iconImage;
 
-        public bool toggled => transform.localScale.x < 0;
+        public bool toggled = false;
 
         private Button _button;
 
@@ -35,9 +35,16 @@ namespace UI.BuilderScene
 
         private void ButtonAction()
         {
-            togglePosition.Toggle();
+            ToggleChange(!toggled);
+        }
 
-            float rotZValue = togglePosition.toggled ? 180 : 0;
+        public void ToggleChange(bool toggled)
+        {
+            this.toggled = toggled;
+
+            togglePosition.Toggle(this.toggled);
+
+            float rotZValue = this.toggled ? 0 : 180;
             iconImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rotZValue));
         }
     }

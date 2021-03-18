@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Game.Player
@@ -16,20 +17,18 @@ namespace Game.Player
         [DllImport("__Internal")]
         private static extern void OpenURLNewTab(string url);
 
-        [SerializeField] Joystick joystick;
-
         public void Awake()
         {
-            joystick = FindObjectOfType<Joystick>();
         }
 
         public void OnSelect(InputAction.CallbackContext ctx)
         {
             if (!ctx.canceled) return;
 
-            if (joystick != null && joystick.moveOn)
-               return;
-
+            //UI가 터치되었을때는 리턴
+            if (EventSystem.current.currentSelectedGameObject != null)
+                return;
+            
             var ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
             var layerMask = ~0;
             if (Physics.Raycast(ray, out var hit, 100.0f, layerMask))
@@ -46,8 +45,7 @@ namespace Game.Player
 #endif
                     if (artworkInfo.bannerUrl == "")
                     {
-                        //StartCoroutine(SetArtworkDescription(artworkInfo));
-                        StartCoroutine(SetArtworkDescription2(artworkInfo));
+                        StartCoroutine(SetArtworkDescription(artworkInfo));
                     }
                 }
             }
@@ -56,7 +54,7 @@ namespace Game.Player
         /*
          * @brief 주어진 ArtworkInfo를 통해 ArtworkDescription UI를 보여줌
          */
-        private IEnumerator SetArtworkDescription2(Artwork.ArtworkInfo info)
+        private IEnumerator SetArtworkDescription(Artwork.ArtworkInfo info)
         {
             var cd = new CoroutineWithData(this, info.GetArtworkInfo2());
             yield return cd.coroutine;

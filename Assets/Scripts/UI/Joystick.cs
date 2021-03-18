@@ -54,12 +54,23 @@ public class Joystick : MonoBehaviour
 
     public void OnPointDown(BaseEventData eventData)
     {
+        PointerEventData peData = (PointerEventData)eventData;
+
+        if (peData.button == PointerEventData.InputButton.Right)
+            return;
+
+        //아트워크 설명창이 안나오도록 세팅
+        EventSystem.current.SetSelectedGameObject(this.gameObject, eventData);
+
         MoveOnSet(true);
     }
 
     public void OnDrag(BaseEventData eventData)
     {
         PointerEventData peData = (PointerEventData)eventData;
+
+        if (peData.button == PointerEventData.InputButton.Right)
+            return;
 
         Vector2 joySticPos = GetPadResultPos(peData.delta);
 
@@ -74,19 +85,19 @@ public class Joystick : MonoBehaviour
         float absX = Mathf.Abs(joySticPos.x);
         float absY = Mathf.Abs(joySticPos.y);
 
-        float moveValueX = joySticPos.x / Mathf.Abs(joySticPos.x);
-        float moveValueY = joySticPos.y / Mathf.Abs(joySticPos.y);
+        float moveValueX = joySticPos.x > 0 ? 1 : -1;
+        float moveValueY = joySticPos.y > 0 ? 1 : -1;
 
         if (joySticPos == Vector2.zero)
         {
             moveValue = Vector2.zero;
         }
-        //조이스틱 방향이 위나 아래라면
+        //조이스틱 방향이 오른쪽 이나 왼쪽이라면
         else if (absX > absY && absX > 65)
         {
             moveValue = new Vector2(moveValueX, 0);
         }
-        //조이스틱 방향이 오른쪽 이나 왼쪽이라면
+        //조이스틱 방향이 위나 아래 라면
         else if (absY > absX && absY > 65)
         {
             moveValue = new Vector2(0, moveValueY);
@@ -120,6 +131,11 @@ public class Joystick : MonoBehaviour
 
     public void OnPointUp(BaseEventData eventData)
     {
+        PointerEventData peData = (PointerEventData)eventData;
+
+        if (peData.button == PointerEventData.InputButton.Right)
+            return;
+
         MoveOnSet(false);
 
         MoveEventOn();

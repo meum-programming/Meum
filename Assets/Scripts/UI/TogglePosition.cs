@@ -9,7 +9,7 @@ namespace UI
         [SerializeField] private float moveTime;
 
         private Vector3 _originalPos;
-        private bool _toggled = true;
+        private bool _toggled = false;
 
         public bool toggled
         {
@@ -26,19 +26,18 @@ namespace UI
             _originalPos = transform.position;
         }
 
-        public void Toggle()
+        public void Toggle(bool _toggled)
         {
             if (_runningCo != null)
                 StopCoroutine(_runningCo);
+
             if (_toggled)
             {
                 StartCoroutine(_runningCo = MoveTo(_originalPos + moveOffset));
-                _toggled = false;
             }
             else
             {
                 StartCoroutine(_runningCo = MoveTo(_originalPos));
-                _toggled = true;
             }
         }
 

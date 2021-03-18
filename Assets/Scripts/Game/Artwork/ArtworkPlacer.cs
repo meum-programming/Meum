@@ -100,9 +100,7 @@ namespace Game.Artwork
             _moving = true;
             ResetScale();
             
-            if(toggleButton.toggled)
-                toggleButton.InvokeButton();
-            toggleButton.SetButtonEnable(false);
+            toggleButton.ToggleChange(true);
 
             _selected.gameObject.layer = LayerMask.NameToLayer("NotPlaced");
         }
@@ -113,9 +111,8 @@ namespace Game.Artwork
         private void StopMovingObj()
         {
             _moving = false;
-            if(!toggleButton.toggled)
-                toggleButton.InvokeButton();
-            toggleButton.SetButtonEnable(true);
+            
+            toggleButton.ToggleChange(false);
             
             if(_selected)
                 _selected.gameObject.layer = LayerMask.NameToLayer("Placeable");

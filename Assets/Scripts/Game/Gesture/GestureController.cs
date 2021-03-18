@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class GestureController : MonoBehaviour
@@ -70,7 +71,70 @@ public class GestureController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        NumberKeyTouchCheck();
         
+    }
+
+    /// <summary>
+    /// 키보드 숫자키가 눌렸는지 체크
+    /// </summary>
+    void NumberKeyTouchCheck()
+    {
+        if (Keyboard.current.digit1Key.wasPressedThisFrame || Keyboard.current.numpad1Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(0);
+        }
+        if (Keyboard.current.digit2Key.wasPressedThisFrame || Keyboard.current.numpad2Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(1);
+        }
+        if (Keyboard.current.digit3Key.wasPressedThisFrame || Keyboard.current.numpad3Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(2);
+        }
+        if (Keyboard.current.digit4Key.wasPressedThisFrame || Keyboard.current.numpad4Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(3);
+        }
+        if (Keyboard.current.digit5Key.wasPressedThisFrame || Keyboard.current.numpad5Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(4);
+        }
+        if (Keyboard.current.digit6Key.wasPressedThisFrame || Keyboard.current.numpad6Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(5);
+        }
+        if (Keyboard.current.digit7Key.wasPressedThisFrame || Keyboard.current.numpad7Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(6);
+        }
+        if (Keyboard.current.digit8Key.wasPressedThisFrame || Keyboard.current.numpad8Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(7);
+        }
+        if (Keyboard.current.digit9Key.wasPressedThisFrame || Keyboard.current.numpad9Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(8);
+        }
+        if (Keyboard.current.digit0Key.wasPressedThisFrame || Keyboard.current.numpad0Key.wasPressedThisFrame)
+        {
+            HotKeyTouchOn(9);
+        }
+    }
+
+    /// <summary>
+    /// 넘버키가 눌렸을때 실행
+    /// </summary>
+    /// <param name="index"></param>
+    void HotKeyTouchOn(int index)
+    {
+        //터치된 넘버키에 맞는 슬롯정보로 제스쳐 모델정보 취득
+        GestureModel gestureModel = GestureManager.Instance.GetSlotData(index);
+
+        if (gestureModel != null)
+        {
+            PlayGestureAnim(gestureModel.id);
+        }
     }
 
     public void OnPointerEnter(BaseEventData eventData)
@@ -92,7 +156,7 @@ public class GestureController : MonoBehaviour
         hoverImage.gameObject.SetActive(hoverOn);
     }
 
-    public void OnPointerClick(BaseEventData eventData)
+    public void OnPointerClick()
     {
         PanelOpenSet(!this.panelOpenOn);
     }
