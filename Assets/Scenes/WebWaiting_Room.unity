@@ -559,7 +559,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1568102771}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -581,6 +582,8 @@ MonoBehaviour:
   otherPlayerPrefabs:
   - {fileID: 6261111249021333171, guid: e605f14b1d25a7a41805d456d3a85a28, type: 3}
   - {fileID: 1278361466101436568, guid: 993f6e67de9b058428ed507d3101fbec, type: 3}
+  _localPlayer: {fileID: 1568102771}
+  maxN: 0
 --- !u!1 &721947047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1141,6 +1144,72 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1568102770
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 513258600}
+    m_Modifications:
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9157458219296972478, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_Name
+      value: Human_local
+      objectReference: {fileID: 0}
+    - target: {fileID: 9157458219296972478, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+--- !u!4 &1568102771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+  m_PrefabInstance: {fileID: 1568102770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1655371720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,8 +1364,7 @@ MonoBehaviour:
       maskIndex: 0
       dressIndex: 0
       skinIndex: 0
-    startPos_x: -10
-    startPos_z: 0
+    startPoint_json: 
   myRoomInfo:
     success: 
     id: 0
@@ -1329,5 +1397,4 @@ MonoBehaviour:
       maskIndex: 0
       dressIndex: 0
       skinIndex: 0
-    startPos_x: -10
-    startPos_z: 0
+    startPoint_json: 

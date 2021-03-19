@@ -20,23 +20,35 @@ namespace UI
         [SerializeField] private Color activatedTextColor;
         [SerializeField] private Color deactivatedColor;
         [SerializeField] private Color deactivatedTextColor;
-        
+
+        [SerializeField] private Slider mouseSlider;
 
         private void Awake()
         {
+            Init();
+            ChangeTab(0);
+        }
+
+        void Init()
+        {
             Assert.AreEqual(buttons.Length, buttonTexts.Length);
             Assert.AreEqual(buttons.Length, tabs.Length);
-            
-            if(autoDisable)
+
+            if (autoDisable)
                 gameObject.SetActive(false);
-            
+
             for (var i = 0; i < buttons.Length; ++i)
             {
                 var temp = i;
                 buttons[i].onClick.AddListener(() => ChangeTab(temp));
             }
-            
-            ChangeTab(0);
+
+            //마우스 감도 조절 슬라이더 값이 변경 되면 호출
+            if (mouseSlider != null)
+            {
+                mouseSlider.value = DataManager.Instance.mouseSensitivityValue;
+                mouseSlider.onValueChanged.AddListener(MouseSliderValueChangeOn);
+            }
         }
 
         public void ChangeTab(int idx)
@@ -65,5 +77,11 @@ namespace UI
         {
             gameObject.SetActive(false);
         }
+
+        public void  MouseSliderValueChangeOn(float value)
+        {
+            DataManager.Instance.MouseSensitivityValueSet(value);
+        }
+
     }
 }

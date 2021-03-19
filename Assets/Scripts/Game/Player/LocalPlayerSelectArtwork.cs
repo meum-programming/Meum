@@ -36,6 +36,17 @@ namespace Game.Player
                 if (hit.transform.CompareTag("Paint"))
                 {
                     var artworkInfo = hit.transform.GetComponent<Artwork.ArtworkInfo>();
+
+                    if (artworkInfo == null)
+                    {
+                        artworkInfo = hit.transform.GetComponentInParent<Artwork.ArtworkInfo>();
+                    }
+
+                    if (artworkInfo == null)
+                    {
+                        return;
+                    }
+
 #if UNITY_WEBGL
                     if (artworkInfo.bannerUrl != "")
                     {

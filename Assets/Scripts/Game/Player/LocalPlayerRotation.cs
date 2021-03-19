@@ -13,7 +13,7 @@ namespace Game.Player
     public class LocalPlayerRotation : MonoBehaviour
     {
         [SerializeField] private Transform cameraPivot;
-        [SerializeField] private float sensitivity;
+        //[SerializeField] private float sensitivity;
         [SerializeField] private LocalPlayerCamera cameraController;
 
         private Transform _transform;
@@ -93,11 +93,21 @@ namespace Game.Player
             
             var value = ctx.ReadValue<Vector2>();
 
-            transform.Rotate(Vector3.up, value.x * sensitivity);
+            float sensitivity = DataManager.Instance.mouseSensitivityValue;
+
+            if (sensitivity == 0)
+            {
+                sensitivity = 0.1f;
+            }
+
+            transform.Rotate(Vector3.up, value.x * sensitivity * 0.1f);
         }
 
         public void OnRotateKeybordInput(Vector2 value)
         {
+            //회전 감도 임시적용
+            float sensitivity = 0.1f;
+
             transform.Rotate(Vector3.up, value.x * sensitivity);
         }
 

@@ -20,6 +20,9 @@ public class DataManager
 		}
 	}
 
+	public float mouseSensitivityValue = 0.5f;
+	public string mouseSensitivityKey = "mouseSensitivity";
+
 	private DataManager() 
 	{
 		Init();
@@ -30,5 +33,16 @@ public class DataManager
 	void Init()
 	{
 		chaCustomizingSaveData = new ChaCustomizingSaveData(0, 0, 0, 0);
+
+		mouseSensitivityValue = PlayerPrefs.GetFloat(mouseSensitivityKey, mouseSensitivityValue);
 	}
+
+	public void MouseSensitivityValueSet(float mouseSensitivityValue)
+	{
+		this.mouseSensitivityValue = mouseSensitivityValue;
+
+		PlayerPrefs.SetFloat(mouseSensitivityKey, mouseSensitivityValue);
+		PlayerPrefs.Save();
+	}
+
 }
