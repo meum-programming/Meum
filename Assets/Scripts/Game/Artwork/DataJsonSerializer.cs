@@ -57,7 +57,7 @@ namespace Game.Artwork
             var proceduralSpace = GameObject.Find("proceduralSpace");
             Assert.IsNotNull(proceduralSpace);
             data.lands = proceduralSpace.GetComponent<ProceduralGalleryBuilder>().GetLandInfos();
-            
+
             return JsonUtility.ToJson(data);
         }
         
@@ -85,8 +85,8 @@ namespace Game.Artwork
                 artworkInfo.UpdateWithArtworkData(data.artworks[i]);
             }
 
-            //영상 테스트 용
-            if (MeumDB.Get().currentRoomInfo.id == 146 && MeumDB.Get().myRoomInfo.owner.user_id == 149)
+            //영상 테스트 용 (블랙 겔러리에서만 보이도록 수정)
+            if (MeumDB.Get().currentRoomInfo.id == 146)
             {
                 ArtworkInfo videoArtworkInfo = Instantiate(videoPrefab, transform).GetComponent<ArtworkInfo>();
 

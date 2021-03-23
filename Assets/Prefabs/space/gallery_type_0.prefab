@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5772607252753717125}
   m_Layer: 11
   m_Name: collider (1)
-  m_TagString: Wall
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5081,7 +5081,7 @@ GameObject:
   - component: {fileID: 3831833214803023881}
   m_Layer: 11
   m_Name: collider
-  m_TagString: Wall
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5126,7 +5126,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.02, y: 0.02, z: 0.0005}
-  m_Center: {x: 0, y: 0, z: -0.0102}
+  m_Center: {x: 0, y: 0, z: -0.0098}
 --- !u!1 &4668676430621262440
 GameObject:
   m_ObjectHideFlags: 0
@@ -6366,7 +6366,7 @@ GameObject:
   - component: {fileID: 3063357084250395467}
   m_Layer: 11
   m_Name: 00_floor
-  m_TagString: Wall
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

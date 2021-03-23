@@ -36,7 +36,7 @@ namespace UI.GalleryScene
             _transform.sizeDelta = sizeDelta;
 
             var meumSocket = Core.Socket.MeumSocket.Get();
-            if (_commentInfo.owner.id == meumSocket.GetPlayerPk())
+            if (_commentInfo.owner.user_id == meumSocket.GetPlayerPk())
             {
                 deleteButton.gameObject.SetActive(true);
                 deleteButton.onClick.AddListener(ShowDeleteModal);

@@ -26,6 +26,8 @@ public class Test_WebWaiting_Room : MonoBehaviour
         webHandler.SetToken("61");
         //webHandler.SetToken("59");
         //webHandler.SetToken("149");
+        //webHandler.SetToken("1");
+        //webHandler.SetToken("157");
     }
 
     public void RoomSetBtnClick()
@@ -33,5 +35,7 @@ public class Test_WebWaiting_Room : MonoBehaviour
         webHandler.EnterRoom("Guest");
         //webHandler.EnterRoom("믐대표서비스");
         //webHandler.EnterRoom("blackgallery");
+        //webHandler.EnterRoom("string");
+        //webHandler.EnterRoom("the_other_layers");
     }
 }

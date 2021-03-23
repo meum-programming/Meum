@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.UserList
@@ -13,7 +14,7 @@ namespace UI.UserList
         [SerializeField] private int nameMaxLength;
 
         [Header("UserList")] 
-        [SerializeField] private Transform userList;
+        [SerializeField] private ScrollRect userList;
         [SerializeField] private GameObject userListContentPrefab;
         [SerializeField] private float defaultExpandedHeight;
 
@@ -57,7 +58,7 @@ namespace UI.UserList
             userName = FitNameMaxLength(userName);
             info.name = userName;
 
-            info.display = Instantiate(userListContentPrefab, userList);
+            info.display = Instantiate(userListContentPrefab, userList.content);
             info.display.GetComponent<UserListContent>().Setup(userName);
 
             _playerInfos.Add(id, info);
@@ -103,13 +104,38 @@ namespace UI.UserList
         {
             if (_toggled)
             {
-                var newHeight = defaultExpandedHeight + _userListContentHeight * _playerInfos.Count;
+                float scrollRectY = userList.content.rect.size.y;
+                scrollRectY = Mathf.Min(420, scrollRectY);
+
+                var newHeight = defaultExpandedHeight + scrollRectY;
                 _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, newHeight);
+
+                RectTransform scrollRect = userList.GetComponent<RectTransform>();
+                Vector2 scrollSizeDelta = scrollRect.sizeDelta;
+                scrollSizeDelta.y = scrollRectY;
+                scrollRect.sizeDelta = scrollSizeDelta;
             }
             else
             {
                 _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, _defaultHeight);
             }
         }
+
+
+        public void OnEndDrag(BaseEventData eventData)
+        {
+            PointerEventData peData = (PointerEventData)eventData;
+
+            userList.OnEndDrag(peData);
+
+            //아트워크 설명창이 안나오도록 세팅
+            EventSystem.current.SetSelectedGameObject(this.gameObject, eventData);
+        }
+        public void OnPointUp(BaseEventData eventData)
+        {
+            //아트워크 설명창이 안나오도록 세팅
+            EventSystem.current.SetSelectedGameObject(this.gameObject, eventData);
+        }
+
     }
 }

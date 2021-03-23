@@ -90,22 +90,17 @@ namespace Game.Player
         {
             if (IsSwitchingView) return;    // 인칭 전환중이라면 아무것도 안함
             if (!_isRotateEnabled) return;
-            
+
+            float sensitivity = DataManager.Instance.GetMouseSensitivityValue();
+
             var value = ctx.ReadValue<Vector2>();
-            _cameraRotationDelta.x -= value.y * sensitivity;
-            _cameraRotationDelta.x = Mathf.Clamp(
-                _cameraRotationDelta.x, 
-                -cameraRotationLimit, 
-                cameraRotationLimit);
 
             if (!IsFirstPersonView)
             {
-                cameraPivot.Rotate(Vector3.up, value.x * sensitivity);
+                cameraPivot.Rotate(Vector3.up, value.x * sensitivity * 0.1f);
             }
 
-            var newCameraRotation = _defaultEulerAngle;
-            newCameraRotation += _cameraRotationDelta;
-            _transform.localEulerAngles = newCameraRotation;
+            _transform.Rotate(Vector3.left, value.y * sensitivity * 0.1f);
         }
 
 
@@ -168,11 +163,17 @@ namespace Game.Player
         {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
                 return;
-            
-            if(ctx.performed)
-                StartCoroutine(_switching = SwitchView());
+
+            if (ctx.performed)
+                OnSwitchView();
         }
-        
+
+        public void OnSwitchView()
+        {
+            StartCoroutine(_switching = SwitchView());
+        }
+
+
         /*
          * @brief 1인칭과 3인칭을 전환하는 코루틴
          * @details 카메라의 local transform을 바꾸고, 1인칭일시에 플레이어를 안보이게 함

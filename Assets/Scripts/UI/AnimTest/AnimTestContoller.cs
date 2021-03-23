@@ -148,9 +148,9 @@ public class AnimTestContoller : MonoBehaviour
     public void RandomSetBtnClick()
     {
         tempData.skinIndex = Random.Range(0, 8);
-        tempData.hairIndex = Random.Range(0, 7);
-        tempData.maskIndex = Random.Range(0, 2);
-        tempData.dressIndex = Random.Range(0, 5);
+        tempData.hairIndex = Random.Range(0, 4);
+        tempData.maskIndex = Random.Range(0, 3);
+        tempData.dressIndex = Random.Range(0, 4);
 
         AllDataSet();
     }
@@ -185,23 +185,27 @@ public class AnimTestContoller : MonoBehaviour
         switch (tempData.dressIndex)
         {
             case 0:
-                dressStr = "단정한 복장";
+                dressStr = "화이트 세미정장";
                 break;
             case 1:
-                dressStr = "작업자 복장";
+                dressStr = "블랙 세미정장";
                 break;
             case 2:
-                dressStr = "따뜻한 복장";
+                dressStr = "데님 작업복";
                 break;
             case 3:
-                dressStr = "정중한 복장";
+                dressStr = "화가 복장";
                 break;
             case 4:
-                dressStr = "시원한 복장";
+                dressStr = "베이지 맨투맨";
+                break;
+            case 5:
+                dressStr = "블랙 믐투믐";
                 break;
         }
         dressName.text = dressStr;
     }
+
 
     public void HairIndexChangeBtnClick(bool next)
     {
@@ -219,30 +223,20 @@ public class AnimTestContoller : MonoBehaviour
         switch (tempData.hairIndex)
         {
             case 0:
-                hairStr = "곱슬머리 헤어";
+                hairStr = "몽실 헤어";
                 break;
             case 1:
-                hairStr = "꽁지머리 헤어";
+                hairStr = "댄디 헤어";
                 break;
             case 2:
-                hairStr = "깔끔한 헤어";
+                hairStr = "안나 헤어";
                 break;
             case 3:
-                hairStr = "단정한 헤어";
-                break;
-            case 4:
                 hairStr = "포니 헤어";
-                break;
-            case 5:
-                hairStr = "러프 헤어";
-                break;
-            case 6:
-                hairStr = "정열적인 헤어";
                 break;
         }
         hairName.text = hairStr;
     }
-
 
 
     public void MaskIndexChangeBtnClick(bool next)
@@ -263,10 +257,16 @@ public class AnimTestContoller : MonoBehaviour
             switch (tempData.maskIndex)
             {
                 case 0:
-                    maskStr = "늑대 가면";
+                    maskStr = "없음";
                     break;
                 case 1:
-                    maskStr = "토끼 가면";
+                    maskStr = "동그란 안경";
+                    break;
+                case 2:
+                    maskStr = "뿔테 안경";
+                    break;
+                case 3:
+                    maskStr = "멋쟁이 선글라스";
                     break;
             }
             maskName.text = maskStr;

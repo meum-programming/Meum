@@ -105,7 +105,7 @@ public class Joystick : MonoBehaviour
         //조이스틱 방향이 대각선이라면
         else
         {
-            moveValue = new Vector2(moveValueX * 0.75f, moveValueY * 0.75f);
+            moveValue = new Vector2(moveValueX * 0.74f, moveValueY * 0.74f);
         }
     }
 

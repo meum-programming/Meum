@@ -43,11 +43,16 @@ namespace UI.ContentViewer
             var imageTransform = image.rectTransform;
             var localScale= imageTransform.localScale;
 
-            if (texture.width > texture.height)
-                localScale.y *= (float) texture.height / texture.width;
-            else
-                localScale.x *= (float) texture.width / texture.height;
-            imageTransform.localScale = localScale;
+            if (texture != null)
+            {
+                if (texture.width > texture.height)
+                    localScale.y *= (float)texture.height / texture.width;
+                else
+                    localScale.x *= (float)texture.width / texture.height;
+                imageTransform.localScale = localScale;
+            }
+
+            
 
         }
     }

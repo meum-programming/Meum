@@ -12,7 +12,7 @@ using UnityEngine.UI;
 /// </summary>
 public class BaseRequest
 {
-    protected string baseUri = "https://dev.meum.me/nodeTest/";
+    protected string baseUri = "https://meum.me/nodeTest/";
     protected string classValue = string.Empty;
     protected string getValue = string.Empty;
 

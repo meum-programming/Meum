@@ -14,7 +14,6 @@ namespace Core.Socket
     public class RemotePlayerController : MonoBehaviour
     {
         [SerializeField] private float lerpTime;
-        [SerializeField] private Renderer playerRenderer;
         [SerializeField] private Text nicknameField;
         
         [NonSerialized] public int UserPrimaryKey;
@@ -36,14 +35,14 @@ namespace Core.Socket
         private Transform _transform;
         [SerializeField] Animator _animator;
         public PlayerChaChange playerChaChange;
+        [SerializeField] Canvas playerCanvas;
+
 
         private Tween chaPosTween;
         private Tween chaRotTween;
         
         private void Awake()
         {
-            Debug.Assert(playerRenderer);
-            
             _transform = transform;
             //_animator = GetComponent<Animator>();
             Debug.Assert(_animator);
@@ -51,7 +50,9 @@ namespace Core.Socket
 
         public void SetRendererEnabled(bool val)
         {
+            //gameObject.SetActive(val);
             playerChaChange.gameObject.SetActive(val);
+            playerCanvas.gameObject.SetActive(val);
             //playerRenderer.enabled = val;
         }
 
@@ -67,8 +68,6 @@ namespace Core.Socket
             _posDest = posDest;
             _rotOrigin = _transform.rotation;
             _rotDest = Quaternion.identity;
-            //_rotDest.eulerAngles = rotDest;
-            //_animator.transform.eulerAngles = rotDest;
             _lerpVal = 0.0f;
 
             if (chaPosTween != null && chaPosTween.IsPlaying())
@@ -109,8 +108,6 @@ namespace Core.Socket
         void Update()
         {
             _lerpVal = Mathf.Clamp(_lerpVal + Time.deltaTime / lerpTime, 0, 1);
-            //_transform.position = Vector3.Lerp(_posOrigin, _posDest, _lerpVal);
-            //_transform.rotation = Quaternion.Lerp(_rotOrigin, _rotDest, _lerpVal);
         }
     }
 }

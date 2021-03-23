@@ -80,7 +80,7 @@ namespace UI
 
         public void  MouseSliderValueChangeOn(float value)
         {
-            DataManager.Instance.MouseSensitivityValueSet(value);
+            DataManager.Instance.SetMouseSensitivityValue(value);
         }
 
     }

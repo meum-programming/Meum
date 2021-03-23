@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class GalleryController : MonoBehaviour
 {
-    [SerializeField] private RectTransform editBtn;
+
+    [SerializeField] private List<RectTransform>  editBtnList = new List<RectTransform>();
 
     private void Awake()
     {
@@ -19,10 +20,20 @@ public class GalleryController : MonoBehaviour
         BGMSet();
         SkyBoxSet();
 
-        if (editBtn != null)
+        if (editBtnList.Count > 0)
         {
             bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.user_id == MeumDB.Get().currentRoomInfo.owner.user_id;
-            editBtn.gameObject.SetActive(isOwnerRoom);
+
+            //게스트로 접속했다면
+            if (MeumDB.Get().currentRoomInfo.owner.user_id == 61)
+            {
+                isOwnerRoom = false;
+            }
+
+            for (int i = 0; i < editBtnList.Count; i++)
+            {
+                editBtnList[i].gameObject.SetActive(isOwnerRoom);
+            }
         }
     }
 
@@ -56,5 +67,12 @@ public class GalleryController : MonoBehaviour
         MeumSocket.Get().GoToChaEditScene();
     }
 
+    public void CameraWwitchingBtnClick()
+    {
+        if (FindObjectOfType<LocalPlayerCamera>())
+        {
+            FindObjectOfType<LocalPlayerCamera>().OnSwitchView();
+        }
+    }
 
 }

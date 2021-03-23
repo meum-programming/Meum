@@ -44,10 +44,20 @@ namespace Game.Player
 
             _colliderCenterPos = _charController.center;
             _distFromColliderCenterToGround = _charController.bounds.extents.y;
+        }
 
+        void OnEnable() 
+        {
             if (FindObjectOfType<Joystick>())
             {
                 FindObjectOfType<Joystick>().moveEventOn += OnMoveJoystick;
+            }
+        }
+        void OnDisable()
+        {
+            if (FindObjectOfType<Joystick>())
+            {
+                FindObjectOfType<Joystick>().moveEventOn -= OnMoveJoystick;
             }
         }
 
@@ -153,33 +163,37 @@ namespace Game.Player
 
         public void OnMove(InputAction.CallbackContext ctx)
         {
-            
-            
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
-            {
-                if (IsGrounded())
-                    _animController.SetVerticalSpeed(0.0f);
-                return;
-            }
-
-            var value = ctx.ReadValue<Vector2>();
-            _moveVector = value;
-            if (IsGrounded())
-                _animController.SetVerticalSpeed(Mathf.Abs(value.x) + Mathf.Abs(value.y));
-                
+            MoveVectorSet(ctx.ReadValue<Vector2>());
         }
 
         public void OnMoveJoystick(Vector2 value)
         {
+            MoveVectorSet(value);
+        }
+
+        void MoveVectorSet(Vector2 value) 
+        {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
             {
-                _animController.SetVerticalSpeed(0.0f);
+                if (IsGrounded())
+                {
+                    _animController.SetVerticalSpeed(0.0f);
+                }
                 return;
             }
 
             _moveVector = value;
-            _animController.SetVerticalSpeed(Mathf.Abs(value.x + value.y));
+
+            if (_moveVector == Vector3.zero)
+            {
+                _animController.SetVerticalSpeed(0);
+            }
+            else if (IsGrounded())
+            {
+                _animController.SetVerticalSpeed(Mathf.Abs(value.x) + Mathf.Abs(value.y));
+            }
         }
+
 
         public void OnJump(InputAction.CallbackContext ctx)
         {

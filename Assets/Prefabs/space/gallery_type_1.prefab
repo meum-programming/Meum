@@ -92,9 +92,9 @@ GameObject:
   m_Component:
   - component: {fileID: 181768452653586270}
   - component: {fileID: 5643396346891597745}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -465,10 +465,9 @@ GameObject:
   - component: {fileID: 5349080227686757288}
   - component: {fileID: 1483067998320484007}
   - component: {fileID: 113355022435473596}
-  - component: {fileID: 3841042738092083102}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 01_space_in
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -483,7 +482,8 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 19.999935, y: 900, z: 200}
-  m_Children: []
+  m_Children:
+  - {fileID: 2491482511038836413}
   m_Father: {fileID: 5859006941629816055}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -536,20 +536,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3841042738092083102
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2498066894596769738}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5487647343512498721, guid: e82cc8ed630fd2544a8cda36fde10a50, type: 3}
 --- !u!1 &2732705268236340054
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +683,7 @@ GameObject:
   - component: {fileID: 23881994054730785}
   m_Layer: 0
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -740,9 +726,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3494218858839761888}
   - component: {fileID: 4291766398131737395}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -868,9 +854,9 @@ GameObject:
   - component: {fileID: 7378302365052985541}
   - component: {fileID: 7580779580388486281}
   - component: {fileID: 8901714143010052583}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 01_space_outside
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -950,9 +936,9 @@ GameObject:
   - component: {fileID: 6496879220230522321}
   - component: {fileID: 8937942388903122292}
   - component: {fileID: 1888539931735928610}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 01_floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1076,9 +1062,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6959232330743030533}
   - component: {fileID: 2921956684589914150}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1205,7 +1191,7 @@ GameObject:
   - component: {fileID: 5635242051476867720}
   m_Layer: 0
   m_Name: 01_ceiling
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1274,6 +1260,51 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6101750675219426756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2491482511038836413}
+  - component: {fileID: 6109236636160576629}
+  m_Layer: 11
+  m_Name: collider
+  m_TagString: Wall
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2491482511038836413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101750675219426756}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5349080227686757288}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &6109236636160576629
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101750675219426756}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5487647343512498721, guid: e82cc8ed630fd2544a8cda36fde10a50, type: 3}
 --- !u!1 &6486467048730052173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,9 +1575,9 @@ GameObject:
   - component: {fileID: 4106455706511523270}
   - component: {fileID: 3977859153091532876}
   - component: {fileID: 4303995143570791213}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 01_top_ceiling
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6446,9 +6477,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4572971747541756572}
   - component: {fileID: 716177216651327495}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: collider
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6461,7 +6492,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8560353338893590031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6496879220230522321}
@@ -6492,9 +6523,9 @@ GameObject:
   - component: {fileID: 6353117098705876587}
   - component: {fileID: 8834116669591918894}
   - component: {fileID: 3837803711200843380}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 01_base
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

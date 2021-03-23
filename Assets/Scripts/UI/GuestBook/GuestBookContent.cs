@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Core;
 using Core.Socket;
 using TMPro;
 using UnityEngine;
@@ -64,10 +65,11 @@ namespace UI.GuestBook
             createdAt.text = _info.created_at;
 
             var meumSocket = Core.Socket.MeumSocket.Get();
-            if(_info.owner.id == meumSocket.GetPlayerPk())
-                deleteButton.gameObject.SetActive(true);
-            else if(meumSocket.IsInRoomOwn())
-                deleteButton.gameObject.SetActive(true);
+
+            bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.user_id == MeumDB.Get().currentRoomInfo.owner.user_id;
+            bool isOwnerData = _info.owner.user_id == meumSocket.GetPlayerPk();
+
+            deleteButton.gameObject.SetActive(isOwnerRoom || isOwnerData);
         }
 
         public void Delete()

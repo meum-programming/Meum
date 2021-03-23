@@ -37,12 +37,22 @@ public class DataManager
 		mouseSensitivityValue = PlayerPrefs.GetFloat(mouseSensitivityKey, mouseSensitivityValue);
 	}
 
-	public void MouseSensitivityValueSet(float mouseSensitivityValue)
+	public void SetMouseSensitivityValue(float mouseSensitivityValue)
 	{
 		this.mouseSensitivityValue = mouseSensitivityValue;
 
 		PlayerPrefs.SetFloat(mouseSensitivityKey, mouseSensitivityValue);
 		PlayerPrefs.Save();
+	}
+
+	public float GetMouseSensitivityValue()
+	{
+		if (mouseSensitivityValue == 0)
+		{
+			return 0.1f;
+		}
+
+		return mouseSensitivityValue;
 	}
 
 }

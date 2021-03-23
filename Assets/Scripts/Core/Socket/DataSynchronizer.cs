@@ -266,7 +266,7 @@ namespace Core.Socket
         {
             MeumSocket.BroadCastUserInfoData result;
             result.position = _localPlayer.position;
-            result.rotation = _localPlayer.Find("character_prefab").eulerAngles;
+            result.rotation = _localPlayer.Find("character").eulerAngles;
 
             var playerInfo = MeumSocket.Get().LocalPlayerInfo;
             result.userKey = playerInfo.id;

@@ -26,10 +26,20 @@ namespace Game.Player
             Assert.IsNotNull(cameraController);
             
             _transform = transform;
+        }
 
+        void OnEnable()
+        {
             if (FindObjectOfType<Joystick>())
             {
                 FindObjectOfType<Joystick>().moveEventOn += OnMoveJoystick;
+            }
+        }
+        void OnDisable()
+        {
+            if (FindObjectOfType<Joystick>())
+            {
+                FindObjectOfType<Joystick>().moveEventOn -= OnMoveJoystick;
             }
         }
 
@@ -93,12 +103,7 @@ namespace Game.Player
             
             var value = ctx.ReadValue<Vector2>();
 
-            float sensitivity = DataManager.Instance.mouseSensitivityValue;
-
-            if (sensitivity == 0)
-            {
-                sensitivity = 0.1f;
-            }
+            float sensitivity = DataManager.Instance.GetMouseSensitivityValue();
 
             transform.Rotate(Vector3.up, value.x * sensitivity * 0.1f);
         }

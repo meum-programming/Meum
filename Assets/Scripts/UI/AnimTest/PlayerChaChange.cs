@@ -10,6 +10,7 @@ public class PlayerChaChange : MonoBehaviour
     private List<Transform> cha_2_part = new List<Transform>();
     private List<Transform> cha_3_part = new List<Transform>();
     private List<Transform> cha_4_part = new List<Transform>();
+    private List<Transform> cha_5_part = new List<Transform>();
 
     List<List<Transform>> chaPartList = new List<List<Transform>>();
 
@@ -38,17 +39,6 @@ public class PlayerChaChange : MonoBehaviour
     public void Init()
     {
         SkinMetarialSet();
-
-        chaPartList = new List<List<Transform>>() 
-        {
-            cha_0_part,
-            cha_1_part,
-            cha_2_part,
-            cha_3_part,
-            cha_4_part,
-
-        };
-
         GetChaCustomizingSaveData();
     }
 
@@ -64,6 +54,8 @@ public class PlayerChaChange : MonoBehaviour
         cha_2_part = new List<Transform>();
         cha_3_part = new List<Transform>();
         cha_4_part = new List<Transform>();
+        cha_5_part = new List<Transform>();
+
         hairObjList = new List<Transform>();
         hairMesh = new List<SkinnedMeshRenderer>();
         maskObjList = new List<Transform>();
@@ -92,12 +84,16 @@ public class PlayerChaChange : MonoBehaviour
             {
                 cha_4_part.Add(childObj);
             }
+            else if (childObj.name.Contains("clothes_6"))
+            {
+                cha_5_part.Add(childObj);
+            }
             else if (childObj.name.Contains("hair_"))
             {
                 hairObjList.Add(childObj);
                 hairMesh.Add(childObj.GetComponent<SkinnedMeshRenderer>());
             }
-            else if (childObj.name.Contains("mask_"))
+            else if (childObj.name.Contains("face_"))
             {
                 maskObjList.Add(childObj);
             }
@@ -107,6 +103,16 @@ public class PlayerChaChange : MonoBehaviour
                 skinMesh.Add(childObj.GetComponent<SkinnedMeshRenderer>());
             }
         }
+
+        chaPartList = new List<List<Transform>>()
+        {
+            cha_0_part,
+            cha_1_part,
+            cha_2_part,
+            cha_3_part,
+            cha_4_part,
+            cha_5_part,
+        };
     }
 
     public void GetChaCustomizingSaveData()

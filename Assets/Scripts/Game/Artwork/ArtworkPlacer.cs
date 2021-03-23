@@ -30,7 +30,7 @@ namespace Game.Artwork
 
         private float _nowScale = 0.5f;
         private float _defaultScaleZ = 0.0f;
-        private Transform _selected = null;
+        public Transform _selected = null;
         private bool _moving = false;
         private bool _nowEditing3D = false;
 
@@ -52,6 +52,8 @@ namespace Game.Artwork
             Vector3 pos = Mouse.current.position.ReadValue();
             pos.z = -10.0f;
             pos = cam.ScreenToWorldPoint(pos);
+
+            Debug.LogWarning("data.Data.type_artwork = " + data.Data.type_artwork);
 
             _nowEditing3D = data.Data.type_artwork == 1;
             _selected = Instantiate(_nowEditing3D ? object3DPrefab : paintPrefab, pos, Quaternion.identity, transform).transform;
@@ -123,7 +125,17 @@ namespace Game.Artwork
             if (_selected)
             {
                 StopMovingObj();
-                Destroy(_selected.gameObject);
+
+                //2D 오브젝트라면
+                if (_selected.GetComponent<ArtworkInfo>())
+                {
+                    Destroy(_selected.gameObject);
+                }
+                else
+                {
+                    Destroy(_selected.parent.gameObject);
+                }
+
                 _selected = null;
             }
         }
@@ -218,9 +230,15 @@ namespace Game.Artwork
                 if (Physics.Raycast(ray, out var hit, 100.0f, mask))
                 {
                     var objectHit = hit.transform;
-                    
-                    if (objectHit.CompareTag("Paint") || objectHit.CompareTag("Wall") || objectHit.CompareTag("Floor"))
-                        AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
+
+                    if (objectHit.CompareTag("Paint") || objectHit.CompareTag("Wall") || objectHit.CompareTag("Floor")) 
+                    {
+                        if (objectHit.name == "collider")
+                        {
+                            AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
+                        }
+                    }
+                        
                 }
             }
         }

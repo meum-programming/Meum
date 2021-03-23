@@ -114,39 +114,44 @@ namespace Core.Socket {
 
             Assert.IsNotNull(roomInfo);
 
-            var artworksData = JsonUtility.FromJson<RoomData>(roomInfo.data_json);
-            var artworksDataLength = artworksData.artworks.Length;
-
-            var set2d = new HashSet<string>();
-            var set3d = new HashSet<string>();
-            for (var i = 0; i < artworksDataLength; ++i)
+            if (roomInfo.data_json != string.Empty)
             {
-                var artworkData = artworksData.artworks[i];
-                if (artworkData.artwork_type == 0)
-                    set2d.Add(artworkData.url);
-                else if (artworkData.artwork_type == 1)
-                    set3d.Add(artworkData.url);
+                var artworksData = JsonUtility.FromJson<RoomData>(roomInfo.data_json);
+                var artworksDataLength = artworksData.artworks.Length;
+
+                var set2d = new HashSet<string>();
+                var set3d = new HashSet<string>();
+                for (var i = 0; i < artworksDataLength; ++i)
+                {
+                    var artworkData = artworksData.artworks[i];
+                    if (artworkData.artwork_type == 0)
+                        set2d.Add(artworkData.url);
+                    else if (artworkData.artwork_type == 1)
+                        set3d.Add(artworkData.url);
+                }
+
+                var loadCompleteCnt = 1;
+                var totalCnt = set2d.Count + set3d.Count;
+                foreach (var url in set2d)
+                {
+                    var cd = MeumDB.Get().GetTextureCoroutine(url);
+                    yield return cd.coroutine;
+                    Assert.IsNotNull(cd.result);
+                    progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
+                    ++loadCompleteCnt;
+                }
+
+                foreach (var url in set3d)
+                {
+                    var cd = MeumDB.Get().GetObject3DCoroutine(url);
+                    yield return cd.coroutine;
+                    Assert.IsNotNull(cd.result);
+                    progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
+                    ++loadCompleteCnt;
+                }
             }
 
-            var loadCompleteCnt = 1;
-            var totalCnt = set2d.Count + set3d.Count;
-            foreach (var url in set2d)
-            {
-                var cd = MeumDB.Get().GetTextureCoroutine(url);
-                yield return cd.coroutine;
-                Assert.IsNotNull(cd.result);
-                progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
-                ++loadCompleteCnt;
-            }
-
-            foreach (var url in set3d)
-            {
-                var cd = MeumDB.Get().GetObject3DCoroutine(url);
-                yield return cd.coroutine;
-                Assert.IsNotNull(cd.result);
-                progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
-                ++loadCompleteCnt;
-            }
+            
 
             nextOn = false;
 

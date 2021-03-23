@@ -17,7 +17,7 @@ MonoBehaviour:
     name: 
     audioClip: {fileID: 0}
   - bgmId: 1
-    name: "[\uD074\uB798\uC2DD] A New Beginning - Esther Abrami"
+    name: "[\uB274\uC5D0\uC774\uC9C0] A New Beginning - Esther Abrami"
     audioClip: {fileID: 8300000, guid: c630d62a21ecf6546a08871d7173f9e8, type: 3}
   - bgmId: 2
     name: "[\uC2E0\uB514] Ready or Not - Trevor Garrod"
@@ -38,7 +38,7 @@ MonoBehaviour:
     name: "[\uC7AC\uC988] BeeyornandRaysd - Noir et Blanc Vie"
     audioClip: {fileID: 8300000, guid: 92db32df7abbd56498b08bec3d6007bd, type: 3}
   - bgmId: 8
-    name: "[\uD074\uB798\uC2DD] Watercolor Lilies - Aaron Kenny"
+    name: "[\uB274\uC5D0\uC774\uC9C0] Watercolor Lilies - Aaron Kenny"
     audioClip: {fileID: 8300000, guid: 5b3488228e5cc724ab10d730121def75, type: 3}
   - bgmId: 9
     name: "[\uC7AC\uC988] This is a Jazz Space - Midnight North"
