@@ -13,6 +13,7 @@ namespace UI.GalleryScene
     public class ArtworkDescription : Core.Singleton<ArtworkDescription>
     {
         [SerializeField] private TabControl tabControl;
+        [SerializeField] private VerticalLayoutGroup descriptionPanel;
         [SerializeField] private GameObject deleteModal;
         
         [Header("Description")]
@@ -68,6 +69,7 @@ namespace UI.GalleryScene
             title.text = _artworkInfo.title;
             title_comments_tab.text = _artworkInfo.title;
             author.text = _artworkInfo.author;
+
             if (info.year != 0)
                 year.text = _artworkInfo.year.ToString();
             else
@@ -76,6 +78,18 @@ namespace UI.GalleryScene
                 description.text = _artworkInfo.instruction;
             else
                 description.text = "";
+
+            StartCoroutine(SetActive());
+        }
+
+        IEnumerator SetActive()
+        {
+            yield return new WaitForSeconds(0.01f);
+
+            descriptionPanel.SetLayoutVertical();
+
+            descriptionPanel.gameObject.SetActive(false);
+            descriptionPanel.gameObject.SetActive(true);
         }
 
         public void Show()

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Core;
 using Core.Socket;
 using TMPro;
@@ -62,7 +63,7 @@ namespace UI.GuestBook
             title.text = _titleByTypes[type];
             detail.text = _info.content;
             writer.text = _info.owner.nickname;
-            createdAt.text = _info.created_at;
+            createdAt.text = GetDataTime(_info.created_at).ToString();
 
             var meumSocket = Core.Socket.MeumSocket.Get();
 
@@ -71,6 +72,32 @@ namespace UI.GuestBook
 
             deleteButton.gameObject.SetActive(isOwnerRoom || isOwnerData);
         }
+
+        public static DateTime GetDataTime(string data)
+        {
+            DateTime dateTime = DateTime.Now;
+
+            if (data != string.Empty)
+            {
+                string dateStr = data.Split('T')[0];
+                string timeStr = data.Split('T')[1].Split('.')[0];
+
+                string[] dateData = dateStr.Split('-');
+                int year = int.Parse(dateData[0]);
+                int month = int.Parse(dateData[1]);
+                int day = int.Parse(dateData[2]);
+
+                string[] timeData = timeStr.Split(':');
+                int hour = int.Parse(timeData[0]);
+                int min = int.Parse(timeData[1]);
+                int sec = int.Parse(timeData[2]);
+
+                dateTime = new DateTime(year, month, day, hour, min, sec);
+            }
+
+            return dateTime.AddHours(9);
+        }
+
 
         public void Delete()
         {

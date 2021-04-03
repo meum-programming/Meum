@@ -76,8 +76,9 @@ namespace Game.Player
 
             var artworkDescriptionUi = UI.GalleryScene.ArtworkDescription.Get();
             Assert.IsNotNull(artworkDescriptionUi);
-            artworkDescriptionUi.SetDescription(artworkInfo);
             artworkDescriptionUi.Show();
+            artworkDescriptionUi.SetDescription(artworkInfo);
+            
         }
 
     }

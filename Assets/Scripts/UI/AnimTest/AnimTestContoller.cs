@@ -202,6 +202,12 @@ public class AnimTestContoller : MonoBehaviour
             case 5:
                 dressStr = "블랙 믐투믐";
                 break;
+            case 6:
+                dressStr = "블루밍 자켓";
+                break;
+            case 7:
+                dressStr = "브라운 멜빵";
+                break;
         }
         dressName.text = dressStr;
     }
@@ -233,6 +239,12 @@ public class AnimTestContoller : MonoBehaviour
                 break;
             case 3:
                 hairStr = "포니 헤어";
+                break;
+            case 4:
+                hairStr = "쉼표 헤어";
+                break;
+            case 5:
+                hairStr = "러플 헤어";
                 break;
         }
         hairName.text = hairStr;
@@ -267,6 +279,12 @@ public class AnimTestContoller : MonoBehaviour
                     break;
                 case 3:
                     maskStr = "멋쟁이 선글라스";
+                    break;
+                case 4:
+                    maskStr = "한쪽 안대";
+                    break;
+                case 5:
+                    maskStr = "머리 위 선글라스";
                     break;
             }
             maskName.text = maskStr;

@@ -89,18 +89,14 @@ namespace Game.Player
         public void OnRotate(InputAction.CallbackContext ctx)
         {
             if (IsSwitchingView) return;    // 인칭 전환중이라면 아무것도 안함
-            if (!_isRotateEnabled) return;
-
-            float sensitivity = DataManager.Instance.GetMouseSensitivityValue();
-
-            var value = ctx.ReadValue<Vector2>();
-
-            if (!IsFirstPersonView)
+            if (!_isRotateEnabled) 
             {
-                cameraPivot.Rotate(Vector3.up, value.x * sensitivity * 0.1f);
-            }
+                cameraRotFlag = false;
+                carmeraRotValue = Vector2.zero;
+                return;
+            } 
 
-            _transform.Rotate(Vector3.left, value.y * sensitivity * 0.1f);
+            CameraRotFlagChange(ctx, 1);
         }
 
 
@@ -114,15 +110,20 @@ namespace Game.Player
                 return;
             }
 
+            CameraRotFlagChange(ctx, 10);
+        }
+
+        void CameraRotFlagChange(InputAction.CallbackContext ctx, float addValue = 10)
+        {
             if (ctx.action.phase == InputActionPhase.Started)
             {
                 cameraRotFlag = true;
-                carmeraRotValue = ctx.ReadValue<Vector2>() * 10;
+                carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
             }
             else if (ctx.action.phase == InputActionPhase.Performed)
             {
                 cameraRotFlag = true;
-                carmeraRotValue = ctx.ReadValue<Vector2>() * 10;
+                carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
             }
             else if (ctx.action.phase == InputActionPhase.Canceled)
             {

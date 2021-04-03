@@ -11,6 +11,8 @@ public class PlayerChaChange : MonoBehaviour
     private List<Transform> cha_3_part = new List<Transform>();
     private List<Transform> cha_4_part = new List<Transform>();
     private List<Transform> cha_5_part = new List<Transform>();
+    private List<Transform> cha_6_part = new List<Transform>();
+    private List<Transform> cha_7_part = new List<Transform>();
 
     List<List<Transform>> chaPartList = new List<List<Transform>>();
 
@@ -55,6 +57,8 @@ public class PlayerChaChange : MonoBehaviour
         cha_3_part = new List<Transform>();
         cha_4_part = new List<Transform>();
         cha_5_part = new List<Transform>();
+        cha_6_part = new List<Transform>();
+        cha_7_part = new List<Transform>();
 
         hairObjList = new List<Transform>();
         hairMesh = new List<SkinnedMeshRenderer>();
@@ -88,6 +92,14 @@ public class PlayerChaChange : MonoBehaviour
             {
                 cha_5_part.Add(childObj);
             }
+            else if (childObj.name.Contains("clothes_7"))
+            {
+                cha_6_part.Add(childObj);
+            }
+            else if (childObj.name.Contains("clothes_8"))
+            {
+                cha_7_part.Add(childObj);
+            }
             else if (childObj.name.Contains("hair_"))
             {
                 hairObjList.Add(childObj);
@@ -112,6 +124,8 @@ public class PlayerChaChange : MonoBehaviour
             cha_3_part,
             cha_4_part,
             cha_5_part,
+            cha_6_part,
+            cha_7_part,
         };
     }
 

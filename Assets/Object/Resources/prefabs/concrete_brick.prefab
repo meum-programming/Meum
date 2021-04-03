@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2045058108330969823}
   - component: {fileID: 2072047715472109909}
   - component: {fileID: 4715499952969436132}
-  m_Layer: 0
+  - component: {fileID: -7596823597411848246}
+  m_Layer: 11
   m_Name: concrete_brick
-  m_TagString: Untagged
+  m_TagString: Paint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,8 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 250, y: 99.999985, z: 25}
-  m_Children:
-  - {fileID: 6314495680540892952}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,47 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6036591337417362731
-GameObject:
+--- !u!64 &-7596823597411848246
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6314495680540892952}
-  - component: {fileID: 1047491549926483381}
-  m_Layer: 0
-  m_Name: coiilder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6314495680540892952
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6036591337417362731}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.00066312554, y: 0.00091761246, z: -0.004773162}
-  m_LocalScale: {x: 0.004, y: 0.040000007, z: 0.0100000035}
-  m_Children: []
-  m_Father: {fileID: 2045058108330969823}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1047491549926483381
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6036591337417362731}
+  m_GameObject: {fileID: 2152432890543287920}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.99817854, y: 0.4015373, z: 0.097830296}
-  m_Center: {x: 0.16706249, y: 0.11907557, z: 0.042452775}
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4574381762999691488, guid: 2ccc9710d09309749b4066a031d732a3, type: 3}
