@@ -18,7 +18,13 @@ namespace UI.GalleryScene
         private void ButtonAction()
         {
 #if UNITY_WEBGL
-        OpenURLNewTab("https://meum.me/tutorial");
+
+            string uri = "https://meum.me/tutorial";
+    #if dev
+            uri = "https://dev.meum.me/tutorial";
+    #endif
+            OpenURLNewTab(uri);
+
 #endif
         }
     }

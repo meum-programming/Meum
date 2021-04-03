@@ -24,11 +24,15 @@ public class GalleryController : MonoBehaviour
         {
             bool isOwnerRoom = MeumDB.Get().myRoomInfo.owner.user_id == MeumDB.Get().currentRoomInfo.owner.user_id;
 
+            //유니티 애디터 상태가 아니라면
+#if !UNITY_EDITOR
             //게스트로 접속했다면
             if (MeumDB.Get().currentRoomInfo.owner.user_id == 61)
             {
                 isOwnerRoom = false;
             }
+#endif
+
 
             for (int i = 0; i < editBtnList.Count; i++)
             {

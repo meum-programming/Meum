@@ -17,15 +17,17 @@ namespace Core
         private TextureBuffer _textureBuffer = new TextureBuffer();
         private Object3DBuffer _object3DBuffer = new Object3DBuffer();
         private string _token = "";                                           // API 서버의 authorization token
-        private const string BASE_URL = "https://api.meum.me";                // API 서버의 BASE URL
-        //private const string BASE_URL2 = "https://dev.meum.me/nodeTest";                // API 서버의 BASE URL
-        private const string BASE_URL2 = "https://meum.me/nodeTest";                // API 서버의 BASE URL
+        private string BASE_URL = "https://meum.me/nodeTest";                // API 서버의 BASE URL
 
         public RoomInfoData currentRoomInfo = null;
         public RoomInfoData myRoomInfo = null;
 
         private void Awake()
         {
+#if dev
+            BASE_URL = "https://dev.meum.me/nodeTest/";
+#endif
+
             base.Awake();
             DontDestroyOnLoad(gameObject);
         }
@@ -124,7 +126,7 @@ namespace Core
             WWWForm form = new WWWForm();
             form.AddField("nickname", nickname);
 
-            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "profileByNickname", form));
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL, "profileByNickname", form));
             yield return cd.coroutine;
 
             var data = cd.result as string;
@@ -146,7 +148,7 @@ namespace Core
             WWWForm form = new WWWForm();
             form.AddField("uid", _token);
 
-            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "user", form));
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL, "user", form));
             yield return cd.coroutine;
 
             var data = cd.result as string;
@@ -162,7 +164,7 @@ namespace Core
             WWWForm form = new WWWForm();
             form.AddField("uid", uid);
 
-            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "roomOwner", form));
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL, "roomOwner", form));
             yield return cd.coroutine;
 
             RoomInfoRespons resultData = GetData<RoomInfoRespons>(cd.result as string);
@@ -174,7 +176,7 @@ namespace Core
             WWWForm form = new WWWForm();
             form.AddField("roomId", roomId);
 
-            var cd = new CoroutineWithData(this, WebReques2(BASE_URL2, "roomById", form));
+            var cd = new CoroutineWithData(this, WebReques2(BASE_URL, "roomById", form));
             yield return cd.coroutine;
 
             RoomInfoRespons resultData = GetData<RoomInfoRespons>(cd.result as string);

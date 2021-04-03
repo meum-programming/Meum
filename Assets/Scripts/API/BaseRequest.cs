@@ -34,6 +34,13 @@ public class BaseRequest
 
     public BaseRespons responsData = null;
 
+    public BaseRequest()
+    {
+#if dev
+        baseUri = "https://dev.meum.me/nodeTest/";
+#endif
+    }
+
     public string GetUri()
     {
         return string.Format("{0}{1}{2}", baseUri, classValue, getValue);

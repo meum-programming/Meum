@@ -18,8 +18,11 @@ public class WebWaitingController : MonoBehaviour
 
     public void AskBtnClick() 
     {
-        //Application.OpenURL("https://dev.meum.me/help");
-        Application.OpenURL("https://meum.me/help");
+        string uri = "https://meum.me/help";
+#if dev
+        uri = "https://dev.meum.me/help";
+#endif
+        Application.OpenURL(uri);
     }
 
 }
