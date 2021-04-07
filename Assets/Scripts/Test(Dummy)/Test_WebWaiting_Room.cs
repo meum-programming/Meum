@@ -23,19 +23,21 @@ public class Test_WebWaiting_Room : MonoBehaviour
 
     public void TokenSetBtnClick()
     {
-        webHandler.SetToken("61");
+        //webHandler.SetToken("61");
         //webHandler.SetToken("59");
         //webHandler.SetToken("149");
         //webHandler.SetToken("1");
         //webHandler.SetToken("157");
+        webHandler.SetToken("242");
     }
 
     public void RoomSetBtnClick()
     {
-        webHandler.EnterRoom("Guest");
+        //webHandler.EnterRoom("Guest");
         //webHandler.EnterRoom("믐대표서비스");
         //webHandler.EnterRoom("blackgallery");
         //webHandler.EnterRoom("string");
         //webHandler.EnterRoom("the_other_layers");
+        webHandler.EnterRoom("sangminTest");
     }
 }

@@ -130,12 +130,25 @@ namespace Game.Artwork
             else if (_artworkData.artwork_type == 1)
             {
                 _artworkData.url = content.Data.object_file;
-                StartCoroutine(LoadModelCoroutine());
+                LoadModelCoroutine2();
+                //StartCoroutine(LoadModelCoroutine());
                 scale.x = scale.y = scale.z = content.Data.size_w;
+
+                //Transform obj = transform.GetComponentInChildren<MeshRenderer>().transform;
+                //scale = obj.localScale;
+                //obj.localScale = Vector3.one;
             }
             transform.localScale = scale;
 
             transform.rotation = Quaternion.identity;
+
+            /*
+            if (_artworkData.artwork_type == 1)
+            {
+                LoadModelCoroutine2();
+            }
+            */
+
         }
 
         /*
@@ -183,8 +196,6 @@ namespace Game.Artwork
 
             artwork_1master.meum /
 
-            Debug.LogWarning("load Model baseURL = " + url);
-
             var object3DGetter = MeumDB.Get().GetObject3DCoroutine(url);
             yield return object3DGetter.coroutine;
             Assert.IsNotNull(object3DGetter.result);
@@ -209,7 +220,7 @@ namespace Game.Artwork
                     Assert.IsNotNull(obj);
                     obj.transform.localRotation = Quaternion.identity;
                     obj.transform.localPosition = Vector3.zero;
-
+                    //obj.transform.localScale = Vector3.one;
                     // 불러온 Object의 root에 있는 콜라이더를 ArtworkInfo가 포함된 게임오브젝트로 옮겨온 후 비활성화
                     // 불러온 오브젝트를 ArtworkInfo를 포함한 게임오브젝트의 자식으로 붙이기 때문에 이렇게 할 필요가 있음
                     // 옮긴 콜라이더는 트리거가 되고, 유저의 클릭, 다른 오브젝트 설치시에 사용됨
@@ -218,19 +229,38 @@ namespace Game.Artwork
                     //CopyComponent(col, gameObject).isTrigger = true;
                     //col.enabled = false;
                 }
-                
-
-
             }
-            else
-            {
-                Debug.LogWarning(path);
-            }
-
-
-
 
         }
+
+        void LoadModelCoroutine2() 
+        {
+            string path = _artworkData.url.Replace("artwork_1master.meum/", "");
+            path = path.Replace("https://api.meum.me/datas/", "");
+
+            GameObject loadedObject = Resources.Load("prefabs/" + path) as GameObject;
+
+            if (loadedObject != null)
+            {
+                var obj = Instantiate(loadedObject, transform);
+
+                if (obj != null)
+                {
+                    Assert.IsNotNull(obj);
+                    obj.transform.localRotation = Quaternion.identity;
+                    obj.transform.localPosition = Vector3.zero;
+                    //obj.transform.localScale = Vector3.one;
+                    // 불러온 Object의 root에 있는 콜라이더를 ArtworkInfo가 포함된 게임오브젝트로 옮겨온 후 비활성화
+                    // 불러온 오브젝트를 ArtworkInfo를 포함한 게임오브젝트의 자식으로 붙이기 때문에 이렇게 할 필요가 있음
+                    // 옮긴 콜라이더는 트리거가 되고, 유저의 클릭, 다른 오브젝트 설치시에 사용됨
+                    // var col = obj.GetComponent<Collider>();
+                    //Assert.IsNotNull(col);
+                    //CopyComponent(col, gameObject).isTrigger = true;
+                    //col.enabled = false;
+                }
+            }
+        }
+
 
         public void LoadVideoCoroutine(string url)
         {

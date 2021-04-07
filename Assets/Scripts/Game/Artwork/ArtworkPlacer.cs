@@ -53,15 +53,19 @@ namespace Game.Artwork
             pos.z = -10.0f;
             pos = cam.ScreenToWorldPoint(pos);
 
-            Debug.LogWarning("data.Data.type_artwork = " + data.Data.type_artwork);
-
             _nowEditing3D = data.Data.type_artwork == 1;
+            
             _selected = Instantiate(_nowEditing3D ? object3DPrefab : paintPrefab, pos, Quaternion.identity, transform).transform;
             Assert.IsNotNull(_selected);
             var artworkInfo = _selected.GetComponent<ArtworkInfo>();
             Assert.IsNotNull(artworkInfo);
 
             artworkInfo.UpdateWithArtworkContent(data);
+
+            if (_nowEditing3D)
+            {
+                _selected = _selected.GetComponentInChildren<MeshRenderer>().transform;
+            }
 
             StartMovingObj();
         }
@@ -144,7 +148,8 @@ namespace Game.Artwork
         {
             if (_selected)
             {
-                _selected.rotation = Quaternion.Euler(_selected.up * 15.0f) * _selected.rotation;
+                Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
+                targetTransform.rotation = Quaternion.Euler(targetTransform.up * 15.0f) * targetTransform.rotation;
             }
         }
         
@@ -156,7 +161,7 @@ namespace Game.Artwork
             if (verifyModalManager.showingModal) return;
             if (EventSystem.current.IsPointerOverGameObject()) // 마우스가 UI Element 위에 있는경우 아무것도 하지 않음
                 return;
-            
+
             var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
             var mask = 1 << LayerMask.NameToLayer("Placeable");
             if (Physics.Raycast(ray, out var hit, 100.0f, mask))
@@ -167,11 +172,22 @@ namespace Game.Artwork
                 {
                     _selected = objectHit;
                     actionSelector.SetSelected(_selected);
-                    _nowEditing3D = objectHit.GetComponent<ArtworkInfo>().ArtworkType == 1;
+
+                    ArtworkInfo artworkInfo = objectHit.GetComponent<ArtworkInfo>();
+
+                    //3D 오브젝트는 부모오브젝트에 ArtworkInfo클래스를 가지고 있다
+                    if (artworkInfo == null) 
+                    {
+                        artworkInfo = objectHit.GetComponentInParent<ArtworkInfo>();
+                    }
+                    
+                    _nowEditing3D = artworkInfo.ArtworkType == 1;
                     _moving = false;
                 }
                 else
                     Deselect();
+
+                
             }
             else if(!_moving)
                 Deselect();
@@ -185,7 +201,9 @@ namespace Game.Artwork
             if (_selected && _moving && ctx.performed)
             {
                 var value = ctx.ReadValue<float>();
-                _selected.rotation = Quaternion.Euler(_selected.up * (15.0f * value)) * _selected.rotation;
+
+                Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
+                targetTransform.rotation = Quaternion.Euler(targetTransform.up * (15.0f * value)) * targetTransform.rotation;
             }
         }
         
@@ -196,18 +214,31 @@ namespace Game.Artwork
         {
             if (!ctx.performed) return;
 
-            var value = ctx.ReadValue<float>() / 120.0f;    // scroll raw value: [-120, 120]
+            var value = ctx.ReadValue<float>() / 120;    // scroll raw value: [-120, 120]
 
             if (_selected && _moving && Mathf.Abs(value) > 1e-10)
             {
-                var scale = _selected.localScale;
+                Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
+                var scale = targetTransform.localScale;
                 var ratioX = scale.x / scale.z;
                 var ratioY = scale.y / scale.z;
-                _nowScale = Mathf.Clamp(_nowScale + value * scaleFactor, 0, 1);
-                scale.z = Mathf.Lerp(_defaultScaleZ / scaleLimit, _defaultScaleZ * scaleLimit, _nowScale);
+                _nowScale = Mathf.Clamp(_nowScale + value * scaleFactor, 0.1f, 1);
+
+                if (_nowEditing3D)
+                {
+                    scale.z = Mathf.Lerp(1 / scaleLimit, 1 * scaleLimit, _nowScale);
+                }
+                else 
+                {
+                    scale.z = Mathf.Lerp(_defaultScaleZ / scaleLimit, _defaultScaleZ * scaleLimit, _nowScale);
+                }
+
                 scale.x = scale.z * ratioX;
-                if(_nowEditing3D)
+                if (_nowEditing3D) 
+                {
                     scale.y = scale.z * ratioY;
+                }
+                    
                 //_selected.localScale = scale;
 
                 if (scaleTween != null && scaleTween.IsPlaying())
@@ -215,12 +246,17 @@ namespace Game.Artwork
                     scaleTween.Kill();
                 }
 
-                scaleTween =  _selected.DOScale(scale, 0.5f);
+                scaleTween = targetTransform.DOScale(scale, 0.5f);
             }
         }
 
         private void Update()
         {
+            if (verifyModalManager == null) 
+            {
+                Debug.LogWarning("verifyModalManager null");
+            }
+            
             if (verifyModalManager.showingModal) return;
             
             if (_selected && _moving)
@@ -233,10 +269,21 @@ namespace Game.Artwork
 
                     if (objectHit.CompareTag("Paint") || objectHit.CompareTag("Wall") || objectHit.CompareTag("Floor")) 
                     {
-                        if (objectHit.name == "collider")
+                        AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
+                        
+                        if (_nowEditing3D == false)
                         {
                             AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
                         }
+                        else
+                        {
+                            if (objectHit.parent != _selected)
+                            {
+                                AlignPaintTransform(_selected.parent, hit, objectHit.CompareTag("Wall"));
+                            }
+                            
+                        }
+                        
                     }
                         
                 }
@@ -255,6 +302,9 @@ namespace Game.Artwork
                               + (snap ? SnapFloat(distanceFromCenterY, snapGridSizeY) : distanceFromCenterY);
             paint.rotation = Quaternion.FromToRotation(paint.up, hit.normal) * paint.rotation;
             paint.position = placePosition;
+
+            //Debug.LogWarning(placePosition);
+
         }
 
         private float SnapFloat(float v, float gridSize)

@@ -33,8 +33,6 @@ public class TestMp4 : MonoBehaviour
 
     IEnumerator GetRequest(string uri)
     {
-        Debug.LogWarning("Play ON!");
-
         UnityWebRequest www = new UnityWebRequest(uri);
         www.downloadHandler = new DownloadHandlerBuffer();
         yield return www.SendWebRequest();
@@ -45,16 +43,8 @@ public class TestMp4 : MonoBehaviour
         }
         else
         {
-            // Show results as text
-            Debug.Log(www.downloadHandler.text);
-
             // Or retrieve results as binary data
             byte[] results = www.downloadHandler.data;
-
-            //www.downloadHandler.ve
-
-            Debug.LogWarning("results = " + results.Length);
-
         }
 
     }
