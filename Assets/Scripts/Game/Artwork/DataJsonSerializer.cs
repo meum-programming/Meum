@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Core;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -32,6 +33,8 @@ namespace Game.Artwork
         [SerializeField] public GameObject videoPrefab;
 
         private string _resetCheckpoint = "";
+
+        [SerializeField] public List<GameObject> tempList = new List<GameObject>();
 
         /*
          * @brief Awake 함수
@@ -94,6 +97,15 @@ namespace Game.Artwork
                 videoArtworkInfo.transform.eulerAngles = new Vector3(270, 0, 270);
                 videoArtworkInfo.transform.localScale = new Vector3(6.5f, 1, 4);
                 videoArtworkInfo.LoadVideoCoroutine("https://www.youtube.com/watch?v=v1DWS9-0zSc");
+            }
+
+            //새로운 3D 오브젝트 임시 설치
+            if (MeumDB.Get().currentRoomInfo.owner.user_id == 238)
+            {
+                for (int i = 0; i < tempList.Count; i++)
+                {
+                    tempList[i].gameObject.SetActive(true);
+                }
             }
 
             _resetCheckpoint = json;

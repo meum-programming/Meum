@@ -144,14 +144,7 @@ namespace Game.Artwork
             }
         }
 
-        public void RotateSelected()
-        {
-            if (_selected)
-            {
-                Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
-                targetTransform.rotation = Quaternion.Euler(targetTransform.up * 15.0f) * targetTransform.rotation;
-            }
-        }
+        
         
         /*
          * @brief Select(클릭) 이벤트에 대한 콜백
@@ -202,11 +195,18 @@ namespace Game.Artwork
             {
                 var value = ctx.ReadValue<float>();
 
-                Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
-                targetTransform.rotation = Quaternion.Euler(targetTransform.up * (15.0f * value)) * targetTransform.rotation;
+                RotateSelected();
             }
         }
-        
+        public void RotateSelected()
+        {
+            if (_selected)
+            {
+                Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
+                targetTransform.rotation = Quaternion.Euler(targetTransform.up * 15.0f) * targetTransform.rotation;
+            }
+        }
+
         /*
          * @brief Resize 이벤트에 대한 콜백
          */
@@ -224,14 +224,7 @@ namespace Game.Artwork
                 var ratioY = scale.y / scale.z;
                 _nowScale = Mathf.Clamp(_nowScale + value * scaleFactor, 0.1f, 1);
 
-                if (_nowEditing3D)
-                {
-                    scale.z = Mathf.Lerp(1 / scaleLimit, 1 * scaleLimit, _nowScale);
-                }
-                else 
-                {
-                    scale.z = Mathf.Lerp(_defaultScaleZ / scaleLimit, _defaultScaleZ * scaleLimit, _nowScale);
-                }
+                scale.z = Mathf.Lerp(_defaultScaleZ / scaleLimit, _defaultScaleZ * scaleLimit, _nowScale);
 
                 scale.x = scale.z * ratioX;
                 if (_nowEditing3D) 
@@ -318,7 +311,15 @@ namespace Game.Artwork
 
         private void ResetScale()
         {
-            _defaultScaleZ = _selected.transform.localScale.z;
+            if (_nowEditing3D)
+            {
+                _defaultScaleZ = _selected.transform.parent.localScale.z;
+            }
+            else
+            {
+                _defaultScaleZ = _selected.transform.localScale.z;
+            }
+
             _nowScale = (_defaultScaleZ - _defaultScaleZ / scaleLimit)
                         / (_defaultScaleZ * scaleLimit - _defaultScaleZ / scaleLimit);
         }

@@ -29,6 +29,8 @@ public class Test_WebWaiting_Room : MonoBehaviour
         //webHandler.SetToken("1");
         //webHandler.SetToken("157");
         webHandler.SetToken("242");
+        //webHandler.SetToken("238");
+        
     }
 
     public void RoomSetBtnClick()
@@ -39,5 +41,6 @@ public class Test_WebWaiting_Room : MonoBehaviour
         //webHandler.EnterRoom("string");
         //webHandler.EnterRoom("the_other_layers");
         webHandler.EnterRoom("sangminTest");
+        //webHandler.EnterRoom("unseenland");
     }
 }

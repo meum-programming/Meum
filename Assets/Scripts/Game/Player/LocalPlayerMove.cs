@@ -145,11 +145,16 @@ namespace Game.Player
 
         private bool IsGrounded()
         {
-            return Physics.Raycast(
+            bool isValue = Physics.Raycast(
                 transform.position + _colliderCenterPos,
                 -Vector3.up,
                 _distFromColliderCenterToGround + groundDetectDistance,
                 checkingMask.value);
+
+
+//            isValue = isValue || _charController.isGrounded;
+
+            return isValue;
         }
 
         private bool IsJumpEnded()

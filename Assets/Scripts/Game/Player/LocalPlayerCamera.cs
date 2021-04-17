@@ -72,9 +72,11 @@ namespace Game.Player
                 layerMask = ~layerMask;
                 if (Physics.Raycast(cameraPivot.position, rayDir, out hit, _thirdPersonCamDistance, layerMask))
                 {
-                    var cameraPosition = cameraPivot.position + rayDir * hit.distance * 0.96f;
-                    cameraPosition.y = thirdPersonCamTransform.position.y;
-                    _camera.transform.position = cameraPosition;
+                    //var cameraPosition = cameraPivot.position + rayDir * hit.distance * 0.96f;
+                    //cameraPosition.y = thirdPersonCamTransform.position.y;
+                    //_camera.transform.position = cameraPosition;
+
+                    _transform.position = cameraPivot.position + rayDir * _thirdPersonCamDistance;
                 }
                 else
                 {
