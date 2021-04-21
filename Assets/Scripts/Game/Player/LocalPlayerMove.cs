@@ -37,6 +37,11 @@ namespace Game.Player
 
         private Tween chaRotTween;
 
+        bool isJumped = false;
+        float jumpEndDeley = 0;
+
+        [SerializeField] GroundChecker groundChecker;
+
         private void Awake()
         {
             _charController = GetComponent<CharacterController>();
@@ -65,8 +70,9 @@ namespace Game.Player
         {
             Move();
             ApplyGravity();
-            
+
             _animController.SetIsJumpEnded(IsJumpEnded());
+            //_animController.SetIsJumpEnded();
         }
 
         private void ApplyGravity()
@@ -141,6 +147,10 @@ namespace Game.Player
 
             chaRotTween = chaTransform.transform.DOLocalRotate(new Vector3(0, value, 0), 0.3f);
 
+            if (_moveVector != Vector3.zero && _animController._animator.GetCurrentAnimatorStateInfo(0).IsName("Human_Idle"))
+            {
+                _animController.SetVerticalSpeed(Mathf.Abs(_moveVector.x) + Mathf.Abs(_moveVector.y));
+            }
         }
 
         private bool IsGrounded()
@@ -151,19 +161,23 @@ namespace Game.Player
                 _distFromColliderCenterToGround + groundDetectDistance,
                 checkingMask.value);
 
-
-//            isValue = isValue || _charController.isGrounded;
+            isValue = isValue || _charController.isGrounded;
 
             return isValue;
         }
 
         private bool IsJumpEnded()
         {
-            return Physics.Raycast(
-                transform.position + _colliderCenterPos,
-                -Vector3.up,
-                _distFromColliderCenterToGround + jumpEndDetectDistance,
-                checkingMask.value);
+            //땅에 닿았는지 체크
+            bool isJumpEnd = Physics.Raycast(
+                    transform.position + _colliderCenterPos,
+                    -Vector3.up,
+                    _distFromColliderCenterToGround + jumpEndDetectDistance,
+                    checkingMask.value);
+
+            return isJumpEnd || groundChecker.isGround;
+
+            //return !;
         }
 
         public void OnMove(InputAction.CallbackContext ctx)
@@ -208,6 +222,9 @@ namespace Game.Player
             {
                 _velocityY = Mathf.Sqrt(2.0f * GRAVITY * jumpHeight);
                 _animController.SetJumpTrigger();
+
+                isJumped = true;
+                jumpEndDeley = 0.5f;
             }
         }
 
