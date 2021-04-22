@@ -113,7 +113,7 @@ namespace Game.Player
                 return;
             }
 
-            CameraRotFlagChange(ctx, 10);
+            CameraRotFlagChange(ctx, 2f);
         }
 
         void CameraRotFlagChange(InputAction.CallbackContext ctx, float addValue = 10)
@@ -154,6 +154,7 @@ namespace Game.Player
                 var newCameraRotation = _defaultEulerAngle;
                 newCameraRotation += _cameraRotationDelta;
                 _transform.localEulerAngles = newCameraRotation;
+                //_transform.parent.localEulerAngles = newCameraRotation;
 
                 if (IsFirstPersonView)
                 {
@@ -229,5 +230,24 @@ namespace Game.Player
             var value = ctx.ReadValue<float>();
             _isRotateEnabled = value > 0.5f; // value is 1 or 0 (float)
         }
+
+        public void OnCameraPosReset(InputAction.CallbackContext ctx)
+        {
+            return;
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+
+            if (!ctx.performed) return;
+
+            var value = ctx.ReadValue<float>() / 120;    // scroll raw value: [-120, 120]
+
+            if (Mathf.Abs(value) > 1e-10)
+            {
+                _camera.transform.Translate(Vector3.forward * value);
+                Debug.LogWarning("value = " + value);
+            }
+        }
+
+
     }
 }

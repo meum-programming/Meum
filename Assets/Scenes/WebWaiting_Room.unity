@@ -1675,6 +1675,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 513258600}
     m_Modifications:
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_ActionId
+      value: 128dceaf-19f5-4809-9c27-490b61d6d82a
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_ActionName
+      value: Gallery Scene/Camera Pos Reset[/Mouse/scroll/y]
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1568102772}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnCameraPosReset
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Game.Player.LocalPlayerCamera, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 936583000424706514, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+      propertyPath: m_ActionEvents.Array.data[27].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1734,6 +1774,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8385142957625115652, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
   m_PrefabInstance: {fileID: 1568102770}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1568102772 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5981749485781786878, guid: 14e34dc9b61db4244ae163fb4880ee58, type: 3}
+  m_PrefabInstance: {fileID: 1568102770}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ed8cb3b20709ca419da3ee66929a19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1607519317
 GameObject:
   m_ObjectHideFlags: 0

@@ -59,9 +59,14 @@ public class ThemaSection : MonoBehaviour
 
         skyDataList = new List<SkyBoxSaveData>();
 
-        for (int i = 1; i <= defaultMaxValue + 1; i++)
+        for (int i = 1; i < skySaveDataList.Count; i++)
         {
-            skyDataList.Add(skySaveDataList[i]);
+            int enumIndex = (i - 1);
+            //I Will Greet The Sun Again Àº Á¦¿Ü
+            if (enumIndex != (int)SkyBoxEnum.SkyBox_4)
+            {
+                skyDataList.Add(skySaveDataList[i]);
+            }
         }
 
         string[] splitData = MeumDB.Get().currentRoomInfo.sky_addValue_string.Split(',');
@@ -74,15 +79,13 @@ public class ThemaSection : MonoBehaviour
 
             int.TryParse(data, out addType);
 
-            if (addType > defaultMaxValue)
-            {
-                SkyBoxSaveData skyBoxSaveData = meumSaveData.GetSKYData((SkyBoxEnum)addType);
+            SkyBoxSaveData skyBoxSaveData = meumSaveData.GetSKYData((SkyBoxEnum)addType);
 
-                if (skyBoxSaveData != null && skyDataList.Contains(skyBoxSaveData) == false)
-                {
-                    skyDataList.Add(skyBoxSaveData);
-                }
+            if (skyBoxSaveData != null && skyDataList.Contains(skyBoxSaveData) == false)
+            {
+                skyDataList.Add(skyBoxSaveData);
             }
+            
         }
     }
 
@@ -118,14 +121,16 @@ public class ThemaSection : MonoBehaviour
 
         DropDownOpen(false);
 
+        int selectIndex = (int)skyDataList[currentSelectIndex].skyBoxEnum;
+
         new RoomRequest()
         {
             requestStatus = 2,
             uid = MeumDB.Get().GetToken(),
-            sky_type_int = currentSelectIndex,
+            sky_type_int = selectIndex,
         }.RequestOn();
 
-        MeumDB.Get().currentRoomInfo.sky_type_int = currentSelectIndex;
+        MeumDB.Get().currentRoomInfo.sky_type_int = selectIndex;
 
         if (FindObjectOfType<GalleryController>() != null)
         {

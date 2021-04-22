@@ -61,6 +61,7 @@ public class SkyBoxSaveData
     public SkyBoxEnum skyBoxEnum;
     public string name;
     public Material material;
+    public bool notUse = false;
 }
 
 public enum SkyBoxEnum
@@ -71,6 +72,7 @@ public enum SkyBoxEnum
     SkyBox_2,
     SkyBox_3,
     SkyBox_4,
+    SkyBox_5,
 }
 
 

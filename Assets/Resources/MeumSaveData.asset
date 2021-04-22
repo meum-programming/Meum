@@ -92,6 +92,9 @@ MonoBehaviour:
   - skyBoxEnum: 4
     name: I Will Greet The Sun Again
     material: {fileID: 2100000, guid: 51171c937f4c81a4db1ad9bd5994810a, type: 2}
+  - skyBoxEnum: 5
+    name: "\uAE08\uC694\uC77C \uBC24"
+    material: {fileID: 2100000, guid: 54d48c025ddd843e8a7289d61823128d, type: 2}
   gestureModelList:
   - id: -1
     name: "\uC124\uC815"
