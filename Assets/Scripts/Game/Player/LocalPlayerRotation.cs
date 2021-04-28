@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 namespace Game.Player
 {
@@ -19,6 +20,8 @@ namespace Game.Player
         private Transform _transform;
         private bool _isMoving = false;
         private bool _isRotateEnabled = false;
+
+        bool cameraRotOn = false;
 
         private void Awake()
         {
@@ -53,8 +56,8 @@ namespace Game.Player
          */
         private void FitCharacterRotationWithCamera()
         {
-            if (cameraController.IsSwitchingView || cameraController.IsFirstPersonView)
-                return;
+            //if (cameraController.IsSwitchingView || cameraController.IsFirstPersonView)
+              //  return;
 
             var camPivotRotationBackup = cameraPivot.rotation;
 
@@ -78,10 +81,33 @@ namespace Game.Player
         {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
                 return;
+
             
-            var value = ctx.ReadValue<Vector2>();
-            if (value.sqrMagnitude < 1e-3) _isMoving = false;
-            else _isMoving = true;
+
+            if (cameraRotOn == false)
+            {
+                float rotY = cameraPivot.localRotation.eulerAngles.y;
+
+                //카메라가 회전한 상태라면
+                if (rotY != 0)
+                {
+                    cameraRotOn = true;
+
+                    //카메라 원위치
+                    cameraPivot
+                        .DOLocalRotate(Vector3.zero,1)
+                        .OnComplete(()=> cameraRotOn = false);
+
+                    //캐릭터를 카메라가 보는 방향으로 회전
+                    Vector3 rotValue = _transform.localRotation.eulerAngles;
+                    rotValue.y += rotY;
+                    _transform.DOLocalRotate(rotValue, 1);
+                }
+            }
+
+            //var value = ctx.ReadValue<Vector2>();
+            //if (value.sqrMagnitude < 1e-3) _isMoving = false;
+            //else _isMoving = true;
         }
 
         public void OnMoveJoystick(Vector2 value)
@@ -105,7 +131,7 @@ namespace Game.Player
 
             float sensitivity = DataManager.Instance.GetMouseSensitivityValue();
 
-            transform.Rotate(Vector3.up, value.x * sensitivity * 0.1f);
+            //transform.Rotate(Vector3.up, value.x * sensitivity * 0.1f);
         }
 
         public void OnRotateKeybordInput(Vector2 value)

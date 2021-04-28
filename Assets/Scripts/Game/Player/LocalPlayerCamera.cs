@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 namespace Game.Player
 {
@@ -22,6 +23,8 @@ namespace Game.Player
         [SerializeField] private float switchingDuration;
 
         [SerializeField] LocalPlayerRotation localPlayerRotation;
+        [SerializeField] Transform lookAtTargetObj;
+        [SerializeField] Transform moveCheckObj;
 
         public bool IsFirstPersonView { get; private set; }
         public bool IsSwitchingView
@@ -35,7 +38,9 @@ namespace Game.Player
         private Transform _transform;
         private IEnumerator _switching = null;
         private bool _isRotateEnabled;
-        private float _thirdPersonCamDistance;
+        public float _thirdPersonCamDistance;
+
+        [SerializeField] CameraColliderChecker cameraColliderChecker;
 
         private void Awake()
         {
@@ -62,32 +67,23 @@ namespace Game.Player
             _thirdPersonCamDistance = (cameraPivot.position - thirdPersonCamTransform.position).magnitude;
         }
 
+        
+
         private void Update()
         {
-            if (!IsFirstPersonView)
-            {
-                RaycastHit hit;
-                var rayDir = (thirdPersonCamTransform.position - cameraPivot.position).normalized;
-                var layerMask = 1 << LayerMask.NameToLayer("LocalPlayer") | 1 << LayerMask.NameToLayer("RemotePlayer");
-                layerMask = ~layerMask;
-                if (Physics.Raycast(cameraPivot.position, rayDir, out hit, _thirdPersonCamDistance, layerMask))
-                {
-                    /*
-                    var cameraPosition = cameraPivot.position + rayDir * hit.distance * 0.96f;
-                    cameraPosition.y = thirdPersonCamTransform.position.y;
-                    _camera.transform.position = cameraPosition;
-                    */
-                    _transform.position = cameraPivot.position + rayDir * _thirdPersonCamDistance;
-                }
-                else
-                {
-                    _transform.position = cameraPivot.position + rayDir * _thirdPersonCamDistance;
-                }
-            }
-
-            InputCheck();
-
+            IsColliderOnCheck();
+            
         }
+
+        void IsColliderOnCheck()
+        {
+            if (cameraColliderChecker.isColliderOn == false)
+                return;
+          
+            float checkDis = Vector3.Distance(cameraPivot.position, _camera.transform.position);
+            MoveCheckObjPosChange(Vector3.forward * checkDis * 0.05f);
+        }
+
 
         public void OnRotate(InputAction.CallbackContext ctx)
         {
@@ -97,9 +93,19 @@ namespace Game.Player
                 cameraRotFlag = false;
                 carmeraRotValue = Vector2.zero;
                 return;
-            } 
+            }
 
-            CameraRotFlagChange(ctx, 1);
+            var value = ctx.ReadValue<Vector2>();
+            float sensitivity = DataManager.Instance.GetMouseSensitivityValue();
+
+            var test = value.x * sensitivity * 0.1f;
+
+            Vector2 setValue = new Vector2(-value.y, value.x);
+            setValue *= sensitivity * 0.1f;
+
+            Vector2 rotValue = cameraPivot.rotation.eulerAngles;
+            rotValue += setValue;
+            cameraPivot.rotation = Quaternion.Euler(rotValue);
         }
 
 
@@ -146,19 +152,22 @@ namespace Game.Player
                     -cameraRotationLimit,
                     cameraRotationLimit);
 
-                if (!IsFirstPersonView)
+                //if (!IsFirstPersonView)
                 {
-                    cameraPivot.Rotate(Vector3.up, carmeraRotValue.x * sensitivity);
+                    //cameraPivot.Rotate(Vector3.up, carmeraRotValue.x * sensitivity);
                 }
 
                 var newCameraRotation = _defaultEulerAngle;
                 newCameraRotation += _cameraRotationDelta;
-                _transform.localEulerAngles = newCameraRotation;
+
+                //_transform.localEulerAngles = newCameraRotation;
+                cameraPivot.localEulerAngles = newCameraRotation;
+
                 //_transform.parent.localEulerAngles = newCameraRotation;
 
                 if (IsFirstPersonView)
                 {
-                    localPlayerRotation.OnRotateKeybordInput(carmeraRotValue);
+                    //localPlayerRotation.OnRotateKeybordInput(carmeraRotValue);
                 }
             }
         }
@@ -233,7 +242,6 @@ namespace Game.Player
 
         public void OnCameraPosReset(InputAction.CallbackContext ctx)
         {
-            return;
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
                 return;
 
@@ -243,11 +251,41 @@ namespace Game.Player
 
             if (Mathf.Abs(value) > 1e-10)
             {
-                _camera.transform.Translate(Vector3.forward * value);
-                Debug.LogWarning("value = " + value);
+                MoveCheckObjPosChange(Vector3.forward * value);
             }
         }
 
+        void MoveCheckObjPosChange(Vector3 value)
+        {
+            moveCheckObj.transform.Translate(value);
+
+            if (moveCheckObj.transform.localPosition.z > 0.15f)
+            {
+                moveCheckObj.transform.localPosition = new Vector3(0, 1.65f, 0.15f);
+            }
+
+            CameraReset();
+        }
+
+        Tween moveTween = null;
+        Tween rotTween = null;
+
+        void CameraReset()
+        {
+            if (moveTween != null && moveTween.IsPlaying())
+            {
+                moveTween.Kill();
+            }
+            moveTween = _camera.transform.DOMove(moveCheckObj.position, 0.5f);
+
+            if (rotTween != null && rotTween.IsPlaying())
+            {
+                rotTween.Kill();
+            }
+            rotTween = _camera.transform.DOLocalRotate(moveCheckObj.transform.localRotation.eulerAngles, 0.5f);
+
+        }
 
     }
 }
+
