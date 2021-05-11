@@ -32,6 +32,8 @@ public class PlayerChaChange : MonoBehaviour
 
     public bool localPlayer = false;
 
+    private bool meshActiveOn = true;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -376,6 +378,22 @@ public class PlayerChaChange : MonoBehaviour
             maskObjList[i].gameObject.SetActive(i == maskIndex);
         }   
     }
+    
+    public void SkinnedMeshRendererActiveSet(bool meshActiveOn)
+    {
+        if (this.meshActiveOn == meshActiveOn)
+            return;
+        
+        this.meshActiveOn = meshActiveOn;
+
+        foreach (var smr in GetComponentsInChildren<SkinnedMeshRenderer>())
+        {
+            smr.enabled = meshActiveOn;
+        }
+        
+
+    }
+
 }
 
 public enum PlayerChaStatus

@@ -216,7 +216,7 @@ public class GestureController : MonoBehaviour
 
         if (animName != string.Empty)
         {
-            PlayerAnimationController playerAnimationController = DataSynchronizer.Get().GetLocalPlayer().GetComponent<PlayerAnimationController>();
+            PlayerAnimationController playerAnimationController = DataSynchronizer.Get().GetLocalPlayer().GetComponentInChildren<PlayerAnimationController>();
             playerAnimationController.PlayGestureAnim(animName);
         }
     }

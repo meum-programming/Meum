@@ -13,81 +13,82 @@ namespace Game.Player
     [RequireComponent(typeof(Camera))]
     public class LocalPlayerCamera : MonoBehaviour
     {
-        [SerializeField] private float sensitivity;
-        [SerializeField] private float cameraRotationLimit;
         [SerializeField] private Transform cameraPivot;
-        
-        [Header("Switching")] 
-        [SerializeField] private Transform firstPersonCamTransform;
-        [SerializeField] private Transform thirdPersonCamTransform;
-        [SerializeField] private float switchingDuration;
-
-        [SerializeField] LocalPlayerRotation localPlayerRotation;
-        [SerializeField] Transform lookAtTargetObj;
         [SerializeField] Transform moveCheckObj;
+        [SerializeField] Camera _camera;
+        [SerializeField] PlayerChaChange playerChaChange;
+        [SerializeField] LocalPlayerMove localPlayerMove;
 
-        public bool IsFirstPersonView { get; private set; }
-        public bool IsSwitchingView
-        {
-            get { return !ReferenceEquals(_switching, null); }
-        }
-
-        private Vector3 _defaultEulerAngle;
-        private Vector3 _cameraRotationDelta;
-        private Camera _camera;
-        private Transform _transform;
-        private IEnumerator _switching = null;
         private bool _isRotateEnabled;
-        public float _thirdPersonCamDistance;
 
-        [SerializeField] CameraColliderChecker cameraColliderChecker;
+        private Tween moveTween = null;
 
-        private void Awake()
+        bool cameraRotFlag = false;
+        Vector2 carmeraRotValue = Vector2.zero;
+
+
+        private void Start()
         {
-            Assert.IsNotNull(cameraPivot);
-            Assert.IsNotNull(firstPersonCamTransform);
-            Assert.IsNotNull(thirdPersonCamTransform);
-            
-            _camera = GetComponent<Camera>();
-            _transform = transform;
-
-            //IsFirstPersonView = false;
-            //_transform.localPosition = thirdPersonCamTransform.localPosition;
-            //_transform.localRotation = thirdPersonCamTransform.localRotation;
-
-            //1인칭 시점으로 세팅
-            IsFirstPersonView = true;
-            _transform.localPosition = firstPersonCamTransform.localPosition;
-            _transform.localRotation = firstPersonCamTransform.localRotation;
-            //StartCoroutine(SwitchView());
-
-            _defaultEulerAngle = _transform.localEulerAngles;
-            _camera.cullingMask = ~0;
-
-            _thirdPersonCamDistance = (cameraPivot.position - thirdPersonCamTransform.position).magnitude;
+            playerChaChange.SkinnedMeshRendererActiveSet(false);
         }
 
-        
-
-        private void Update()
+        private void FixedUpdate()
         {
             IsColliderOnCheck();
-            
         }
 
+        /// <summary>
+        /// 콜라이더 충돌 여부 체크
+        /// </summary>
         void IsColliderOnCheck()
         {
-            if (cameraColliderChecker.isColliderOn == false)
-                return;
-          
-            float checkDis = Vector3.Distance(cameraPivot.position, _camera.transform.position);
-            MoveCheckObjPosChange(Vector3.forward * checkDis * 0.05f);
+            float hitDistance = RayCastCheck(transform.position);
+
+            if (hitDistance != 0)
+            {
+                float posZ = -(hitDistance - 1);
+                ResetCameraZoom(posZ, time);
+            }
         }
 
+        public float time = 0.1f;
 
+
+        /// <summary>
+        /// 넘겨 받은 위치값에 콜라이더가 있는지 체크
+        /// </summary>
+        /// <param name="checkPos"></param>
+        /// <returns></returns>
+        float RayCastCheck(Vector3 checkPos)
+        {
+            RaycastHit hit;
+
+            float distance = Vector3.Distance(cameraPivot.position, checkPos) + 1;
+
+            var rayDir = (checkPos - cameraPivot.position).normalized;
+            var layerMask = 1 << LayerMask.NameToLayer("LocalPlayer") | 1 << LayerMask.NameToLayer("RemotePlayer");
+            layerMask = ~layerMask;
+            Physics.Raycast(cameraPivot.position, rayDir, out hit, distance, layerMask);
+
+            return hit.distance;
+        }
+
+        /// <summary>
+        /// 마우스 오른쪽 버튼을 누르면 호출
+        /// </summary>
+        /// <param name="ctx"></param>
+        public void OnRotateEnable(InputAction.CallbackContext ctx)
+        {
+            var value = ctx.ReadValue<float>();
+            _isRotateEnabled = value == 1; // value is 1 or 0 (float)
+        }
+
+        /// <summary>
+        /// 마우스 오른쪽 버튼을 드레그 하면 호출
+        /// </summary>
+        /// <param name="ctx"></param>
         public void OnRotate(InputAction.CallbackContext ctx)
         {
-            if (IsSwitchingView) return;    // 인칭 전환중이라면 아무것도 안함
             if (!_isRotateEnabled) 
             {
                 cameraRotFlag = false;
@@ -106,11 +107,15 @@ namespace Game.Player
             Vector2 rotValue = cameraPivot.rotation.eulerAngles;
             rotValue += setValue;
             cameraPivot.rotation = Quaternion.Euler(rotValue);
+
+            cameraPivot.transform.localPosition = Vector3.zero;
+
+            if (firstViewOn)
+            {
+                localPlayerMove.ChaLookAtForward();
+            }
+
         }
-
-
-        bool cameraRotFlag = false;
-        Vector2 carmeraRotValue = Vector2.zero;
 
         public void OnRotateKeybordInput(InputAction.CallbackContext ctx)
         {
@@ -141,151 +146,118 @@ namespace Game.Player
             }
         }
 
-
-        void InputCheck()
-        {
-            if (cameraRotFlag)
-            {
-                _cameraRotationDelta.x -= carmeraRotValue.y * sensitivity;
-                _cameraRotationDelta.x = Mathf.Clamp(
-                    _cameraRotationDelta.x,
-                    -cameraRotationLimit,
-                    cameraRotationLimit);
-
-                //if (!IsFirstPersonView)
-                {
-                    //cameraPivot.Rotate(Vector3.up, carmeraRotValue.x * sensitivity);
-                }
-
-                var newCameraRotation = _defaultEulerAngle;
-                newCameraRotation += _cameraRotationDelta;
-
-                //_transform.localEulerAngles = newCameraRotation;
-                cameraPivot.localEulerAngles = newCameraRotation;
-
-                //_transform.parent.localEulerAngles = newCameraRotation;
-
-                if (IsFirstPersonView)
-                {
-                    //localPlayerRotation.OnRotateKeybordInput(carmeraRotValue);
-                }
-            }
-        }
-
-
-        public void OnSwitchView(InputAction.CallbackContext ctx)
-        {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
-                return;
-
-            if (ctx.performed)
-                OnSwitchView();
-        }
-
-        public void OnSwitchView()
-        {
-            StartCoroutine(_switching = SwitchView());
-        }
-
-
-        /*
-         * @brief 1인칭과 3인칭을 전환하는 코루틴
-         * @details 카메라의 local transform을 바꾸고, 1인칭일시에 플레이어를 안보이게 함
-         */
-        private IEnumerator SwitchView()
-        {
-            var posSrc = _transform.localPosition;
-            var posDst = IsFirstPersonView
-                ? thirdPersonCamTransform.localPosition
-                : firstPersonCamTransform.localPosition;
-
-            var rotSrc = _transform.localRotation;
-            var rotDst = IsFirstPersonView
-                ? thirdPersonCamTransform.localRotation
-                : firstPersonCamTransform.localRotation;
-
-            var pivotRotSrc = cameraPivot.localRotation;
-            var pivotRotDst = Quaternion.identity;
-            
-            var t = 0.0f;
-            while (t < 1.0f)
-            {
-                _transform.localPosition = Vector3.Lerp(posSrc, posDst, t);
-                _transform.localRotation = Quaternion.Lerp(rotSrc, rotDst, t);
-                cameraPivot.localRotation = Quaternion.Lerp(pivotRotSrc, pivotRotDst, t);
-                
-                t += Time.deltaTime / switchingDuration;
-                yield return null;
-            }
-
-            _transform.localPosition = posDst;
-            _transform.localRotation = rotDst;
-            cameraPivot.localRotation = pivotRotDst;
-
-            _defaultEulerAngle = _transform.localEulerAngles;
-            _cameraRotationDelta = Vector3.zero;
-
-            IsFirstPersonView = !IsFirstPersonView;
-            if (IsFirstPersonView)
-                _camera.cullingMask = ~LayerMask.GetMask("LocalPlayer");
-            else
-                _camera.cullingMask = ~0;
-            
-            _switching = null;
-        }
-        
-        public void OnRotateEnable(InputAction.CallbackContext ctx)
-        {
-            var value = ctx.ReadValue<float>();
-            _isRotateEnabled = value > 0.5f; // value is 1 or 0 (float)
-        }
-
-        public void OnCameraPosReset(InputAction.CallbackContext ctx)
+        /// <summary>
+        /// 마우스 휠을 조정할때 호출
+        /// </summary>
+        /// <param name="ctx"></param>
+        public void OnCameraZoomReset(InputAction.CallbackContext ctx)
         {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
                 return;
 
             if (!ctx.performed) return;
 
-            var value = ctx.ReadValue<float>() / 120;    // scroll raw value: [-120, 120]
+            var value = ctx.ReadValue<float>();    // scroll raw value: [-120, 120]
+#if UNITY_EDITOR
+            value *= 0.01f;
+#endif
 
             if (Mathf.Abs(value) > 1e-10)
             {
-                MoveCheckObjPosChange(Vector3.forward * value);
+                //if (CanZoomCheck(value))
+                {
+                    float posZ = _camera.transform.localPosition.z;
+                    ResetCameraZoom(posZ + value);
+                }
             }
         }
 
-        void MoveCheckObjPosChange(Vector3 value)
+        /// <summary>
+        /// 줌이 가능할지 체크
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        bool CanZoomCheck(float value)
         {
-            moveCheckObj.transform.Translate(value);
+            moveCheckObj.transform.position = _camera.transform.position;
 
-            if (moveCheckObj.transform.localPosition.z > 0.15f)
-            {
-                moveCheckObj.transform.localPosition = new Vector3(0, 1.65f, 0.15f);
-            }
+            Vector3 pos = moveCheckObj.transform.localPosition;
+            pos.z += value;
+            moveCheckObj.transform.localPosition = pos;
 
-            CameraReset();
+            Vector3 checkPos = moveCheckObj.transform.position;
+
+            return RayCastCheck(checkPos) == 0;
         }
 
-        Tween moveTween = null;
-        Tween rotTween = null;
 
-        void CameraReset()
+        /// <summary>
+        /// 카메라 줌 인(아웃)
+        /// </summary>
+        /// <param name="posZ"></param>
+        /// <param name="tweenTime"></param>
+        void ResetCameraZoom(float posZ, float tweenTime = 0.5f)
         {
             if (moveTween != null && moveTween.IsPlaying())
             {
                 moveTween.Kill();
             }
-            moveTween = _camera.transform.DOMove(moveCheckObj.position, 0.5f);
 
-            if (rotTween != null && rotTween.IsPlaying())
+            if (posZ > firstViewMinValue)
             {
-                rotTween.Kill();
-            }
-            rotTween = _camera.transform.DOLocalRotate(moveCheckObj.transform.localRotation.eulerAngles, 0.5f);
 
+                if (firstViewReadyOn) 
+                {
+                    if (firstViewOn)
+                    {
+                        _camera.transform.localPosition = new Vector3(0, 0, 0f);
+                        playerChaChange.SkinnedMeshRendererActiveSet(false);
+                    }
+                    else
+                    {
+                        moveTween = _camera.transform.DOLocalMoveZ(firstViewMinValue, tweenTime);
+                    }
+                }
+                else
+                {
+                    firstViewReadyOn = true;
+                    firstViewOnDelay = 0.5f;
+                    moveTween = _camera.transform.DOLocalMoveZ(firstViewMinValue, tweenTime);
+                }
+                
+            }
+            
+            else
+            {
+                playerChaChange.SkinnedMeshRendererActiveSet(true);
+                firstViewOn = false;
+                firstViewReadyOn = false;
+                moveTween = _camera.transform.DOLocalMoveZ(posZ, tweenTime);
+            }
         }
 
+        private void Update()
+        {
+            if (firstViewReadyOn)
+            {
+                firstViewOnDelay -= Time.deltaTime;
+
+                if (firstViewOnDelay < 0 )
+                {
+                    firstViewOnDelay = 0;
+                    firstViewOn = true;
+
+                    localPlayerMove.ChaLookAtForward();
+                }
+
+            }
+            
+        }
+
+        public float firstViewMinValue = -0.7f;
+        public float firstViewOnDelay = 1;
+        public bool firstViewOn = false;
+        public bool firstViewReadyOn = false;
     }
 }
 
