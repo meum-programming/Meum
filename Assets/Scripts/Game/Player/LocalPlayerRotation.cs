@@ -23,6 +23,7 @@ namespace Game.Player
 
         bool cameraRotOn = false;
 
+        /*
         private void Awake()
         {
             Assert.IsNotNull(cameraPivot);
@@ -48,41 +49,50 @@ namespace Game.Player
 
         private void Update()
         {
-            if(_isMoving)
-                FitCharacterRotationWithCamera();
+            //if(_isMoving)
+              //  FitCharacterRotationWithCamera();
         }
+        */
         /*
          * @breif 카메라 방향과 캐릭터 방향을 맞춤
          */
-        private void FitCharacterRotationWithCamera()
-        {
+        
+        //private void FitCharacterRotationWithCamera()
+        //{
             //if (cameraController.IsSwitchingView || cameraController.IsFirstPersonView)
-              //  return;
+            //  return;
 
-            var camPivotRotationBackup = cameraPivot.rotation;
+            //var camPivotRotationBackup = cameraPivot.rotation;
 
-            var targetRotation = Quaternion.LookRotation(cameraPivot.forward, Vector3.up);
-            _transform.rotation = Damp(_transform.rotation, targetRotation, 5.0f, Time.deltaTime);
+            //float y = cameraPivot.localRotation.eulerAngles.y;
+            //_transform.DOLocalRotate(new Vector3(0, y, 0), 0.5f);
+
+
+            //var targetRotation = Quaternion.LookRotation(cameraPivot.forward, Vector3.up);
+            //_transform.rotation = Damp(_transform.rotation, targetRotation, 5.0f, Time.deltaTime);
 
             /*
              * cameraPivot은 플레이어의 child로 들어가서 플레이어가 회전하면 같이 돌아감 
              * 카메라 방향은 돌아가면 안되기때문에 회전전에 저장하고 덮어씌움
              */
-            cameraPivot.rotation = camPivotRotationBackup;
-        }
+            //cameraPivot.rotation = camPivotRotationBackup;
+        //}
 
         // http://www.rorydriscoll.com/2016/03/07/frame-rate-independent-damping-using-lerp/
-        private Quaternion Damp(Quaternion a, Quaternion b, float lambda, float dt)
-        {
-            return Quaternion.Slerp(a, b, 1 - Mathf.Exp(-lambda * dt));
-        }
+        //private Quaternion Damp(Quaternion a, Quaternion b, float lambda, float dt)
+        //{
+            //return Quaternion.Slerp(a, b, 1 - Mathf.Exp(-lambda * dt));
+        //}
         
-        public void OnMove(InputAction.CallbackContext ctx)
-        {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
-                return;
+        //public void OnMove(InputAction.CallbackContext ctx)
+        //{
+            //if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+              //  return;
 
-            
+            //float y = cameraPivot.localRotation.eulerAngles.y;
+            //_transform.DOLocalRotate(new Vector3(0, y, 0), 0.5f);
+
+            /*
 
             if (cameraRotOn == false)
             {
@@ -104,12 +114,13 @@ namespace Game.Player
                     _transform.DOLocalRotate(rotValue, 1);
                 }
             }
-
+            */
             //var value = ctx.ReadValue<Vector2>();
             //if (value.sqrMagnitude < 1e-3) _isMoving = false;
             //else _isMoving = true;
-        }
+        //}
 
+        /*
         public void OnMoveJoystick(Vector2 value)
         {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
@@ -147,5 +158,6 @@ namespace Game.Player
             var value = ctx.ReadValue<float>();
             _isRotateEnabled = value > 0.5f;    // value is 1 or 0 (float)
         }
+        */
     }
 }

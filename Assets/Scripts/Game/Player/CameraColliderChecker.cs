@@ -9,6 +9,8 @@ public class CameraColliderChecker : MonoBehaviour
     public Transform cameraPivot;
     public BoxCollider boxCol;
 
+    public List<GameObject> objList = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,15 +26,45 @@ public class CameraColliderChecker : MonoBehaviour
     void BoxColChange()
     {
         float checkDis = Vector3.Distance(cameraPivot.position, transform.position);
+        Reset(checkDis);
+    }
 
+    void Reset(float checkDis)
+    {
         Vector3 size = boxCol.size;
         size.z = checkDis;
         boxCol.size = size;
 
         Vector3 center = boxCol.center;
-        center.z = checkDis * 0.5f -0.5f;
+        center.z = checkDis * 0.5f - 0.5f;
         boxCol.center = center;
     }
+
+
+    public void Test()
+    {
+        float checkDis = Vector3.Distance(cameraPivot.position, transform.position);
+
+
+        int index = 0;
+
+        for (int i = 0; i < 100; i++)
+        {
+            checkDis -= 0.1f;
+            Reset(checkDis);
+
+            index = i;
+
+            if (isColliderOn == false)
+            {
+                break;
+            }
+
+        }
+
+        Debug.LogWarning(index);
+    }
+
 
 
     private void OnCollisionEnter(Collision collision)
@@ -41,6 +73,11 @@ public class CameraColliderChecker : MonoBehaviour
             return;
 
         isColliderOn = true;
+
+        if (!objList.Contains(collision.gameObject))
+        {
+            objList.Add(collision.gameObject);
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -49,14 +86,19 @@ public class CameraColliderChecker : MonoBehaviour
             return;
 
         isColliderOn = true;
+        if (!objList.Contains(collision.gameObject))
+        {
+            objList.Add(collision.gameObject);
+        }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (CanNotLayerCheck(collision))
             return;
-        
+
         isColliderOn = false;
+        objList.Remove(collision.gameObject);
     }
 
     bool CanNotLayerCheck(Collision collision)

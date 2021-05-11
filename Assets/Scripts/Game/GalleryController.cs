@@ -70,13 +70,4 @@ public class GalleryController : MonoBehaviour
     {
         MeumSocket.Get().GoToChaEditScene();
     }
-
-    public void CameraWwitchingBtnClick()
-    {
-        if (FindObjectOfType<LocalPlayerCamera>())
-        {
-            FindObjectOfType<LocalPlayerCamera>().OnSwitchView();
-        }
-    }
-
 }

@@ -41,6 +41,7 @@ namespace Game.Player
         float jumpEndDeley = 0;
 
         [SerializeField] GroundChecker groundChecker;
+        [SerializeField] private Transform cameraPivot;
 
         private void Awake()
         {
@@ -83,12 +84,23 @@ namespace Game.Player
                 _velocityY -= GRAVITY * Time.deltaTime;
         }
 
+        public void ChaLookAtForward()
+        {
+            float y = cameraPivot.localRotation.eulerAngles.y;
+            transform.DOLocalRotate(new Vector3(0, y, 0), 0.5f);
+        }
+
         private void Move()
         {
             if (UI.ChattingUI.ChattingUI.Get() != null && UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
             {
                 _moveVector = Vector3.zero;
                // return;
+            }
+
+            if (_moveVector != Vector3.zero)
+            {
+                ChaLookAtForward();
             }
 
             var selfTransform = transform;
