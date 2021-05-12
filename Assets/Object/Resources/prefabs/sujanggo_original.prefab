@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6033069521162206985}
   - component: {fileID: 7211986309992476844}
   - component: {fileID: 4896230966860973158}
-  m_Layer: 0
+  - component: {fileID: 3601665446576865770}
+  m_Layer: 11
   m_Name: sujanggo_original
-  m_TagString: Untagged
+  m_TagString: Paint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3601665446576865770
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6409207687894771123}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0115314, y: 0.04354072, z: 0.01479823}
+  m_Center: {x: 0.000031709904, y: 0.021759951, z: 0.00006661471}
