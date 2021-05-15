@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class Test_WebWaiting_Room : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class Test_WebWaiting_Room : MonoBehaviour
     {
         TokenSetBtnClick();
         RoomSetBtnClick();
+        //AddresableTest();
     }
 
     // Update is called once per frame
@@ -47,4 +50,43 @@ public class Test_WebWaiting_Room : MonoBehaviour
         //webHandler.EnterRoom("unseenland");
         //webHandler.EnterRoom("UGKIM");
     }
+
+    void AddresableTest()
+    {
+
+        //Debug.LogWarning(Addressables.kAddressablesRuntimeDataPath);
+
+#if !UNITY_EDITOR
+    PlayerPrefs.DeleteKey( Addressables.kAddressablesRuntimeDataPath );
+#endif
+
+        StartCoroutine(loadOn());
+        
+
+
+        //obj.transform.localScale = Vector3.one * 100;
+    }
+
+    IEnumerator loadOn()
+    {
+        //AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>("sofa");
+        //yield return handle;
+        //if (handle.Result != null)
+          //  Complete(handle.Result);
+          
+        var data = Addressables.InstantiateAsync("sofa", Vector3.zero, Quaternion.identity, transform);
+        yield return data.IsDone;
+
+
+        Complete(data.Result);
+    }
+
+    void Complete(GameObject resultObj)
+    {
+        GameObject obj = Instantiate(resultObj, Vector3.zero, Quaternion.identity, transform);
+        Debug.LogWarning(obj);
+    }
+
+
+
 }
