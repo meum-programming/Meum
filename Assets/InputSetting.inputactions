@@ -78,12 +78,20 @@
                     "interactions": "Press"
                 },
                 {
-                    "name": "Camera Pos Reset",
+                    "name": "CameraZoom",
                     "type": "Value",
                     "id": "128dceaf-19f5-4809-9c27-490b61d6d82a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "CameraZoom-keybord",
+                    "type": "Value",
+                    "id": "157cfc0a-64a0-4a18-91a0-6ebdbd5fe0df",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -325,9 +333,42 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Camera Pos Reset",
+                    "action": "CameraZoom",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "bed46bbf-6639-48bb-abd0-a93fe37c5c01",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraZoom-keybord",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "d4d18152-037c-4034-8f7d-1cc82814502f",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraZoom-keybord",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "69932bff-778e-4190-990c-63e215102322",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraZoom-keybord",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

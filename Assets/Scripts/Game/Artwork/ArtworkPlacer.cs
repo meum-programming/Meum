@@ -194,16 +194,15 @@ namespace Game.Artwork
             if (_selected && _moving && ctx.performed)
             {
                 var value = ctx.ReadValue<float>();
-
-                RotateSelected();
+                RotateSelected(value);
             }
         }
-        public void RotateSelected()
+        public void RotateSelected(float value = 1)
         {
             if (_selected)
             {
                 Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
-                targetTransform.rotation = Quaternion.Euler(targetTransform.up * 15.0f) * targetTransform.rotation;
+                targetTransform.rotation = Quaternion.Euler(Vector3.down * value *15.0f) * targetTransform.rotation;
             }
         }
 

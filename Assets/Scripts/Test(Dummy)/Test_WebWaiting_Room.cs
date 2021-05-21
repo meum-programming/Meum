@@ -26,8 +26,12 @@ public class Test_WebWaiting_Room : MonoBehaviour
 
     public void TokenSetBtnClick()
     {
+        //webHandler.SetToken("180");
+
+        //webHandler.SetToken("62");
+
         //webHandler.SetToken("61");
-        webHandler.SetToken("60");
+        //webHandler.SetToken("60");
         //webHandler.SetToken("59");
         //webHandler.SetToken("149");
         //webHandler.SetToken("1");
@@ -35,20 +39,26 @@ public class Test_WebWaiting_Room : MonoBehaviour
         //webHandler.SetToken("242");
         //webHandler.SetToken("238");
         //webHandler.SetToken("8");
+        webHandler.SetToken("268");
 
     }
 
     public void RoomSetBtnClick()
     {
+        //webHandler.EnterRoom("죽산중학교");
+
+        //webHandler.EnterRoom("SNUART2020");
+
         //webHandler.EnterRoom("Guest");
-        webHandler.EnterRoom("믐MASTER");
-        //webHandler.EnterRoom("믐대표서비스");
+        //webHandler.EnterRoom("믐MASTER");
+        //webHandler.EnterRoom("Meum");
         //webHandler.EnterRoom("blackgallery");
         //webHandler.EnterRoom("string");
         //webHandler.EnterRoom("the_other_layers");
         //webHandler.EnterRoom("sangminTest");
         //webHandler.EnterRoom("unseenland");
         //webHandler.EnterRoom("UGKIM");
+        webHandler.EnterRoom("gogh");
     }
 
     void AddresableTest()
@@ -56,9 +66,9 @@ public class Test_WebWaiting_Room : MonoBehaviour
 
         //Debug.LogWarning(Addressables.kAddressablesRuntimeDataPath);
 
-#if !UNITY_EDITOR
-    PlayerPrefs.DeleteKey( Addressables.kAddressablesRuntimeDataPath );
-#endif
+//#if !UNITY_EDITOR
+  //  PlayerPrefs.DeleteKey( Addressables.kAddressablesRuntimeDataPath );
+//#endif
 
         StartCoroutine(loadOn());
         

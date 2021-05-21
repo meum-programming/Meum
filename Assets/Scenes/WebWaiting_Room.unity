@@ -2350,6 +2350,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 128dceaf-19f5-4809-9c27-490b61d6d82a
     m_ActionName: Gallery Scene/Camera Pos Reset[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5981749484618611084}
+        m_TargetAssemblyTypeName: Game.Player.LocalPlayerCamera, Assembly-CSharp
+        m_MethodName: OnCameraZoomResetKeybordInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 157cfc0a-64a0-4a18-91a0-6ebdbd5fe0df
+    m_ActionName: Gallery Scene/CameraZoom-keybord[/Keyboard/o,/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Gallery Scene

@@ -26,6 +26,8 @@ namespace Game.Player
         bool cameraRotFlag = false;
         Vector2 carmeraRotValue = Vector2.zero;
 
+        bool cameraZoomFlag = false;
+        float carmeraZoomValue = 0;
 
         private void Start()
         {
@@ -91,12 +93,15 @@ namespace Game.Player
         {
             if (!_isRotateEnabled) 
             {
-                cameraRotFlag = false;
-                carmeraRotValue = Vector2.zero;
                 return;
             }
 
             var value = ctx.ReadValue<Vector2>();
+            RotateOn(value);
+        }
+
+        void RotateOn(Vector2 value)
+        {
             float sensitivity = DataManager.Instance.GetMouseSensitivityValue();
 
             var test = value.x * sensitivity * 0.1f;
@@ -114,9 +119,13 @@ namespace Game.Player
             {
                 localPlayerMove.ChaLookAtForward();
             }
-
         }
 
+
+        /// <summary>
+        /// 키보드 IJKL키를 누르면 호출
+        /// </summary>
+        /// <param name="ctx"></param>
         public void OnRotateKeybordInput(InputAction.CallbackContext ctx)
         {
             if (UI.ChattingUI.ChattingUI.Get() != null && UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
@@ -124,26 +133,74 @@ namespace Game.Player
                 return;
             }
 
-            CameraRotFlagChange(ctx, 2f);
+            float addValue = 4;
+
+            switch (ctx.action.phase)
+            {
+                case InputActionPhase.Started:
+                    cameraRotFlag = true;
+                    carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
+                    break;
+                case InputActionPhase.Performed:
+                    cameraRotFlag = true;
+                    carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
+                    break;
+                case InputActionPhase.Canceled:
+                    cameraRotFlag = false;
+                    carmeraRotValue = Vector2.zero;
+                    break;
+            }
         }
 
-        void CameraRotFlagChange(InputAction.CallbackContext ctx, float addValue = 10)
+        /// <summary>
+        /// update에서 cameraRotFlag값이 true일때 계속 호출
+        /// </summary>
+        void CameraRotFlagCheck()
         {
-            if (ctx.action.phase == InputActionPhase.Started)
+            if (cameraRotFlag == false)
+                return;
+
+            RotateOn(carmeraRotValue);
+        }
+
+        /// <summary>
+        /// 키보드 IJKL키를 누르면 호출
+        /// </summary>
+        /// <param name="ctx"></param>
+        public void OnCameraZoomResetKeybordInput(InputAction.CallbackContext ctx)
+        {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+
+            float addValue = 120;
+
+            switch (ctx.action.phase)
             {
-                cameraRotFlag = true;
-                carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
+                case InputActionPhase.Started:
+                    cameraZoomFlag = true;
+                    carmeraZoomValue = ctx.ReadValue<float>(); 
+                    break;
+                case InputActionPhase.Performed:
+                    cameraZoomFlag = true;
+                    carmeraZoomValue = ctx.ReadValue<float>();
+                    break;
+                case InputActionPhase.Canceled:
+                    cameraZoomFlag = false;
+                    carmeraZoomValue = 0;
+                    break;
             }
-            else if (ctx.action.phase == InputActionPhase.Performed)
+        }
+
+        void CameraZoomFlagCheck()
+        {
+            if (cameraZoomFlag == false)
+                return;
+
+            if (CanZoomCheck(carmeraZoomValue))
             {
-                cameraRotFlag = true;
-                carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
-            }
-            else if (ctx.action.phase == InputActionPhase.Canceled)
-            {
-                cameraRotFlag = false;
-                carmeraRotValue = Vector2.zero;
-            }
+                float posZ = _camera.transform.localPosition.z;
+                ResetCameraZoom(posZ + carmeraZoomValue);
+            }   
         }
 
         /// <summary>
@@ -158,16 +215,18 @@ namespace Game.Player
             if (!ctx.performed) return;
 
             var value = ctx.ReadValue<float>();    // scroll raw value: [-120, 120]
+            
 #if UNITY_EDITOR
             value *= 0.01f;
 #endif
 
-            if (Mathf.Abs(value) > 1e-10)
+            if (Mathf.Abs(value) > 0)
             {
                 //if (CanZoomCheck(value))
                 {
                     float posZ = _camera.transform.localPosition.z;
                     ResetCameraZoom(posZ + value);
+                    //ResetCameraZoom(posZ);
                 }
             }
         }
@@ -189,7 +248,6 @@ namespace Game.Player
 
             return RayCastCheck(checkPos) == 0;
         }
-
 
         /// <summary>
         /// 카메라 줌 인(아웃)
@@ -251,7 +309,9 @@ namespace Game.Player
                 }
 
             }
-            
+
+            CameraZoomFlagCheck();
+            CameraRotFlagCheck();
         }
 
         public float firstViewMinValue = -0.7f;
