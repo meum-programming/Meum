@@ -43,6 +43,10 @@ namespace Game.Player
         [SerializeField] GroundChecker groundChecker;
         [SerializeField] private Transform cameraPivot;
 
+        public bool portalMoveOn = false;
+
+        float portalMoveNotDelay = 0;
+
         private void Awake()
         {
             _charController = GetComponent<CharacterController>();
@@ -69,6 +73,13 @@ namespace Game.Player
 
         private void Update()
         {
+            if (portalMoveOn)
+            {
+                _moveVector = Vector3.zero;
+                portalMoveOn = false;
+                return;
+            }
+
             Move();
             ApplyGravity();
 
@@ -256,5 +267,27 @@ namespace Game.Player
                 UI.ChattingUI.ChattingUI.Get().SetInputFieldActive();
             }
         }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Portal"))
+            {
+                Teleporting teleporting = other.GetComponent<Teleporting>();
+
+                if (teleporting == null)
+                    return;
+
+                portalMoveOn = true;
+
+                Transform target = teleporting.teleportTarget;
+                //위치 이동
+                transform.position = target.position;
+
+                //회전값 수정
+                transform.rotation = target.rotation;
+                cameraPivot.rotation = target.rotation;
+            }
+        }
+
     }
 }
