@@ -18,10 +18,10 @@ MonoBehaviour:
     audioClip: {fileID: 0}
   - bgmId: 1
     name: "[\uB274\uC5D0\uC774\uC9C0] A New Beginning - Esther Abrami"
-    audioClip: {fileID: 8300000, guid: c630d62a21ecf6546a08871d7173f9e8, type: 3}
+    audioClip: {fileID: 0}
   - bgmId: 2
     name: "[\uC2E0\uB514] Ready or Not - Trevor Garrod"
-    audioClip: {fileID: 8300000, guid: 19f54fc3fd07b114597c84c95ac53a73, type: 3}
+    audioClip: {fileID: 0}
   - bgmId: 3
     name: "[\uC2E0\uB514] Shadowing - Corbyn Kites"
     audioClip: {fileID: 8300000, guid: ac62a46b8ea70734783a855a48197cee, type: 3}
@@ -33,13 +33,13 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 05a02775fe248e342b4fd83634e924bb, type: 3}
   - bgmId: 6
     name: "[\uC2E0\uB514] AnaCaptainslogue  - Noir et Blanc Vie"
-    audioClip: {fileID: 8300000, guid: f323cb73cde3d5948ad6d6ef30398e6d, type: 3}
+    audioClip: {fileID: 0}
   - bgmId: 7
     name: "[\uC7AC\uC988] BeeyornandRaysd - Noir et Blanc Vie"
-    audioClip: {fileID: 8300000, guid: 92db32df7abbd56498b08bec3d6007bd, type: 3}
+    audioClip: {fileID: 0}
   - bgmId: 8
     name: "[\uB274\uC5D0\uC774\uC9C0] Watercolor Lilies - Aaron Kenny"
-    audioClip: {fileID: 8300000, guid: 5b3488228e5cc724ab10d730121def75, type: 3}
+    audioClip: {fileID: 0}
   - bgmId: 9
     name: "[\uC7AC\uC988] This is a Jazz Space - Midnight North"
     audioClip: {fileID: 8300000, guid: 9bdf8170028217a43a94578cc365b33b, type: 3}
@@ -54,7 +54,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: cf432c1fe4ec6b345be38d7a83701dd3, type: 3}
   - bgmId: 13
     name: "[\uD31D] Cozy up with coffee - Unknown"
-    audioClip: {fileID: 8300000, guid: 8e7f17b74a2370c4bb507e82cd77e98d, type: 3}
+    audioClip: {fileID: 0}
   - bgmId: 14
     name: "[\uC2E0\uB514] Altitude - Unknown"
     audioClip: {fileID: 8300000, guid: d3e40c65b87273841908cd0237fee13b, type: 3}
@@ -77,24 +77,31 @@ MonoBehaviour:
   - skyBoxEnum: -1
     name: 
     material: {fileID: 0}
+    notUse: 0
   - skyBoxEnum: 0
     name: "\uC5EC\uB984 \uC815\uC624"
     material: {fileID: 2100000, guid: b6c9329c7bf2d4e7d89f3ee71506bcac, type: 2}
+    notUse: 0
   - skyBoxEnum: 1
     name: "\uC870\uC6A9\uD55C \uAD6C\uB984"
     material: {fileID: 2100000, guid: a7360fd7ed66c45edac3d45188adc78c, type: 2}
+    notUse: 0
   - skyBoxEnum: 2
     name: "\uBC31\uC0C9\uACF5\uAC04"
     material: {fileID: 2100000, guid: 835f60c2a79c81343986250f2351f75f, type: 2}
+    notUse: 0
   - skyBoxEnum: 3
     name: "\uD751\uC0C9 \uACF5\uAC04"
     material: {fileID: 2100000, guid: 8501a18039160a64aa030a56ba7b4fcd, type: 2}
+    notUse: 0
   - skyBoxEnum: 4
     name: I Will Greet The Sun Again
     material: {fileID: 2100000, guid: 51171c937f4c81a4db1ad9bd5994810a, type: 2}
+    notUse: 0
   - skyBoxEnum: 5
     name: "\uAE08\uC694\uC77C \uBC24"
     material: {fileID: 2100000, guid: 54d48c025ddd843e8a7289d61823128d, type: 2}
+    notUse: 0
   gestureModelList:
   - id: -1
     name: "\uC124\uC815"

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// 사운드를 관리하는 클래스
@@ -127,10 +128,42 @@ public class SoundManager : MonoBehaviour
 
 		BGMSaveData bGMSaveData = meumSaveData.GetBGMData(bgmID);
 
-        if (bGMSaveData == null)
+		//클릭이 없으면 S3에서 다운로드
+		if (bGMSaveData.audioClip == null)
+		{
+			StartCoroutine(DownLoadBgm(bGMSaveData));
 			return;
+		}
+        else
+		{
+			PlayBGM(bGMSaveData.audioClip);
+		}
+	}
 
-		bgmAudio.clip = bGMSaveData.audioClip;
+	IEnumerator DownLoadBgm(BGMSaveData bGMSaveData)
+	{
+		string bgmName = string.Format("BGM_{0:d2}.mp3", bGMSaveData.bgmId);
+		string baseUrl = "https://s3.ap-northeast-2.amazonaws.com/meum.test.addressable/BGM";
+		string url = string.Format("{0}/{1}", baseUrl, bgmName);
+
+		UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url,AudioType.MPEG);
+
+		yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+		{
+			bGMSaveData.audioClip = DownloadHandlerAudioClip.GetContent(www);
+			PlayBGM(bGMSaveData.audioClip);
+		}
+        else
+		{
+			Debug.LogWarning("BGM DownLoad Error = "+www.error);
+		}
+	}
+
+	public void PlayBGM(AudioClip clip)
+	{
+		bgmAudio.clip = clip;
 		bgmAudio.loop = true;
 		bgmAudio.Play();
 	}
