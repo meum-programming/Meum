@@ -1,9 +1,14 @@
 ﻿using Core;
 using Core.Socket;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Assertions;
+using UnityEngine.Networking;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceLocations;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
@@ -48,16 +53,35 @@ namespace Game
 
         public void Build(LandInfo[] landInfos)
         {
-            Assert.IsNotNull(landInfos);
             _landInfos = landInfos;
-            for (var i = 0; i < _landInfos.Length; ++i)
-                BuildBlock(_landInfos[i]);
+            StartCoroutine(LoadGallery());   
         }
 
-        private void BuildBlock(LandInfo pos)
+        IEnumerator LoadGallery() 
+        {
+            bool downLoadOn = true;
+
+            for (var i = 0; i < _landInfos.Length; ++i)
+            {
+                downLoadOn = true;
+                int type = _landInfos[i].type;
+
+                string objName = string.Format("gallery_type_{0}", type);
+
+                Addressables.InstantiateAsync(objName, _floors).Completed += (AsyncOperationHandle<GameObject> handle) =>
+                {
+                    BuildBlock(_landInfos[i], handle.Result);
+                    downLoadOn = false;
+                };
+                
+                yield return new WaitWhile(()=> downLoadOn);
+            }
+        }
+
+        private void BuildBlock(LandInfo pos , GameObject resultObj)
         {
             var position = new Vector3(pos.x * edgeLength, 0, pos.y * edgeLength);
-            var floor = Instantiate(floorPrefabs[pos.type], _floors);
+            var floor = resultObj;
             floor.transform.position = position;
 
             var wallY = wallPrefab.transform.position.y;

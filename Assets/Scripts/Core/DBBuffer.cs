@@ -111,6 +111,7 @@ namespace Core
     {
         protected override IEnumerator Load(string url)
         {
+            //Debug.LogWarning("url = " + url);
             if (Contains(url))
                 yield return Get(url);
             else

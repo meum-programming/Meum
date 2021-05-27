@@ -13,6 +13,7 @@ public class Test_WebWaiting_Room : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.DeleteKey(Addressables.kAddressablesRuntimeDataPath);
         TokenSetBtnClick();
         RoomSetBtnClick();
         //AddresableTest();

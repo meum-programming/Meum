@@ -11043,12 +11043,44 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 48e0b957e34e97244808f81e8bc1f046, type: 2}
     - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: floorPrefabs.Array.size
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 8266742639423753298, guid: 5ca1a2d5f80d9d24b9e6fe45892030fe, type: 3}
     - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: floorPrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 6486467048730052173, guid: 64d133ea998ead84a996666bf561a90d, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 9070464549837300298, guid: 8cb176001b0d92548bff1e688aa841ad, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 7579459698209365305, guid: 8b3c0294c0d903f4aa70ea09b837e0ca, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 4030194005475324818, guid: 21bf3672c2f2f7c4bb36e05d61ca4f72, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 8512949799821195839, guid: 959adb21cecff0d4caabfe9eca53f2bf, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[6]
+      value: 
+      objectReference: {fileID: 6003056252023715544, guid: a1bf6b97149344a408d39968f1761429, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[7]
+      value: 
+      objectReference: {fileID: 6003056252023715544, guid: 74dfc3702db8c724f8aca8a9ed64c06a, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[8]
+      value: 
+      objectReference: {fileID: 9050478193926011379, guid: 41ad0c826ed2c2748889027d4eaaa4d2, type: 3}
     - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: floorPrefabs.Array.data[9]
       value: 

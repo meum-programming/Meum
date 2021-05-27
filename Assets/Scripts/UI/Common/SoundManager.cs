@@ -128,7 +128,10 @@ public class SoundManager : MonoBehaviour
 
 		BGMSaveData bGMSaveData = meumSaveData.GetBGMData(bgmID);
 
-		//클릭이 없으면 S3에서 다운로드
+        if (bGMSaveData == null)
+			return;
+		
+		//클립이 없으면 S3에서 다운로드
 		if (bGMSaveData.audioClip == null)
 		{
 			StartCoroutine(DownLoadBgm(bGMSaveData));

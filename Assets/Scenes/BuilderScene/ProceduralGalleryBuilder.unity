@@ -711,12 +711,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: floorPrefabs.Array.size
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 8266742639423753298, guid: 5ca1a2d5f80d9d24b9e6fe45892030fe, type: 3}
     - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: floorPrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 6486467048730052173, guid: 64d133ea998ead84a996666bf561a90d, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 9070464549837300298, guid: 8cb176001b0d92548bff1e688aa841ad, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 7579459698209365305, guid: 8b3c0294c0d903f4aa70ea09b837e0ca, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 4030194005475324818, guid: 21bf3672c2f2f7c4bb36e05d61ca4f72, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 8512949799821195839, guid: 959adb21cecff0d4caabfe9eca53f2bf, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[6]
+      value: 
+      objectReference: {fileID: 6003056252023715544, guid: a1bf6b97149344a408d39968f1761429, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[7]
+      value: 
+      objectReference: {fileID: 6003056252023715544, guid: 74dfc3702db8c724f8aca8a9ed64c06a, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[8]
+      value: 
+      objectReference: {fileID: 9050478193926011379, guid: 41ad0c826ed2c2748889027d4eaaa4d2, type: 3}
     - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: floorPrefabs.Array.data[9]
       value: 
@@ -725,6 +757,58 @@ PrefabInstance:
       propertyPath: floorPrefabs.Array.data[10]
       value: 
       objectReference: {fileID: 4090804851376264734, guid: b532a8b2a150038488d39ae85e7d92d8, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[11]
+      value: 
+      objectReference: {fileID: 8232074613990675191, guid: 6571802eafc928a4ba59c4c207302853, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[12]
+      value: 
+      objectReference: {fileID: 8266742639423753298, guid: 5ca1a2d5f80d9d24b9e6fe45892030fe, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[13]
+      value: 
+      objectReference: {fileID: 6486467048730052173, guid: 64d133ea998ead84a996666bf561a90d, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[14]
+      value: 
+      objectReference: {fileID: 9070464549837300298, guid: 8cb176001b0d92548bff1e688aa841ad, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[15]
+      value: 
+      objectReference: {fileID: 7579459698209365305, guid: 8b3c0294c0d903f4aa70ea09b837e0ca, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[16]
+      value: 
+      objectReference: {fileID: 4030194005475324818, guid: 21bf3672c2f2f7c4bb36e05d61ca4f72, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[17]
+      value: 
+      objectReference: {fileID: 8512949799821195839, guid: 959adb21cecff0d4caabfe9eca53f2bf, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[18]
+      value: 
+      objectReference: {fileID: 6003056252023715544, guid: a1bf6b97149344a408d39968f1761429, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[19]
+      value: 
+      objectReference: {fileID: 6003056252023715544, guid: 74dfc3702db8c724f8aca8a9ed64c06a, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[20]
+      value: 
+      objectReference: {fileID: 9050478193926011379, guid: 41ad0c826ed2c2748889027d4eaaa4d2, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[21]
+      value: 
+      objectReference: {fileID: 4599362270735638478, guid: 140711631e69025409adf929891064a8, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[22]
+      value: 
+      objectReference: {fileID: 4090804851376264734, guid: b532a8b2a150038488d39ae85e7d92d8, type: 3}
+    - target: {fileID: 7784460449287985673, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
+      propertyPath: floorPrefabs.Array.data[23]
+      value: 
+      objectReference: {fileID: 8232074613990675191, guid: 6571802eafc928a4ba59c4c207302853, type: 3}
     - target: {fileID: 7784460449287985674, guid: a2af14b7fb27edb439e8803bc254ab8b, type: 3}
       propertyPath: m_Name
       value: proceduralSpace
@@ -9292,7 +9376,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4409475924177347825, guid: 5c3a2d13017cebf41a9e03ff7373c284, type: 3}
+  m_Sprite: {fileID: -5664854901772819738, guid: af370a3559185f84fb876655121ac46c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9986,6 +10070,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: fc3c886d-784c-4517-b8e8-57282f2188b2
     m_ActionName: Builder Scene/run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7036f0b8-05c4-445a-8989-cd6e8522c11a
+    m_ActionName: Gallery Scene/Rotate-keybord[/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e7e4ba58-9774-4f09-88bf-26acd7085049
+    m_ActionName: Gallery Scene/Enter[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 128dceaf-19f5-4809-9c27-490b61d6d82a
+    m_ActionName: Gallery Scene/CameraZoom[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 157cfc0a-64a0-4a18-91a0-6ebdbd5fe0df
+    m_ActionName: Gallery Scene/CameraZoom-keybord[/Keyboard/p,/Keyboard/o]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Builder Scene

@@ -137,10 +137,12 @@ namespace Core.Socket {
                     var cd = MeumDB.Get().GetTextureCoroutine(url);
                     yield return cd.coroutine;
                     Assert.IsNotNull(cd.result);
-                    progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
+                    //progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
+                    progressBar.SetProgress((float)loadCompleteCnt);
                     ++loadCompleteCnt;
                 }
 
+                /*
                 foreach (var url in set3d)
                 {
                     var cd = MeumDB.Get().GetObject3DCoroutine(url);
@@ -149,6 +151,7 @@ namespace Core.Socket {
                     progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
                     ++loadCompleteCnt;
                 }
+                */
             }
 
             
