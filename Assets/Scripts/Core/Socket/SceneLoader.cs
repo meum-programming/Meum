@@ -152,9 +152,26 @@ namespace Core.Socket {
                     ++loadCompleteCnt;
                 }
                 */
+
+                
+                //어드레서블에서 겔러리 미리 로딩
+                for (var i = 0; i < artworksData.lands.Length; i++)
+                {
+                    nextOn = false;
+
+                    int type = artworksData.lands[i].type;
+
+                    string objName = string.Format("gallery_type_{0}", type);
+
+                    AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
+                    {
+                        nextOn = true;
+                    });
+
+                    yield return new WaitUntil(() => nextOn);
+                }
             }
 
-            
 
             nextOn = false;
 

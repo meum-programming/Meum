@@ -54,28 +54,19 @@ namespace Game
         public void Build(LandInfo[] landInfos)
         {
             _landInfos = landInfos;
-            StartCoroutine(LoadGallery());   
-        }
 
-        IEnumerator LoadGallery() 
-        {
-            bool downLoadOn = true;
-
-            for (var i = 0; i < _landInfos.Length; ++i)
+            for (var i = 0; i < _landInfos.Length; i++)
             {
-                downLoadOn = true;
                 int type = _landInfos[i].type;
 
                 string objName = string.Format("gallery_type_{0}", type);
 
-                Addressables.InstantiateAsync(objName, _floors).Completed += (AsyncOperationHandle<GameObject> handle) =>
+                AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
                 {
-                    BuildBlock(_landInfos[i], handle.Result);
-                    downLoadOn = false;
-                };
-                
-                yield return new WaitWhile(()=> downLoadOn);
+                    BuildBlock(_landInfos[i], Instantiate(obj, _floors));
+                });
             }
+
         }
 
         private void BuildBlock(LandInfo pos , GameObject resultObj)
