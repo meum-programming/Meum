@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
-    url: socket.meum.me
+    url: socket2.meum.me
     port: 3000
     sslEnabled: 1
     reconnectTime: 500
@@ -2829,6 +2829,7 @@ MonoBehaviour:
     m_Bits: 6967
   groundChecker: {fileID: 1362627143}
   cameraPivot: {fileID: 5238687189761958075}
+  portalMoveOn: 0
 --- !u!114 &9157458218310043591
 MonoBehaviour:
   m_ObjectHideFlags: 0

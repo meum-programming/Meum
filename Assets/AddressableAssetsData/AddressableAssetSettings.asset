@@ -30,18 +30,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3687dc67dc6280347b6efb1672792074, type: 2}
   - {fileID: 11400000, guid: 47855a7e1fe881c43b4130f91fcbad5c, type: 2}
   - {fileID: 11400000, guid: 3c4fe03972b3c5b4db0161a34dc98ecd, type: 2}
-  - {fileID: 11400000, guid: 06f76720d5ad4614e88e1f37028428c9, type: 2}
-  - {fileID: 11400000, guid: 93cd6d214c3192e4b832649b76e842eb, type: 2}
-  - {fileID: 11400000, guid: a6e531e6e76979c46996d6b449632d19, type: 2}
-  - {fileID: 11400000, guid: 7f2da12c7b0471a4d9b45762c0414d77, type: 2}
-  - {fileID: 11400000, guid: 88eddc646a3c2d046bbbd542cf97f0c2, type: 2}
-  - {fileID: 11400000, guid: 56494a452feeab341982569c867d0836, type: 2}
-  - {fileID: 11400000, guid: 23533ae757017ec4295af217ec866457, type: 2}
-  - {fileID: 11400000, guid: a3fed18a6e7299547a84f29a290263fe, type: 2}
-  - {fileID: 11400000, guid: e2f4d412bdf12cc4cbe5d39de6541c99, type: 2}
-  - {fileID: 11400000, guid: c2bd488321c4b244f91d47860789b972, type: 2}
-  - {fileID: 11400000, guid: 0e812d288ae14ea4f9e27b670e597823, type: 2}
-  - {fileID: 11400000, guid: 3b78590a64f27fb408f005c026dc38f7, type: 2}
+  - {fileID: 11400000, guid: 71db86d568aad554d90a4b2e1385a62a, type: 2}
+  - {fileID: 11400000, guid: d3ef3d676351bdb4d91e50c20880aa96, type: 2}
+  - {fileID: 11400000, guid: b16072cc3ef095d4d9045392add5384f, type: 2}
+  - {fileID: 11400000, guid: fc56876baf1cb8244aa0871e86a7aaca, type: 2}
+  - {fileID: 11400000, guid: 722943056a7e4174192e633792ed9730, type: 2}
+  - {fileID: 11400000, guid: d23df0b6c3ae14548843c8e3c6fe46c6, type: 2}
+  - {fileID: 11400000, guid: f26248ec3a03aa14982a0136ff6be5ee, type: 2}
+  - {fileID: 11400000, guid: 5e4fe483d8c117d4698e80b09892d1dc, type: 2}
+  - {fileID: 11400000, guid: c64027bee3fbbfd4ba424400a18484ee, type: 2}
+  - {fileID: 11400000, guid: b735d7ebbb385574db6b54843ba92cef, type: 2}
+  - {fileID: 11400000, guid: 62b52f37817fc1e4c8b7dbb730d8d9f1, type: 2}
+  - {fileID: 11400000, guid: 9177565b60131044a833a5dee5bc6c38, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -83,18 +83,6 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
-    - gallery_type_0
-    - gallery_type_1
-    - gallery_type_2
-    - gallery_type_3
-    - gallery_type_4
-    - gallery_type_5
-    - gallery_type_6
-    - gallery_type_7
-    - gallery_type_8
-    - gallery_type_9
-    - gallery_type_10
-    - gallery_type_11
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 4ca41c8735928244daae0bde28fe9597, type: 2}

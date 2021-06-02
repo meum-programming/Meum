@@ -15,19 +15,17 @@ MonoBehaviour:
   m_GroupName: gallery_type_3
   m_Data:
     m_SerializedData: []
-  m_GUID: 8b4b26fd44c7ef243a17a0e3d3cd6529
+  m_GUID: 501f63d18b50a004ab7e70f64679b44c
   m_SerializeEntries:
   - m_GUID: 8b3c0294c0d903f4aa70ea09b837e0ca
     m_Address: gallery_type_3
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - default
-    - gallery_type_3
+    m_SerializedLabels: []
     m_MainAsset: {fileID: 7579459698209365305, guid: 8b3c0294c0d903f4aa70ea09b837e0ca, type: 3}
     m_TargetAsset: {fileID: 7579459698209365305, guid: 8b3c0294c0d903f4aa70ea09b837e0ca, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: cd4b0cf6120eaa148a79022ba31ae1f7, type: 2}
-    - {fileID: 11400000, guid: 6cc2ceeff31ee26488f56e00e4e70cde, type: 2}
+    - {fileID: 11400000, guid: 114cedcb3fa08d6489d9c872cc4cc4a6, type: 2}
+    - {fileID: 11400000, guid: 30defa742ea946a4e86db893201dcffa, type: 2}
