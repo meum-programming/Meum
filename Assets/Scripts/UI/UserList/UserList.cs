@@ -8,8 +8,9 @@ namespace UI.UserList
 {
     public class UserList : Core.Singleton<UserList>
     {
-        [SerializeField] private TextMeshProUGUI ownerNameText;
-        [SerializeField] private TextMeshProUGUI userCountText;
+        [SerializeField] private Text ownerNameText;
+        [SerializeField] private Text userCountText;
+        //[SerializeField] private TextMeshProUGUI userCountText;
         [SerializeField] private Button toggleButton;
         [SerializeField] private int nameMaxLength;
 

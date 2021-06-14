@@ -35,6 +35,8 @@ namespace Game.Artwork
         private bool _nowEditing3D = false;
 
         Tween scaleTween = null;
+        Vector3 hitNormal = Vector3.zero;
+        bool hitNormalReady = false;
 
         /*
          * @brief 선택한 오브젝트를 반환 
@@ -202,7 +204,37 @@ namespace Game.Artwork
             if (_selected)
             {
                 Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
-                targetTransform.rotation = Quaternion.Euler(Vector3.down * value *15.0f) * targetTransform.rotation;
+
+                if (_moving == false)
+                {
+                    HitNomalValueSet(targetTransform);
+                }
+
+                targetTransform.rotation = Quaternion.Euler(hitNormal * value * 15) * targetTransform.rotation;
+            }
+        }
+
+        void HitNomalValueSet(Transform targetTransform)
+        {
+            LayerSet("NotPlaced");
+
+            var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var mask = 1 << LayerMask.NameToLayer("Placeable");
+            if (Physics.Raycast(ray, out var hit, 100.0f, mask))
+            {
+                hitNormal = hit.normal;
+            }
+
+            LayerSet("Placeable");
+        }
+
+        void LayerSet(string layerValue)
+        {
+            _selected.gameObject.layer = LayerMask.NameToLayer(layerValue);
+
+            if (_nowEditing3D)
+            {
+                _selected.parent.gameObject.layer = LayerMask.NameToLayer(layerValue);
             }
         }
 
@@ -253,31 +285,26 @@ namespace Game.Artwork
             
             if (_selected && _moving)
             {
-                var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-                var mask = 1 << LayerMask.NameToLayer("Placeable");
-                if (Physics.Raycast(ray, out var hit, 100.0f, mask))
-                {
-                    var objectHit = hit.transform;
+                RaySet();
+            }
+        }
 
-                    if (objectHit.CompareTag("Paint") || objectHit.CompareTag("Wall") || objectHit.CompareTag("Floor")) 
+        void RaySet()
+        {
+            var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var mask = 1 << LayerMask.NameToLayer("Placeable");
+            if (Physics.Raycast(ray, out var hit, 100.0f, mask))
+            {
+                var objectHit = hit.transform;
+
+                if (objectHit.CompareTag("Paint") || objectHit.CompareTag("Wall") || objectHit.CompareTag("Floor"))
+                {
+                    AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
+
+                    if (_nowEditing3D && objectHit.parent != _selected)
                     {
-                        AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
-                        
-                        if (_nowEditing3D == false)
-                        {
-                            AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
-                        }
-                        else
-                        {
-                            if (objectHit.parent != _selected)
-                            {
-                                AlignPaintTransform(_selected.parent, hit, objectHit.CompareTag("Wall"));
-                            }
-                            
-                        }
-                        
+                        AlignPaintTransform(_selected.parent, hit, objectHit.CompareTag("Wall"));
                     }
-                        
                 }
             }
         }
@@ -293,10 +320,10 @@ namespace Game.Artwork
             placePosition.y = objectHit.transform.position.y 
                               + (snap ? SnapFloat(distanceFromCenterY, snapGridSizeY) : distanceFromCenterY);
             paint.rotation = Quaternion.FromToRotation(paint.up, hit.normal) * paint.rotation;
+            hitNormal = hit.normal;
+            hitNormalReady = true;
+
             paint.position = placePosition;
-
-            //Debug.LogWarning(placePosition);
-
         }
 
         private float SnapFloat(float v, float gridSize)

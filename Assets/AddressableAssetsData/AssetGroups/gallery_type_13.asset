@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: gallery_type_0
+  m_Name: gallery_type_13
   m_EditorClassIdentifier: 
-  m_GroupName: gallery_type_0
+  m_GroupName: gallery_type_13
   m_Data:
     m_SerializedData: []
-  m_GUID: 617e24c7b0c143e4c990b26dd3accd72
+  m_GUID: 70031b09b0edcc34ebca2b11fc17efaa
   m_SerializeEntries:
-  - m_GUID: 5ca1a2d5f80d9d24b9e6fe45892030fe
-    m_Address: gallery_type_0
+  - m_GUID: 9612090f5f946794c90dedf24677b1c6
+    m_Address: gallery_type_13
     m_ReadOnly: 0
     m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
+    m_MainAsset: {fileID: 4609340552598348455, guid: 9612090f5f946794c90dedf24677b1c6, type: 3}
+    m_TargetAsset: {fileID: 4609340552598348455, guid: 9612090f5f946794c90dedf24677b1c6, type: 3}
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: e4b7a1a817700c5419417ea28dd7cca1, type: 2}
-    - {fileID: 11400000, guid: 05c0b66569bf0d942a5372ae413779c7, type: 2}
+    - {fileID: 11400000, guid: e7424d03bc21e654a9a3ba1a9176d74e, type: 2}
+    - {fileID: 11400000, guid: 13bd8253c6fe5844aa2f440bf6b6d629, type: 2}

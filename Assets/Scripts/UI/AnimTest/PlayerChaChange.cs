@@ -131,6 +131,22 @@ public class PlayerChaChange : MonoBehaviour
         };
     }
 
+    public int GetHairCount()
+    {
+        return hairObjList.Count;
+    }
+
+    public int GetMaskCount()
+    {
+        return maskObjList.Count;
+    }
+
+    public int GetDressCount()
+    {
+        return chaPartList.Count;
+    }
+
+
     public void GetChaCustomizingSaveData()
     {
         chaCustomizingSaveData = DataManager.Instance.chaCustomizingSaveData;
