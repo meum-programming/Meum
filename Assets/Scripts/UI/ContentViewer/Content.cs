@@ -7,7 +7,7 @@ namespace UI.ContentViewer
 {
     public class Content : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI title;
+        [SerializeField] private Text title;
         [SerializeField] private RawImage image;
         [SerializeField] private int titleMaxLength;
 

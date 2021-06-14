@@ -27,7 +27,6 @@ namespace Game
      */
     public class ProceduralGalleryBuilder : MonoBehaviour
     {
-        [SerializeField] private GameObject[] floorPrefabs;
         [SerializeField] private GameObject wallPrefab;
         [FormerlySerializedAs("edge_length")] [SerializeField] private float edgeLength;
 
@@ -57,24 +56,39 @@ namespace Game
 
             for (var i = 0; i < _landInfos.Length; i++)
             {
+                int index = i;
                 int type = _landInfos[i].type;
 
                 string objName = string.Format("gallery_type_{0}", type);
 
                 AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
                 {
-                    BuildBlock(_landInfos[i], Instantiate(obj, _floors));
+                    BuildBlock(_landInfos[index], obj);
                 });
             }
-
         }
 
         private void BuildBlock(LandInfo pos , GameObject resultObj)
         {
             var position = new Vector3(pos.x * edgeLength, 0, pos.y * edgeLength);
-            var floor = resultObj;
+            var floor = Instantiate(resultObj, _floors);
             floor.transform.position = position;
+            floor.gameObject.SetActive(true);
 
+            WallCreate(pos , position);
+        }
+
+        /// <summary>
+        /// 바다로 못나가게 막는 벽 생성
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="position"></param>
+        void WallCreate(LandInfo pos , Vector3 position)
+        {
+            //생성 안할것인지 체크
+            if (NotCreateWallOn(pos.type))
+                return;
+            
             var wallY = wallPrefab.transform.position.y;
             // x axis walls
             if (!Has(pos.x - 1, pos.y))
@@ -107,6 +121,19 @@ namespace Game
                 wall.transform.position = wallPos;
                 wall.transform.Rotate(Vector3.up, -90.0f);
             }
+        }
+
+        bool NotCreateWallOn(int type)
+        {
+            bool value = false;
+
+            //화이트 큐브 (gallery_type_6)
+            if (type == 6)
+            {
+                value = true;
+            }
+
+            return value;
         }
 
         private bool Has(int x, int y)

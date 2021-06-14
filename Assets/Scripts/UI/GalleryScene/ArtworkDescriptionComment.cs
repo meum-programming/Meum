@@ -10,8 +10,9 @@ namespace UI.GalleryScene
     {
         [SerializeField] private Image badgeImage;
         [SerializeField] private Button deleteButton;
-        [SerializeField] private TextMeshProUGUI writer;
-        [SerializeField] private TextMeshProUGUI content;
+
+        [SerializeField] private Text content;
+
         [SerializeField] private float heightWithoutContent;
  
         private RectTransform _transform;
@@ -27,15 +28,16 @@ namespace UI.GalleryScene
         {
             _commentInfo = info;
             _descriptionUi = descriptionUi;
-            
-            writer.text = _commentInfo.owner.nickname;
-            content.text = _commentInfo.content;
-            
+
+            string contentStr = string.Format("<b>{0}</b>  {1}", _commentInfo.owner.nickname, _commentInfo.content);
+            content.text = contentStr;
+
             var sizeDelta = _transform.sizeDelta;
             sizeDelta.y = content.preferredHeight + heightWithoutContent;
             _transform.sizeDelta = sizeDelta;
 
             var meumSocket = Core.Socket.MeumSocket.Get();
+
             if (_commentInfo.owner.user_id == meumSocket.GetPlayerPk())
             {
                 deleteButton.gameObject.SetActive(true);

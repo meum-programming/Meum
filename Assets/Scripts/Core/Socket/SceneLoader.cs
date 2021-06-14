@@ -163,12 +163,7 @@ namespace Core.Socket {
 
                     string objName = string.Format("gallery_type_{0}", type);
 
-                    AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
-                    {
-                        nextOn = true;
-                    });
-
-                    yield return new WaitUntil(() => nextOn);
+                    yield return AddressableManager.Insatnce.DownLoadObj(objName);
                 }
             }
 

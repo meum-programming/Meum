@@ -148,9 +148,9 @@ public class AnimTestContoller : MonoBehaviour
     public void RandomSetBtnClick()
     {
         tempData.skinIndex = Random.Range(0, 8);
-        tempData.hairIndex = Random.Range(0, 4);
-        tempData.maskIndex = Random.Range(0, 3);
-        tempData.dressIndex = Random.Range(0, 4);
+        tempData.hairIndex = Random.Range(0, playerChaChange.GetHairCount());
+        tempData.maskIndex = Random.Range(0, playerChaChange.GetMaskCount());
+        tempData.dressIndex = Random.Range(0, playerChaChange.GetDressCount());
 
         AllDataSet();
     }

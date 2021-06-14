@@ -152,6 +152,11 @@ namespace Core.Socket
 
             yield return new WaitUntil(() => nextOn);
 
+            if (userInfo.user_id == 0)
+            {
+                yield break;
+            }
+
             if (null != userInfo)
             {
                 nextOn = false;

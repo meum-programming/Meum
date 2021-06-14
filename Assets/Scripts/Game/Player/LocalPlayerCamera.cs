@@ -109,9 +109,16 @@ namespace Game.Player
             Vector2 setValue = new Vector2(-value.y, value.x);
             setValue *= sensitivity * 0.1f;
 
-            Vector2 rotValue = cameraPivot.rotation.eulerAngles;
+            Vector2 rotValue = cameraPivot.localEulerAngles;
+
+            float checkXValue = setValue.x + rotValue.x;
+
+            //x값이 90 이상이면 180 이하 값이 되면, 270도 근처에서 화면이 반전된다.
+            if (checkXValue <= 180 && checkXValue >= 90 || checkXValue <= 275 && checkXValue >= 265)
+                return;
+            
             rotValue += setValue;
-            cameraPivot.rotation = Quaternion.Euler(rotValue);
+            cameraPivot.localEulerAngles = rotValue;
 
             cameraPivot.transform.localPosition = Vector3.zero;
 
@@ -256,6 +263,12 @@ namespace Game.Player
         /// <param name="tweenTime"></param>
         void ResetCameraZoom(float posZ, float tweenTime = 0.5f)
         {
+            //20미터 보다 더 멀어지면 
+            if (posZ < - 20)
+            {
+                return;
+            }
+
             if (moveTween != null && moveTween.IsPlaying())
             {
                 moveTween.Kill();

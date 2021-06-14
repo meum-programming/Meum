@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace UI.GalleryScene
 {
-    [RequireComponent(typeof(Button))]
     public class TutorialButton : MonoBehaviour
     {
         [DllImport("__Internal")]
