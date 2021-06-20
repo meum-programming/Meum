@@ -127,8 +127,36 @@ namespace Core.Socket
         #region Socket Emitters
         public void EnterGallery(string nickname)
         {
-            //Assert.IsTrue(_state.IsNotInGalleryOrSquare());
             StartCoroutine(EnterGalleryCoroutine2(nickname));
+        }
+
+        /// <summary>
+        /// 룸 ID로 정보 로딩
+        /// </summary>
+        /// <param name="roomId"></param>
+        public void EnterGallery(int roomId)
+        {
+            StartCoroutine(EnterGalleryCoroutine(roomId));
+        }
+
+        private IEnumerator EnterGalleryCoroutine(int roomId)
+        {
+            bool nextOn = false;
+
+            RoomRequest roomRequest = new RoomRequest()
+            {
+                requestStatus = 0,
+                id = roomId,
+                successOn = ResultData =>
+                {
+                    RoomInfoRespons data = (RoomInfoRespons)ResultData;
+                    nextOn = true;
+                    RoomDataSet(data.result);
+                }
+            };
+            roomRequest.RequestOn();
+
+            yield return new WaitUntil(() => nextOn);
         }
 
         private IEnumerator EnterGalleryCoroutine2(string nickname)
@@ -159,10 +187,6 @@ namespace Core.Socket
 
             if (null != userInfo)
             {
-                nextOn = false;
-
-                RoomInfoData roomInfo = null;
-
                 RoomRequest roomRequest = new RoomRequest()
                 {
                     requestStatus = 1,
@@ -170,25 +194,28 @@ namespace Core.Socket
                     successOn = ResultData =>
                     {
                         RoomInfoRespons data = (RoomInfoRespons)ResultData;
-                        roomInfo = data.result;
                         nextOn = true;
+                        RoomDataSet(data.result);
                     }
                 };
                 roomRequest.RequestOn();
 
                 yield return new WaitUntil(() => nextOn);
+            }
+        }
 
-                if (null != roomInfo)
-                {
-                    MeumDB.Get().currentRoomInfo = roomInfo;
+        void RoomDataSet(RoomInfoData roomInfo)
+        {
+            if (null != roomInfo)
+            {
+                MeumDB.Get().currentRoomInfo = roomInfo;
 
-                    StartCoroutine(LoadLocalPlayerInfo2());
-                    EnteringGalleryData data;
-                    data.roomId = roomInfo.id;
-                    data.roomType = roomInfo.type_int;
-                    data.maxN = roomInfo.max_people;
-                    _socket.Emit("enteringGallery", JsonConvert.SerializeObject(data));
-                }
+                StartCoroutine(LoadLocalPlayerInfo2());
+                EnteringGalleryData data;
+                data.roomId = roomInfo.id;
+                data.roomType = roomInfo.type_int;
+                data.maxN = roomInfo.max_people;
+                _socket.Emit("enteringGallery", JsonConvert.SerializeObject(data));
             }
         }
 

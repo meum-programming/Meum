@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class GestureController : MonoBehaviour
 {
     bool hoverOn = false;
-    bool panelOpenOn = false;
+    public bool panelOpenOn = false;
 
     [SerializeField] Image bgImage;
     [SerializeField] Image iconImage;
@@ -20,6 +20,12 @@ public class GestureController : MonoBehaviour
     [SerializeField] RectTransform gestureSlotListPanel;
     [SerializeField] GestureBtn gestureSlotObj;
     [SerializeField] GestureBtn gestureSetBtn;
+
+    bool showOn = false;
+
+    [SerializeField] MouseToggleButton mouseToggleButton;
+    [SerializeField] SoundToggleButton soundToggleButton;
+
 
     void Awake()
     {
@@ -161,7 +167,7 @@ public class GestureController : MonoBehaviour
         PanelOpenSet(!this.panelOpenOn);
     }
 
-    void PanelOpenSet(bool panelOpenOn)
+    public void PanelOpenSet(bool panelOpenOn)
     {
         this.panelOpenOn = panelOpenOn;
 
@@ -172,7 +178,7 @@ public class GestureController : MonoBehaviour
         int zVlaue = panelOpenOn ? 90 : 270;
         hoverImage.transform.rotation = Quaternion.Euler(new Vector3(0, 0, zVlaue));
 
-        gestureSlotListPanel.gameObject.SetActive(panelOpenOn);
+        gestureSlotListPanel.transform.parent.gameObject.SetActive(panelOpenOn);
     }
 
 

@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace UI.ChattingUI
 {
@@ -14,7 +15,6 @@ namespace UI.ChattingUI
         [Header("Toggle")] 
         [SerializeField] private Sprite toggleSprite;
         [SerializeField] private Sprite untoggleSprite;
-        [SerializeField] private Button toggleButton;
         [SerializeField] private float toggledHeight;
 
         [Header("Input Area")] 
@@ -26,7 +26,9 @@ namespace UI.ChattingUI
         private bool _toggled = false;
         private float _defaultHeight;
         private AudioSource _audioSource;
-        
+
+        public bool showOn = false;
+
         private void Awake() {
             base.Awake();
             Init();
@@ -37,9 +39,6 @@ namespace UI.ChattingUI
             sendButton.onClick.RemoveAllListeners();
             sendButton.onClick.AddListener(Send);
             
-            toggleButton.onClick.RemoveAllListeners();
-            toggleButton.onClick.AddListener(Toggle);
-
             _rectTransform = GetComponent<RectTransform>();
             _defaultHeight = _rectTransform.sizeDelta.y;
 
@@ -71,7 +70,7 @@ namespace UI.ChattingUI
 
         public void SetInputFieldActive()
         {
-            if (InputFieldActivated())
+            if (InputFieldActivated() || !showOn)
                 return;
             
             inputField.ActivateInputField();
@@ -126,26 +125,13 @@ namespace UI.ChattingUI
                 Core.Socket.MeumSocket.Get().BroadCastChatting(0, -1, str);
         }
 
-        private void Toggle()
+        public void ShowOn(bool showOn)
         {
-            if (_toggled)
-            {
-                var btnImageCompo = toggleButton.GetComponent<Image>();
-                btnImageCompo.sprite = toggleSprite;
-                
-                _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, _defaultHeight);
+            this.showOn = showOn;
 
-                _toggled = false;
-            }
-            else
-            {
-                var btnImageCompo = toggleButton.GetComponent<Image>();
-                btnImageCompo.sprite = untoggleSprite;
-                
-                _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, toggledHeight);
-                
-                _toggled = true;
-            }
+            float xMoveValue = showOn ? 0 : -425;
+            _rectTransform.DOAnchorPosX(xMoveValue, 0.5f);
         }
+
     }
 }
