@@ -28,6 +28,16 @@ public class WebHandler : MonoBehaviour
         MeumSocket.Get().EnterGallery(nickname);
     }
 
+    public void EnterRoomFromID(int roomId)
+    {
+#if dev
+        Debug.Log(roomId);
+#endif
+
+        if (!MeumDB.Get().TokenExist()) Debug.LogError("SetToken first");
+        MeumSocket.Get().EnterGallery(roomId);
+    }
+
     public void EnterSquare()
     {
         if (!MeumDB.Get().TokenExist()) Debug.LogError("SetToken first");

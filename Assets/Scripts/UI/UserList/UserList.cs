@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace UI.UserList
 {
@@ -10,7 +11,6 @@ namespace UI.UserList
     {
         [SerializeField] private Text ownerNameText;
         [SerializeField] private Text userCountText;
-        //[SerializeField] private TextMeshProUGUI userCountText;
         [SerializeField] private Button toggleButton;
         [SerializeField] private int nameMaxLength;
 
@@ -64,8 +64,8 @@ namespace UI.UserList
 
             _playerInfos.Add(id, info);
             userCountText.text = _playerInfos.Count.ToString();
-            
-            RecalculateHeight();
+
+            UserListHeightSet();
         }
 
         public void RemoveUser(int id)
@@ -75,8 +75,8 @@ namespace UI.UserList
                 Destroy(_playerInfos[id].display);
                 _playerInfos.Remove(id);
                 userCountText.text = _playerInfos.Count.ToString();
-                
-                RecalculateHeight();
+
+                UserListHeightSet();
             }
         }
 
@@ -92,36 +92,35 @@ namespace UI.UserList
             else
                 userList.gameObject.SetActive(true);
 
-            var buttonTransform = toggleButton.GetComponent<RectTransform>();
-            var buttonLocalScale = buttonTransform.localScale;
-            buttonLocalScale.y *= -1.0f;
-            buttonTransform.localScale = buttonLocalScale;
-            
+            float scaleYValue = _toggled ? -1 : 1;
+            toggleButton.transform.DOScaleY(scaleYValue, 0);
+
             _toggled = !_toggled;
-            RecalculateHeight();
+
+            if (_toggled) 
+            {
+                UserListHeightSet();
+            }
         }
 
-        private void RecalculateHeight()
+        private void UserListHeightSet() 
         {
-            if (_toggled)
-            {
-                float scrollRectY = userList.content.rect.size.y;
-                scrollRectY = Mathf.Min(420, scrollRectY);
+            //오브젝트 1개당 높이
+            float height = userListContentPrefab.GetComponent<RectTransform>().sizeDelta.y;
+            //오브젝트들의 갯수
+            int cnt = userList.content.childCount;
+            //오브젝트들마다 벌어진 거리
+            float spacing = userList.content.GetComponent<VerticalLayoutGroup>().spacing;
+            //전체 높이
+            float scrollRectY = (height * cnt) + (spacing * cnt);
 
-                var newHeight = defaultExpandedHeight + scrollRectY;
-                _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, newHeight);
+            scrollRectY = Mathf.Min(420, scrollRectY);
 
-                RectTransform scrollRect = userList.GetComponent<RectTransform>();
-                Vector2 scrollSizeDelta = scrollRect.sizeDelta;
-                scrollSizeDelta.y = scrollRectY;
-                scrollRect.sizeDelta = scrollSizeDelta;
-            }
-            else
-            {
-                _rectTransform.sizeDelta = new Vector2(_rectTransform.sizeDelta.x, _defaultHeight);
-            }
+            RectTransform scrollRect = userList.GetComponent<RectTransform>();
+            Vector2 scrollSizeDelta = scrollRect.sizeDelta;
+            scrollSizeDelta.y = scrollRectY;
+            scrollRect.sizeDelta = scrollSizeDelta;
         }
-
 
         public void OnEndDrag(BaseEventData eventData)
         {

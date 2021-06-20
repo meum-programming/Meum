@@ -9,7 +9,7 @@ namespace UI.UserList
     public class UserListContent : MonoBehaviour
     {
         [SerializeField] private RawImage profileImage;
-        [SerializeField] private TextMeshProUGUI userName;
+        [SerializeField] private Text userName;
 
         public void Setup(string name)
         {

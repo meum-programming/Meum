@@ -35,21 +35,23 @@ public class GestureBtn : MonoBehaviour , IPointerEnterHandler , IPointerExitHan
         this.slotNum = slotNum;
         model = gestureModel;
 
+        if (slotNumText != null)
+        {
+            string slotStr = ((slotNum + 1) % 10).ToString();
+            slotNumText.text = slotStr;
+        }
+
         if (model != null)
         {
             iconNameText.text = model.name;
             iconImage.sprite = model.sprite;
 
-            if (slotNumText != null)
-            {
-                string slotStr = ((slotNum + 1) % 10).ToString();
-                slotNumText.text = slotStr;
-            }
+            
 
             nullImage.gameObject.SetActive(false);
             iconNameText.gameObject.SetActive(false);
             iconImage.gameObject.SetActive(true);
-            slotNumText.gameObject.SetActive(false);
+         //   slotNumText.gameObject.SetActive(false);
 
         }
         else
@@ -57,7 +59,7 @@ public class GestureBtn : MonoBehaviour , IPointerEnterHandler , IPointerExitHan
             nullImage.gameObject.SetActive(true);
             iconNameText.gameObject.SetActive(false);
             iconImage.gameObject.SetActive(false);
-            slotNumText.gameObject.SetActive(false);
+           // slotNumText.gameObject.SetActive(false);
         }
 
         HoverOnSet(false);
@@ -98,7 +100,7 @@ public class GestureBtn : MonoBehaviour , IPointerEnterHandler , IPointerExitHan
 
         if (slotNumText != null)
         {
-            slotNumText.gameObject.SetActive(this.hoverOn);
+            //slotNumText.gameObject.SetActive(this.hoverOn);
         }
     }
 
