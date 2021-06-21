@@ -17,12 +17,28 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 70031b09b0edcc34ebca2b11fc17efaa
   m_SerializeEntries:
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
   - m_GUID: 9612090f5f946794c90dedf24677b1c6
     m_Address: gallery_type_13
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 4609340552598348455, guid: 9612090f5f946794c90dedf24677b1c6, type: 3}
     m_TargetAsset: {fileID: 4609340552598348455, guid: 9612090f5f946794c90dedf24677b1c6, type: 3}
+=======
+=======
+>>>>>>> Stashed changes
+  - m_GUID: 1003e10ae3cca1a4ea95c6ad5976b0d7
+    m_Address: gallery_type_13
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+    m_MainAsset: {fileID: 3058854489033094638, guid: 1003e10ae3cca1a4ea95c6ad5976b0d7, type: 3}
+    m_TargetAsset: {fileID: 3058854489033094638, guid: 1003e10ae3cca1a4ea95c6ad5976b0d7, type: 3}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
   m_SchemaSet:
