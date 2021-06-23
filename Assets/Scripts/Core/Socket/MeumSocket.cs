@@ -134,14 +134,16 @@ namespace Core.Socket
         /// 룸 ID로 정보 로딩
         /// </summary>
         /// <param name="roomId"></param>
-        public void EnterGallery(int roomId)
+        public void EnterGalleryFromRoomID(int roomId)
         {
-            StartCoroutine(EnterGalleryCoroutine(roomId));
+            StartCoroutine(EnterGalleryCoroutineFromRoomID(roomId));
         }
 
-        private IEnumerator EnterGalleryCoroutine(int roomId)
+        private IEnumerator EnterGalleryCoroutineFromRoomID(int roomId)
         {
             bool nextOn = false;
+
+            RoomInfoData roomInfoData = null;
 
             RoomRequest roomRequest = new RoomRequest()
             {
@@ -151,12 +153,26 @@ namespace Core.Socket
                 {
                     RoomInfoRespons data = (RoomInfoRespons)ResultData;
                     nextOn = true;
-                    RoomDataSet(data.result);
+                    roomInfoData = data.result;
                 }
             };
             roomRequest.RequestOn();
 
             yield return new WaitUntil(() => nextOn);
+
+            if (roomInfoData != null)
+            {
+                MeumDB.Get().currentRoomInfo = roomInfoData;
+
+                yield return LoadLocalPlayerInfo2();
+
+                EnteringGalleryData data;
+                data.roomId = roomInfoData.id;
+                data.roomType = roomInfoData.type_int;
+                data.maxN = roomInfoData.max_people;
+
+                _socket.Emit("enteringGallery", JsonConvert.SerializeObject(data));
+            }
         }
 
         private IEnumerator EnterGalleryCoroutine2(string nickname)
