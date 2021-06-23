@@ -128,7 +128,7 @@ namespace Game
             bool value = false;
 
             //화이트 큐브 (gallery_type_6)
-            if (type == 6)
+            if (type == 6 || type == 13)
             {
                 value = true;
             }

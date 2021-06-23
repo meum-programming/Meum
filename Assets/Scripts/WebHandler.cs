@@ -11,7 +11,7 @@ public class WebHandler : MonoBehaviour
     public void SetToken(string token)
     {
 #if dev
-        Debug.Log(token);
+        Debug.Log("token = " + token);
 #endif
         MeumDB.Get().SetToken(token);
     }
@@ -21,7 +21,7 @@ public class WebHandler : MonoBehaviour
         nickname = UnityWebRequest.UnEscapeURL(nickname);
 
 #if dev
-        Debug.Log(nickname);
+        Debug.Log("nickname join = " + nickname);
 #endif
 
         if (!MeumDB.Get().TokenExist()) Debug.LogError("SetToken first");
@@ -31,11 +31,11 @@ public class WebHandler : MonoBehaviour
     public void EnterRoomFromID(int roomId)
     {
 #if dev
-        Debug.Log(roomId);
+        Debug.Log("roomID join = "+roomId);
 #endif
 
         if (!MeumDB.Get().TokenExist()) Debug.LogError("SetToken first");
-        MeumSocket.Get().EnterGallery(roomId);
+        MeumSocket.Get().EnterGalleryFromRoomID(roomId);
     }
 
     public void EnterSquare()

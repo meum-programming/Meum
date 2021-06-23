@@ -255,8 +255,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   webHandler: {fileID: 1225810292}
-  loginUid: 61
-  roomid: 57
+  loginUid: 242
+  roomid: 202
   roomName: Guest
   roomJoinToID: 1
 --- !u!1 &55261360
