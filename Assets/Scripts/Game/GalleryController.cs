@@ -205,7 +205,29 @@ public class GalleryController : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        Debug.LogWarning("촬영");
+        yield return new WaitForEndOfFrame();
+        Texture2D texture2D = ScreenCapture.CaptureScreenshotAsTexture(1);
+        byte[] bytes = texture2D.EncodeToPNG();
+
+        bool nextOn = false;
+
+        //스크린샷을 S3로 보내기
+        ScreenShotRequest screenShotRequest = new ScreenShotRequest()
+        {
+            requestStatus = 0,
+            id = MeumDB.Get().myRoomInfo.owner.user_id,
+            saveType = ScreenShotRequest.saveTypeEnum.screenshot,
+            bytes = bytes,
+            successOn = ResultData =>
+            {
+                ScreenShotInfoData data = (ScreenShotInfoData)ResultData;
+                Application.OpenURL(data.url);
+                nextOn = true;
+            }
+        };
+        screenShotRequest.RequestOn();
+
+        yield return new WaitUntil(() => nextOn);
 
         yield return new WaitForSeconds(1);
 
