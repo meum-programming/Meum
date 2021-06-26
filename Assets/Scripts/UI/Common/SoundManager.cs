@@ -176,11 +176,8 @@ public class SoundManager : MonoBehaviour
 	/// SE ½ÇÇà
 	/// </summary>
 	/// <param name="path"></param>
-	public void PlaySe(string path)
+	public AudioSource PlaySe(string path)
 	{
-		if (bgmAudio == null)
-			bgmAudio = gameObject.AddComponent<AudioSource>();
-
 		AudioSource audioSource = null;
 
 		foreach (var seAudio in seAudioList)
@@ -201,6 +198,8 @@ public class SoundManager : MonoBehaviour
 
 		audioSource.clip = Resources.Load<AudioClip>("Se/" + path);
 		audioSource.Play();
+
+		return audioSource;
 	}
 
 

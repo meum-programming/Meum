@@ -50,8 +50,17 @@ namespace Game.Player
 #if UNITY_WEBGL
                     if (artworkInfo.bannerUrl != "")
                     {
+                        string contensStr = string.Format("외부링크({0})로 \n이동합니다.정말 이동하시겠습니까?", FitURLMaxLength(artworkInfo.bannerUrl));
+                        
+                        PopupManager.Instance.OkPopupCreate(
+                            contensStr, 
+                            okBtnStr:"링크 이동",
+                            cancelBtnStr: "정보 보기",
+                            maskClickDestoryOn: true,
+                            okBtnClickEvent: () => OpenURLNewTab(artworkInfo.bannerUrl), 
+                            cancelBtnClickEvent :()=> StartCoroutine(SetArtworkDescription(artworkInfo))
+                        );
                         Debug.Log(artworkInfo.bannerUrl);
-                        OpenURLNewTab(artworkInfo.bannerUrl);
                     }
 #endif
                     if (artworkInfo.bannerUrl == "")
@@ -61,7 +70,15 @@ namespace Game.Player
                 }
             }
         }
-        
+
+        private string FitURLMaxLength(string s)
+        {
+            if (s.Length > 30)
+                return s.Substring(0, 30) + "...";
+            else
+                return s;
+        }
+
         /*
          * @brief 주어진 ArtworkInfo를 통해 ArtworkDescription UI를 보여줌
          */

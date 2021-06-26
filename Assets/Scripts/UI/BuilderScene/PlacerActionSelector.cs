@@ -69,10 +69,12 @@ namespace UI.BuilderScene
         {
             var selected = artworkPlacer.GetSelected();
             Assert.IsNotNull(selected);
-            var artworkInfo = selected.GetComponent<ArtworkInfo>();
-            Assert.IsNotNull(artworkInfo);
-            
-            linkModal.Show(artworkInfo);
+            var artworkInfo = selected.GetComponentInParent<ArtworkInfo>();
+
+            if (artworkInfo != null)
+            {
+                linkModal.Show(artworkInfo);
+            }
         }
 
         public void OnDeleteButton()

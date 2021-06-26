@@ -25,6 +25,7 @@ public class GalleryController : MonoBehaviour
     bool hideOn = false;
 
     [SerializeField] List<RectTransform> screenShotHidUIList = new List<RectTransform>();
+    [SerializeField] RawImage image;
 
     private void Awake()
     {
@@ -203,11 +204,14 @@ public class GalleryController : MonoBehaviour
             obj.gameObject.SetActive(false);
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraReady").clip.length);
+
+        yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraShot").clip.length);
 
         yield return new WaitForEndOfFrame();
-        Texture2D texture2D = ScreenCapture.CaptureScreenshotAsTexture(1);
-        byte[] bytes = texture2D.EncodeToPNG();
+        Texture2D reSizeTexture2D = ScreenShotReSizing(ScreenCapture.CaptureScreenshotAsTexture(1));
+
+        byte[] bytes = reSizeTexture2D.EncodeToPNG();
 
         bool nextOn = false;
 
@@ -238,6 +242,92 @@ public class GalleryController : MonoBehaviour
 
         AllHideOn(firstHideOn);
 
+    }
+
+    Texture2D ScreenShotReSizing(Texture2D texture2D)
+    {
+        float width = texture2D.width;
+        float height = texture2D.height;
+
+        int newWidth = 1024;
+        int newHeiht = 1024;
+
+        if (width > height)
+        {
+            newHeiht = Mathf.RoundToInt((height * 1024) / width);
+        }
+        else
+        {
+            newWidth = Mathf.RoundToInt((width * 1024) / height);
+        }
+
+        Texture2D reSizeTexture2D = ScaleTexture(texture2D, newWidth, newHeiht);
+
+        //카드 비율 420 : 240 의 이미지가 나올수 있도록 크롭 한다.
+        int check_w_Rate = Mathf.RoundToInt(newWidth / 7);
+        int check_h_Rate = Mathf.RoundToInt(newHeiht / 4);
+
+        int cardNewWidth = 0;
+        int cardNewHeiht = 0;
+
+        if (check_w_Rate > check_h_Rate)
+        {
+            cardNewHeiht = newHeiht;
+            cardNewWidth = Mathf.RoundToInt(newHeiht * 420 / 240);
+        }
+        else
+        {
+            cardNewWidth = newWidth;
+            cardNewHeiht = Mathf.RoundToInt(newWidth * 240 / 420);
+        }
+
+#if dev
+        Debug.LogWarning($"newHeiht = {newHeiht} , newWidth = {newWidth} , cardNewHeiht = {cardNewHeiht} , cardNewWidth = {cardNewWidth}");
+#endif
+
+        Texture2D cropTexture =  CropTexture(reSizeTexture2D, cardNewWidth, cardNewHeiht);
+
+        image.texture = cropTexture;
+
+        return cropTexture;
+    }
+
+    private Texture2D ScaleTexture(Texture2D source, int targetWidth, int targetHeight)
+    {
+        Texture2D result = new Texture2D(targetWidth, targetHeight, source.format, true);
+        Color[] rpixels = result.GetPixels(0);
+        float incX = (1.0f / (float)targetWidth);
+        float incY = (1.0f / (float)targetHeight);
+        for (int px = 0; px < rpixels.Length; px++)
+        {
+            rpixels[px] = source.GetPixelBilinear(incX * ((float)px % targetWidth), incY * ((float)Mathf.Floor(px / targetWidth)));
+        }
+        result.SetPixels(rpixels, 0);
+        result.Apply();
+        return result;
+    }
+
+    private Texture2D CropTexture(Texture2D source, int targetWidth, int targetHeight)
+    {
+        Texture2D result = new Texture2D(targetWidth, targetHeight, source.format, true);
+
+        int startX = 0;
+        int startY = 0;
+
+        if (source.width == targetWidth)
+        {
+            startY = Mathf.RoundToInt((source.height - targetHeight) / 2);
+        }
+        else
+        {
+            startX = Mathf.RoundToInt((source.width - targetWidth) / 2);
+        }
+
+        Color[] c = source.GetPixels(startX, startY, targetWidth, targetHeight);
+        result.SetPixels(c);
+
+        result.Apply();
+        return result;
     }
 
 }
