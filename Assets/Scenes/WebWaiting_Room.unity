@@ -219,7 +219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &29432391
 RectTransform:
   m_ObjectHideFlags: 0
@@ -559,7 +559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 222.2, y: -276}
+  m_AnchoredPosition: {x: 222.20001, y: -276}
   m_SizeDelta: {x: 485.72, y: 130}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &176244636
@@ -703,7 +703,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 222.2, y: -708}
+  m_AnchoredPosition: {x: 222.20001, y: -708}
   m_SizeDelta: {x: 785.72, y: 130}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &193625872
@@ -1033,7 +1033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 223.2, y: -446.2}
+  m_AnchoredPosition: {x: 223.20001, y: -446.2}
   m_SizeDelta: {x: 617.9, y: 173.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &462209351
@@ -1309,8 +1309,8 @@ Canvas:
   m_GameObject: {fileID: 721947047}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 336567972}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1801,7 +1801,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 223.2, y: -585.8}
+  m_AnchoredPosition: {x: 223.20001, y: -585.8}
   m_SizeDelta: {x: 617.9, y: 173.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1081050931
@@ -2282,7 +2282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0, y: -3.6}
+  m_AnchoredPosition: {x: 0, y: -3.5999985}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1494942467
@@ -2357,21 +2357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
 --- !u!114 &1517653498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2862,272 +2847,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0df64cb654968cd4a994d58585662a77, type: 3}
---- !u!114 &936582999293339808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9157458218310043596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: deb4b60f012fb0f44a256c38f4bec7d2, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8528761650277880500}
-        m_TargetAssemblyTypeName: Game.Gallery.Player.LocalPlayerMove, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 8c703471-6ea3-4702-bdd4-a77f82c4a169
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5981749484618611084}
-        m_TargetAssemblyTypeName: Game.Gallery.Player.LocalPlayerCamera, Assembly-CSharp
-        m_MethodName: OnRotate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f2ef9a15-a717-4935-ac7f-a6c0f9e263ab
-    m_ActionName: Player/Look[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8528761650277880500}
-        m_TargetAssemblyTypeName: Game.Gallery.Player.LocalPlayerMove, Assembly-CSharp
-        m_MethodName: OnJump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0bc9b5c4-7bf5-4b93-b9f5-09ebcbe58d99
-    m_ActionName: Player/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6293154055673340615}
-        m_TargetAssemblyTypeName: Game.Gallery.Player.LocalPlayerSelectArtwork, Assembly-CSharp
-        m_MethodName: OnSelect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: a6d22559-0ef3-491b-853b-ba118452590e
-    m_ActionName: Player/Select[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b771d823-21a3-48ed-b762-ad3543cc69f5
-    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7c7785b5-d824-41eb-bfbc-aa31ee9b4af9
-    m_ActionName: UI/Submit[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 84908247-dd89-4400-8c19-679075130b2f
-    m_ActionName: UI/Cancel[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ca75c842-0a48-48bc-814c-07b5a5afff6a
-    m_ActionName: UI/Point[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 303c5bad-e882-4965-b0c3-b26a09787ff2
-    m_ActionName: UI/Click[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c75acebb-c2c3-4ffe-b908-52b43e980d7c
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ca4dad7b-f3ea-4f8a-bf94-c9635673579b
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f901e752-da7b-4f22-91cf-f93546215d35
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 326e9082-1078-4017-942e-4c3b9e3c4670
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 832b3901-8fef-42b2-aa18-713d910710ea
-    m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1ad9c3a8-346f-4137-ab45-e45033f36124
-    m_ActionName: First Person View/SwitchView[/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5981749484618611084}
-        m_TargetAssemblyTypeName: Game.Gallery.Player.LocalPlayerCamera, Assembly-CSharp
-        m_MethodName: OnRotateEnable
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2af4fd4a-e289-476c-a8cc-fea03ff197c2
-    m_ActionName: First Person View/Rotate Enable[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: eda78999-6fad-4f4d-b0de-1900e592c3e0
-    m_ActionName: Builder Scene/Select[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b4584555-26eb-42ed-883d-54d6140bde38
-    m_ActionName: Builder Scene/Rotate Enable[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2aab384e-c4f9-4505-87cf-a787beeb90a5
-    m_ActionName: Builder Scene/Rotate[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 23a875f9-8b7c-421e-8d54-2e8f60113af8
-    m_ActionName: Builder Scene/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 25211e64-d0ac-4180-8ccb-7179b613eecb
-    m_ActionName: Builder Scene/Reset Transform[/Keyboard/r]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 05086a6b-d923-4c6a-a956-c40f5a80f04f
-    m_ActionName: Builder Scene/Rotate Artwork[/Keyboard/x,/Keyboard/z]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 02f96d27-a21a-4465-9a56-a0f291b0e585
-    m_ActionName: Builder Scene/Resize Artwork[/Mouse/scroll/y]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8528761650277880500}
-        m_TargetAssemblyTypeName: Game.Player.LocalPlayerMove, Assembly-CSharp
-        m_MethodName: OnRun
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ca348f39-965e-4618-8b91-39ab555a8130
-    m_ActionName: Gallery Scene/New action
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fc3c886d-784c-4517-b8e8-57282f2188b2
-    m_ActionName: Builder Scene/run[/Keyboard/shift]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5981749484618611084}
-        m_TargetAssemblyTypeName: Game.Player.LocalPlayerCamera, Assembly-CSharp
-        m_MethodName: OnRotateKeybordInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 7036f0b8-05c4-445a-8989-cd6e8522c11a
-    m_ActionName: Gallery Scene/Rotate-J[/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8528761650277880500}
-        m_TargetAssemblyTypeName: Game.Player.LocalPlayerMove, Assembly-CSharp
-        m_MethodName: OnChat
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: e7e4ba58-9774-4f09-88bf-26acd7085049
-    m_ActionName: Gallery Scene/Enter[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5981749484618611084}
-        m_TargetAssemblyTypeName: Game.Player.LocalPlayerCamera, Assembly-CSharp
-        m_MethodName: OnCameraZoomReset
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 128dceaf-19f5-4809-9c27-490b61d6d82a
-    m_ActionName: Gallery Scene/Camera Pos Reset[/Mouse/scroll/y]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5981749484618611084}
-        m_TargetAssemblyTypeName: Game.Player.LocalPlayerCamera, Assembly-CSharp
-        m_MethodName: OnCameraZoomResetKeybordInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 157cfc0a-64a0-4a18-91a0-6ebdbd5fe0df
-    m_ActionName: Gallery Scene/CameraZoom-keybord[/Keyboard/o,/Keyboard/p]
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Keyboard&Mouse
-  m_DefaultActionMap: Gallery Scene
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 1066372007151264912}
 --- !u!4 &1066372006467001882
 Transform:
   m_ObjectHideFlags: 0
@@ -3614,7 +3333,6 @@ GameObject:
   - component: {fileID: 6605736515343191064}
   - component: {fileID: 8528761650277880500}
   - component: {fileID: 6293154055673340615}
-  - component: {fileID: 936582999293339808}
   - component: {fileID: 1346440493498590335}
   m_Layer: 8
   m_Name: Human_local

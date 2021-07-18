@@ -1,21 +1,21 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 namespace UI
 {
     public class DisablePlayerInputOnEnabled : MonoBehaviour
     {
-        [SerializeField] private InputActionAsset playerInput;
+        //[SerializeField] private InputActionAsset playerInput;
 
-        private void OnEnable()
-        {
-            playerInput.Disable();
-        }
+        //private void OnEnable()
+        //{
+        //    playerInput.Disable();
+        //}
 
-        private void OnDisable()
-        {
-            playerInput.Enable();
-        }
+        //private void OnDisable()
+        //{
+        //    playerInput.Enable();
+        //}
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Core;
 using DG.Tweening;

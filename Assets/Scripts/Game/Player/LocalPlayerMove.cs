@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 using DG.Tweening;
 
 namespace Game.Player
@@ -84,7 +83,8 @@ namespace Game.Player
             ApplyGravity();
 
             _animController.SetIsJumpEnded(IsJumpEnded());
-            //_animController.SetIsJumpEnded();
+
+            InputEventCheck();
         }
 
         private void ApplyGravity()
@@ -99,6 +99,106 @@ namespace Game.Player
         {
             float y = cameraPivot.localRotation.eulerAngles.y;
             transform.DOLocalRotate(new Vector3(0, y, 0), 0.5f);
+        }
+
+        void InputEventCheck()
+        {
+            OnJump();
+            OnRun();
+            OnMove();
+            OnChat();
+        }
+
+        void OnJump()
+        {
+            if (!Input.GetKeyDown(KeyCode.Space))
+                return;
+            
+            if(IsGrounded())
+            {
+                _velocityY = Mathf.Sqrt(2.0f * GRAVITY * jumpHeight);
+                _animController.SetJumpTrigger();
+
+                isJumped = true;
+                jumpEndDeley = 0.5f;
+            }
+        }
+
+        void OnRun()
+        {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+
+            _running = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            _animController.SetRunning(_running);
+        }
+
+        void OnMove()
+        {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+
+            Vector2 moveValue = Vector2.zero;
+
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+            {
+                moveValue = Vector2.zero;
+            }
+            else
+            {
+                if (Input.GetKey(KeyCode.W))
+                {
+                    moveValue.y += 1;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    moveValue.y -= 1;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    moveValue.x -= 1;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    moveValue.x += 1;
+                }
+            }
+
+            //조이스틱 방향이 대각선이라면
+            if(moveValue.x != 0 && moveValue.y != 0)
+            {
+                moveValue = new Vector2(moveValue.x * 0.74f, moveValue.y * 0.74f);
+            }
+
+            MoveVectorSet(moveValue);
+        }
+
+        public void OnMoveJoystick(Vector2 value)
+        {
+            MoveVectorSet(value);
+        }
+
+        void MoveVectorSet(Vector2 value)
+        {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            {
+                if (IsGrounded())
+                {
+                    _animController.SetVerticalSpeed(0.0f);
+                }
+                return;
+            }
+
+            _moveVector = value;
+
+            if (_moveVector == Vector3.zero)
+            {
+                _animController.SetVerticalSpeed(0);
+            }
+            else if (IsGrounded())
+            {
+                _animController.SetVerticalSpeed(Mathf.Abs(value.x) + Mathf.Abs(value.y));
+            }
         }
 
         private void Move()
@@ -176,6 +276,14 @@ namespace Game.Player
             }
         }
 
+        void OnChat()
+        {
+            if (Input.GetKey(KeyCode.Return))
+            {
+                UI.ChattingUI.ChattingUI.Get().SetInputFieldActive();
+            }
+        }
+
         private bool IsGrounded()
         {
             bool isValue = Physics.Raycast(
@@ -201,71 +309,6 @@ namespace Game.Player
             return isJumpEnd || groundChecker.isGround;
 
             //return !;
-        }
-
-        public void OnMove(InputAction.CallbackContext ctx)
-        {
-            MoveVectorSet(ctx.ReadValue<Vector2>());
-        }
-
-        public void OnMoveJoystick(Vector2 value)
-        {
-            MoveVectorSet(value);
-        }
-
-        void MoveVectorSet(Vector2 value) 
-        {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
-            {
-                if (IsGrounded())
-                {
-                    _animController.SetVerticalSpeed(0.0f);
-                }
-                return;
-            }
-
-            _moveVector = value;
-
-            if (_moveVector == Vector3.zero)
-            {
-                _animController.SetVerticalSpeed(0);
-            }
-            else if (IsGrounded())
-            {
-                _animController.SetVerticalSpeed(Mathf.Abs(value.x) + Mathf.Abs(value.y));
-            }
-        }
-
-
-        public void OnJump(InputAction.CallbackContext ctx)
-        {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
-                return;
-            if (ctx.performed && IsGrounded())
-            {
-                _velocityY = Mathf.Sqrt(2.0f * GRAVITY * jumpHeight);
-                _animController.SetJumpTrigger();
-
-                isJumped = true;
-                jumpEndDeley = 0.5f;
-            }
-        }
-
-        public void OnRun(InputAction.CallbackContext ctx)
-        {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
-                return;
-            var value = ctx.ReadValue<float>();
-            _running = value > 0.5f;    // value is 1 or 0 (float)
-            _animController.SetRunning(_running);
-        }
-
-        public void OnChat(InputAction.CallbackContext ctx)
-        {
-            if (ctx.action.phase == InputActionPhase.Started)
-            {
-                UI.ChattingUI.ChattingUI.Get().SetInputFieldActive();
-            }
         }
 
         void OnTriggerEnter(Collider other)

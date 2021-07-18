@@ -5,6 +5,8 @@ using UnityEngine;
 public class ScreenShotRequest : BaseRequest
 {
     public int id;
+    public string file_name;
+
     public enum saveTypeEnum 
     {
         screenshot,
@@ -25,6 +27,7 @@ public class ScreenShotRequest : BaseRequest
 
             form.AddField("type", saveType.ToString());
             form.AddField("target", id);
+            form.AddField("file_name", file_name);
             form.AddBinaryData("file", bytes);
         }
 

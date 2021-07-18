@@ -30,6 +30,8 @@ namespace UI.BuilderScene
             verifySaveSuccess.SetActive(true);
             gameObject.SetActive(true);
             showingModal = true;
+
+            DataManager.Instance.roomSaveOn = true;
         }
 
         public void ShowVerfiyResetModal()

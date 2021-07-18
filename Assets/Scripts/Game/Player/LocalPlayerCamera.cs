@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using DG.Tweening;
 
 namespace Game.Player
@@ -49,7 +49,7 @@ namespace Game.Player
             if (hitDistance != 0)
             {
                 float posZ = -(hitDistance - 1);
-                ResetCameraZoom(posZ, time);
+                ResetCameraZoom(posZ, tweenTime: time);
             }
         }
 
@@ -75,29 +75,14 @@ namespace Game.Player
             return hit.distance;
         }
 
-        /// <summary>
-        /// 마우스 오른쪽 버튼을 누르면 호출
-        /// </summary>
-        /// <param name="ctx"></param>
-        public void OnRotateEnable(InputAction.CallbackContext ctx)
+        private void OnRotateInput()
         {
-            var value = ctx.ReadValue<float>();
-            _isRotateEnabled = value == 1; // value is 1 or 0 (float)
-        }
-
-        /// <summary>
-        /// 마우스 오른쪽 버튼을 드레그 하면 호출
-        /// </summary>
-        /// <param name="ctx"></param>
-        public void OnRotate(InputAction.CallbackContext ctx)
-        {
-            if (!_isRotateEnabled) 
-            {
+            //마우스 오른쪽 버튼이 눌린게 아니라면
+            if (!Input.GetMouseButton(1))
                 return;
-            }
-
-            var value = ctx.ReadValue<Vector2>();
-            RotateOn(value);
+            
+            Vector2 delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            RotateOn(delta * 10);
         }
 
         void RotateOn(Vector2 value)
@@ -128,34 +113,46 @@ namespace Game.Player
             }
         }
 
-
         /// <summary>
         /// 키보드 IJKL키를 누르면 호출
         /// </summary>
-        /// <param name="ctx"></param>
-        public void OnRotateKeybordInput(InputAction.CallbackContext ctx)
+        void OnRotateKeybordInput()
         {
             if (UI.ChattingUI.ChattingUI.Get() != null && UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
             {
                 return;
             }
 
-            float addValue = 4;
+            carmeraRotValue = Vector2.zero;
 
-            switch (ctx.action.phase)
+            if (Input.GetKeyUp(KeyCode.I) || Input.GetKeyUp(KeyCode.J) || Input.GetKeyUp(KeyCode.K) || Input.GetKeyUp(KeyCode.L))
             {
-                case InputActionPhase.Started:
+                cameraRotFlag = false;
+                carmeraRotValue = Vector2.zero;
+            }
+            else
+            {
+                if (Input.GetKey(KeyCode.I))
+                {
                     cameraRotFlag = true;
-                    carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
-                    break;
-                case InputActionPhase.Performed:
+                    carmeraRotValue.y += 10;
+                }
+                if (Input.GetKey(KeyCode.K))
+                {
                     cameraRotFlag = true;
-                    carmeraRotValue = ctx.ReadValue<Vector2>() * addValue;
-                    break;
-                case InputActionPhase.Canceled:
-                    cameraRotFlag = false;
-                    carmeraRotValue = Vector2.zero;
-                    break;
+                    carmeraRotValue.y -= 10;
+                }
+                if (Input.GetKey(KeyCode.J))
+                {
+                    cameraRotFlag = true;
+                    carmeraRotValue.x -= 10;
+                }
+                
+                if (Input.GetKey(KeyCode.L))
+                {
+                    cameraRotFlag = true;
+                    carmeraRotValue.x += 10;
+                }
             }
         }
 
@@ -171,30 +168,27 @@ namespace Game.Player
         }
 
         /// <summary>
-        /// 키보드 IJKL키를 누르면 호출
+        /// 키보드 O,P키를 누르면 호출(카메라 줌)
         /// </summary>
-        /// <param name="ctx"></param>
-        public void OnCameraZoomResetKeybordInput(InputAction.CallbackContext ctx)
+        void OnCameraZoomKeybordInputCheck()
         {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
                 return;
 
-            float addValue = 120;
-
-            switch (ctx.action.phase)
+            if (Input.GetKeyUp(KeyCode.O) || Input.GetKeyUp(KeyCode.P))
             {
-                case InputActionPhase.Started:
-                    cameraZoomFlag = true;
-                    carmeraZoomValue = ctx.ReadValue<float>(); 
-                    break;
-                case InputActionPhase.Performed:
-                    cameraZoomFlag = true;
-                    carmeraZoomValue = ctx.ReadValue<float>();
-                    break;
-                case InputActionPhase.Canceled:
-                    cameraZoomFlag = false;
-                    carmeraZoomValue = 0;
-                    break;
+                cameraZoomFlag = false;
+                carmeraZoomValue = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.O)) 
+            {
+                cameraZoomFlag = true;
+                carmeraZoomValue = 10;
+            }
+            else if (Input.GetKeyDown(KeyCode.P))
+            {
+                cameraZoomFlag = true;
+                carmeraZoomValue = -10;
             }
         }
 
@@ -206,34 +200,25 @@ namespace Game.Player
             if (CanZoomCheck(carmeraZoomValue))
             {
                 float posZ = _camera.transform.localPosition.z;
-                ResetCameraZoom(posZ + carmeraZoomValue);
-            }   
+                ResetCameraZoom(posZ + carmeraZoomValue , carmeraZoomValue > 0);
+            }
         }
 
-        /// <summary>
-        /// 마우스 휠을 조정할때 호출
-        /// </summary>
-        /// <param name="ctx"></param>
-        public void OnCameraZoomReset(InputAction.CallbackContext ctx)
+        void OnCameraZoomCheck()
         {
             if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
                 return;
 
-            if (!ctx.performed) return;
+            float wheelInputValue = Input.GetAxis("Mouse ScrollWheel");
 
-            var value = ctx.ReadValue<float>();    // scroll raw value: [-120, 120]
-            
-#if UNITY_EDITOR
-            value *= 0.01f;
-#endif
+            wheelInputValue *= 10;
 
-            if (Mathf.Abs(value) > 0)
+            if (wheelInputValue != 0)
             {
-                //if (CanZoomCheck(value))
+                if (CanZoomCheck(wheelInputValue))
                 {
                     float posZ = _camera.transform.localPosition.z;
-                    ResetCameraZoom(posZ + value);
-                    //ResetCameraZoom(posZ);
+                    ResetCameraZoom(posZ + wheelInputValue, wheelInputValue > 0);
                 }
             }
         }
@@ -261,7 +246,7 @@ namespace Game.Player
         /// </summary>
         /// <param name="posZ"></param>
         /// <param name="tweenTime"></param>
-        void ResetCameraZoom(float posZ, float tweenTime = 0.5f)
+        void ResetCameraZoom(float posZ,bool zoomIn = false , float tweenTime = 0.5f)
         {
             //20미터 보다 더 멀어지면 
             if (posZ < - 20)
@@ -274,9 +259,8 @@ namespace Game.Player
                 moveTween.Kill();
             }
 
-            if (posZ > firstViewMinValue)
+            if (zoomIn && posZ > firstViewMinValue)
             {
-
                 if (firstViewReadyOn) 
                 {
                     if (firstViewOn)
@@ -309,6 +293,8 @@ namespace Game.Player
 
         private void Update()
         {
+            InputEventCheck();
+            
             if (firstViewReadyOn)
             {
                 firstViewOnDelay -= Time.deltaTime;
@@ -325,6 +311,14 @@ namespace Game.Player
 
             CameraZoomFlagCheck();
             CameraRotFlagCheck();
+        }
+
+        void InputEventCheck()
+        {
+            OnCameraZoomCheck();
+            OnCameraZoomKeybordInputCheck();
+            OnRotateInput();
+            OnRotateKeybordInput();
         }
 
         public float firstViewMinValue = -0.7f;

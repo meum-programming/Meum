@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using Game.Artwork;
+using System.Collections;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
@@ -21,15 +21,26 @@ namespace Game.Player
         {
         }
 
-        public void OnSelect(InputAction.CallbackContext ctx)
+        private void Update()
         {
-            if (!ctx.canceled) return;
+            InputCheck();
+        }
 
+        void InputCheck() 
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                OnSelect();
+            }
+        }
+
+        public void OnSelect()
+        {
             //UI가 터치되었을때는 리턴
             if (EventSystem.current.currentSelectedGameObject != null)
                 return;
-            
-            var ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            var ray = camera.ScreenPointToRay(Input.mousePosition);
             var layerMask = ~0;
             if (Physics.Raycast(ray, out var hit, 100.0f, layerMask))
             {
@@ -51,14 +62,14 @@ namespace Game.Player
                     if (artworkInfo.bannerUrl != "")
                     {
                         string contensStr = string.Format("외부링크({0})로 \n이동합니다.정말 이동하시겠습니까?", FitURLMaxLength(artworkInfo.bannerUrl));
-                        
+
                         PopupManager.Instance.OkPopupCreate(
-                            contensStr, 
-                            okBtnStr:"링크 이동",
+                            contensStr,
+                            okBtnStr: "링크 이동",
                             cancelBtnStr: "정보 보기",
                             maskClickDestoryOn: true,
-                            okBtnClickEvent: () => OpenURLNewTab(artworkInfo.bannerUrl), 
-                            cancelBtnClickEvent :()=> StartCoroutine(SetArtworkDescription(artworkInfo))
+                            okBtnClickEvent: () => OpenURLNewTab(artworkInfo.bannerUrl),
+                            cancelBtnClickEvent: () => StartCoroutine(SetArtworkDescription(artworkInfo))
                         );
                         Debug.Log(artworkInfo.bannerUrl);
                     }
