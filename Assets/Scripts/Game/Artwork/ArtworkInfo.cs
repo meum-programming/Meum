@@ -46,7 +46,6 @@ namespace Game.Artwork
         [SerializeField] public Material mat;
         [SerializeField] public YoutubePlayer player;
         [HideInInspector] public string bannerUrl;
-        public Outline outline = null;
 
         public int ArtworkType => _artworkData.artwork_type;
 
@@ -176,26 +175,6 @@ namespace Game.Artwork
             
             paintRenderer.material = new Material(mat);
             paintRenderer.material.mainTexture = texture;
-
-            if (paintRenderer != null)
-            {
-                if (paintRenderer.gameObject.GetComponent<Outline>() != null)
-                {
-                    outline = paintRenderer.gameObject.GetComponent<Outline>();
-                }
-                else
-                {
-                    outline = paintRenderer.gameObject.AddComponent<Outline>();
-                }
-                
-                if (outline != null)
-                {
-                    outline.OutlineMode = Outline.Mode.OutlineAll;
-                    outline.OutlineWidth = 0;
-                    outline.OutlineColor = new Color32(60,219,192,255);
-                    outline.enabled = false;
-                }
-            }
             
         }
         
@@ -274,22 +253,6 @@ namespace Game.Artwork
                     obj.transform.localRotation = Quaternion.identity;
                     obj.transform.localPosition = Vector3.zero;
 
-                    if (obj.GetComponent<Outline>() != null)
-                    {
-                        outline = obj.GetComponent<Outline>();
-                    }
-                    else
-                    {
-                        outline = obj.AddComponent<Outline>();
-                    }
-
-                    if (outline != null)
-                    {
-                        outline.OutlineMode = Outline.Mode.OutlineAll;
-                        outline.OutlineWidth = 0;
-                        outline.OutlineColor = new Color32(60, 219, 192, 255);
-                        outline.enabled = false;
-                    }
 
                     //obj.transform.localScale = Vector3.one;
                     // 불러온 Object의 root에 있는 콜라이더를 ArtworkInfo가 포함된 게임오브젝트로 옮겨온 후 비활성화
