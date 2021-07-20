@@ -446,6 +446,7 @@ GameObject:
   - component: {fileID: 1855536342606042217}
   - component: {fileID: 6808764854774712744}
   - component: {fileID: 1824939034021268441}
+  - component: {fileID: 4830078433386471669}
   m_Layer: 0
   m_Name: 12_geumbo_plate
   m_TagString: Untagged
@@ -516,6 +517,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4830078433386471669
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734834196639157147}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.11756052, y: 0.25194642, z: 0.020429514}
+  m_Center: {x: -0.019346302, y: 0.121108785, z: 0.008917075}
 --- !u!1 &792648085033210998
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +637,7 @@ GameObject:
   - component: {fileID: 9198764959091071665}
   - component: {fileID: 5201023969386306473}
   - component: {fileID: 517364246662612886}
+  - component: {fileID: 4140783424513403741}
   m_Layer: 11
   m_Name: 12_building4
   m_TagString: Wall
@@ -693,6 +708,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4140783424513403741
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1055588679876303506}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3733431764257077715, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &1139410576776361861
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +733,7 @@ GameObject:
   - component: {fileID: 6481134812863228389}
   - component: {fileID: 4233119655985486374}
   - component: {fileID: 4547143907559747633}
+  - component: {fileID: 963524218288413278}
   m_Layer: 11
   m_Name: 12_building6
   m_TagString: Wall
@@ -774,6 +804,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &963524218288413278
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139410576776361861}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4694922845585362382, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &1269276913454463881
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,6 +1006,7 @@ GameObject:
   - component: {fileID: 9170627819480807549}
   - component: {fileID: 2516641144046829999}
   - component: {fileID: 46671575525856226}
+  - component: {fileID: 5009558416477954462}
   m_Layer: 0
   m_Name: 12_geumbo_giwa1
   m_TagString: Untagged
@@ -1032,6 +1077,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5009558416477954462
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2444480206032176311}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7746793025259986698, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &3190797127513788475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,6 +1102,7 @@ GameObject:
   - component: {fileID: 277824765058275946}
   - component: {fileID: 2061721597720988465}
   - component: {fileID: 601949072039879868}
+  - component: {fileID: 6258781785800178681}
   m_Layer: 11
   m_Name: 12_bom_garden
   m_TagString: Wall
@@ -1113,6 +1173,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6258781785800178681
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3190797127513788475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6335980729882765056, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &3504018632393555033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,6 +1758,7 @@ GameObject:
   - component: {fileID: 5620967862674551219}
   - component: {fileID: 8908884336345137850}
   - component: {fileID: 1949656045026466810}
+  - component: {fileID: 9062107672881396934}
   m_Layer: 11
   m_Name: 12_big_wall
   m_TagString: Wall
@@ -1754,6 +1829,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &9062107672881396934
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5906119519107917868}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7777926582106837141, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &6169097199017931406
 GameObject:
   m_ObjectHideFlags: 0
@@ -1765,6 +1854,7 @@ GameObject:
   - component: {fileID: 3655368397796567319}
   - component: {fileID: 6235118383626748030}
   - component: {fileID: 8980958424472299219}
+  - component: {fileID: 3705716806858198332}
   m_Layer: 11
   m_Name: 12_geumbo_wall
   m_TagString: Wall
@@ -1835,6 +1925,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3705716806858198332
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6169097199017931406}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4096087345538351699, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &6297850422300250511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,6 +1950,7 @@ GameObject:
   - component: {fileID: 8200450327061433694}
   - component: {fileID: 7157902221406283365}
   - component: {fileID: 235055982534769677}
+  - component: {fileID: 7423039111387059664}
   m_Layer: 11
   m_Name: 12_geumbo_wall_2
   m_TagString: Wall
@@ -1916,6 +2021,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7423039111387059664
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6297850422300250511}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -982640152620453561, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &6506043069746752298
 GameObject:
   m_ObjectHideFlags: 0
@@ -2104,6 +2223,7 @@ GameObject:
   - component: {fileID: 2660672994490278577}
   - component: {fileID: 4131050435346799794}
   - component: {fileID: 7641172496873842401}
+  - component: {fileID: 1775962763253597565}
   m_Layer: 0
   m_Name: 12_bom_in_window
   m_TagString: Untagged
@@ -2174,6 +2294,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1775962763253597565
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6598319010476168380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.044588488, y: 0, z: 0.01465012}
+  m_Center: {x: 0, y: -0.00017978367, z: 0}
 --- !u!1 &6863753785885813698
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,6 +2414,7 @@ GameObject:
   - component: {fileID: 3227502151190584938}
   - component: {fileID: 333756583464260905}
   - component: {fileID: 6378616801698028677}
+  - component: {fileID: 7644226594151943154}
   m_Layer: 0
   m_Name: 12_geumbo_giwa2
   m_TagString: Untagged
@@ -2351,6 +2485,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7644226594151943154
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6979032760052093820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6508914663197724480, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &7011785772905647728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,6 +2510,7 @@ GameObject:
   - component: {fileID: 4002873377921487371}
   - component: {fileID: 7425080616422445724}
   - component: {fileID: 6036765997451819962}
+  - component: {fileID: 1214118636783740499}
   m_Layer: 11
   m_Name: 12_building3
   m_TagString: Wall
@@ -2432,6 +2581,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1214118636783740499
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011785772905647728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6475468520027881844, guid: 606876331650bc84ca33003b90b46cc7, type: 3}
 --- !u!1 &7203195019577740516
 GameObject:
   m_ObjectHideFlags: 0
