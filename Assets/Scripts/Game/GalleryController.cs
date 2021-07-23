@@ -37,7 +37,7 @@ public class GalleryController : MonoBehaviour
     void Init()
     {
         BGMSet();
-        SkyBoxSet();
+        //SkyBoxSet();
 
         if (editBtnList.Count > 0)
         {
@@ -70,7 +70,11 @@ public class GalleryController : MonoBehaviour
     {
         int index = MeumDB.Get().currentRoomInfo.sky_type_int;
         SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
-        RenderSettings.skybox = skydata.material;
+
+        if (skydata != null)
+        {
+            RenderSettings.skybox = skydata.material;
+        }
     }
 
     // Start is called before the first frame update
