@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 12_bom_garden
-  m_Shader: {fileID: -6465566751694194690, guid: f2cb7f21824e8054fb9bca3c36b93a87, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 86d34b42adfe4da4eb0a9bae6d01bfe6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -36,8 +36,24 @@ Material:
         m_Texture: {fileID: 2800000, guid: 238f12896c00e6448a70422da3c895a2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_6677B5ED:
+        m_Texture: {fileID: 2800000, guid: 1aa817ec5b2e47940a594b49e59b1caa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C4D19952:
+        m_Texture: {fileID: 2800000, guid: 86e788eb7954d954886062da42910bf6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_CA7C0B13:
         m_Texture: {fileID: 2800000, guid: 86e788eb7954d954886062da42910bf6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_DD509F96:
+        m_Texture: {fileID: 2800000, guid: 238f12896c00e6448a70422da3c895a2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_E42DEB9C:
+        m_Texture: {fileID: 2800000, guid: b79b53b5dc0ae9f4a8428a673a520de4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -98,6 +114,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_23E38260: 20
+    - Vector1_F275C368: 20
+    - Vector1_F3981FDE: 20
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -125,6 +143,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_4c29627bb6d644269d66c6373684d7ad: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
