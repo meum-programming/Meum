@@ -42,6 +42,8 @@ public class BGMWaveController : MonoBehaviour
         }
 
         instanceObj.gameObject.SetActive(false);
+
+        Debug.LogWarning("bgmWaveList = " + bgmWaveList.Count);
     }
 
     public void AudioSet(AudioSource audioSource)
@@ -56,53 +58,58 @@ public class BGMWaveController : MonoBehaviour
 
         samples = new float[numOfSamples];
 
-        audioClip.GetData(samples, 0);
-
-        var AveragedSound = new float[samples.Length / 10];
-        var j = 0;
-        for (var i = 0; i < samples.Length / 10 -1; ++i)
+        if (audioClip.GetData(samples, 0))
         {
-            j += 10;
-
-            float value = Mathf.Abs(samples[j]) + Mathf.Abs(samples[j + 1]) + Mathf.Abs(samples[j + 2]) + Mathf.Abs(samples[j + 3]) + Mathf.Abs(samples[j + 4])
-                        + Mathf.Abs(samples[j + 5]) + Mathf.Abs(samples[j + 6]) + Mathf.Abs(samples[j + 7]) + Mathf.Abs(samples[j + 8]) + Mathf.Abs(samples[j + 9]);
-
-            AveragedSound[i] = (value/10);
-        }
-
-        List<float> valueList = new List<float>();
-
-        for (int i = 0; i < waveCnt; i++)
-        {
-            int index = 0;
-
-            if (i > 0)
+            var AveragedSound = new float[samples.Length / 10];
+            var j = 0;
+            for (var i = 0; i < samples.Length / 10 - 1; ++i)
             {
-                index = (int)((i) / waveCnt * AveragedSound.Length);
+                j += 10;
+
+                float value = Mathf.Abs(samples[j]) + Mathf.Abs(samples[j + 1]) + Mathf.Abs(samples[j + 2]) + Mathf.Abs(samples[j + 3]) + Mathf.Abs(samples[j + 4])
+                            + Mathf.Abs(samples[j + 5]) + Mathf.Abs(samples[j + 6]) + Mathf.Abs(samples[j + 7]) + Mathf.Abs(samples[j + 8]) + Mathf.Abs(samples[j + 9]);
+
+                AveragedSound[i] = (value / 10);
             }
 
-            float waveValue = Mathf.Min(AveragedSound[index] * 150, 50);
+            List<float> valueList = new List<float>();
 
-            valueList.Add(waveValue);
-        }
-
-        for (int i = 0; i < valueList.Count; i++)
-        {
-            float reslutValue = valueList[i];
-
-            if (i > 0 && i < valueList.Count-1)
+            for (int i = 0; i < waveCnt; i++)
             {
-                reslutValue = (valueList[i - 1] + valueList[i] + valueList[i + 1]) / 3;
+                int index = 0;
+
+                if (i > 0)
+                {
+                    index = (int)((i) / waveCnt * AveragedSound.Length);
+                }
+
+                float waveValue = Mathf.Min(AveragedSound[index] * 150, 50);
+
+                valueList.Add(waveValue);
             }
 
-            bgmWaveList[i].SetSize(reslutValue);
+            for (int i = 0; i < valueList.Count; i++)
+            {
+                float reslutValue = valueList[i];
+
+                if (i > 0 && i < valueList.Count - 1)
+                {
+                    reslutValue = (valueList[i - 1] + valueList[i] + valueList[i + 1]) / 3;
+                }
+
+                bgmWaveList[i].SetSize(reslutValue);
+            }
+            IndexSet(true);
         }
-        IndexSet(true);
+        else 
+        {
+            Debug.LogWarning("fail");
+        }
     }
 
     private void Update()
     {
-        SetCurrentIndex();
+        //SetCurrentIndex();
     }
 
     void SetCurrentIndex()

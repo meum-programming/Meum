@@ -103,6 +103,20 @@ public class BGMSetController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (MeumDB.Get() != null) 
+        {
+            int currentBgmID = MeumDB.Get().currentRoomInfo.bgm_type_int;
+
+            for (int i = 0; i < activeBGMList.Count; i++)
+            {
+                if (activeBGMList[i].bgmId == currentBgmID)
+                {
+                    bgmIndex = i;
+                    break;
+                }
+            }
+        }
+        
         BGMSelectOn(bgmIndex);
     }
 
@@ -156,10 +170,7 @@ public class BGMSetController : MonoBehaviour
         playOn = true;
         PlayBtnImageSet();
 
-        maxTimeText.text = GetTimeText((int)bgmAudioSource.clip.length);
-
-        Debug.LogWarning("id = " + bGMSaveData.bgmId + "maxTime = " + (int)bgmAudioSource.clip.length);
-
+        maxTimeText.text = GetTimeText(bgmSaveData.maxTime);
     }
 
     public void PlayBtnClick()
