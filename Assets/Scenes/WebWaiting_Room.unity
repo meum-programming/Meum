@@ -2757,6 +2757,7 @@ MonoBehaviour:
       dressIndex: 0
       skinIndex: 0
     startPoint_json: 
+    land_type: 0
   myRoomInfo:
     success: 
     id: 0
@@ -2790,6 +2791,7 @@ MonoBehaviour:
       dressIndex: 0
       skinIndex: 0
     startPoint_json: 
+    land_type: 0
 --- !u!1001 &357048684857932951
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -43,6 +43,7 @@ public class BGMSaveData
     public int bgmId;
     public string name;
     public AudioClip audioClip;
+    public int maxTime;
 }
 
 public enum BGMEnum

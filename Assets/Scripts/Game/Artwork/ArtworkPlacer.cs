@@ -309,8 +309,6 @@ namespace Game.Artwork
         {
             float wheelInputValue = Input.GetAxis("Mouse ScrollWheel");
 
-            wheelInputValue *= 10;
-
             if (_moving)
             {
                 SetResize(wheelInputValue);
