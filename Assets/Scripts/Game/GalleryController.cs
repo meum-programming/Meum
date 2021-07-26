@@ -1,6 +1,8 @@
 ﻿using Core;
 using Core.Socket;
+using Game;
 using Game.Player;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UI.ChattingUI;
@@ -35,7 +37,7 @@ public class GalleryController : MonoBehaviour
     void Init()
     {
         BGMSet();
-        SkyBoxSet();
+        //SkyBoxSet();
 
         if (editBtnList.Count > 0)
         {
@@ -68,13 +70,21 @@ public class GalleryController : MonoBehaviour
     {
         int index = MeumDB.Get().currentRoomInfo.sky_type_int;
         SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
-        RenderSettings.skybox = skydata.material;
+
+        if (skydata != null)
+        {
+            RenderSettings.skybox = skydata.material;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (DataManager.Instance.roomSaveOn)
+        {
+            DataManager.Instance.roomSaveOn = false;
+            ScreenShowBtnClick(false);
+        }
     }
 
     // Update is called once per frame
@@ -185,12 +195,12 @@ public class GalleryController : MonoBehaviour
     }
 
 
-    public void ScreenShowBtnClick()
+    public void ScreenShowBtnClick(bool isScreenShot)
     {
-        StartCoroutine(ScreenShowOn());
+        StartCoroutine(ScreenShowOn(isScreenShot));
     }
 
-    IEnumerator ScreenShowOn()
+    IEnumerator ScreenShowOn(bool isScreenShot)
     {
         bool firstHideOn = hideOn;
 
@@ -204,14 +214,34 @@ public class GalleryController : MonoBehaviour
             obj.gameObject.SetActive(false);
         }
 
-        yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraReady").clip.length);
+        if (isScreenShot)
+        {
+            yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraReady").clip.length);
 
-        yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraShot").clip.length);
+            yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraShot").clip.length);
+        }
+        else 
+        {
+            yield return new WaitForEndOfFrame();
+        }
 
         yield return new WaitForEndOfFrame();
         Texture2D reSizeTexture2D = ScreenShotReSizing(ScreenCapture.CaptureScreenshotAsTexture(1));
 
+        ScreenShotRequest.saveTypeEnum saveTypeEnum = isScreenShot ? ScreenShotRequest.saveTypeEnum.screenshot : ScreenShotRequest.saveTypeEnum.thumbnail;
+
         byte[] bytes = reSizeTexture2D.EncodeToPNG();
+
+        string fileType = isScreenShot ? "screenshot_" : "thumbnail_";
+
+        int roomType = FindObjectOfType<ProceduralGalleryBuilder>().GetLandInfos()[0].type;
+        int uid = MeumDB.Get().myRoomInfo.owner.user_id;
+        int middleId = isScreenShot ? uid : roomType;
+
+        DateTime nowDT = DateTime.Now;
+        string dateStr = isScreenShot ? string.Format("_{0}_{1:D2}_{2:D2}_{3:D2}_{4:D2}", nowDT.Year, nowDT.Month, nowDT.Day, nowDT.Hour, nowDT.Minute) : string.Empty;
+
+        string fileName = string.Format("{0}{1}{2}.png", fileType , middleId, dateStr);
 
         bool nextOn = false;
 
@@ -220,12 +250,20 @@ public class GalleryController : MonoBehaviour
         {
             requestStatus = 0,
             id = MeumDB.Get().myRoomInfo.owner.user_id,
-            saveType = ScreenShotRequest.saveTypeEnum.screenshot,
+            saveType = saveTypeEnum,
             bytes = bytes,
+            file_name = fileName,
             successOn = ResultData =>
             {
                 ScreenShotInfoData data = (ScreenShotInfoData)ResultData;
-                Application.OpenURL(data.url);
+
+                Debug.LogWarning(data.url);
+
+                if (isScreenShot)
+                {
+                    Application.OpenURL(data.url);
+                }
+                
                 nextOn = true;
             }
         };
@@ -233,8 +271,11 @@ public class GalleryController : MonoBehaviour
 
         yield return new WaitUntil(() => nextOn);
 
-        yield return new WaitForSeconds(1);
-
+        if (isScreenShot)
+        {
+            yield return new WaitForSeconds(1);
+        }
+        
         foreach (var obj in screenShotHidUIList)
         {
             obj.gameObject.SetActive(true);

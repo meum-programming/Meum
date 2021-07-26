@@ -18,9 +18,9 @@ namespace UI.GalleryScene
         {
 #if UNITY_WEBGL
 
-            string uri = "https://meum.me/tutorial";
+            string uri = "https://meum.me/guide";
     #if dev
-            uri = "https://dev.meum.me/tutorial";
+            uri = "https://dev.meum.me/guide";
     #endif
             OpenURLNewTab(uri);
 

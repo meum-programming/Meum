@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class GestureController : MonoBehaviour
@@ -86,43 +86,43 @@ public class GestureController : MonoBehaviour
     /// </summary>
     void NumberKeyTouchCheck()
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame || Keyboard.current.numpad1Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             HotKeyTouchOn(0);
         }
-        if (Keyboard.current.digit2Key.wasPressedThisFrame || Keyboard.current.numpad2Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             HotKeyTouchOn(1);
         }
-        if (Keyboard.current.digit3Key.wasPressedThisFrame || Keyboard.current.numpad3Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             HotKeyTouchOn(2);
         }
-        if (Keyboard.current.digit4Key.wasPressedThisFrame || Keyboard.current.numpad4Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             HotKeyTouchOn(3);
         }
-        if (Keyboard.current.digit5Key.wasPressedThisFrame || Keyboard.current.numpad5Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             HotKeyTouchOn(4);
         }
-        if (Keyboard.current.digit6Key.wasPressedThisFrame || Keyboard.current.numpad6Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             HotKeyTouchOn(5);
         }
-        if (Keyboard.current.digit7Key.wasPressedThisFrame || Keyboard.current.numpad7Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             HotKeyTouchOn(6);
         }
-        if (Keyboard.current.digit8Key.wasPressedThisFrame || Keyboard.current.numpad8Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             HotKeyTouchOn(7);
         }
-        if (Keyboard.current.digit9Key.wasPressedThisFrame || Keyboard.current.numpad9Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             HotKeyTouchOn(8);
         }
-        if (Keyboard.current.digit0Key.wasPressedThisFrame || Keyboard.current.numpad0Key.wasPressedThisFrame)
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             HotKeyTouchOn(9);
         }

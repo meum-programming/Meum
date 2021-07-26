@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Core;
 using DG.Tweening;
@@ -100,26 +99,29 @@ namespace UI.GalleryScene
 
             var textureGetter = MeumDB.Get().GetTextureCoroutine(url);
             yield return textureGetter.coroutine;
-            
+
             var texture = textureGetter.result as Texture2D;
 
-            image.gameObject.SetActive(true);
-
-            image.texture = texture;
-
-            float tempWidth = originWidth;
-            float tempHeight = originHeight;
-
-            if (texture.height > texture.width || texture.height == texture.width)
+            if (texture != null)
             {
-                tempWidth = ((texture.width * originHeight) / texture.height);  
-            }
-            else
-            {
-                tempHeight = ((texture.height * originWidth) / texture.width);
-            }
+                image.gameObject.SetActive(true);
 
-            image.rectTransform.sizeDelta = new Vector2(tempWidth, tempHeight);
+                image.texture = texture;
+
+                float tempWidth = originWidth;
+                float tempHeight = originHeight;
+
+                if (texture.height > texture.width || texture.height == texture.width)
+                {
+                    tempWidth = ((texture.width * originHeight) / texture.height);
+                }
+                else
+                {
+                    tempHeight = ((texture.height * originWidth) / texture.width);
+                }
+
+                image.rectTransform.sizeDelta = new Vector2(tempWidth, tempHeight);
+            }
 
         }
 

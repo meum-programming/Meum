@@ -31,6 +31,7 @@ namespace Game
         [FormerlySerializedAs("edge_length")] [SerializeField] private float edgeLength;
 
         private LandInfo[] _landInfos;
+        public RoomInfoData roomInfoData;
         private Transform _walls;
         private Transform _floors;
 
@@ -66,6 +67,34 @@ namespace Game
                     BuildBlock(_landInfos[index], obj);
                 });
             }
+        }
+
+        /// <summary>
+        /// 랜드타입으로 건물 로드
+        /// </summary>
+        /// <param name="roomInfoData"></param>
+        public void Build_ToRandType(RoomInfoData roomInfoData)
+        {
+            this.roomInfoData = roomInfoData;
+
+            int type = roomInfoData.land_type;
+
+            string objName = string.Format("gallery_type_{0}", type);
+
+            LandInfo[] pos = new LandInfo[1];
+            pos[0] = new LandInfo();
+            pos[0].type = type;
+
+            Debug.LogWarning(pos[0].type);
+
+            _landInfos = pos;
+
+            AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
+            {
+                BuildBlock(pos[0], obj);
+            });
+
+            SkyBoxSet();
         }
 
         private void BuildBlock(LandInfo pos , GameObject resultObj)
@@ -146,6 +175,24 @@ namespace Game
             }
 
             return false;
+        }
+
+        public void SkyBoxSet()
+        {
+            int index = MeumDB.Get().currentRoomInfo.sky_type_int;
+            SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
+
+            if (skydata != null)
+            {
+                RenderSettings.skybox = skydata.material;
+            }
+        }
+
+        public void SkyBoxChange(int index)
+        {
+            MeumDB.Get().currentRoomInfo.sky_type_int = index;
+            SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
+            RenderSettings.skybox = skydata.material;
         }
 
     }

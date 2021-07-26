@@ -103,7 +103,7 @@ public class RoomInfoData : BaseRespons
     public string data_json = string.Empty;
     public UserData owner = null;
     public string startPoint_json = string.Empty;
-
+    public int land_type = 0;
 }
 
 [System.Serializable]

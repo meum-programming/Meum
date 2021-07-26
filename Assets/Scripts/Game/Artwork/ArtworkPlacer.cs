@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using DG.Tweening;
 
 namespace Game.Artwork
@@ -51,7 +50,7 @@ namespace Game.Artwork
          */
         public void CreateSelected(UI.ContentViewer.Content data)
         {
-            Vector3 pos = Mouse.current.position.ReadValue();
+            Vector3 pos = Input.mousePosition;
             pos.z = -10.0f;
             pos = cam.ScreenToWorldPoint(pos);
 
@@ -79,7 +78,7 @@ namespace Game.Artwork
         {
             Assert.IsTrue(data.Data.type_artwork == 0);
 
-            Vector3 pos = Mouse.current.position.ReadValue();
+            Vector3 pos = Input.mousePosition;
             pos.z = -10.0f;
             pos = cam.ScreenToWorldPoint(pos);
 
@@ -95,6 +94,15 @@ namespace Game.Artwork
         
         public void Deselect()
         {
+            ArtworkInfo artworkInfo = GetArtWorkInfo();
+
+            //if (artworkInfo != null)
+            //{
+            //    artworkInfo.outline.enabled = false;
+            //    artworkInfo.outline.OutlineMode = Outline.Mode.OutlineAll;
+            //    artworkInfo.outline.OutlineWidth = 0;
+            //}
+
             StopMovingObj();
             actionSelector.Deselect();
             _selected = null;
@@ -151,13 +159,16 @@ namespace Game.Artwork
         /*
          * @brief Select(클릭) 이벤트에 대한 콜백
          */
-        public void OnSelect(InputAction.CallbackContext ctx)
+        public void OnSelect()
         {
+            if (!Input.GetMouseButtonUp(0))
+                return;
+            
             if (verifyModalManager.showingModal) return;
             if (EventSystem.current.IsPointerOverGameObject()) // 마우스가 UI Element 위에 있는경우 아무것도 하지 않음
                 return;
 
-            var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var ray = cam.ScreenPointToRay(Input.mousePosition);
             var mask = 1 << LayerMask.NameToLayer("Placeable");
             if (Physics.Raycast(ray, out var hit, 100.0f, mask))
             {
@@ -165,37 +176,90 @@ namespace Game.Artwork
                 
                 if (!_moving && objectHit.CompareTag("Paint"))
                 {
+                    ArtworkInfo artworkInfo = null;
+
+                    if (_selected != null)
+                    {
+                        artworkInfo = GetArtWorkInfo();
+
+                        //if (artworkInfo != null)
+                        //{
+                        //    artworkInfo.outline.enabled = false;
+                        //    artworkInfo.outline.OutlineMode = Outline.Mode.OutlineAll;
+                        //    artworkInfo.outline.OutlineWidth = 0;
+                        //}
+                    }
+
                     _selected = objectHit;
                     actionSelector.SetSelected(_selected);
 
-                    ArtworkInfo artworkInfo = objectHit.GetComponent<ArtworkInfo>();
+                    artworkInfo = GetArtWorkInfo();
 
-                    //3D 오브젝트는 부모오브젝트에 ArtworkInfo클래스를 가지고 있다
-                    if (artworkInfo == null) 
-                    {
-                        artworkInfo = objectHit.GetComponentInParent<ArtworkInfo>();
-                    }
-                    
                     _nowEditing3D = artworkInfo.ArtworkType == 1;
                     _moving = false;
+
+                    //if (artworkInfo != null)
+                    //{
+                    //    artworkInfo.outline.enabled = true;
+                    //    artworkInfo.outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
+                    //    artworkInfo.outline.OutlineWidth = 5;
+                    //}
                 }
                 else
-                    Deselect();
+                {
+                    if (!actionSelector.dragOn)
+                    {
+                        Deselect();
+                    }
+                }
+                    
 
                 
             }
             else if(!_moving)
                 Deselect();
         }
-        
+
+        ArtworkInfo GetArtWorkInfo()
+        {
+            if (_selected == null)
+            {
+                return null;
+            }
+
+            ArtworkInfo artworkInfo = _selected.GetComponent<ArtworkInfo>();
+
+            //3D 오브젝트는 부모오브젝트에 ArtworkInfo클래스를 가지고 있다
+            if (artworkInfo == null)
+            {
+                artworkInfo = _selected.GetComponentInParent<ArtworkInfo>();
+            }
+
+            return artworkInfo;
+        }
+
         /*
          * @brief Rotate 이벤트에 대한 콜백
          */
-        public void OnRotateArtwork(InputAction.CallbackContext ctx)
+        public void OnRotateArtwork()
         {
-            if (_selected && _moving && ctx.performed)
+            if (!_selected || !_moving)
+                return;
+
+
+            float value = 0;
+
+            if (Input.GetKeyDown(KeyCode.Z))
             {
-                var value = ctx.ReadValue<float>();
+                value = -1;
+            }
+            else if (Input.GetKeyDown(KeyCode.X))
+            {
+                value = 1;
+            }
+
+            if (value != 0)
+            {
                 RotateSelected(value);
             }
         }
@@ -218,7 +282,7 @@ namespace Game.Artwork
         {
             LayerSet("NotPlaced");
 
-            var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var ray = cam.ScreenPointToRay(Input.mousePosition);
             var mask = 1 << LayerMask.NameToLayer("Placeable");
             if (Physics.Raycast(ray, out var hit, 100.0f, mask))
             {
@@ -241,13 +305,19 @@ namespace Game.Artwork
         /*
          * @brief Resize 이벤트에 대한 콜백
          */
-        public void OnResizeArtwork(InputAction.CallbackContext ctx)
+        public void OnResizeArtwork()
         {
-            if (!ctx.performed) return;
+            float wheelInputValue = Input.GetAxis("Mouse ScrollWheel");
 
-            var value = ctx.ReadValue<float>() / 120;    // scroll raw value: [-120, 120]
+            if (_moving)
+            {
+                SetResize(wheelInputValue);
+            }
+        }
 
-            if (_selected && _moving && Mathf.Abs(value) > 1e-10)
+        public void SetResize(float value)
+        {
+            if (_selected && Mathf.Abs(value) > 1e-10)
             {
                 Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
                 var scale = targetTransform.localScale;
@@ -258,11 +328,11 @@ namespace Game.Artwork
                 scale.z = Mathf.Lerp(_defaultScaleZ / scaleLimit, _defaultScaleZ * scaleLimit, _nowScale);
 
                 scale.x = scale.z * ratioX;
-                if (_nowEditing3D) 
+                if (_nowEditing3D)
                 {
                     scale.y = scale.z * ratioY;
                 }
-                    
+
                 //_selected.localScale = scale;
 
                 if (scaleTween != null && scaleTween.IsPlaying())
@@ -276,6 +346,8 @@ namespace Game.Artwork
 
         private void Update()
         {
+            InputCheck();
+
             if (verifyModalManager == null) 
             {
                 Debug.LogWarning("verifyModalManager null");
@@ -289,9 +361,16 @@ namespace Game.Artwork
             }
         }
 
+        void InputCheck()
+        {
+            OnSelect();
+            OnResizeArtwork();
+            OnRotateArtwork();
+        }
+
         void RaySet()
         {
-            var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var ray = cam.ScreenPointToRay(Input.mousePosition);
             var mask = 1 << LayerMask.NameToLayer("Placeable");
             if (Physics.Raycast(ray, out var hit, 100.0f, mask))
             {

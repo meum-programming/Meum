@@ -32,7 +32,7 @@ namespace Game.Artwork
         [SerializeField] public GameObject object3DPrefab;
         [SerializeField] public GameObject videoPrefab;
 
-        private string _resetCheckpoint = "";
+        private RoomInfoData _resetCheckpoint = null;
 
         [SerializeField] public List<GameObject> tempList = new List<GameObject>();
 
@@ -67,13 +67,13 @@ namespace Game.Artwork
         /*
          * @brief json_data -> Artworks, LandInfo 변환 함수
          */
-        public void SetJson(string json)
+        public void SetJson(RoomInfoData roomInfoData)
         {
-            var data = JsonUtility.FromJson<RoomData>(json);
+            var data = JsonUtility.FromJson<RoomData>(roomInfoData.data_json);
             
             var proceduralSpace = GameObject.Find("proceduralSpace");
             Assert.IsNotNull(proceduralSpace);
-            proceduralSpace.GetComponent<ProceduralGalleryBuilder>().Build(data.lands);
+            proceduralSpace.GetComponent<ProceduralGalleryBuilder>().Build_ToRandType(roomInfoData);
 
             ClearArtworks();
             
@@ -108,7 +108,7 @@ namespace Game.Artwork
                 }
             }
 
-            _resetCheckpoint = json;
+            _resetCheckpoint = roomInfoData;
         }
         
         private void ClearArtworks()
@@ -134,7 +134,7 @@ namespace Game.Artwork
 
             Core.Socket.MeumSocket.Get().BroadCastUpdateArtworks();
 
-            _resetCheckpoint = json;
+            _resetCheckpoint.data_json = json;
 
             yield return null;
         }

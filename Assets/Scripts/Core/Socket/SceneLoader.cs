@@ -73,7 +73,7 @@ namespace Core.Socket {
             yield return cd.coroutine;
 
             RoomInfoData roomInfoData = cd.result as RoomInfoData;
-            paintsSerializer.SetJson(roomInfoData.data_json);
+            paintsSerializer.SetJson(roomInfoData);
         }
 
         #endregion
@@ -232,7 +232,7 @@ namespace Core.Socket {
             // setting paints
             //SerializeArtworks();
             var paintsSerializer = GameObject.Find("Artworks").GetComponent<DataJsonSerializer>();
-            paintsSerializer.SetJson(roomInfo.data_json);
+            paintsSerializer.SetJson(roomInfo);
 
             // setting userList
             var userList = UI.UserList.UserList.Get();

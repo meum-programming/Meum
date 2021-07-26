@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 2688551443530596206}
   - component: {fileID: 2688551443530596201}
   - component: {fileID: 2688551443530596200}
+  - component: {fileID: 8507469185312197563}
   m_Layer: 11
   m_Name: Paint
   m_TagString: Paint
@@ -162,6 +163,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8507469185312197563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2688551443530596205}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 3
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 0
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2688551444214508632
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +229,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paintRenderer: {fileID: 2688551443530596200}
   mat: {fileID: 2100000, guid: 4a89e2b9d6de14842a80f516b039f19b, type: 2}
+  player: {fileID: 0}
+  bannerUrl: 
+  outline: {fileID: 0}
 --- !u!65 &6818819310556752803
 BoxCollider:
   m_ObjectHideFlags: 0

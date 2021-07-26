@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class ThemaSection : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI selectSkyName;
+    [SerializeField] Text selectSkyName;
 
     [SerializeField] Image arrowImage;
 
@@ -149,7 +149,7 @@ public class ThemaSection : MonoBehaviour
         scrollRect.gameObject.SetActive(active);
         scrollRectCloseBG.gameObject.SetActive(active);
 
-        Quaternion rot = active ? Quaternion.Euler(180, 0, 0) : Quaternion.Euler(0, 0, 0);
+        Quaternion rot = active ? Quaternion.Euler(0, 0, 0) : Quaternion.Euler(180, 0, 0);
         arrowImage.transform.rotation = rot;
     }
 

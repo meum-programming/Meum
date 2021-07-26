@@ -22,6 +22,7 @@ public class DataManager
 
 	public float mouseSensitivityValue = 0.5f;
 	public string mouseSensitivityKey = "mouseSensitivity";
+	public bool roomSaveOn = false;
 
 	private DataManager() 
 	{

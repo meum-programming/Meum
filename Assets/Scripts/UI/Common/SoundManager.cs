@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 /// <summary>
@@ -30,6 +31,7 @@ public class SoundManager : MonoBehaviour
 
 	private AudioSource bgmAudio;
 	private List<AudioSource> seAudioList = new List<AudioSource>();
+	public UnityAction<BGMSaveData , AudioSource> bgmAudioPlayOn = null;
 
 	public float bgmValue = 0;
 	public float seValue = 0;
@@ -121,12 +123,18 @@ public class SoundManager : MonoBehaviour
 
 	public void PlayBGM(int bgmID)
 	{
-		if (currentPlaybgmId == bgmID)
-			return;
-
-		currentPlaybgmId = bgmID;
-
 		BGMSaveData bGMSaveData = meumSaveData.GetBGMData(bgmID);
+
+		if (currentPlaybgmId == bgmID)
+		{
+			if (bgmAudioPlayOn != null)
+			{
+				bgmAudioPlayOn(bGMSaveData, bgmAudio);
+			}
+			return;
+		}
+			
+		currentPlaybgmId = bgmID;
 
         if (bGMSaveData == null)
 			return;
@@ -139,7 +147,7 @@ public class SoundManager : MonoBehaviour
 		}
         else
 		{
-			PlayBGM(bGMSaveData.audioClip);
+			PlayBGM(bGMSaveData);
 		}
 	}
 
@@ -156,7 +164,7 @@ public class SoundManager : MonoBehaviour
         if (www.result == UnityWebRequest.Result.Success)
 		{
 			bGMSaveData.audioClip = DownloadHandlerAudioClip.GetContent(www);
-			PlayBGM(bGMSaveData.audioClip);
+			PlayBGM(bGMSaveData);
 		}
         else
 		{
@@ -164,11 +172,16 @@ public class SoundManager : MonoBehaviour
 		}
 	}
 
-	public void PlayBGM(AudioClip clip)
+	public void PlayBGM(BGMSaveData bGMSaveData)
 	{
-		bgmAudio.clip = clip;
+		bgmAudio.clip = bGMSaveData.audioClip;
 		bgmAudio.loop = true;
 		bgmAudio.Play();
+
+        if (bgmAudioPlayOn != null)
+		{
+			bgmAudioPlayOn(bGMSaveData , bgmAudio);
+		}
 	}
 
 

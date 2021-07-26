@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 namespace UI.BuilderScene
 {
@@ -9,7 +9,7 @@ namespace UI.BuilderScene
     {
         [SerializeField] private TMP_InputField urlInputField;
         [SerializeField] private GameObject checkObject;
-        [SerializeField] private InputActionAsset playerInput;
+        //[SerializeField] private InputActionAsset playerInput;
         
         private Game.Artwork.ArtworkInfo _artworkInfo;
 
@@ -17,7 +17,7 @@ namespace UI.BuilderScene
         {
             Assert.IsNotNull(urlInputField);
             Assert.IsNotNull(checkObject);
-            Assert.IsNotNull(playerInput);
+         //   Assert.IsNotNull(playerInput);
         }
 
         public void Show(Game.Artwork.ArtworkInfo artworkInfo)
@@ -29,7 +29,7 @@ namespace UI.BuilderScene
             if(!_artworkInfo.bannerUrl.Equals(""))
                 checkObject.SetActive(true);
             
-            playerInput.Disable();
+            //playerInput.Disable();
             gameObject.SetActive(true);
         }
 
@@ -41,7 +41,7 @@ namespace UI.BuilderScene
             else
                 _artworkInfo.bannerUrl = "";
             
-            playerInput.Enable();
+            //playerInput.Enable();
             gameObject.SetActive(false);
         }
 

@@ -1,7 +1,7 @@
 ﻿using Core.Socket;
 using UI.BuilderScene;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 namespace Game.Builder.Camera
 {
@@ -28,21 +28,26 @@ namespace Game.Builder.Camera
             transform.rotation = DataSynchronizer.Get().GetSpawnRot();
         }
 
-        public void OnRotate(InputAction.CallbackContext ctx)
+        private void Update()
         {
-            if (!_isRotateEnabled) return;
+            OnRotate();
+        }
+
+        public void OnRotate()
+        {
+            //if (!_isRotateEnabled) return;
             if (verifyModalManager.showingModal) return;
 
-            var value = ctx.ReadValue<Vector2>();
-            
+            //마우스 오른쪽 버튼이 눌린게 아니라면
+            if (!Input.GetMouseButton(1))
+                return;
+
+            Vector2 delta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+
+            var value = delta * 10;
+
             transform.Rotate(Vector3.up, value.x * sensitivity);
             camera.Rotate(Vector3.right, -value.y * sensitivity);
-        }
-        
-        public void OnRotateEnable(InputAction.CallbackContext ctx)
-        {
-            var value = ctx.ReadValue<float>();
-            _isRotateEnabled = value > 0.5f;    // value is 1 or 0 (float)
         }
     }
 }

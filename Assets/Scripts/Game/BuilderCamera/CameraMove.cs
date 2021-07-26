@@ -2,10 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using TMPro;
 using UI.BuilderScene;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
 namespace Game.Builder.Camera
 {
@@ -21,6 +21,8 @@ namespace Game.Builder.Camera
 
         private Vector3 _moveVector;
         private bool _running;
+
+        [SerializeField] private TMP_InputField urlInputField;
 
         private void Start()
         {
@@ -39,6 +41,8 @@ namespace Game.Builder.Camera
          */
         private void Update()
         {
+            InputCheck();
+
             if (verifyModalManager.showingModal) return;
             
             var direction = camera.right * _moveVector.x +
@@ -49,16 +53,55 @@ namespace Game.Builder.Camera
             transform.Translate(delta, Space.World);
         }
 
-        public void OnMove(InputAction.CallbackContext ctx)
+        void InputCheck()
         {
-            var value = ctx.ReadValue<Vector2>();
-            _moveVector = value;
+            OnMove();
+            OnRun();
         }
-        
-        public void OnRun(InputAction.CallbackContext ctx)
+
+        public void OnMove()
         {
-            var value = ctx.ReadValue<float>();
-            _running = value > 0.5f;    // value is 1 or 0 (float)
+            if (urlInputField.isFocused)
+                return;
+
+            Vector2 moveValue = Vector2.zero;
+
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+            {
+                moveValue = Vector2.zero;
+            }
+            else
+            {
+                if (Input.GetKey(KeyCode.W))
+                {
+                    moveValue.y += 1;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    moveValue.y -= 1;
+                }
+                if (Input.GetKey(KeyCode.A))
+                {
+                    moveValue.x -= 1;
+                }
+                if (Input.GetKey(KeyCode.D))
+                {
+                    moveValue.x += 1;
+                }
+            }
+
+            //조이스틱 방향이 대각선이라면
+            if (moveValue.x != 0 && moveValue.y != 0)
+            {
+                moveValue = new Vector2(moveValue.x * 0.74f, moveValue.y * 0.74f);
+            }
+
+            _moveVector = moveValue;
+        }
+
+        public void OnRun()
+        {
+            _running = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         }
     }
 }
