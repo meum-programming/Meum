@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using TMPro;
 using UI.BuilderScene;
 using UnityEngine;
 //using UnityEngine.InputSystem;
@@ -21,6 +21,8 @@ namespace Game.Builder.Camera
 
         private Vector3 _moveVector;
         private bool _running;
+
+        [SerializeField] private TMP_InputField urlInputField;
 
         private void Start()
         {
@@ -59,6 +61,9 @@ namespace Game.Builder.Camera
 
         public void OnMove()
         {
+            if (urlInputField.isFocused)
+                return;
+
             Vector2 moveValue = Vector2.zero;
 
             if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))

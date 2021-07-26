@@ -33,7 +33,7 @@ public class BGMSetController : MonoBehaviour
     [SerializeField] RectTransform bgmListItemParant;
     [SerializeField] BGMListItem bgmListItemPrefab;
 
-
+    [SerializeField] Slider slider;
     [SerializeField] Image slider_BG;
     [SerializeField] Image slider_FG;
 
@@ -147,6 +147,10 @@ public class BGMSetController : MonoBehaviour
         {
             this.bgmIndex = 1;
         }
+        else if (this.bgmIndex < 1)
+        {
+            this.bgmIndex = activeBGMList.Count - 1;
+        }
 
         BGMDataSet(activeBGMList[this.bgmIndex]);
 
@@ -160,6 +164,8 @@ public class BGMSetController : MonoBehaviour
         bgmNameText.text = bGMSaveData.name;
 
         maxTimeText.text = GetTimeText(bGMSaveData.maxTime);
+
+        SliderImageSet(bGMSaveData.waveImage);
 
         SoundManager.Instance.PlayBGM(bGMSaveData.bgmId);
     }
@@ -218,6 +224,9 @@ public class BGMSetController : MonoBehaviour
         {
             bgmIndex -= 1;
         }
+
+        slider.value = 0;
+        SliderClickOn(0);
         BGMSelectOn(bgmIndex);
     }
 
@@ -227,6 +236,15 @@ public class BGMSetController : MonoBehaviour
             return;
 
         currentTimeText.text = GetTimeText((int)bgmAudioSource.time);
+
+        float sliderValue = bgmAudioSource.time / bgmAudioSource.clip.length;
+
+        slider.value = sliderValue;
+    }
+
+    public void SliderClickOn(float value)
+    {
+        bgmAudioSource.time = bgmAudioSource.clip.length * value;
     }
 
     public void ListUpBtnClickOn()

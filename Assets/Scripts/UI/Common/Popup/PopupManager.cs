@@ -31,8 +31,8 @@ public class PopupManager : MonoBehaviour
 
 	void Init() 
 	{
-		Canvas canvas = FindObjectOfType<Canvas>();
-		transform.SetParent(canvas.transform);
+		GalleryController galleryController = FindObjectOfType<GalleryController>();
+		transform.SetParent(galleryController.transform);
 		transform.localPosition = Vector3.zero;
 	}
 

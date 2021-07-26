@@ -123,12 +123,18 @@ public class SoundManager : MonoBehaviour
 
 	public void PlayBGM(int bgmID)
 	{
-		if (currentPlaybgmId == bgmID)
-			return;
-
-		currentPlaybgmId = bgmID;
-
 		BGMSaveData bGMSaveData = meumSaveData.GetBGMData(bgmID);
+
+		if (currentPlaybgmId == bgmID)
+		{
+			if (bgmAudioPlayOn != null)
+			{
+				bgmAudioPlayOn(bGMSaveData, bgmAudio);
+			}
+			return;
+		}
+			
+		currentPlaybgmId = bgmID;
 
         if (bGMSaveData == null)
 			return;
