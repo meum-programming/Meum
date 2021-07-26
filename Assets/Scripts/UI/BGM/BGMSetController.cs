@@ -32,12 +32,19 @@ public class BGMSetController : MonoBehaviour
     [SerializeField] RectTransform bgmListPanel;
     [SerializeField] RectTransform bgmListItemParant;
     [SerializeField] BGMListItem bgmListItemPrefab;
-    
+
+
+    [SerializeField] Image slider_BG;
+    [SerializeField] Image slider_FG;
+
+    [SerializeField] Sprite sprite;
+
     private void Awake()
     {
         SoundManager.Instance.bgmAudioPlayOn += BGMAudioPlayOn;
         DataSet();
         BGMListCreate();
+        SliderImageSet(sprite);
     }
 
     void DataSet()
@@ -81,6 +88,12 @@ public class BGMSetController : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SliderImageSet(Sprite sprite)
+    {
+        slider_BG.sprite = sprite;
+        slider_FG.sprite = sprite;
     }
 
     void BGMListCreate() 
