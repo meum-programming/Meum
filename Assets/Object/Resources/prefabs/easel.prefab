@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8843520989864729304}
   m_Layer: 11
   m_Name: easel
-  m_TagString: Untagged
+  m_TagString: Paint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4326329329770578365, guid: 2880c5259393d6e43b61f92fa6f77f42, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00013
+      value: 0.012
       objectReference: {fileID: 0}
     - target: {fileID: 4326329329770578365, guid: 2880c5259393d6e43b61f92fa6f77f42, type: 3}
       propertyPath: m_LocalPosition.z

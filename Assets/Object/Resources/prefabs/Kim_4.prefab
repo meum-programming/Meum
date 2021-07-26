@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6046869187899739699}
   - component: {fileID: 1195494905214856246}
   - component: {fileID: 6009039822934228343}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Kim_4
   m_TagString: Paint
   m_Icon: {fileID: 0}
@@ -106,6 +106,10 @@ PrefabInstance:
     - target: {fileID: 4326329329770578354, guid: 2880c5259393d6e43b61f92fa6f77f42, type: 3}
       propertyPath: m_Name
       value: shadow_rec
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326329329770578354, guid: 2880c5259393d6e43b61f92fa6f77f42, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4326329329770578365, guid: 2880c5259393d6e43b61f92fa6f77f42, type: 3}
       propertyPath: m_RootOrder
