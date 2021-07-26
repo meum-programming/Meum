@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8804992351280780475}
   m_Layer: 11
   m_Name: FlowerLamp
-  m_TagString: Untagged
+  m_TagString: Paint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,9 +60,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 3721027279864905642, guid: ce47e3aa5b07b004ba0301b6c031cfe7, type: 3}
-  - {fileID: -6729105567224105183, guid: ce47e3aa5b07b004ba0301b6c031cfe7, type: 3}
-  - {fileID: 2100000, guid: a0427cf339e5891468d5f2b433b2d44a, type: 2}
+  - {fileID: 2100000, guid: 60fa9732dd8b49542b6e0982f0327d0f, type: 2}
+  - {fileID: 2100000, guid: dd5b05ecdb07edf41a330cd85dc356fc, type: 2}
+  - {fileID: 2100000, guid: ee9a7008a6e65314c8a30b4557423e54, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,5 +95,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0024071913, y: 0.01215837, z: 0.0016555679}
-  m_Center: {x: 0.00051974447, y: -0.006079044, z: -0.00052082003}
+  m_Size: {x: 0.0012537343, y: 0.01215837, z: 0.0007367411}
+  m_Center: {x: 0.000034588127, y: -0.006079044, z: -0.00006140664}

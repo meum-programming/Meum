@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4004645107172811715}
   - component: {fileID: 3340867623018155611}
   - component: {fileID: 5288132795281381585}
+  - component: {fileID: 5110894622500959941}
   m_Layer: 11
   m_Name: 17_wall
   m_TagString: Wall
@@ -81,6 +82,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5110894622500959941
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715084068210167204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8111527490456212096, guid: f7e1e024d9e75764f986498364a22190, type: 3}
 --- !u!1 &4438685942120961109
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3950415486752362223}
   m_Layer: 0
-  m_Name: Konig
+  m_Name: gallery_type_17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,6 +140,7 @@ GameObject:
   - component: {fileID: 2375528561773558611}
   - component: {fileID: 826968845480962995}
   - component: {fileID: 9141898542966421269}
+  - component: {fileID: 5761538179236182757}
   m_Layer: 11
   m_Name: 17_base
   m_TagString: Floor
@@ -195,6 +211,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5761538179236182757
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951466012586778402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.39999998, y: 0.39999992, z: 0.019999996}
+  m_Center: {x: 0, y: 0, z: -0.009999998}
 --- !u!1 &7464148509457893567
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +235,7 @@ GameObject:
   - component: {fileID: 5181107623358940328}
   - component: {fileID: 2891819744466296313}
   - component: {fileID: 3041660282732044537}
+  - component: {fileID: 5128942967900294642}
   m_Layer: 11
   m_Name: 17_floor
   m_TagString: Wall
@@ -276,3 +306,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5128942967900294642
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7464148509457893567}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2365401473647721178, guid: f7e1e024d9e75764f986498364a22190, type: 3}

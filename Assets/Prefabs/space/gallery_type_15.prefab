@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1085490486711622393}
   m_Layer: 0
-  m_Name: artgalleryjj
+  m_Name: gallery_type_15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
