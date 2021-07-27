@@ -61,8 +61,6 @@ public class CameraColliderChecker : MonoBehaviour
             }
 
         }
-
-        Debug.LogWarning(index);
     }
 
 
