@@ -214,62 +214,7 @@ public class GalleryController : MonoBehaviour
             obj.gameObject.SetActive(false);
         }
 
-        if (isScreenShot)
-        {
-            yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraReady").clip.length);
-
-            yield return new WaitForSeconds(SoundManager.Instance.PlaySe("CameraShot").clip.length);
-        }
-        else 
-        {
-            yield return new WaitForEndOfFrame();
-        }
-
-        yield return new WaitForEndOfFrame();
-        Texture2D reSizeTexture2D = ScreenShotReSizing(ScreenCapture.CaptureScreenshotAsTexture(1));
-
-        ScreenShotRequest.saveTypeEnum saveTypeEnum = isScreenShot ? ScreenShotRequest.saveTypeEnum.screenshot : ScreenShotRequest.saveTypeEnum.thumbnail;
-
-        byte[] bytes = reSizeTexture2D.EncodeToPNG();
-
-        string fileType = isScreenShot ? "screenshot_" : "thumbnail_";
-
-        int roomType = FindObjectOfType<ProceduralGalleryBuilder>().GetLandInfos()[0].type;
-        int uid = MeumDB.Get().myRoomInfo.owner.user_id;
-        int middleId = isScreenShot ? uid : roomType;
-
-        DateTime nowDT = DateTime.Now;
-        string dateStr = isScreenShot ? string.Format("_{0}_{1:D2}_{2:D2}_{3:D2}_{4:D2}", nowDT.Year, nowDT.Month, nowDT.Day, nowDT.Hour, nowDT.Minute) : string.Empty;
-
-        string fileName = string.Format("{0}{1}{2}.png", fileType , middleId, dateStr);
-
-        bool nextOn = false;
-
-        //스크린샷을 S3로 보내기
-        ScreenShotRequest screenShotRequest = new ScreenShotRequest()
-        {
-            requestStatus = 0,
-            id = MeumDB.Get().myRoomInfo.owner.user_id,
-            saveType = saveTypeEnum,
-            bytes = bytes,
-            file_name = fileName,
-            successOn = ResultData =>
-            {
-                ScreenShotInfoData data = (ScreenShotInfoData)ResultData;
-
-                Debug.LogWarning(data.url);
-
-                if (isScreenShot)
-                {
-                    Application.OpenURL(data.url);
-                }
-                
-                nextOn = true;
-            }
-        };
-        screenShotRequest.RequestOn();
-
-        yield return new WaitUntil(() => nextOn);
+        yield return ScreenShotManager.Instance.ScreenShowOn(isScreenShot);
 
         if (isScreenShot)
         {

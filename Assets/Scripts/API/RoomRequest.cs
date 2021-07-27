@@ -104,6 +104,7 @@ public class RoomInfoData : BaseRespons
     public UserData owner = null;
     public string startPoint_json = string.Empty;
     public int land_type = 0;
+    public int is_auto_thumbnail = 1;
 }
 
 [System.Serializable]
