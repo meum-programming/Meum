@@ -85,8 +85,6 @@ namespace Game
             pos[0] = new LandInfo();
             pos[0].type = type;
 
-            Debug.LogWarning(pos[0].type);
-
             _landInfos = pos;
 
             AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
