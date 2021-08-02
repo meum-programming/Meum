@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using UI.ChattingUI;
 
 namespace Game.Player
 {
@@ -106,11 +107,13 @@ namespace Game.Player
             OnJump();
             OnRun();
             OnMove();
-            OnChat();
         }
 
         void OnJump()
         {
+            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+                return;
+
             if (!Input.GetKeyDown(KeyCode.Space))
                 return;
             
@@ -273,14 +276,6 @@ namespace Game.Player
             if (_moveVector != Vector3.zero && _animController._animator.GetCurrentAnimatorStateInfo(0).IsName("Human_Idle"))
             {
                 _animController.SetVerticalSpeed(Mathf.Abs(_moveVector.x) + Mathf.Abs(_moveVector.y));
-            }
-        }
-
-        void OnChat()
-        {
-            if (Input.GetKey(KeyCode.Return))
-            {
-                UI.ChattingUI.ChattingUI.Get().SetInputFieldActive();
             }
         }
 

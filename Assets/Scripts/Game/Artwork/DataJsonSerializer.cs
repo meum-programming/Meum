@@ -91,12 +91,15 @@ namespace Game.Artwork
             //영상 테스트 용 (블랙 겔러리에서만 보이도록 수정)
             if (MeumDB.Get().currentRoomInfo.id == 146)
             {
-                ArtworkInfo videoArtworkInfo = Instantiate(videoPrefab, transform).GetComponent<ArtworkInfo>();
-
-                videoArtworkInfo.transform.position = new Vector3(10.2f, 2.4f, -4.6f);
-                videoArtworkInfo.transform.eulerAngles = new Vector3(270, 0, 270);
-                videoArtworkInfo.transform.localScale = new Vector3(6.5f, 1, 4);
-                videoArtworkInfo.LoadVideoCoroutine("https://www.youtube.com/watch?v=v1DWS9-0zSc");
+                CreateVideo(new Vector3(10.2f, 2.4f, -4.6f), new Vector3(270, 0, 270), new Vector3(6.5f, 1, 4), "https://www.youtube.com/watch?v=v1DWS9-0zSc");
+            }
+            //영상 테스트 용 (수원 전시에서만 보이도록 수정)
+            else if (MeumDB.Get().currentRoomInfo.id == 524)
+            {
+                CreateVideo(new Vector3(5.76f, 8.5f, -16.35f) , new Vector3(270, 0, 270) , new Vector3(3.2f, 0.5f, 1.8f) , "https://youtu.be/a5O-mGwBuqs");
+                CreateVideo(new Vector3(0.615f, 2.0f, -23.8f), new Vector3(270, 0, 0), new Vector3(1.05f, 0.5f, 1.87f), "https://youtu.be/iXolIMQFdsM");
+                CreateVideo(new Vector3(5.76f, 8.5f, -21.47f), new Vector3(270, 0, 270), new Vector3(2.99f, 0.5f, 1.68f), "https://youtu.be/a2dcLWJGOZ0");
+                CreateVideo(new Vector3(-4.8f, 2.0f, -15.58f), new Vector3(270, 0, 90), new Vector3(4.14f, 0.5f, 1.86f), "https://youtu.be/kcyhpuBIm0M");
             }
 
             //새로운 3D 오브젝트 임시 설치
@@ -110,6 +113,17 @@ namespace Game.Artwork
 
             _resetCheckpoint = roomInfoData;
         }
+
+        void CreateVideo(Vector3 pos , Vector3 rot , Vector3 scale , string url)
+        {
+            ArtworkInfo videoArtworkInfo = Instantiate(videoPrefab, transform).GetComponent<ArtworkInfo>();
+
+            videoArtworkInfo.transform.position = pos;
+            videoArtworkInfo.transform.eulerAngles = rot;
+            videoArtworkInfo.transform.localScale = scale;
+            videoArtworkInfo.LoadVideoCoroutine(url);
+        }
+
         
         private void ClearArtworks()
         {
@@ -134,7 +148,10 @@ namespace Game.Artwork
 
             Core.Socket.MeumSocket.Get().BroadCastUpdateArtworks();
 
-            _resetCheckpoint.data_json = json;
+            if (_resetCheckpoint != null)
+            {
+                _resetCheckpoint.data_json = json;
+            }
 
             yield return null;
         }
