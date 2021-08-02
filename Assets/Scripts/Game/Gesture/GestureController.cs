@@ -86,6 +86,9 @@ public class GestureController : MonoBehaviour
     /// </summary>
     void NumberKeyTouchCheck()
     {
+        if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            return;
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             HotKeyTouchOn(0);

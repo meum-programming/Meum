@@ -49,7 +49,7 @@ namespace Game.Player
             if (hitDistance != 0)
             {
                 float posZ = -(hitDistance - 1);
-                ResetCameraZoom(posZ, tweenTime: time);
+                ResetCameraZoom(posZ, tweenTime: time , colliderOn : true);
             }
         }
 
@@ -183,12 +183,12 @@ namespace Game.Player
             else if (Input.GetKeyDown(KeyCode.O)) 
             {
                 cameraZoomFlag = true;
-                carmeraZoomValue = 10;
+                carmeraZoomValue = 1f;
             }
             else if (Input.GetKeyDown(KeyCode.P))
             {
                 cameraZoomFlag = true;
-                carmeraZoomValue = -10;
+                carmeraZoomValue = -1f;
             }
         }
 
@@ -200,7 +200,7 @@ namespace Game.Player
             if (CanZoomCheck(carmeraZoomValue))
             {
                 float posZ = _camera.transform.localPosition.z;
-                ResetCameraZoom(posZ + carmeraZoomValue , carmeraZoomValue > 0);
+                ResetCameraZoom(posZ + carmeraZoomValue , true);
             }
         }
 
@@ -246,7 +246,7 @@ namespace Game.Player
         /// </summary>
         /// <param name="posZ"></param>
         /// <param name="tweenTime"></param>
-        void ResetCameraZoom(float posZ,bool zoomIn = false , float tweenTime = 0.5f)
+        void ResetCameraZoom(float posZ,bool zoomIn = false , float tweenTime = 0.5f , bool colliderOn = false)
         {
             //20미터 보다 더 멀어지면 
             if (posZ < - 20)
@@ -259,7 +259,7 @@ namespace Game.Player
                 moveTween.Kill();
             }
 
-            if (zoomIn && posZ > firstViewMinValue)
+            if (zoomIn && posZ > firstViewMinValue || colliderOn && posZ > firstViewMinValue)
             {
                 if (firstViewReadyOn) 
                 {

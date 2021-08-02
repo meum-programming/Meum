@@ -111,7 +111,12 @@ namespace UI.GalleryScene
                 float tempWidth = originWidth;
                 float tempHeight = originHeight;
 
-                if (texture.height > texture.width || texture.height == texture.width)
+                //유니티의 Image 가로 사이즈 대비 텍스쳐의 가로 사이즈
+                float check_w_Rate = tempWidth / texture.width;
+                //유니티의 Image 세로 사이즈 대비 텍스쳐의 세로 사이즈
+                float check_h_Rate = tempHeight / texture.height;
+                
+                if (check_w_Rate > check_h_Rate || check_h_Rate == check_w_Rate)
                 {
                     tempWidth = ((texture.width * originHeight) / texture.height);
                 }

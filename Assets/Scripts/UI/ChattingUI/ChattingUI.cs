@@ -29,6 +29,8 @@ namespace UI.ChattingUI
 
         public bool showOn = false;
 
+        float enterDelay = 0;
+
         private void Awake() {
             base.Awake();
             Init();
@@ -47,6 +49,8 @@ namespace UI.ChattingUI
 
         public void OnEndEdit()
         {
+            enterDelay = 0.1f;
+
             if (!EventSystem.current.alreadySelecting)
             {
                 Send();
@@ -131,6 +135,35 @@ namespace UI.ChattingUI
 
             float xMoveValue = showOn ? 0 : -425;
             _rectTransform.DOAnchorPosX(xMoveValue, 0.5f);
+        }
+
+        private void Update()
+        {
+            OnChat();
+        }
+
+        void OnChat()
+        {
+            if (enterDelay > 0)
+            {
+                enterDelay -= Time.deltaTime;
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (showOn == false)
+                {
+                    ShowOn(true);
+                }
+
+                ChattingUI chattingUI = ChattingUI.Get();
+
+                if (chattingUI.InputFieldActivated() == false)
+                {
+                    chattingUI.SetInputFieldActive();
+                }
+            }
         }
 
     }
