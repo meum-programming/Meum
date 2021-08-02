@@ -42,8 +42,6 @@ public class BGMWaveController : MonoBehaviour
         }
 
         instanceObj.gameObject.SetActive(false);
-
-        Debug.LogWarning("bgmWaveList = " + bgmWaveList.Count);
     }
 
     public void AudioSet(AudioSource audioSource)
@@ -103,7 +101,6 @@ public class BGMWaveController : MonoBehaviour
         }
         else 
         {
-            Debug.LogWarning("fail");
         }
     }
 

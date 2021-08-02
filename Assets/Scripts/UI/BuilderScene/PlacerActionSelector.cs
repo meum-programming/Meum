@@ -128,8 +128,6 @@ namespace UI.BuilderScene
                 scaleValue.z -= delta.x;
             }
 
-            Debug.LogWarning(scaleValue);
-
             _selected.transform.localScale = scaleValue;
         }
 
@@ -159,8 +157,6 @@ namespace UI.BuilderScene
                         {
                             dragOn = true;
                             arrowEnum = hit.transform.gameObject.GetComponent<Arrow>().arrowEnum;
-
-                            Debug.LogWarning(arrowEnum + " , 클릭");
                         }
                     }
                     else if (Input.GetMouseButtonUp(0))
@@ -245,8 +241,6 @@ namespace UI.BuilderScene
                     OnDeleteButton();
                     break;
             }
-
-            Debug.LogWarning("selectState = "+ selectState + " expertModeOn = "+ expertModeOn);
 
             easeScaleSetBtnPanel.gameObject.SetActive(expertModeOn == false && selectState == 2);
             expertModePanel.gameObject.SetActive(expertModeOn && selectState <= 2);

@@ -115,7 +115,6 @@ public class GestureBtn : MonoBehaviour , IPointerEnterHandler , IPointerExitHan
         }
 
         //FindObjectOfType<GestureController>().PlayGestureAnim(model.id);
-        //Debug.LogWarning("Click");
     }
 }
 

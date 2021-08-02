@@ -346,11 +346,11 @@ namespace Core.Socket
 
         private IEnumerator GravitySet()
         {
-            GravitySet(_localPlayer.GetComponent<CharacterController>(), 0);
+            GravitySet(_localPlayer.GetComponentInChildren<CharacterController>(), 0);
 
             yield return new WaitForSeconds(1);
 
-            GravitySet(_localPlayer.GetComponent<CharacterController>(), 0.9f);
+            GravitySet(_localPlayer.GetComponentInChildren<CharacterController>(), 0.9f);
         }
 
         private void GravitySet(CharacterController controller , float value) 

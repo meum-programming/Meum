@@ -305,7 +305,7 @@ namespace Core.Socket {
 
             // load scene
             progressBar.SetProgress(0);
-            sceneOpen = SceneManager.LoadSceneAsync("AnimTest");
+            sceneOpen = SceneManager.LoadSceneAsync("EditCha");
             while (!sceneOpen.isDone)
             {
                 progressBar.SetProgress(sceneOpen.progress);
