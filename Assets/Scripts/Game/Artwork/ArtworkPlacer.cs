@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using System.Collections;
 
 namespace Game.Artwork
 {
@@ -55,7 +56,12 @@ namespace Game.Artwork
             pos = cam.ScreenToWorldPoint(pos);
 
             _nowEditing3D = data.Data.type_artwork == 1;
-            
+
+            if (_selected != null)
+            {
+                LayerSet("Placeable");
+            }
+
             _selected = Instantiate(_nowEditing3D ? object3DPrefab : paintPrefab, pos, Quaternion.identity, transform).transform;
             Assert.IsNotNull(_selected);
             var artworkInfo = _selected.GetComponent<ArtworkInfo>();
@@ -82,6 +88,11 @@ namespace Game.Artwork
             pos.z = -10.0f;
             pos = cam.ScreenToWorldPoint(pos);
 
+            if (_selected != null)
+            {
+                LayerSet("Placeable");
+            }
+
             _selected = Instantiate(paintPrefab, pos, Quaternion.identity, transform).transform;
             Assert.IsNotNull(_selected);
             var paintInfo = _selected.GetComponent<ArtworkInfo>();
@@ -94,15 +105,6 @@ namespace Game.Artwork
         
         public void Deselect()
         {
-            ArtworkInfo artworkInfo = GetArtWorkInfo();
-
-            //if (artworkInfo != null)
-            //{
-            //    artworkInfo.outline.enabled = false;
-            //    artworkInfo.outline.OutlineMode = Outline.Mode.OutlineAll;
-            //    artworkInfo.outline.OutlineWidth = 0;
-            //}
-
             StopMovingObj();
             actionSelector.Deselect();
             _selected = null;
@@ -161,6 +163,7 @@ namespace Game.Artwork
          */
         public void OnSelect()
         {
+            
             if (!Input.GetMouseButtonUp(0))
                 return;
             
@@ -180,14 +183,7 @@ namespace Game.Artwork
 
                     if (_selected != null)
                     {
-                        artworkInfo = GetArtWorkInfo();
-
-                        //if (artworkInfo != null)
-                        //{
-                        //    artworkInfo.outline.enabled = false;
-                        //    artworkInfo.outline.OutlineMode = Outline.Mode.OutlineAll;
-                        //    artworkInfo.outline.OutlineWidth = 0;
-                        //}
+                        LayerSet("Placeable");
                     }
 
                     _selected = objectHit;
@@ -198,12 +194,7 @@ namespace Game.Artwork
                     _nowEditing3D = artworkInfo.ArtworkType == 1;
                     _moving = false;
 
-                    //if (artworkInfo != null)
-                    //{
-                    //    artworkInfo.outline.enabled = true;
-                    //    artworkInfo.outline.OutlineMode = Outline.Mode.OutlineAndSilhouette;
-                    //    artworkInfo.outline.OutlineWidth = 5;
-                    //}
+                    StartCoroutine(HitNomalValueSet()); 
                 }
                 else
                 {
@@ -212,9 +203,7 @@ namespace Game.Artwork
                         Deselect();
                     }
                 }
-                    
 
-                
             }
             else if(!_moving)
                 Deselect();
@@ -268,32 +257,26 @@ namespace Game.Artwork
             if (_selected)
             {
                 Transform targetTransform = _nowEditing3D ? _selected.parent : _selected;
-
-                if (_moving == false)
-                {
-                    HitNomalValueSet(targetTransform);
-                }
-
                 targetTransform.rotation = Quaternion.Euler(hitNormal * value * 15) * targetTransform.rotation;
             }
         }
 
-        void HitNomalValueSet(Transform targetTransform)
+        IEnumerator HitNomalValueSet()
         {
             LayerSet("NotPlaced");
 
-            var ray = cam.ScreenPointToRay(Input.mousePosition);
-            var mask = 1 << LayerMask.NameToLayer("Placeable");
-            if (Physics.Raycast(ray, out var hit, 100.0f, mask))
-            {
-                hitNormal = hit.normal;
-            }
+            yield return new WaitForEndOfFrame();
 
-            LayerSet("Placeable");
+            RaySet(true);
         }
 
         void LayerSet(string layerValue)
         {
+            if (_selected == null)
+            {
+                return;
+            }
+
             _selected.gameObject.layer = LayerMask.NameToLayer(layerValue);
 
             if (_nowEditing3D)
@@ -333,8 +316,6 @@ namespace Game.Artwork
                     scale.y = scale.z * ratioY;
                 }
 
-                //_selected.localScale = scale;
-
                 if (scaleTween != null && scaleTween.IsPlaying())
                 {
                     scaleTween.Kill();
@@ -368,7 +349,7 @@ namespace Game.Artwork
             OnRotateArtwork();
         }
 
-        void RaySet()
+        void RaySet(bool hitNormalSetOnly = false)
         {
             var ray = cam.ScreenPointToRay(Input.mousePosition);
             var mask = 1 << LayerMask.NameToLayer("Placeable");
@@ -378,11 +359,16 @@ namespace Game.Artwork
 
                 if (objectHit.CompareTag("Paint") || objectHit.CompareTag("Wall") || objectHit.CompareTag("Floor"))
                 {
-                    AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"));
-
-                    if (_nowEditing3D && objectHit.parent != _selected)
+                    if (_nowEditing3D)
                     {
-                        AlignPaintTransform(_selected.parent, hit, objectHit.CompareTag("Wall"));
+                        if (objectHit != _selected)
+                        {
+                            AlignPaintTransform(_selected.parent, hit, objectHit.CompareTag("Wall"), hitNormalSetOnly);
+                        }
+                    }
+                    else
+                    {
+                        AlignPaintTransform(_selected, hit, objectHit.CompareTag("Wall"), hitNormalSetOnly);
                     }
                 }
             }
@@ -391,18 +377,23 @@ namespace Game.Artwork
         /*
          * @brief Ray의 hit정보에 따라 Artwork의 transform을 설정해주는 함수
          */
-        private void AlignPaintTransform(Transform paint, RaycastHit hit, bool snap)
+        private void AlignPaintTransform(Transform paint, RaycastHit hit, bool snap , bool hitNormalSetOnly = false)
         {
             var placePosition = hit.point;
             var objectHit = hit.transform;
             var distanceFromCenterY = hit.point.y - objectHit.transform.position.y;
             placePosition.y = objectHit.transform.position.y 
                               + (snap ? SnapFloat(distanceFromCenterY, snapGridSizeY) : distanceFromCenterY);
-            paint.rotation = Quaternion.FromToRotation(paint.up, hit.normal) * paint.rotation;
+
             hitNormal = hit.normal;
             hitNormalReady = true;
 
-            paint.position = placePosition;
+
+            if (!hitNormalSetOnly)
+            {
+                paint.rotation = Quaternion.FromToRotation(paint.up, hit.normal) * paint.rotation;
+                paint.position = placePosition;
+            }
         }
 
         private float SnapFloat(float v, float gridSize)

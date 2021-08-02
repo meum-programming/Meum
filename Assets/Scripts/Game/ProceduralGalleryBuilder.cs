@@ -27,7 +27,6 @@ namespace Game
      */
     public class ProceduralGalleryBuilder : MonoBehaviour
     {
-        [SerializeField] private GameObject wallPrefab;
         [FormerlySerializedAs("edge_length")] [SerializeField] private float edgeLength;
 
         private LandInfo[] _landInfos;
@@ -101,53 +100,6 @@ namespace Game
             var floor = Instantiate(resultObj, _floors);
             floor.transform.position = position;
             floor.gameObject.SetActive(true);
-
-            WallCreate(pos , position);
-        }
-
-        /// <summary>
-        /// 바다로 못나가게 막는 벽 생성
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="position"></param>
-        void WallCreate(LandInfo pos , Vector3 position)
-        {
-            //생성 안할것인지 체크
-            if (NotCreateWallOn(pos.type))
-                return;
-            
-            var wallY = wallPrefab.transform.position.y;
-            // x axis walls
-            if (!Has(pos.x - 1, pos.y))
-            {
-                var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x - edgeLength / 2.0f, wallY, position.z);
-                wall.transform.position = wallPos;
-            }
-
-            if (!Has(pos.x + 1, pos.y))
-            {
-                var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x + edgeLength / 2.0f, wallY, position.z);
-                wall.transform.position = wallPos;
-            }
-
-            // y axis walls
-            if (!Has(pos.x, pos.y - 1))
-            {
-                var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x, wallY, position.z - edgeLength / 2.0f);
-                wall.transform.position = wallPos;
-                wall.transform.Rotate(Vector3.up, 90.0f);
-            }
-
-            if (!Has(pos.x, pos.y + 1))
-            {
-                var wall = Instantiate(wallPrefab, _walls);
-                var wallPos = new Vector3(position.x, wallY, position.z + edgeLength / 2.0f);
-                wall.transform.position = wallPos;
-                wall.transform.Rotate(Vector3.up, -90.0f);
-            }
         }
 
         bool NotCreateWallOn(int type)
