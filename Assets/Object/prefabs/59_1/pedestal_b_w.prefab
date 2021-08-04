@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3828417841706703978}
   - component: {fileID: 4252862430342926247}
   m_Layer: 11
-  m_Name: pedestal_b
+  m_Name: pedestal_b_w
   m_TagString: Paint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
