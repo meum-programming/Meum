@@ -4,6 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Core;
+using UnityEngine.Events;
 
 namespace Game.Artwork
 {
@@ -105,13 +106,13 @@ namespace Game.Artwork
             if (data.artwork_type == 0)
                 StartCoroutine(LoadTextureCoroutine());
             else if(data.artwork_type == 1)
-                StartCoroutine(LoadModelCoroutine());
+                LoadModelCoroutine();
         }
         
         /*
          * @brief UI.Content.data(ArtworkInfo(DB))를 통해 업데이트, BuilderScene에서 새로 설치할때 사용됨
          */
-        public void UpdateWithArtworkContent(UI.ContentViewer.Content content)
+        public void UpdateWithArtworkContent(UI.ContentViewer.Content content , UnityAction loadOn = null)
         {
             if (ReferenceEquals(content, null) || 
                 ReferenceEquals(content.Image.texture, null)) 
@@ -124,38 +125,26 @@ namespace Game.Artwork
             if (_artworkData.artwork_type == 0)
             {
                 _artworkData.url = content.Data.image_file;
-                StartCoroutine(LoadTextureCoroutine());
+                StartCoroutine(LoadTextureCoroutine(loadOn));
                 scale.x = content.Data.size_w ;
                 scale.z = content.Data.size_h ;
             }
             else if (_artworkData.artwork_type == 1)
             {
                 _artworkData.url = content.Data.object_file;
-                LoadModelCoroutine2();
-                //StartCoroutine(LoadModelCoroutine());
+                LoadModelCoroutine(loadOn);
                 scale.x = scale.y = scale.z = content.Data.size_w;
-
-                //Transform obj = transform.GetComponentInChildren<MeshRenderer>().transform;
-                //scale = obj.localScale;
-                //obj.localScale = Vector3.one;
             }
             transform.localScale = scale;
 
             transform.rotation = Quaternion.identity;
-
-            /*
-            if (_artworkData.artwork_type == 1)
-            {
-                LoadModelCoroutine2();
-            }
-            */
 
         }
 
         /*
          * @brief DB에서 텍스쳐를 불러오는 함수 Artwork의 타입이 2d(=0) 일 경우 사용됨
          */
-        private IEnumerator LoadTextureCoroutine()
+        private IEnumerator LoadTextureCoroutine(UnityAction loadOn = null)
         {
             string url = _artworkData.url;
 
@@ -169,103 +158,43 @@ namespace Game.Artwork
 
             var textureGetter = MeumDB.Get().GetTextureCoroutine(url);
             yield return textureGetter.coroutine;
-            //Assert.IsNotNull(textureGetter.result);
+
             var texture = textureGetter.result as Texture2D;
-            //Assert.IsNotNull(texture);
             
             paintRenderer.material = new Material(mat);
             paintRenderer.material.mainTexture = texture;
-            
+
+            if (loadOn != null)
+            {
+                loadOn();
+            }
         }
-        
+
         /*
          * @brief DB에서 3D Object를 불러오는 함수 Artwork의 타입이 3d(=1) 일 경우 사용됨
          */
-        private IEnumerator LoadModelCoroutine()
-        {
-            /*
-            string url = _artworkData.url;
-
-            string baseURL = "https://api.meum.me/datas/";
-            int index = url.IndexOf(baseURL);
-
-            if (index == -1)
-            {
-                url = baseURL + url;
-            }
-
-            
-
-            artwork_1master.meum /
-
-            var object3DGetter = MeumDB.Get().GetObject3DCoroutine(url);
-            yield return object3DGetter.coroutine;
-            Assert.IsNotNull(object3DGetter.result);
-            var loadedObject = object3DGetter.result as GameObject;
-            Assert.IsNotNull(loadedObject);
-            
-            */
-
-            yield return null;
-
-            string path = _artworkData.url.Replace("artwork_1master.meum/", "");
-            path = path.Replace("https://api.meum.me/datas/", "");
-
-            GameObject loadedObject = Resources.Load("prefabs/"+path) as GameObject;
-
-            if (loadedObject != null)
-            {
-                var obj = Instantiate(loadedObject, transform);
-
-                if (obj != null)
-                {
-                    Assert.IsNotNull(obj);
-                    obj.transform.localRotation = Quaternion.identity;
-                    obj.transform.localPosition = Vector3.zero;
-
-                    //obj.transform.localScale = Vector3.one;
-                    // 불러온 Object의 root에 있는 콜라이더를 ArtworkInfo가 포함된 게임오브젝트로 옮겨온 후 비활성화
-                    // 불러온 오브젝트를 ArtworkInfo를 포함한 게임오브젝트의 자식으로 붙이기 때문에 이렇게 할 필요가 있음
-                    // 옮긴 콜라이더는 트리거가 되고, 유저의 클릭, 다른 오브젝트 설치시에 사용됨
-                    // var col = obj.GetComponent<Collider>();
-                    //Assert.IsNotNull(col);
-                    //CopyComponent(col, gameObject).isTrigger = true;
-                    //col.enabled = false;
-                }
-            }
-
-        }
-
-        void LoadModelCoroutine2() 
+        private void LoadModelCoroutine(UnityAction loadOn = null)
         {
             string path = _artworkData.url.Replace("artwork_1master.meum/", "");
             path = path.Replace("https://api.meum.me/datas/", "");
 
-            GameObject loadedObject = Resources.Load("prefabs/" + path) as GameObject;
-
-            if (loadedObject != null)
+            AddressableManager.Insatnce.GetObj(path, (GameObject resultPbj) =>
             {
-                var obj = Instantiate(loadedObject, transform);
+                var obj = Instantiate(resultPbj, transform);
 
                 if (obj != null)
                 {
-                    Assert.IsNotNull(obj);
                     obj.transform.localRotation = Quaternion.identity;
                     obj.transform.localPosition = Vector3.zero;
+                    obj.gameObject.SetActive(true);
 
-
-                    //obj.transform.localScale = Vector3.one;
-                    // 불러온 Object의 root에 있는 콜라이더를 ArtworkInfo가 포함된 게임오브젝트로 옮겨온 후 비활성화
-                    // 불러온 오브젝트를 ArtworkInfo를 포함한 게임오브젝트의 자식으로 붙이기 때문에 이렇게 할 필요가 있음
-                    // 옮긴 콜라이더는 트리거가 되고, 유저의 클릭, 다른 오브젝트 설치시에 사용됨
-                    // var col = obj.GetComponent<Collider>();
-                    //Assert.IsNotNull(col);
-                    //CopyComponent(col, gameObject).isTrigger = true;
-                    //col.enabled = false;
+                    if (loadOn != null)
+                    {
+                        loadOn();
+                    }
                 }
-            }
+            });
         }
-
 
         public void LoadVideoCoroutine(string url)
         {

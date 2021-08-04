@@ -1,0 +1,325 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: 3DModel_59_1
+  m_EditorClassIdentifier: 
+  m_GroupName: 3DModel_59_1
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 3b9925adb4c312b458d4da5c028f7b7c
+  m_SerializeEntries:
+  - m_GUID: b758f93cb7020cf4eaa0be1eb4afc2d9
+    m_Address: pedestal_a_w
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5565999231768409881, guid: b758f93cb7020cf4eaa0be1eb4afc2d9, type: 3}
+    m_TargetAsset: {fileID: 5565999231768409881, guid: b758f93cb7020cf4eaa0be1eb4afc2d9, type: 3}
+  - m_GUID: 5d0803d64d2a38f4b9d899dbeabe8b90
+    m_Address: light_table
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8045837485119439670, guid: 5d0803d64d2a38f4b9d899dbeabe8b90, type: 3}
+    m_TargetAsset: {fileID: 8045837485119439670, guid: 5d0803d64d2a38f4b9d899dbeabe8b90, type: 3}
+  - m_GUID: 05100c9cc3f56b747a051fef99895524
+    m_Address: TableLamp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3345521466976017738, guid: 05100c9cc3f56b747a051fef99895524, type: 3}
+    m_TargetAsset: {fileID: 3345521466976017738, guid: 05100c9cc3f56b747a051fef99895524, type: 3}
+  - m_GUID: 2055e860b06f6994d828f1da7ad57740
+    m_Address: Step_Ladder
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4472479318442500328, guid: 2055e860b06f6994d828f1da7ad57740, type: 3}
+    m_TargetAsset: {fileID: 4472479318442500328, guid: 2055e860b06f6994d828f1da7ad57740, type: 3}
+  - m_GUID: ca8a8ff3346ad8f4ba5be83903f28b52
+    m_Address: sofa_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 951781323825343942, guid: ca8a8ff3346ad8f4ba5be83903f28b52, type: 3}
+    m_TargetAsset: {fileID: 951781323825343942, guid: ca8a8ff3346ad8f4ba5be83903f28b52, type: 3}
+  - m_GUID: b8aaf9feee3f82a489d43895c9c66ac9
+    m_Address: desk_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7056872099541846466, guid: b8aaf9feee3f82a489d43895c9c66ac9, type: 3}
+    m_TargetAsset: {fileID: 7056872099541846466, guid: b8aaf9feee3f82a489d43895c9c66ac9, type: 3}
+  - m_GUID: 22c648aa74d1f9544951cfe595fc7572
+    m_Address: TableGlowLamp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8560508373353049264, guid: 22c648aa74d1f9544951cfe595fc7572, type: 3}
+    m_TargetAsset: {fileID: 8560508373353049264, guid: 22c648aa74d1f9544951cfe595fc7572, type: 3}
+  - m_GUID: f16c5ce2b304a8e4f9368be2092937c9
+    m_Address: sofa_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5134811647958980969, guid: f16c5ce2b304a8e4f9368be2092937c9, type: 3}
+    m_TargetAsset: {fileID: 5134811647958980969, guid: f16c5ce2b304a8e4f9368be2092937c9, type: 3}
+  - m_GUID: f2667a3a5c2324248916d9e799c21dbf
+    m_Address: flammingoRing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 749039041508154378, guid: f2667a3a5c2324248916d9e799c21dbf, type: 3}
+    m_TargetAsset: {fileID: 749039041508154378, guid: f2667a3a5c2324248916d9e799c21dbf, type: 3}
+  - m_GUID: f59970e4993a6b7439a39d2380cdb1ac
+    m_Address: pedestal_b_w
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1061740121900235524, guid: f59970e4993a6b7439a39d2380cdb1ac, type: 3}
+    m_TargetAsset: {fileID: 1061740121900235524, guid: f59970e4993a6b7439a39d2380cdb1ac, type: 3}
+  - m_GUID: e9e3ce22deccb3349a811b05fe259603
+    m_Address: dinnerTable_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6874243896598664667, guid: e9e3ce22deccb3349a811b05fe259603, type: 3}
+    m_TargetAsset: {fileID: 6874243896598664667, guid: e9e3ce22deccb3349a811b05fe259603, type: 3}
+  - m_GUID: b3333c839d0c2e443b4e98d9b7357386
+    m_Address: velvetline
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2516129588508606225, guid: b3333c839d0c2e443b4e98d9b7357386, type: 3}
+    m_TargetAsset: {fileID: 2516129588508606225, guid: b3333c839d0c2e443b4e98d9b7357386, type: 3}
+  - m_GUID: 17ba7c32349e5e5438ec7b9f48287423
+    m_Address: deskLamp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5155910502533194957, guid: 17ba7c32349e5e5438ec7b9f48287423, type: 3}
+    m_TargetAsset: {fileID: 5155910502533194957, guid: 17ba7c32349e5e5438ec7b9f48287423, type: 3}
+  - m_GUID: d72bcf44aa590ea498f333fcdce1af67
+    m_Address: wetfloorsign
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5923344880611225152, guid: d72bcf44aa590ea498f333fcdce1af67, type: 3}
+    m_TargetAsset: {fileID: 5923344880611225152, guid: d72bcf44aa590ea498f333fcdce1af67, type: 3}
+  - m_GUID: edfc980b324685145ad2b70f58cdbab9
+    m_Address: StandingWall_c_b
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 668084990178994715, guid: edfc980b324685145ad2b70f58cdbab9, type: 3}
+    m_TargetAsset: {fileID: 668084990178994715, guid: edfc980b324685145ad2b70f58cdbab9, type: 3}
+  - m_GUID: 8c07fe613e0a35247af69799c039fb68
+    m_Address: sofa_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5614258661381453390, guid: 8c07fe613e0a35247af69799c039fb68, type: 3}
+    m_TargetAsset: {fileID: 5614258661381453390, guid: 8c07fe613e0a35247af69799c039fb68, type: 3}
+  - m_GUID: 353f843c7719b9e4ea9e8957417aa98d
+    m_Address: light_rec
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6307667315356194977, guid: 353f843c7719b9e4ea9e8957417aa98d, type: 3}
+    m_TargetAsset: {fileID: 6307667315356194977, guid: 353f843c7719b9e4ea9e8957417aa98d, type: 3}
+  - m_GUID: 7e6ce29a9aabb984ca3e3f4db2cfd210
+    m_Address: shadow_cir
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2560460036189802802, guid: 7e6ce29a9aabb984ca3e3f4db2cfd210, type: 3}
+    m_TargetAsset: {fileID: 2560460036189802802, guid: 7e6ce29a9aabb984ca3e3f4db2cfd210, type: 3}
+  - m_GUID: af14d2de3fa29cb428e6bd08dcf34a25
+    m_Address: SpotlightA
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1455824061984639403, guid: af14d2de3fa29cb428e6bd08dcf34a25, type: 3}
+    m_TargetAsset: {fileID: 1455824061984639403, guid: af14d2de3fa29cb428e6bd08dcf34a25, type: 3}
+  - m_GUID: e83ab7c16c7e7f04a99bdb1063b6e09a
+    m_Address: easel
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2119028058294720987, guid: e83ab7c16c7e7f04a99bdb1063b6e09a, type: 3}
+    m_TargetAsset: {fileID: 2119028058294720987, guid: e83ab7c16c7e7f04a99bdb1063b6e09a, type: 3}
+  - m_GUID: 4fc5e51bd82cb8349b20a99db4b9bf4b
+    m_Address: HangingStemLight
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2732039278562486979, guid: 4fc5e51bd82cb8349b20a99db4b9bf4b, type: 3}
+    m_TargetAsset: {fileID: 2732039278562486979, guid: 4fc5e51bd82cb8349b20a99db4b9bf4b, type: 3}
+  - m_GUID: b1ea042bb0481dc44b1a3eb6e31e8e4e
+    m_Address: deskChair_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4871735194352093557, guid: b1ea042bb0481dc44b1a3eb6e31e8e4e, type: 3}
+    m_TargetAsset: {fileID: 4871735194352093557, guid: b1ea042bb0481dc44b1a3eb6e31e8e4e, type: 3}
+  - m_GUID: d6be6b46677372b40b4633857cefbccb
+    m_Address: Fireextinguisher
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2783445115173953081, guid: d6be6b46677372b40b4633857cefbccb, type: 3}
+    m_TargetAsset: {fileID: 2783445115173953081, guid: d6be6b46677372b40b4633857cefbccb, type: 3}
+  - m_GUID: 7e587d491c975b843aec63bdd9c84f15
+    m_Address: desk_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3612181904536373860, guid: 7e587d491c975b843aec63bdd9c84f15, type: 3}
+    m_TargetAsset: {fileID: 3612181904536373860, guid: 7e587d491c975b843aec63bdd9c84f15, type: 3}
+  - m_GUID: 1fc7c9ec1528dc8468b16cf030231b82
+    m_Address: dinnerTable_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1539476957278569992, guid: 1fc7c9ec1528dc8468b16cf030231b82, type: 3}
+    m_TargetAsset: {fileID: 1539476957278569992, guid: 1fc7c9ec1528dc8468b16cf030231b82, type: 3}
+  - m_GUID: 64174005b7100764cbb60e5753261dd9
+    m_Address: SpotLightB
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3106727667965733552, guid: 64174005b7100764cbb60e5753261dd9, type: 3}
+    m_TargetAsset: {fileID: 3106727667965733552, guid: 64174005b7100764cbb60e5753261dd9, type: 3}
+  - m_GUID: a12470617ef83d84c8197b4c6df2e92a
+    m_Address: Rubberduck
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7949064804805693916, guid: a12470617ef83d84c8197b4c6df2e92a, type: 3}
+    m_TargetAsset: {fileID: 7949064804805693916, guid: a12470617ef83d84c8197b4c6df2e92a, type: 3}
+  - m_GUID: 47772adea5feb894fbeb43e4cc855371
+    m_Address: 'Rack '
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4589484931893848957, guid: 47772adea5feb894fbeb43e4cc855371, type: 3}
+    m_TargetAsset: {fileID: 4589484931893848957, guid: 47772adea5feb894fbeb43e4cc855371, type: 3}
+  - m_GUID: 11753a791b6c9ab4a9a1c2e6f19daa36
+    m_Address: light_floor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2064174105307252646, guid: 11753a791b6c9ab4a9a1c2e6f19daa36, type: 3}
+    m_TargetAsset: {fileID: 2064174105307252646, guid: 11753a791b6c9ab4a9a1c2e6f19daa36, type: 3}
+  - m_GUID: 72b7fc7ed98b9ca489deda4d6d7a9a37
+    m_Address: StandingWall_a_b
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4328782852025241678, guid: 72b7fc7ed98b9ca489deda4d6d7a9a37, type: 3}
+    m_TargetAsset: {fileID: 4328782852025241678, guid: 72b7fc7ed98b9ca489deda4d6d7a9a37, type: 3}
+  - m_GUID: 2880c5259393d6e43b61f92fa6f77f42
+    m_Address: shadow_rec
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4326329329770578354, guid: 2880c5259393d6e43b61f92fa6f77f42, type: 3}
+    m_TargetAsset: {fileID: 4326329329770578354, guid: 2880c5259393d6e43b61f92fa6f77f42, type: 3}
+  - m_GUID: 45829287215084f45b3a4bf6674ac00f
+    m_Address: stanchions
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6264412360285220442, guid: 45829287215084f45b3a4bf6674ac00f, type: 3}
+    m_TargetAsset: {fileID: 6264412360285220442, guid: 45829287215084f45b3a4bf6674ac00f, type: 3}
+  - m_GUID: 4eea618aa693d14439f09f4d20c87455
+    m_Address: StandingWall_b_w
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8634409108565462233, guid: 4eea618aa693d14439f09f4d20c87455, type: 3}
+    m_TargetAsset: {fileID: 8634409108565462233, guid: 4eea618aa693d14439f09f4d20c87455, type: 3}
+  - m_GUID: 0cf1c6365e02e994d99ab48be6ca88c7
+    m_Address: sofa_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1354312729547620704, guid: 0cf1c6365e02e994d99ab48be6ca88c7, type: 3}
+    m_TargetAsset: {fileID: 1354312729547620704, guid: 0cf1c6365e02e994d99ab48be6ca88c7, type: 3}
+  - m_GUID: f285b2400ff33b34799985a9af025f7e
+    m_Address: desk_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2922077917720771124, guid: f285b2400ff33b34799985a9af025f7e, type: 3}
+    m_TargetAsset: {fileID: 2922077917720771124, guid: f285b2400ff33b34799985a9af025f7e, type: 3}
+  - m_GUID: f3c4ff0c3644c774686efa36702aa597
+    m_Address: pedestal_a_b
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2737893094882564653, guid: f3c4ff0c3644c774686efa36702aa597, type: 3}
+    m_TargetAsset: {fileID: 2737893094882564653, guid: f3c4ff0c3644c774686efa36702aa597, type: 3}
+  - m_GUID: 1663ba8817b9a3a47abb96ddb813478e
+    m_Address: pedestal_c_b
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4218314858864684761, guid: 1663ba8817b9a3a47abb96ddb813478e, type: 3}
+    m_TargetAsset: {fileID: 4218314858864684761, guid: 1663ba8817b9a3a47abb96ddb813478e, type: 3}
+  - m_GUID: d214e82afc10b5a4890ef503e0bc0d94
+    m_Address: MetalRack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8884750480494430373, guid: d214e82afc10b5a4890ef503e0bc0d94, type: 3}
+    m_TargetAsset: {fileID: 8884750480494430373, guid: d214e82afc10b5a4890ef503e0bc0d94, type: 3}
+  - m_GUID: 00c0990edc1dea74ebf1c857770068f8
+    m_Address: light_cir
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4337113380424762158, guid: 00c0990edc1dea74ebf1c857770068f8, type: 3}
+    m_TargetAsset: {fileID: 4337113380424762158, guid: 00c0990edc1dea74ebf1c857770068f8, type: 3}
+  - m_GUID: 594ed555b4e1e6f4aba1d923b5d9d7e6
+    m_Address: deskChair_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4049500446373274563, guid: 594ed555b4e1e6f4aba1d923b5d9d7e6, type: 3}
+    m_TargetAsset: {fileID: 4049500446373274563, guid: 594ed555b4e1e6f4aba1d923b5d9d7e6, type: 3}
+  - m_GUID: 5a93461f1688b1249b3f431beb171dc3
+    m_Address: pedestal_b_b
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 9096343093194459142, guid: 5a93461f1688b1249b3f431beb171dc3, type: 3}
+    m_TargetAsset: {fileID: 9096343093194459142, guid: 5a93461f1688b1249b3f431beb171dc3, type: 3}
+  - m_GUID: db45977959bf69641bfb873e68f78f06
+    m_Address: dinnerTable_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6328088522728261631, guid: db45977959bf69641bfb873e68f78f06, type: 3}
+    m_TargetAsset: {fileID: 6328088522728261631, guid: db45977959bf69641bfb873e68f78f06, type: 3}
+  - m_GUID: 13e7bfe0e6863404a88f1101586e236b
+    m_Address: woosukhall_fakewall
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2083703770766494449, guid: 13e7bfe0e6863404a88f1101586e236b, type: 3}
+    m_TargetAsset: {fileID: 2083703770766494449, guid: 13e7bfe0e6863404a88f1101586e236b, type: 3}
+  - m_GUID: b6a2104580eea974596fd31920bae60b
+    m_Address: StandingWall_a_w
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6119087091074677691, guid: b6a2104580eea974596fd31920bae60b, type: 3}
+    m_TargetAsset: {fileID: 6119087091074677691, guid: b6a2104580eea974596fd31920bae60b, type: 3}
+  - m_GUID: 1414a30fff351ab47812e83cfd243676
+    m_Address: FlowerLamp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4166612548087863022, guid: 1414a30fff351ab47812e83cfd243676, type: 3}
+    m_TargetAsset: {fileID: 4166612548087863022, guid: 1414a30fff351ab47812e83cfd243676, type: 3}
+  - m_GUID: d2da18bc50393dc4a88bac1ffd0f28d9
+    m_Address: StandingWall_c_w
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2820513604759001000, guid: d2da18bc50393dc4a88bac1ffd0f28d9, type: 3}
+    m_TargetAsset: {fileID: 2820513604759001000, guid: d2da18bc50393dc4a88bac1ffd0f28d9, type: 3}
+  - m_GUID: f798fb106e7a28446a4a2e09e3c9a046
+    m_Address: pedestal_c_w
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1811909769550271036, guid: f798fb106e7a28446a4a2e09e3c9a046, type: 3}
+    m_TargetAsset: {fileID: 1811909769550271036, guid: f798fb106e7a28446a4a2e09e3c9a046, type: 3}
+  - m_GUID: 73733215da5b56249b0c130fe9ba2823
+    m_Address: StandingWall_b_b
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4349025055014169512, guid: 73733215da5b56249b0c130fe9ba2823, type: 3}
+    m_TargetAsset: {fileID: 4349025055014169512, guid: 73733215da5b56249b0c130fe9ba2823, type: 3}
+  - m_GUID: 272d0b8ecdacf9a46bb02b4850f822cf
+    m_Address: Downlignt_Metal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8936309767872434186, guid: 272d0b8ecdacf9a46bb02b4850f822cf, type: 3}
+    m_TargetAsset: {fileID: 8936309767872434186, guid: 272d0b8ecdacf9a46bb02b4850f822cf, type: 3}
+  - m_GUID: c8d1ea2198bdb0344b2a9b022e1325aa
+    m_Address: light_Lamp
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3658602886646944034, guid: c8d1ea2198bdb0344b2a9b022e1325aa, type: 3}
+    m_TargetAsset: {fileID: 3658602886646944034, guid: c8d1ea2198bdb0344b2a9b022e1325aa, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 30f0b43cef5ccbf4ca85eb3a20d481ab, type: 2}
+    - {fileID: 11400000, guid: dd301619d3a7a094fb2dc69de505b0d4, type: 2}

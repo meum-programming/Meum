@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: 3DModel_393
+  m_EditorClassIdentifier: 
+  m_GroupName: 3DModel_393
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1a506d99da095ed4cb181f8b568b1eb1
+  m_SerializeEntries:
+  - m_GUID: 41fe5d6a76e74024d928874c06ef36bd
+    m_Address: Kim_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5019563033329092649, guid: 41fe5d6a76e74024d928874c06ef36bd, type: 3}
+    m_TargetAsset: {fileID: 5019563033329092649, guid: 41fe5d6a76e74024d928874c06ef36bd, type: 3}
+  - m_GUID: a19cf4ee90c64be4898fd282dc9e1dfe
+    m_Address: Kim_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7500026218062976430, guid: a19cf4ee90c64be4898fd282dc9e1dfe, type: 3}
+    m_TargetAsset: {fileID: 7500026218062976430, guid: a19cf4ee90c64be4898fd282dc9e1dfe, type: 3}
+  - m_GUID: ecd8489cd58a9a542acdcbbba1ad3105
+    m_Address: Kim_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3663345856192070082, guid: ecd8489cd58a9a542acdcbbba1ad3105, type: 3}
+    m_TargetAsset: {fileID: 3663345856192070082, guid: ecd8489cd58a9a542acdcbbba1ad3105, type: 3}
+  - m_GUID: 922730f42ac13d54da11cc12576c592f
+    m_Address: saga_chair
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3161860373120052172, guid: 922730f42ac13d54da11cc12576c592f, type: 3}
+    m_TargetAsset: {fileID: 3161860373120052172, guid: 922730f42ac13d54da11cc12576c592f, type: 3}
+  - m_GUID: 49fb399ac03b15947b019b08fd495ec1
+    m_Address: Kim_6
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 606697639185584801, guid: 49fb399ac03b15947b019b08fd495ec1, type: 3}
+    m_TargetAsset: {fileID: 606697639185584801, guid: 49fb399ac03b15947b019b08fd495ec1, type: 3}
+  - m_GUID: 9d214ea3cf6de97479083e82cdcc2a90
+    m_Address: sujanggo_stretch_low
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6845751750773697956, guid: 9d214ea3cf6de97479083e82cdcc2a90, type: 3}
+    m_TargetAsset: {fileID: 6845751750773697956, guid: 9d214ea3cf6de97479083e82cdcc2a90, type: 3}
+  - m_GUID: 756698d43b7f7d344b9b4fc89d9f96be
+    m_Address: saga_table
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3075305854974445729, guid: 756698d43b7f7d344b9b4fc89d9f96be, type: 3}
+    m_TargetAsset: {fileID: 3075305854974445729, guid: 756698d43b7f7d344b9b4fc89d9f96be, type: 3}
+  - m_GUID: 4cd4667e5cbdad84987b219d5a8c62e9
+    m_Address: Kim_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3700292863262327161, guid: 4cd4667e5cbdad84987b219d5a8c62e9, type: 3}
+    m_TargetAsset: {fileID: 3700292863262327161, guid: 4cd4667e5cbdad84987b219d5a8c62e9, type: 3}
+  - m_GUID: f570c94bfa8555641b70ef37e06030ae
+    m_Address: Kim_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1296610729890497994, guid: f570c94bfa8555641b70ef37e06030ae, type: 3}
+    m_TargetAsset: {fileID: 1296610729890497994, guid: f570c94bfa8555641b70ef37e06030ae, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 481ed95ff1d2e4943b0021fa4719834b, type: 2}
+    - {fileID: 11400000, guid: 3de10371b33658545865fffb8cec2f2d, type: 2}

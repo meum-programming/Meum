@@ -1,0 +1,217 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: 3DModel_59_0
+  m_EditorClassIdentifier: 
+  m_GroupName: 3DModel_59_0
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 23c5307116bd94044858e784e9f2760b
+  m_SerializeEntries:
+  - m_GUID: 85804899b4573504a9dc772e58f238e9
+    m_Address: artist_pallet_set
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 228721054867250353, guid: 85804899b4573504a9dc772e58f238e9, type: 3}
+    m_TargetAsset: {fileID: 228721054867250353, guid: 85804899b4573504a9dc772e58f238e9, type: 3}
+  - m_GUID: 0e1e9f58a89267245b109a33d9bad008
+    m_Address: Canvas3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 770995670145441059, guid: 0e1e9f58a89267245b109a33d9bad008, type: 3}
+    m_TargetAsset: {fileID: 770995670145441059, guid: 0e1e9f58a89267245b109a33d9bad008, type: 3}
+  - m_GUID: 19da7a678c749c3438111bad17ff39a3
+    m_Address: bed_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5664536100163726846, guid: 19da7a678c749c3438111bad17ff39a3, type: 3}
+    m_TargetAsset: {fileID: 5664536100163726846, guid: 19da7a678c749c3438111bad17ff39a3, type: 3}
+  - m_GUID: 470d0fa102244ab43803dd9b85e9c220
+    m_Address: Canvas2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6061750046237665280, guid: 470d0fa102244ab43803dd9b85e9c220, type: 3}
+    m_TargetAsset: {fileID: 6061750046237665280, guid: 470d0fa102244ab43803dd9b85e9c220, type: 3}
+  - m_GUID: 5545744093f1fd842a780649368b96b6
+    m_Address: chair_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1750637913544644938, guid: 5545744093f1fd842a780649368b96b6, type: 3}
+    m_TargetAsset: {fileID: 1750637913544644938, guid: 5545744093f1fd842a780649368b96b6, type: 3}
+  - m_GUID: ca0509d6af48c114593bc6f0eeaf6860
+    m_Address: CardBoxC_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4280552966965101842, guid: ca0509d6af48c114593bc6f0eeaf6860, type: 3}
+    m_TargetAsset: {fileID: 4280552966965101842, guid: ca0509d6af48c114593bc6f0eeaf6860, type: 3}
+  - m_GUID: c1cfa453da0819e43838bce72c49bd07
+    m_Address: CartonDrawer_06
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7322548508094487741, guid: c1cfa453da0819e43838bce72c49bd07, type: 3}
+    m_TargetAsset: {fileID: 7322548508094487741, guid: c1cfa453da0819e43838bce72c49bd07, type: 3}
+  - m_GUID: 84a831fe9b1d2e84bb0bfbb9b0d992dd
+    m_Address: CardBoxA_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 4017338229941339399, guid: 84a831fe9b1d2e84bb0bfbb9b0d992dd, type: 3}
+    m_TargetAsset: {fileID: 4017338229941339399, guid: 84a831fe9b1d2e84bb0bfbb9b0d992dd, type: 3}
+  - m_GUID: 4cc3de06272573640b1c627a35d84e3f
+    m_Address: artist_woodpallet_set
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6717138610427216956, guid: 4cc3de06272573640b1c627a35d84e3f, type: 3}
+    m_TargetAsset: {fileID: 6717138610427216956, guid: 4cc3de06272573640b1c627a35d84e3f, type: 3}
+  - m_GUID: 3142efa66ff312a4295a4b81a6ae88b1
+    m_Address: artist_paints_set
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3368642233068502817, guid: 3142efa66ff312a4295a4b81a6ae88b1, type: 3}
+    m_TargetAsset: {fileID: 3368642233068502817, guid: 3142efa66ff312a4295a4b81a6ae88b1, type: 3}
+  - m_GUID: 3a7829c00fd4cec498b17dcf42b334c5
+    m_Address: carpet_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5306547670257071427, guid: 3a7829c00fd4cec498b17dcf42b334c5, type: 3}
+    m_TargetAsset: {fileID: 5306547670257071427, guid: 3a7829c00fd4cec498b17dcf42b334c5, type: 3}
+  - m_GUID: 8d65aba8059cd4a4b94b496c5b4da30f
+    m_Address: CartonDrawer_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6008817116598318786, guid: 8d65aba8059cd4a4b94b496c5b4da30f, type: 3}
+    m_TargetAsset: {fileID: 6008817116598318786, guid: 8d65aba8059cd4a4b94b496c5b4da30f, type: 3}
+  - m_GUID: 2123eb4a15e657c48ae7e76afa02117c
+    m_Address: CartonDrawer_07
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 395716807839291681, guid: 2123eb4a15e657c48ae7e76afa02117c, type: 3}
+    m_TargetAsset: {fileID: 395716807839291681, guid: 2123eb4a15e657c48ae7e76afa02117c, type: 3}
+  - m_GUID: b2aac66f3a83844408d0a55ea9bca764
+    m_Address: CardBoxD_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2840747629203762585, guid: b2aac66f3a83844408d0a55ea9bca764, type: 3}
+    m_TargetAsset: {fileID: 2840747629203762585, guid: b2aac66f3a83844408d0a55ea9bca764, type: 3}
+  - m_GUID: b32e7bb96abd8b14b98d5dd6c03ab652
+    m_Address: CartonDrawer_08
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7867804549371510363, guid: b32e7bb96abd8b14b98d5dd6c03ab652, type: 3}
+    m_TargetAsset: {fileID: 7867804549371510363, guid: b32e7bb96abd8b14b98d5dd6c03ab652, type: 3}
+  - m_GUID: a9e7932466101f840a14a68197fcd06d
+    m_Address: CardBoxB_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1919826173483959431, guid: a9e7932466101f840a14a68197fcd06d, type: 3}
+    m_TargetAsset: {fileID: 1919826173483959431, guid: a9e7932466101f840a14a68197fcd06d, type: 3}
+  - m_GUID: 10dd7fadb8bd36e47950d40a53354e7c
+    m_Address: CardBoxC_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8704759076510844616, guid: 10dd7fadb8bd36e47950d40a53354e7c, type: 3}
+    m_TargetAsset: {fileID: 8704759076510844616, guid: 10dd7fadb8bd36e47950d40a53354e7c, type: 3}
+  - m_GUID: 91c9d03c8e769f8468cb01a56834a9f5
+    m_Address: carpet_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2182463414517964518, guid: 91c9d03c8e769f8468cb01a56834a9f5, type: 3}
+    m_TargetAsset: {fileID: 2182463414517964518, guid: 91c9d03c8e769f8468cb01a56834a9f5, type: 3}
+  - m_GUID: dc8eeb84dd446474fbedb05d13c02791
+    m_Address: concrete_brick
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2152432890543287920, guid: dc8eeb84dd446474fbedb05d13c02791, type: 3}
+    m_TargetAsset: {fileID: 2152432890543287920, guid: dc8eeb84dd446474fbedb05d13c02791, type: 3}
+  - m_GUID: 848d16f697d01104fbbe04005aba77c5
+    m_Address: carpet_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 933653182758765676, guid: 848d16f697d01104fbbe04005aba77c5, type: 3}
+    m_TargetAsset: {fileID: 933653182758765676, guid: 848d16f697d01104fbbe04005aba77c5, type: 3}
+  - m_GUID: 3eb1eb8dfcf9fad48ae87aa62aff1876
+    m_Address: CardBoxA_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5883408806647051076, guid: 3eb1eb8dfcf9fad48ae87aa62aff1876, type: 3}
+    m_TargetAsset: {fileID: 5883408806647051076, guid: 3eb1eb8dfcf9fad48ae87aa62aff1876, type: 3}
+  - m_GUID: aea03f25410435f4bb84bcf1f43fc16c
+    m_Address: CardBoxB_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2104960542680001791, guid: aea03f25410435f4bb84bcf1f43fc16c, type: 3}
+    m_TargetAsset: {fileID: 2104960542680001791, guid: aea03f25410435f4bb84bcf1f43fc16c, type: 3}
+  - m_GUID: c158b9edec59bdc4aa8aba4fc9df04e1
+    m_Address: chair_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2020947846136385403, guid: c158b9edec59bdc4aa8aba4fc9df04e1, type: 3}
+    m_TargetAsset: {fileID: 2020947846136385403, guid: c158b9edec59bdc4aa8aba4fc9df04e1, type: 3}
+  - m_GUID: b9d93c5310bd85a4c91240330b3b448a
+    m_Address: beachtable
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7923486995838493034, guid: b9d93c5310bd85a4c91240330b3b448a, type: 3}
+    m_TargetAsset: {fileID: 7923486995838493034, guid: b9d93c5310bd85a4c91240330b3b448a, type: 3}
+  - m_GUID: a5be79c2f1d484a429899abeaf0b1cc3
+    m_Address: Canvas1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3580681703936539072, guid: a5be79c2f1d484a429899abeaf0b1cc3, type: 3}
+    m_TargetAsset: {fileID: 3580681703936539072, guid: a5be79c2f1d484a429899abeaf0b1cc3, type: 3}
+  - m_GUID: 62ccad71385c49848a4af614ec51e150
+    m_Address: CartonDrawer_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2409212181488215922, guid: 62ccad71385c49848a4af614ec51e150, type: 3}
+    m_TargetAsset: {fileID: 2409212181488215922, guid: 62ccad71385c49848a4af614ec51e150, type: 3}
+  - m_GUID: de5be492e3a3e39418566ba2ffcd4b2e
+    m_Address: CardBoxD_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1009736425244040857, guid: de5be492e3a3e39418566ba2ffcd4b2e, type: 3}
+    m_TargetAsset: {fileID: 1009736425244040857, guid: de5be492e3a3e39418566ba2ffcd4b2e, type: 3}
+  - m_GUID: a762c599d2e9fff4086ee9d036d68786
+    m_Address: CartonDrawer_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3314251346973907588, guid: a762c599d2e9fff4086ee9d036d68786, type: 3}
+    m_TargetAsset: {fileID: 3314251346973907588, guid: a762c599d2e9fff4086ee9d036d68786, type: 3}
+  - m_GUID: e140e0ccafa10b44ea00512066746795
+    m_Address: CardBoxD_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3247476397078830546, guid: e140e0ccafa10b44ea00512066746795, type: 3}
+    m_TargetAsset: {fileID: 3247476397078830546, guid: e140e0ccafa10b44ea00512066746795, type: 3}
+  - m_GUID: 2ad2173a1d70cbb4f9ddbb5cdf83ea2b
+    m_Address: CartonDrawer_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1465611525310473844, guid: 2ad2173a1d70cbb4f9ddbb5cdf83ea2b, type: 3}
+    m_TargetAsset: {fileID: 1465611525310473844, guid: 2ad2173a1d70cbb4f9ddbb5cdf83ea2b, type: 3}
+  - m_GUID: 732bffeaa4d176d4188331ef888a21a9
+    m_Address: CartonDrawer_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 5343977650551793012, guid: 732bffeaa4d176d4188331ef888a21a9, type: 3}
+    m_TargetAsset: {fileID: 5343977650551793012, guid: 732bffeaa4d176d4188331ef888a21a9, type: 3}
+  - m_GUID: b6713e1db3ecdf449837ddeb1e3de788
+    m_Address: guide
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1641084163430299464, guid: b6713e1db3ecdf449837ddeb1e3de788, type: 3}
+    m_TargetAsset: {fileID: 1641084163430299464, guid: b6713e1db3ecdf449837ddeb1e3de788, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9d30e0bbba6a1584d8246a10a9047148, type: 2}
+    - {fileID: 11400000, guid: df14cbe9ea2eb26489c2b2b68f116820, type: 2}

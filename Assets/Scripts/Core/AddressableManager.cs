@@ -22,15 +22,18 @@ public class AddressableManager : MonoSingleton<AddressableManager>
     /// <param name="completed"></param>
     public void GetObj(string objName, UnityAction<GameObject> completed = null)
     {
+        string path = objName.Replace("artwork_1master.meum/", "");
+        path = path.Replace("https://api.meum.me/datas/", "");
+
         //Dictionary에 값이 없다면
-        if (objDic.ContainsKey(objName) == false)
+        if (objDic.ContainsKey(path) == false)
         {
             //다운로드 실행
-            StartCoroutine(DownLoadObj(objName, completed));
+            StartCoroutine(DownLoadObj(path, completed));
         }
         else
         {
-            CompletedOn(objName, completed);
+            CompletedOn(path, completed);
         }
     }
 
@@ -45,17 +48,20 @@ public class AddressableManager : MonoSingleton<AddressableManager>
     {
         bool downLoadOn = false;
 
+        string path = objName.Replace("artwork_1master.meum/", "");
+        path = path.Replace("https://api.meum.me/datas/", "");
+
         //Dictionary에 값이 없다면
-        if (objDic.ContainsKey(objName) == false)
+        if (objDic.ContainsKey(path) == false)
         {
             //다운로드 시작
-            Addressables.InstantiateAsync(objName, transform).Completed += (AsyncOperationHandle<GameObject> handle) =>
+            Addressables.InstantiateAsync(path, transform).Completed += (AsyncOperationHandle<GameObject> handle) =>
             {
-                if (objDic.ContainsKey(objName) == false)
+                if (objDic.ContainsKey(path) == false)
                 {
                     //obj를 Dictionary에 추가한다.
                     handle.Result.gameObject.SetActive(false);
-                    objDic.Add(objName, handle.Result);
+                    objDic.Add(path, handle.Result);
                 }
                 downLoadOn = true;
             };    
@@ -68,7 +74,7 @@ public class AddressableManager : MonoSingleton<AddressableManager>
         //다운로드 완료될때까지 대기
         yield return new WaitUntil(() => downLoadOn);
 
-        CompletedOn(objName, completed);
+        CompletedOn(path, completed);
     }
 
     void CompletedOn(string objName, UnityAction<GameObject> completed)

@@ -4,6 +4,7 @@ using UnityEngine.Assertions;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System.Collections;
+using UnityEngine.Events;
 
 namespace Game.Artwork
 {
@@ -67,8 +68,11 @@ namespace Game.Artwork
             var artworkInfo = _selected.GetComponent<ArtworkInfo>();
             Assert.IsNotNull(artworkInfo);
 
-            artworkInfo.UpdateWithArtworkContent(data);
+            artworkInfo.UpdateWithArtworkContent(data , ()=> CreateCompleteOn());
+        }
 
+        void CreateCompleteOn()
+        {
             if (_nowEditing3D)
             {
                 _selected = _selected.GetComponentInChildren<MeshRenderer>().transform;

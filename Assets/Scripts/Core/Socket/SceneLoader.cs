@@ -142,17 +142,14 @@ namespace Core.Socket {
                     ++loadCompleteCnt;
                 }
 
-                /*
+                
                 foreach (var url in set3d)
                 {
-                    var cd = MeumDB.Get().GetObject3DCoroutine(url);
-                    yield return cd.coroutine;
-                    Assert.IsNotNull(cd.result);
-                    progressBar.SetProgress((float)loadCompleteCnt / totalCnt);
+                    yield return AddressableManager.Insatnce.DownLoadObj(url);
+
+                    progressBar.SetProgress((float)loadCompleteCnt);
                     ++loadCompleteCnt;
                 }
-                */
-
                 
                 //어드레서블에서 겔러리 미리 로딩
                 for (var i = 0; i < artworksData.lands.Length; i++)

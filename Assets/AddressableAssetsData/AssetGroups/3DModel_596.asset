@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: 3DModel_596
+  m_EditorClassIdentifier: 
+  m_GroupName: 3DModel_596
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 80e9d5ffc94bbeb46b5e6d8f5735d85b
+  m_SerializeEntries:
+  - m_GUID: a53d185835c4393418a2fd84ed74191d
+    m_Address: traditional_duck_white
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2100393308820761125, guid: a53d185835c4393418a2fd84ed74191d, type: 3}
+    m_TargetAsset: {fileID: 2100393308820761125, guid: a53d185835c4393418a2fd84ed74191d, type: 3}
+  - m_GUID: 12c7282eb2b95ff4e87e6b6b3ea8c03b
+    m_Address: traditional_duckpot_white
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 7706150249898301133, guid: 12c7282eb2b95ff4e87e6b6b3ea8c03b, type: 3}
+    m_TargetAsset: {fileID: 7706150249898301133, guid: 12c7282eb2b95ff4e87e6b6b3ea8c03b, type: 3}
+  - m_GUID: ac6ad91169558e9478d5bca77d2a8b01
+    m_Address: traditional_light_cyan
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2760044218758714605, guid: ac6ad91169558e9478d5bca77d2a8b01, type: 3}
+    m_TargetAsset: {fileID: 2760044218758714605, guid: ac6ad91169558e9478d5bca77d2a8b01, type: 3}
+  - m_GUID: 67f6ba39f4c80f544827af1c80e99ea6
+    m_Address: traditional_duckpot_cyan
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 3940120598638468590, guid: 67f6ba39f4c80f544827af1c80e99ea6, type: 3}
+    m_TargetAsset: {fileID: 3940120598638468590, guid: 67f6ba39f4c80f544827af1c80e99ea6, type: 3}
+  - m_GUID: ac259badaacf1bb49b004e886d51ed52
+    m_Address: traditional_light_white
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8533745879355887270, guid: ac259badaacf1bb49b004e886d51ed52, type: 3}
+    m_TargetAsset: {fileID: 8533745879355887270, guid: ac259badaacf1bb49b004e886d51ed52, type: 3}
+  - m_GUID: e6dcb7c0e89817f46985ef7ae159c643
+    m_Address: traditional_desk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2192369774319471702, guid: e6dcb7c0e89817f46985ef7ae159c643, type: 3}
+    m_TargetAsset: {fileID: 2192369774319471702, guid: e6dcb7c0e89817f46985ef7ae159c643, type: 3}
+  - m_GUID: 7e0a0b43a73272b4d9c24d6b2d33bcce
+    m_Address: traditional_moktak_cyan
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6271047689533702027, guid: 7e0a0b43a73272b4d9c24d6b2d33bcce, type: 3}
+    m_TargetAsset: {fileID: 6271047689533702027, guid: 7e0a0b43a73272b4d9c24d6b2d33bcce, type: 3}
+  - m_GUID: 6b099ca813d2e604bac8f5d05d5c284e
+    m_Address: traditional_desk_white
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1133713848257739063, guid: 6b099ca813d2e604bac8f5d05d5c284e, type: 3}
+    m_TargetAsset: {fileID: 1133713848257739063, guid: 6b099ca813d2e604bac8f5d05d5c284e, type: 3}
+  - m_GUID: b46e697ad61ef17419bd21e83c389e07
+    m_Address: traditional_moktak
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6870064505650478063, guid: b46e697ad61ef17419bd21e83c389e07, type: 3}
+    m_TargetAsset: {fileID: 6870064505650478063, guid: b46e697ad61ef17419bd21e83c389e07, type: 3}
+  - m_GUID: f973bdf87c29da540b9b6efc8dcbfbea
+    m_Address: traditional_duck_cyan
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 2526489258135688765, guid: f973bdf87c29da540b9b6efc8dcbfbea, type: 3}
+    m_TargetAsset: {fileID: 2526489258135688765, guid: f973bdf87c29da540b9b6efc8dcbfbea, type: 3}
+  - m_GUID: 0dfe02b93262cae408e9cf5015c43bdb
+    m_Address: traditional_duck
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 9115403211422769645, guid: 0dfe02b93262cae408e9cf5015c43bdb, type: 3}
+    m_TargetAsset: {fileID: 9115403211422769645, guid: 0dfe02b93262cae408e9cf5015c43bdb, type: 3}
+  - m_GUID: d94ef50b755a5ac48bb07198a8d41bb3
+    m_Address: traditional_duckpot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 127158279526534013, guid: d94ef50b755a5ac48bb07198a8d41bb3, type: 3}
+    m_TargetAsset: {fileID: 127158279526534013, guid: d94ef50b755a5ac48bb07198a8d41bb3, type: 3}
+  - m_GUID: 93f17f30c91b4d641a23ca3e606a30de
+    m_Address: traditional_moktak_white
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 1750714519335762731, guid: 93f17f30c91b4d641a23ca3e606a30de, type: 3}
+    m_TargetAsset: {fileID: 1750714519335762731, guid: 93f17f30c91b4d641a23ca3e606a30de, type: 3}
+  - m_GUID: 5d9705775af3e1746ac756575943449e
+    m_Address: traditional_light
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6111562241582158538, guid: 5d9705775af3e1746ac756575943449e, type: 3}
+    m_TargetAsset: {fileID: 6111562241582158538, guid: 5d9705775af3e1746ac756575943449e, type: 3}
+  - m_GUID: a39e7dfe6c97abb43a932258aa90e6c9
+    m_Address: traditional_desk_cyan
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 6024076129025536319, guid: a39e7dfe6c97abb43a932258aa90e6c9, type: 3}
+    m_TargetAsset: {fileID: 6024076129025536319, guid: a39e7dfe6c97abb43a932258aa90e6c9, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 452fab07c48ba364f84086869f83b82d, type: 2}
+    - {fileID: 11400000, guid: 03719e14d24c0504eb510940900e973f, type: 2}
