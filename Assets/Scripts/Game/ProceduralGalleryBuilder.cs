@@ -15,7 +15,7 @@ using UnityEngine.Serialization;
 namespace Game
 {
     [Serializable]
-    public struct LandInfo
+    public class LandInfo
     {
         public int x;
         public int y;
@@ -29,7 +29,7 @@ namespace Game
     {
         [FormerlySerializedAs("edge_length")] [SerializeField] private float edgeLength;
 
-        private LandInfo[] _landInfos;
+        private LandInfo _landInfos;
         public RoomInfoData roomInfoData;
         private Transform _walls;
         private Transform _floors;
@@ -45,27 +45,23 @@ namespace Game
             _floors = transform.Find("floors");
         }
 
-        public LandInfo[] GetLandInfos()
+        public LandInfo GetLandInfos()
         {
             return _landInfos;
         }
 
-        public void Build(LandInfo[] landInfos)
+        public void Build(LandInfo landInfos)
         {
             _landInfos = landInfos;
 
-            for (var i = 0; i < _landInfos.Length; i++)
+            int type = _landInfos.type;
+
+            string objName = string.Format("gallery_type_{0}", type);
+
+            AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
             {
-                int index = i;
-                int type = _landInfos[i].type;
-
-                string objName = string.Format("gallery_type_{0}", type);
-
-                AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
-                {
-                    BuildBlock(_landInfos[index], obj);
-                });
-            }
+                BuildBlock(_landInfos, obj);
+            });
         }
 
         /// <summary>
@@ -80,16 +76,18 @@ namespace Game
 
             string objName = string.Format("gallery_type_{0}", type);
 
-            LandInfo[] pos = new LandInfo[1];
-            pos[0] = new LandInfo();
-            pos[0].type = type;
+            LandInfo pos = new LandInfo();
+            pos.type = type;
 
             _landInfos = pos;
 
-            AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
+            if (roomInfoData.land_type != 7)
             {
-                BuildBlock(pos[0], obj);
-            });
+                AddressableManager.Insatnce.GetObj(objName, (GameObject obj) =>
+                {
+                    BuildBlock(pos, obj);
+                });
+            }
 
             SkyBoxSet();
         }
@@ -100,31 +98,6 @@ namespace Game
             var floor = Instantiate(resultObj, _floors);
             floor.transform.position = position;
             floor.gameObject.SetActive(true);
-        }
-
-        bool NotCreateWallOn(int type)
-        {
-            bool value = false;
-
-            //화이트 큐브 (gallery_type_6)
-            if (type == 6 || type == 13)
-            {
-                value = true;
-            }
-
-            return value;
-        }
-
-        private bool Has(int x, int y)
-        {
-            if (x == 0 && y == 0) return true;
-            for (var i = 0; i < _landInfos.Length; ++i)
-            {
-                if (_landInfos[i].x == x && _landInfos[i].y == y)
-                    return true;
-            }
-
-            return false;
         }
 
         public void SkyBoxSet()

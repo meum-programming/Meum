@@ -118,7 +118,7 @@ namespace Game.Player
         /// </summary>
         void OnRotateKeybordInput()
         {
-            if (UI.ChattingUI.ChattingUI.Get() != null && UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
             {
                 return;
             }
@@ -172,7 +172,7 @@ namespace Game.Player
         /// </summary>
         void OnCameraZoomKeybordInputCheck()
         {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
                 return;
 
             if (Input.GetKeyUp(KeyCode.O) || Input.GetKeyUp(KeyCode.P))
@@ -206,7 +206,7 @@ namespace Game.Player
 
         void OnCameraZoomCheck()
         {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
                 return;
 
             float wheelInputValue = Input.GetAxis("Mouse ScrollWheel");

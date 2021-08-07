@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using Core;
+using UnityEngine.AddressableAssets;
 
 namespace Core.Socket {
     /*
@@ -142,7 +143,6 @@ namespace Core.Socket {
                     ++loadCompleteCnt;
                 }
 
-                
                 foreach (var url in set3d)
                 {
                     yield return AddressableManager.Insatnce.DownLoadObj(url);
@@ -152,14 +152,14 @@ namespace Core.Socket {
                 }
                 
                 //어드레서블에서 겔러리 미리 로딩
-                for (var i = 0; i < artworksData.lands.Length; i++)
+                nextOn = false;
+
+                int type = roomInfo.land_type;
+
+                string objName = string.Format("gallery_type_{0}", type);
+
+                if (type != 7)
                 {
-                    nextOn = false;
-
-                    int type = artworksData.lands[i].type;
-
-                    string objName = string.Format("gallery_type_{0}", type);
-
                     yield return AddressableManager.Insatnce.DownLoadObj(objName);
                 }
             }
@@ -209,14 +209,7 @@ namespace Core.Socket {
 
             var ownRoomId = ownRoomInfo.owner.id;
 
-            // load scene
-            progressBar.SetProgress(0);
-            sceneOpen = SceneManager.LoadSceneAsync("ProceduralGallery");
-            while (!sceneOpen.isDone)
-            {
-                progressBar.SetProgress(sceneOpen.progress);
-                yield return null;
-            }
+            yield return LoadSceneDoing("ProceduralGallery");
 
             if (ownRoomId == data.roomId)
                 _state.EnterGalleryOwn();
@@ -409,16 +402,9 @@ namespace Core.Socket {
                 progressBar.SetProgress((float) (artworkInfos.Length + i + 1) / artworksCount);
                 yield return null;
             }
-            
-            // load scene
-            progressBar.SetProgress(0);
-            sceneOpen = SceneManager.LoadSceneAsync("ProceduralGalleryBuilder");
-            while (!sceneOpen.isDone)
-            {
-                progressBar.SetProgress(sceneOpen.progress);
-                yield return null;
-            }
-            
+
+            yield return LoadSceneDoing("ProceduralGalleryBuilder");
+
             var artworksLoader = GameObject.Find("Artworks").GetComponent<ArtworksLoader>();
             Assert.IsNotNull(artworksLoader);
             artworksLoader.Load();
@@ -429,6 +415,40 @@ namespace Core.Socket {
             SerializeArtworks();
         }
         
+        IEnumerator LoadSceneDoing(string nextScene)
+        {
+            bool nextOn = true;
+            int landType = MeumDB.Get().currentRoomInfo.land_type;
+
+            if (landType == 7)
+            {
+                nextOn = false;
+
+                string objName = string.Format("gallery_type_{0}", landType);
+
+                Addressables.LoadSceneAsync(objName, LoadSceneMode.Additive).Completed += (handle) =>
+                {
+                    if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+                    {
+                        nextOn = true;
+                    }
+                };
+
+                yield return new WaitUntil(() => nextOn);
+            }
+
+            var progressBar = GameObject.Find("ProgressBar").GetComponent<UI.ProgressBar>();
+            progressBar.SetProgress(0);
+            var sceneOpen = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+            while (!sceneOpen.isDone)
+            {
+                progressBar.SetProgress(sceneOpen.progress);
+                yield return null;
+            }
+
+            SceneManager.UnloadSceneAsync("Loading");
+        }
+
         #endregion
 
         public void Return()

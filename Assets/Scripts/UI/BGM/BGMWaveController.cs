@@ -44,11 +44,11 @@ public class BGMWaveController : MonoBehaviour
         instanceObj.gameObject.SetActive(false);
     }
 
-    public void AudioSet(AudioSource audioSource)
-    {
-        this.audioSource = audioSource;
-        WaveValueSet(audioSource.clip);
-    }
+    //public void AudioSet(AudioSource audioSource)
+    //{
+    //    this.audioSource = audioSource;
+    //    WaveValueSet(audioSource.clip);
+    //}
 
     void WaveValueSet(AudioClip audioClip)
     {

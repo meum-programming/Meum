@@ -58,6 +58,15 @@ namespace UI.GalleryScene
             originHeight = sizeDelta.y;
 
             SetTab();
+            CloseModal();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         public void Close()
@@ -81,6 +90,8 @@ namespace UI.GalleryScene
 
         IEnumerator SetActive()
         {
+            CloseModal();
+
             image.gameObject.SetActive(false);
 
             yield return new WaitForSeconds(0.01f);
