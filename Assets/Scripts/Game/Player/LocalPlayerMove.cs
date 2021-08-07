@@ -111,7 +111,7 @@ namespace Game.Player
 
         void OnJump()
         {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
                 return;
 
             if (!Input.GetKeyDown(KeyCode.Space))
@@ -129,7 +129,7 @@ namespace Game.Player
 
         void OnRun()
         {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
                 return;
 
             _running = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -138,7 +138,7 @@ namespace Game.Player
 
         void OnMove()
         {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
                 return;
 
             Vector2 moveValue = Vector2.zero;
@@ -183,7 +183,7 @@ namespace Game.Player
 
         void MoveVectorSet(Vector2 value)
         {
-            if (UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
             {
                 if (IsGrounded())
                 {
@@ -206,7 +206,7 @@ namespace Game.Player
 
         private void Move()
         {
-            if (UI.ChattingUI.ChattingUI.Get() != null && UI.ChattingUI.ChattingUI.Get().InputFieldActivated())
+            if (DataManager.Instance.NotActiveKey())
             {
                 _moveVector = Vector3.zero;
                // return;

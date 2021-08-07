@@ -57,7 +57,7 @@ public class AddressableManager : MonoSingleton<AddressableManager>
             //다운로드 시작
             Addressables.InstantiateAsync(path, transform).Completed += (AsyncOperationHandle<GameObject> handle) =>
             {
-                if (objDic.ContainsKey(path) == false)
+                if (handle.Result != null && objDic.ContainsKey(path) == false )
                 {
                     //obj를 Dictionary에 추가한다.
                     handle.Result.gameObject.SetActive(false);

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UI.ChattingUI;
 using UnityEngine;
 
 public class DataManager
@@ -45,6 +46,15 @@ public class DataManager
 		PlayerPrefs.SetFloat(mouseSensitivityKey, mouseSensitivityValue);
 		PlayerPrefs.Save();
 	}
+
+	public bool NotActiveKey()
+	{
+        bool value = (ChattingUI.Get() != null && ChattingUI.Get().InputFieldActivated())||
+					 UI.GalleryScene.ArtworkDescription.Get().gameObject.activeInHierarchy;
+
+		return value;
+	}
+
 
 	public float GetMouseSensitivityValue()
 	{

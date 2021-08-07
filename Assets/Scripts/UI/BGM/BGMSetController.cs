@@ -185,7 +185,6 @@ public class BGMSetController : MonoBehaviour
 
         bgmAudioSource = audioSource;
 
-        bgmWaveController.AudioSet(audioSource);
         playOn = true;
         PlayBtnImageSet();
 

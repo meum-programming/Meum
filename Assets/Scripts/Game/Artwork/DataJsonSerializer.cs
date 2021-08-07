@@ -14,7 +14,7 @@ namespace Game.Artwork
     struct RoomData
     {
         public ArtworkData[] artworks;
-        public LandInfo[] lands;
+        public LandInfo lands;
 
         public RoomData(int n)
         {
