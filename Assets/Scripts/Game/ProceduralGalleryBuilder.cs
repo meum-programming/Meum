@@ -113,6 +113,13 @@ namespace Game
 
         public void SkyBoxChange(int index)
         {
+            new RoomRequest()
+            {
+                requestStatus = 2,
+                uid = MeumDB.Get().GetToken(),
+                sky_type_int = index,
+            }.RequestOn();
+
             MeumDB.Get().currentRoomInfo.sky_type_int = index;
             SkyBoxSaveData skydata = Resources.Load<MeumSaveData>("MeumSaveData").GetSKYData((SkyBoxEnum)index);
             RenderSettings.skybox = skydata.material;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 using UI.ChattingUI;
+using System.Collections;
 
 namespace Game.Player
 {
@@ -80,12 +81,21 @@ namespace Game.Player
                 return;
             }
 
+            CenterCheck();
             Move();
             ApplyGravity();
 
             _animController.SetIsJumpEnded(IsJumpEnded());
 
             InputEventCheck();
+        }
+
+        void CenterCheck()
+        {
+            if (_charController.center != _colliderCenterPos)
+            {
+                _charController.center = _colliderCenterPos;
+            }
         }
 
         private void ApplyGravity()
@@ -143,7 +153,7 @@ namespace Game.Player
 
             Vector2 moveValue = Vector2.zero;
 
-            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+            if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow))
             {
                 moveValue = Vector2.zero;
             }
@@ -164,6 +174,14 @@ namespace Game.Player
                 if (Input.GetKey(KeyCode.D))
                 {
                     moveValue.x += 1;
+                }
+                if (Input.GetKey(KeyCode.UpArrow))
+                {
+                    moveValue.y += 1;
+                }
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    moveValue.y -= 1;
                 }
             }
 

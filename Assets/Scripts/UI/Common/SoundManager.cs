@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
@@ -142,7 +143,7 @@ public class SoundManager : MonoBehaviour
 		//클립이 없으면 S3에서 다운로드
 		if (bGMSaveData.audioClip == null)
 		{
-			StartCoroutine(DownLoadBgm(bGMSaveData));
+			DownLoadBgm(bGMSaveData);
 			return;
 		}
         else
@@ -151,26 +152,22 @@ public class SoundManager : MonoBehaviour
 		}
 	}
 
-	IEnumerator DownLoadBgm(BGMSaveData bGMSaveData)
+	void DownLoadBgm(BGMSaveData bGMSaveData)
 	{
-		string bgmName = string.Format("BGM_{0:d2}.mp3", bGMSaveData.bgmId);
-		string baseUrl = "https://s3.ap-northeast-2.amazonaws.com/meum.test.addressable/BGM";
-		string url = string.Format("{0}/{1}", baseUrl, bgmName);
+        bgmAudio.Stop();
+        bgmAudio.time = 0;
 
-		UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(url,AudioType.MPEG);
+		string bgmKey = string.Format("BGM_{0:d2}", bGMSaveData.bgmId);
 
-		yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.Success)
-		{
-			bGMSaveData.audioClip = DownloadHandlerAudioClip.GetContent(www);
-			PlayBGM(bGMSaveData);
-		}
-        else
-		{
-			Debug.LogWarning("BGM DownLoad Error = "+www.error);
-		}
-	}
+		Addressables.LoadAssetAsync<AudioClip>(bgmKey).Completed += (handle) =>
+        {
+            if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+            {
+                bGMSaveData.audioClip = handle.Result;
+				PlayBGM(bGMSaveData);
+            }
+        };
+    }
 
 	public void PlayBGM(BGMSaveData bGMSaveData)
 	{

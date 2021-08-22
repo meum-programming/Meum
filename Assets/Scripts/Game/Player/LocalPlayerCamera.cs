@@ -125,7 +125,7 @@ namespace Game.Player
 
             carmeraRotValue = Vector2.zero;
 
-            if (Input.GetKeyUp(KeyCode.I) || Input.GetKeyUp(KeyCode.J) || Input.GetKeyUp(KeyCode.K) || Input.GetKeyUp(KeyCode.L))
+            if (Input.GetKeyUp(KeyCode.I) || Input.GetKeyUp(KeyCode.J) || Input.GetKeyUp(KeyCode.K) || Input.GetKeyUp(KeyCode.L) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
             {
                 cameraRotFlag = false;
                 carmeraRotValue = Vector2.zero;
@@ -153,6 +153,18 @@ namespace Game.Player
                     cameraRotFlag = true;
                     carmeraRotValue.x += 10;
                 }
+
+                if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    cameraRotFlag = true;
+                    carmeraRotValue.x -= 10;
+                }
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    cameraRotFlag = true;
+                    carmeraRotValue.x += 10;
+                }
+
             }
         }
 
