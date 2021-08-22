@@ -143,11 +143,11 @@ public class BGMSetController : MonoBehaviour
     {
         this.bgmIndex = bgmIndex;
 
-        if (this.bgmIndex >= activeBGMList.Count )
+        if (this.bgmIndex >= activeBGMList.Count)
         {
-            this.bgmIndex = 1;
+            this.bgmIndex = 0;
         }
-        else if (this.bgmIndex < 1)
+        else if (this.bgmIndex < 0)
         {
             this.bgmIndex = activeBGMList.Count - 1;
         }

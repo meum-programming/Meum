@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: AudioClip_5
+  m_EditorClassIdentifier: 
+  m_GroupName: AudioClip_5
+  m_Data:
+    m_SerializedData: []
+  m_GUID: ece704001eedf1740a8de67b9f070a3c
+  m_SerializeEntries:
+  - m_GUID: 79b04565af46c834cbc93243054e910d
+    m_Address: BGM_14
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8300000, guid: 79b04565af46c834cbc93243054e910d, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 79b04565af46c834cbc93243054e910d, type: 3}
+  - m_GUID: 68e3746bfbbfd164f8ca214ea5877de9
+    m_Address: BGM_15
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8300000, guid: 68e3746bfbbfd164f8ca214ea5877de9, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 68e3746bfbbfd164f8ca214ea5877de9, type: 3}
+  - m_GUID: 869e2804b8c508945bc8abb80e8b8956
+    m_Address: BGM_16
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 8300000, guid: 869e2804b8c508945bc8abb80e8b8956, type: 3}
+    m_TargetAsset: {fileID: 8300000, guid: 869e2804b8c508945bc8abb80e8b8956, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ef6b448d0bb8bc84dbfbd3c702fa2990, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 92ed225125516ee43a32e66cf81993bb, type: 2}
+    - {fileID: 11400000, guid: 302d348eb84fd584b823fdd64e03871a, type: 2}

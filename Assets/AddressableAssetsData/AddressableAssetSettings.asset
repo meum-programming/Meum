@@ -18,18 +18,17 @@ MonoBehaviour:
   m_BundleLocalCatalog: 0
   m_DisableCatalogUpdateOnStart: 0
   m_IgnoreUnsupportedFilesInBuild: 0
-  m_UniqueBundleIds: 0
+  m_UniqueBundleIds: 1
   m_maxConcurrentWebRequests: 500
   m_ContiguousBundles: 0
   m_RemoteCatalogBuildPath:
     m_Id: 7efef8d0b5e35fe43a8bce8513578d8d
   m_RemoteCatalogLoadPath:
     m_Id: 955aa5cd4141efb4d9c5fd012c05afae
-  m_overridePlayerVersion: 
+  m_overridePlayerVersion: 0.0.1
   m_GroupAssets:
   - {fileID: 11400000, guid: 3687dc67dc6280347b6efb1672792074, type: 2}
   - {fileID: 11400000, guid: 47855a7e1fe881c43b4130f91fcbad5c, type: 2}
-  - {fileID: 11400000, guid: 3c4fe03972b3c5b4db0161a34dc98ecd, type: 2}
   - {fileID: 11400000, guid: 3f279e0bb4add09479ccf0f748cdd5b7, type: 2}
   - {fileID: 11400000, guid: 96c640b5ca067534a8f90e0640b337f5, type: 2}
   - {fileID: 11400000, guid: 3b8871a307e787942a06f6fa08f6c4a3, type: 2}
@@ -54,6 +53,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2f67a3617a807b9489fab266f911f97a, type: 2}
   - {fileID: 11400000, guid: 2ac5607e936397d44897ee7268115d43, type: 2}
   - {fileID: 11400000, guid: 15c5faf6803db6947a325d34a9267b2b, type: 2}
+  - {fileID: 11400000, guid: 56f98f442562c474b9f750beed21fcaa, type: 2}
+  - {fileID: 11400000, guid: d234edcd512814e419e0cf1775af6dbc, type: 2}
+  - {fileID: 11400000, guid: 0e3c5c4d42cf5cc4bad3f53d28a180b3, type: 2}
+  - {fileID: 11400000, guid: bc261f1839c04db4ea3318b9cfe39ad5, type: 2}
+  - {fileID: 11400000, guid: f8990956db44b624f824ccf56a2a3aba, type: 2}
+  - {fileID: 11400000, guid: 5efd648230afd0d40b1ab9079d333e2d, type: 2}
+  - {fileID: 11400000, guid: 0b64ff31b1d8f6b4491b155b9a872d79, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -74,7 +80,7 @@ MonoBehaviour:
       - m_Id: 7efef8d0b5e35fe43a8bce8513578d8d
         m_Value: ServerData/[BuildTarget]
       - m_Id: 955aa5cd4141efb4d9c5fd012c05afae
-        m_Value: https://s3.ap-northeast-2.amazonaws.com/meum.test.addressable/Gallery/[BuildTarget]
+        m_Value: ServerData/[BuildTarget]
     m_ProfileEntryNames:
     - m_Id: 517008d38c7f4d1448c345f45ba69d09
       m_Name: BuildTarget

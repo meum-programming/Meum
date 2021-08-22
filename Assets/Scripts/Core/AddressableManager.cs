@@ -9,11 +9,6 @@ public class AddressableManager : MonoSingleton<AddressableManager>
 {
     private Dictionary<string, GameObject> objDic = new Dictionary<string, GameObject>();
 
-    private void Awake()
-    {
-        PlayerPrefs.DeleteKey(Addressables.kAddressablesRuntimeDataPath);
-    }
-
     /// <summary>
     /// 오브젝트 리턴
     /// </summary>
